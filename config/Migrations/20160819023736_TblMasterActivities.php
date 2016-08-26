@@ -15,7 +15,8 @@ class TblMasterActivities extends AbstractMigration
         $exists = $this->hasTable('tbl_master_activities');
         if (!$exists) {
             $users = $this->table('tbl_master_activities');
-            $users->addColumn('title', 'string')
+            $users->addColumn('id', 'integer')
+                ->addColumn('title', 'string')
                 ->addColumn('contents', 'text')
                 ->addColumn('start_time', 'date')
                 ->addColumn('end_time', 'date')

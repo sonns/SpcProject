@@ -12,18 +12,25 @@ class TblMasterDepartments extends AbstractMigration
      */
     public function change()
     {
-        $deparments = $this->table('tbl_master_departments');
-        $deparments->addColumn('id', 'integer')
+        $departments = $this->table('tbl_master_departments');
+        $departments->addColumn('id', 'integer', [
+                'autoIncrement' => true,
+                'default' => null,
+                'limit' => 11,
+                'null' => false,
+            ])
+            ->addPrimaryKey(['id'])
             ->addColumn('name', 'text')
             ->addColumn('tel', 'string',['null'=>true])
             ->addColumn('address', 'string',['null'=>true])
             ->addColumn('del_flg', 'integer', array('limit' => 1,'default'=>0))
-            ->addColumn('user_id', 'integer')
             ->addColumn('created', 'datetime')
             ->addColumn('modified', 'datetime')
-            ->addPrimaryKey('id', [
-                'autoIncrement' => true
-            ])
+            ->addIndex(
+                [
+                    'name',
+                ]
+            )
             ->save();
     }
 }

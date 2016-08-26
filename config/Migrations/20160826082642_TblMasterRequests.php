@@ -12,22 +12,65 @@ class TblMasterRequests extends AbstractMigration
      */
     public function change()
     {
-        $requests = $this->table('tbl_master_departments');
-        $requests->addColumn('id', 'integer')
+        $requests = $this->table('tbl_master_requests');
+        $requests->addColumn('id', 'integer', [
+                'autoIncrement' => true,
+                'default' => null,
+                'limit' => 11,
+                'null' => false,
+            ])
+            ->addPrimaryKey(['id'])
             ->addColumn('user_id', 'integer')
             ->addColumn('dep_id', 'integer')
+            ->addColumn('title', 'string')
             ->addColumn('subject', 'string')
             ->addColumn('description', 'text',['null'=>true])
             ->addColumn('effectiveness', 'text',['null'=>true])
-            ->addColumn('attach', 'text')
-            ->addColumn('note', 'text')
+            ->addColumn('attach', 'text',['null'=>true])
+            ->addColumn('note', 'text',['null'=>true])
             ->addColumn('appr_date', 'datetime')
             ->addColumn('del_flg', 'integer', array('limit' => 1,'default'=>0))
             ->addColumn('created', 'datetime')
             ->addColumn('modified', 'datetime')
-            ->addPrimaryKey('id', [
-                'autoIncrement' => true
-            ])
+            ->addForeignKey(
+                'user_id',
+                'tbl_master_users',
+                'id',
+                [
+                    'update' => 'CASCADE',
+                    'delete' => 'CASCADE'
+                ]
+            )
+            ->addForeignKey(
+                'dep_id',
+                'tbl_master_departments',
+                'id',
+                [
+                    'update' => 'CASCADE',
+                    'delete' => 'CASCADE'
+                ]
+            )
+            ->addIndex(
+                [
+                    'dep_id',
+                ]
+            )
+            ->addIndex(
+                [
+                    'user_id',
+                ]
+            )
+            ->addIndex(
+                [
+                    'title',
+                ]
+            )
+            ->addIndex(
+                [
+                    'subject',
+                ]
+            )
+
             ->save();
     }
 }
