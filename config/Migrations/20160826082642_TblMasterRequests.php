@@ -10,9 +10,12 @@ class TblMasterRequests extends AbstractMigration
      * http://docs.phinx.org/en/latest/migrations.html#the-change-method
      * @return void
      */
-    public function change()
+    public function up()
     {
-        $requests = $this->table('tbl_master_requests');
+        $requests = $this->table('tbl_master_requests', [
+            'id' => false,
+            'primary_key' => ['id']
+        ]);
         $requests->addColumn('id', 'integer', [
                 'autoIncrement' => true,
                 'default' => null,
@@ -72,5 +75,10 @@ class TblMasterRequests extends AbstractMigration
             )
 
             ->save();
+    }
+    public function down()
+    {
+        $this->table('tbl_master_requests')->dropForeignKey(['dep_id','user_id']);
+        $this->table('tbl_master_requests')->drop();
     }
 }

@@ -10,9 +10,14 @@ class TblMasterDepartments extends AbstractMigration
      * http://docs.phinx.org/en/latest/migrations.html#the-change-method
      * @return void
      */
-    public function change()
+
+
+    public function up()
     {
-        $departments = $this->table('tbl_master_departments');
+        $departments = $this->table('tbl_master_departments', [
+            'id' => false,
+            'primary_key' => ['id']
+        ]);
         $departments->addColumn('id', 'integer', [
                 'autoIncrement' => true,
                 'default' => null,
@@ -20,7 +25,7 @@ class TblMasterDepartments extends AbstractMigration
                 'null' => false,
             ])
             ->addPrimaryKey(['id'])
-            ->addColumn('name', 'text')
+            ->addColumn('name', 'string')
             ->addColumn('tel', 'string',['null'=>true])
             ->addColumn('address', 'string',['null'=>true])
             ->addColumn('del_flg', 'integer', array('limit' => 1,'default'=>0))
@@ -32,5 +37,19 @@ class TblMasterDepartments extends AbstractMigration
                 ]
             )
             ->save();
+
+        $users = $this->table('tbl_master_users');
+        $users->addForeignKey( 'dep_id',
+            'tbl_master_departments',
+            'id',
+            [
+                'update' => 'CASCADE',
+                'delete' => 'CASCADE'
+            ])->save();
+    }
+    public function down()
+    {
+        $this->table('tbl_master_users')->dropForeignKey('dep_id');
+        $this->table('tbl_master_departments')->drop();
     }
 }

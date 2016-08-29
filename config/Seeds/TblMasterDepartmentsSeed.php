@@ -2,9 +2,9 @@
 use Migrations\AbstractSeed;
 
 /**
- * Departments seed.
+ * TblMasterDepartments seed.
  */
-class DepartmentsSeed extends AbstractSeed
+class TblMasterDepartmentsSeed extends AbstractSeed
 {
     /**
      * Run Method.
@@ -18,12 +18,6 @@ class DepartmentsSeed extends AbstractSeed
      */
     public function run()
     {
-        $data = [];
-
-        $table = $this->table('departments');
-        $table->insert($data)->save();
-
-
         $data = [
             [
                 'id'    => 1,
@@ -47,7 +41,5 @@ class DepartmentsSeed extends AbstractSeed
 
         $table = $this->table('tbl_master_departments');
         $table->insert($data)->save();
-
-
     }
 }
