@@ -29,4 +29,8 @@ class LegacyPasswordHasher extends AbstractPasswordHasher
     {
         return $this->hash($password) === $hashedPassword;
     }
+    public function needsRehash($password)
+    {
+        return password_needs_rehash(fread($password, 256), PASSWORD_DEFAULT);
+    }
 }

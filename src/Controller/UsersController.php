@@ -4,11 +4,11 @@ namespace App\Controller;
 use App\Controller\AppController;
 
 /**
- * Accounts Controller
+ * Users Controller
  *
- * @property \App\Model\Table\AccountsTable $Accounts
+ * @property \App\Model\Table\UsersTable $Users
  */
-class AccountsController extends AppController
+class UsersController extends AppController
 {
 
     public function beforeFilter(Event $event)
@@ -41,10 +41,10 @@ class AccountsController extends AppController
      */
     public function index()
     {
-        $accounts = $this->paginate($this->Accounts);
+        $Users = $this->paginate($this->Users);
 
-        $this->set(compact('accounts'));
-        $this->set('_serialize', ['accounts']);
+        $this->set(compact('Users'));
+        $this->set('_serialize', ['Users']);
     }
 
 
@@ -52,18 +52,18 @@ class AccountsController extends AppController
     /**
      * View method
      *
-     * @param string|null $id Account id.
+     * @param string|null $id User id.
      * @return \Cake\Network\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null)
     {
-        $account = $this->Accounts->get($id, [
+        $user = $this->Users->get($id, [
             'contain' => []
         ]);
 
-        $this->set('account', $account);
-        $this->set('_serialize', ['account']);
+        $this->set('User', $user);
+        $this->set('_serialize', ['User']);
     }
 
     /**
@@ -73,62 +73,62 @@ class AccountsController extends AppController
      */
     public function add()
     {
-        $account = $this->Accounts->newEntity();
+        $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
-            $account = $this->Accounts->patchEntity($account, $this->request->data);
-            if ($this->Accounts->save($account)) {
-                $this->Flash->success(__('The account has been saved.'));
+            $user = $this->Users->patchEntity($user, $this->request->data);
+            if ($this->Users->save($user)) {
+                $this->Flash->success(__('The User has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The account could not be saved. Please, try again.'));
+                $this->Flash->error(__('The User could not be saved. Please, try again.'));
             }
         }
-        $this->set(compact('account'));
-        $this->set('_serialize', ['account']);
+        $this->set(compact('User'));
+        $this->set('_serialize', ['User']);
     }
 
     /**
      * Edit method
      *
-     * @param string|null $id Account id.
+     * @param string|null $id User id.
      * @return \Cake\Network\Response|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
     public function edit($id = null)
     {
-        $account = $this->Accounts->get($id, [
+        $user = $this->Users->get($id, [
             'contain' => []
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $account = $this->Accounts->patchEntity($account, $this->request->data);
-            if ($this->Accounts->save($account)) {
-                $this->Flash->success(__('The account has been saved.'));
+            $user = $this->Users->patchEntity($user, $this->request->data);
+            if ($this->Users->save($user)) {
+                $this->Flash->success(__('The User has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The account could not be saved. Please, try again.'));
+                $this->Flash->error(__('The User could not be saved. Please, try again.'));
             }
         }
-        $this->set(compact('account'));
-        $this->set('_serialize', ['account']);
+        $this->set(compact('User'));
+        $this->set('_serialize', ['User']);
     }
 
     /**
      * Delete method
      *
-     * @param string|null $id Account id.
+     * @param string|null $id User id.
      * @return \Cake\Network\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
-        $account = $this->Accounts->get($id);
-        if ($this->Accounts->delete($account)) {
-            $this->Flash->success(__('The account has been deleted.'));
+        $user = $this->Users->get($id);
+        if ($this->Users->delete($user)) {
+            $this->Flash->success(__('The User has been deleted.'));
         } else {
-            $this->Flash->error(__('The account could not be deleted. Please, try again.'));
+            $this->Flash->error(__('The User could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);

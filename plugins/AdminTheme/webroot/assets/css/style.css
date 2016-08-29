@@ -762,6 +762,7 @@ body {
   text-rendering: optimizelegibility;
   -webkit-text-size-adjust: 100%;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  height: 600px;
 }
 h1,
 h2,

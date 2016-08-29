@@ -7,21 +7,21 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * TblMasterAccounts Model
+ * TblMasterUsers Model
  *
  * @property \Cake\ORM\Association\BelongsTo $Logins
  *
- * @method \App\Model\Entity\AccountsTable get($primaryKey, $options = [])
- * @method \App\Model\Entity\AccountsTable newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\AccountsTable[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\AccountsTable|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\AccountsTable patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\AccountsTable[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\AccountsTable findOrCreate($search, callable $callback = null)
+ * @method \App\Model\Entity\UsersTable get($primaryKey, $options = [])
+ * @method \App\Model\Entity\UsersTable newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\UsersTable[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\UsersTable|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\UsersTable patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\UsersTable[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\UsersTable findOrCreate($search, callable $callback = null)
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
-class AccountsTable extends Table
+class UsersTable extends Table
 {
 
 
@@ -35,7 +35,7 @@ class AccountsTable extends Table
     {
         parent::initialize($config);
 
-        $this->table('tbl_master_accounts');
+        $this->table('tbl_master_users');
         $this->displayField('id');
         $this->primaryKey('id');
         $this->addBehavior('Timestamp');
@@ -55,8 +55,8 @@ class AccountsTable extends Table
     public function validationDefault(Validator $validator)
     {
         return $validator
-            ->notEmpty('login_id', 'A username is required')
-            ->notEmpty('login_pass', 'A password is required')
+            ->notEmpty('username', 'A username is required')
+            ->notEmpty('password', 'A password is required')
             ->notEmpty('role', 'A role is required')
             ->add('role', 'inList', [
                 'rule' => ['inList', ['admin', 'author']],
@@ -73,7 +73,7 @@ class AccountsTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->isUnique(['login_id']));
+        $rules->add($rules->isUnique(['email','username']));
         return $rules;
     }
 }

@@ -49,60 +49,74 @@ class AppController extends Controller
 //        echo 123;exit;
 //           $this->Auth->config('authenticate', [
 //            AuthComponent::ALL => [
-//               'userModel' => 'Accounts',
-//               'scope' => ['Accounts.active' => 1]
+//               'userModel' => 'Users',
+//               'scope' => ['Users.active' => 1]
 //          ],
 //          'Form',
 //          'Basic'
 //       ]);
         $this->loadComponent('Auth', [
                 'authenticate' => ['all' => array(
-                    'userModel' => 'Accounts'
+                    'userModel' => 'Users'
                 ),
                 'Form' => [
-                    'fields' => ['username' => 'login_id', 'password' => 'login_pass'],
+                    'fields' => ['username' => 'username', 'password' => 'password'],
                     'passwordHasher' => [
                         'className' => 'Legacy',
                     ]
                 ]
             ],
+            'loginAction' => [
+                'controller' => 'home',
+                'action' => 'login',
+                'login'
+            ],
             'loginRedirect' => [
-                'controller' => '/',
-                'action' => 'home'
+                'controller' => 'home',
+                'action' => 'index',
+                'home'
             ],
             'logoutRedirect' => [
                 'controller' => 'home',
                 'action' => 'login',
-                'home'
+                'login'
             ],
 
         ]);
+        if($this->Auth->user()){
+            $this->set('user', $this->Auth->user());
+        }
     }
+
+    public function isAuthorized($user = null)
+    {
+        // Any registered user can access public functions
+        if (empty($this->request->params['prefix'])) {
+            return true;
+        }
+
+        // Only admins can access admin functions
+        if ($this->request->params['prefix'] === 'admin') {
+            return (bool)($user['role'] === 'admin');
+        }
+
+        // Default deny
+        return false;
+    }
+
+//    // Deny all actions.
+//$this->Auth->deny();
+//
+//// Deny one action
+//$this->Auth->deny('add');
+//
+//// Deny a group of actions.
+//$this->Auth->deny(['add', 'edit']);
     public function beforeFilter(Event $event)
     {
         $this->Auth->allow(['login','logout','register']);
 
     }
-
-//    function __isEffectiveAccount($id,$pass=""){
-//
-//        if(empty($pass)) return false;
-//        $this->loadModel("Accounts");
-//        $flg=false;
-//        $all_accounts=$this->Accounts->findAllByDelFlg(0);
-//        foreach($all_accounts as $k=>$v){
-//            $dec_pass=$this->Common->cipher_decrypt($v->login_pass,MCRYPT_KEY);
-//            if($dec_pass==$pass){
-//                $flg=true;
-//                break;
-//            }
-//        }
-//        if(!$flg) return false;
-//        if($v->login_id!=$id)
-//            return false;
-//        return $v;
-//    }
-
     /**
      * Before render callback.
      *
