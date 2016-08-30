@@ -1,18 +1,17 @@
 <?php
 use Migrations\AbstractMigration;
 
-class TblMasterRequests extends AbstractMigration
+class TblMasterRules extends AbstractMigration
 {
     /**
      * Change Method.
      *
      * More information on this method is available here:
      * http://docs.phinx.org/en/latest/migrations.html#the-change-method
-     * @return void
-     */
+     * @return void */
     public function up()
     {
-        $requests = $this->table('tbl_master_requests', [
+        $requests = $this->table('tbl_master_rules', [
             'id' => false,
             'primary_key' => ['id']
         ]);
@@ -23,30 +22,14 @@ class TblMasterRequests extends AbstractMigration
             'null' => false,
         ])
             ->addPrimaryKey(['id'])
-            ->addColumn('user_id', 'integer')
             ->addColumn('dep_id', 'integer')
-            ->addColumn('cate_id', 'integer')
-            ->addColumn('title', 'string')
-            ->addColumn('subject', 'string')
-            ->addColumn('description', 'text',['null'=>true])
-            ->addColumn('effectiveness', 'text',['null'=>true])
-            ->addColumn('attach', 'text',['null'=>true])
-            ->addColumn('note', 'text',['null'=>true])
-            ->addColumn('appr_date', 'datetime')
-            ->addColumn('del_flg', 'integer', array('limit' => 1,'default'=>0))
-            ->addColumn('is_reject', 'integer', array('limit' => 1,'default'=>0))
+            ->addColumn('key', 'string')
+            ->addColumn('value', 'string')
+            ->addColumn('comparision_operator', 'string', array('limit' => 2,'default'=>1))
+            ->addColumn('action', 'string')
+            ->addColumn('is_active', 'integer', array('limit' => 1,'default'=>1))
             ->addColumn('created', 'datetime')
             ->addColumn('modified', 'datetime')
-
-            ->addForeignKey(
-                'user_id',
-                'tbl_master_users',
-                'id',
-                [
-                    'update' => 'CASCADE',
-                    'delete' => 'CASCADE'
-                ]
-            )
             ->addForeignKey(
                 'dep_id',
                 'tbl_master_departments',
@@ -63,17 +46,12 @@ class TblMasterRequests extends AbstractMigration
             )
             ->addIndex(
                 [
-                    'user_id',
+                    'key',
                 ]
             )
             ->addIndex(
                 [
-                    'title',
-                ]
-            )
-            ->addIndex(
-                [
-                    'subject',
+                    'value',
                 ]
             )
 
@@ -81,7 +59,7 @@ class TblMasterRequests extends AbstractMigration
     }
     public function down()
     {
-
-        $this->table('tbl_master_requests')->drop();
+        $this->table('tbl_master_rules')->dropForeignKey(['dep_id']);
+        $this->table('tbl_master_rules')->drop();
     }
 }

@@ -50,6 +50,9 @@ class TblMasterDepartments extends AbstractMigration
     public function down()
     {
         $this->table('tbl_master_users')->dropForeignKey('dep_id');
+        $this->table('tbl_master_approval')->dropForeignKey(['dep_id']);
+        $this->table('tbl_master_rules')->dropForeignKey(['dep_id']);
+        $this->table('tbl_master_requests')->dropForeignKey(['dep_id']);
         $this->table('tbl_master_departments')->drop();
     }
 }

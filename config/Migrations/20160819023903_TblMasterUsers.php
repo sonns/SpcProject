@@ -56,6 +56,8 @@ class TblMasterUsers extends AbstractMigration
     }
     public function down()
     {
+        $this->table('tbl_master_approval')->dropForeignKey(['user_id']);
+        $this->table('tbl_master_requests')->dropForeignKey(['user_id']);
         $this->table('tbl_master_users')->drop();
     }
 }

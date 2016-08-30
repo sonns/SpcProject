@@ -1,6 +1,8 @@
 <!-- Start info box -->
 <div class="row top-summary">
 
+    <?php echo $users1;?>
+
     <div class="col-lg-3 col-md-6">
         <div class="widget green-1 animated fadeInDown">
             <div class="widget-content padding">
