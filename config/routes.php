@@ -54,10 +54,15 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/logout', ['controller' => 'Home', 'action' => 'logout', 'logout']);
     $routes->connect('/', ['controller' => 'Home', 'action' => 'index','home']);
     $routes->connect('/register', ['controller' => 'Home', 'action' => 'register']);
-    $routes->connect('/users/list', ['controller' => 'Users', 'action' => 'index','manage_user']);
-    $routes->connect('/users/add', ['controller' => 'Users', 'action' => 'add','add_user']);
-    $routes->connect('/users/edit', ['controller' => 'Users', 'action' => 'edit','edit_user']);
-    $routes->connect('/users/delete', ['controller' => 'Users', 'action' => 'delete','del_user']);
+    $routes->connect('/user/list', ['controller' => 'Users', 'action' => 'index','manage_user']);
+    $routes->connect('/user/add', ['controller' => 'Users', 'action' => 'add','add_user']);
+    $routes->connect('/user/edit', ['controller' => 'Users', 'action' => 'edit','edit_user']);
+    $routes->connect('/user/delete', ['controller' => 'Users', 'action' => 'delete','del_user']);
+//Department router
+    $routes->connect('/department/list', ['controller' => 'Departments', 'action' => 'index','manage_dep']);
+    $routes->connect('/department/add', ['controller' => 'Departments', 'action' => 'add','add_dep']);
+    $routes->connect('/department/edit', ['controller' => 'Departments', 'action' => 'edit','edit_dep']);
+    $routes->connect('/department/delete', ['controller' => 'Departments', 'action' => 'delete','del_dep']);
 
     /**
      * ...and connect the rest of 'Pages' controller's URLs.

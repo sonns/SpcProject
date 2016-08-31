@@ -28,6 +28,7 @@ class TblMasterDepartments extends AbstractMigration
             ->addColumn('name', 'string')
             ->addColumn('tel', 'string',['null'=>true])
             ->addColumn('address', 'string',['null'=>true])
+            ->addColumn('status', 'integer', array('limit' => 1,'default'=>1))
             ->addColumn('del_flg', 'integer', array('limit' => 1,'default'=>0))
             ->addColumn('created', 'datetime')
             ->addColumn('modified', 'datetime')

@@ -84,13 +84,14 @@ class AppController extends Controller
 
         ]);
         if($this->Auth->user()){
-//            print_r($this->Auth->user());exit;
             $this->set('userInfo', $this->Auth->user());
         }
+
     }
 
     public function isAuthorized($user = null)
     {
+
         // Any registered user can access public functions
         if (empty($this->request->params['prefix'])) {
             return true;
@@ -98,6 +99,7 @@ class AppController extends Controller
 
         // Only admins can access admin functions
         if ($this->request->params['prefix'] === 'admin') {
+
             return (bool)($user['role'] === 'admin');
         }
 
@@ -116,6 +118,7 @@ class AppController extends Controller
     public function beforeFilter(Event $event)
     {
         $this->Auth->allow(['login','logout','register']);
+
 
     }
     /**

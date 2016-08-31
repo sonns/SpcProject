@@ -6,20 +6,24 @@
         </div>
         <div class="widget-content padding">
             <div id="basic-form">
-                <?php echo $this->Form->create(null,['url'=>['controller' => 'users','action'=>'add','add_user']])?>
+<!--                <form href="users/add" method="post">-->
+                <?php echo $this->Form->create($user)?>
                     <div class="form-group">
                         <label for="lblUsername">Username</label>
-                        <input type="text" class="form-control" id="username" placeholder="Enter user">
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Enter user">
                     </div>
                     <div class="form-group">
                         <label for="lblEmail">Email address</label>
-                        <input type="email" class="form-control" id="email" placeholder="Enter email">
+                        <input type="text" class="form-control" id="email" name="email" placeholder="Enter email">
                     </div>
                     <div class="form-group">
                         <label for="lblPassword">Password</label>
-                        <input type="password" class="form-control" id="password" placeholder="*******">
+                        <input type="password" class="form-control" id="password" name="password" placeholder="*******">
                     </div>
-                    <button type="submit" class="btn btn-default">Submit</button>
+                <div class="col-sm-4">
+                    <button type="submit" class="btn btn-success">Submit</button>
+                    <button type="reset" class="btn btn-default">Cancel</button>
+                </div>
                 </form>
             </div>
         </div>
