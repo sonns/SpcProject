@@ -1,7 +1,5 @@
 /vendor/*
 /.idea/*
-.idea/*
-*.idea
 /config/app.php
 /tmp/*
 /logs/*
