@@ -3,38 +3,24 @@
     <h1><i class='fa fa-table'></i> Department List</h1>
 <!-- Page Heading End-->
 
-
-    <div class="md-modal md-slide-stick-top" id="form-modal">
+    <!-- Modal fade in scale up -->
+    <div class="md-modal md-fade-in-scale-up" id="md-fade-in-scale-up">
         <div class="md-content">
-            <div class="md-close-btn"><a class="md-close"><i class="fa fa-times"></i></a></div>
-            <h3><strong>Form</strong> Modal</h3>
+            <h3>Modal Dialog</h3>
             <div>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <h4>Login</h4>
-                        <form role="form">
-                            <div class="form-group">
-                                <input type="email" class="form-control" placeholder="Enter email">
-                            </div>
-                            <div class="form-group">
-                                <input type="password" class="form-control" placeholder="Password">
-                            </div>
-                            <button type="submit" class="btn btn-default">Login</button>
-                        </form>
-                    </div>
-                    <div class="col-sm-6">
-                        <h4>Not a member?</h4>
-                        <p>Create account <a href="#fakelink">here</a></p>
-                        <p>OR</p>
-
-                        <button type="button" class="btn btn-primary btn-sm btn-block btn-facebook"><i class="fa fa-facebook"></i> Login with Facebook</button>
-                        <button type="button" class="btn btn-primary btn-sm btn-block btn-twitter"><i class="fa fa-twitter"></i> Login with Twitter</button>
-
-                    </div>
-                </div>
+                <p>This is a modal window. You can do the following things with it:</p>
+                <ul>
+                    <li><strong>Read:</strong> modal windows will probably tell you something important so don't forget to read what they say.</li>
+                    <li><strong>Look:</strong> a modal window enjoys a certain kind of attention; just look at it and appreciate its presence.</li>
+                    <li><strong>Close:</strong> click on the button below to close the modal.</li>
+                </ul>
+                <p>
+                    <button class="btn btn-danger md-close">Close me!</button>
+                    <button class="btn btn-success md-close">Some button</button>
+                </p>
             </div>
-        </div>
-    </div><!-- End .md-modal -->
+        </div><!-- End div .md-content -->
+    </div><!-- End div .md-modal .md-fade-in-scale-up -->
 
 
     <!-- Your awesome content goes here -->
@@ -58,8 +44,11 @@
                         </div>
                         <div class="col-md-8">
                             <div class="toolbar-btn-action">
-                                <a href="<?php echo $this->Url->build(['controller'=>'departments','action'=>'add','dep_add'])?>" class="btn btn-success"><i class="fa fa-plus-circle"></i> Add new</a>
-                                <a class="btn btn-danger"><i class="fa fa-trash-o"></i> Delete</a>
+                                <?php echo $this->Html->link('<i class="fa fa-plus-circle"></i>Add new',['controller'=>'departments','action'=>'add','dep_add'],['data-modal'=>'form-add-department-modal','class' => "btn btn-success md-trigger",'escape' => false])?>
+                                <?php echo $this->Html->link('<i class="fa fa-trash-o"></i>Delete',['controller'=>'departments','action'=>'add','dep_add'],['class' => "btn btn-danger",'escape' => false])?>
+<!--                                <a href="--><?php //echo $this->Url->build(['controller'=>'departments','action'=>'add','dep_add'])?><!--" ><i class="fa fa-plus-circle"></i> Add new</a>-->
+                                <a class="btn btn-danger md-trigger"  data-modal="logout-modal"><i class="fa fa-trash-o"></i> Delete</a>
+                                <button data-modal="md-fade-in-scale-up" class="btn btn-default btn-sm md-trigger">Fade in &amp; Scale</button>
                             </div>
                         </div>
                     </div>

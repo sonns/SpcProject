@@ -24,15 +24,17 @@ class TblMasterMenu extends AbstractMigration
         ])
             ->addPrimaryKey(['id'])
             ->addColumn('parent_id', 'string')
-            ->addColumn('name', 'string')
-            ->addColumn('position', 'integer')
+            ->addColumn('title', 'string')
+            ->addColumn('link', 'integer')
+            ->addColumn('index', 'integer', array('null'=>true,'default'=>0))
+            ->addColumn('icon', 'string', array('null'=>true))
             ->addColumn('active', 'integer', array('limit' => 1,'default'=>0))
             ->addColumn('del_flg', 'integer', array('limit' => 1,'default'=>0))
             ->addColumn('created', 'datetime')
             ->addColumn('modified', 'datetime')
             ->addIndex(
                 [
-                    'name',
+                    'title',
                 ]
             )->addIndex(
                 [
