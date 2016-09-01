@@ -29,3 +29,6 @@
         </div>
     </div>
 </div><!-- End .md-modal -->
+
+<?= $this->Html->script('AdminTheme./assets/libs/bootstrap-validator/js/bootstrapValidator.min.js') ?>
+<?= $this->Html->script('AdminTheme./assets/js/pages/form-validation.js') ?>
