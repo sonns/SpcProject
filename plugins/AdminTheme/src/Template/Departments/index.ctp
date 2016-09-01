@@ -1,30 +1,12 @@
+<!-- Modal add department-->
+<?php echo $this->element('Department/add') ?>
+<!-- End div .md-modal .md-fade-in-scale-up -->
+
 <!-- Page Heading Start -->
 <div class="page-heading">
     <h1><i class='fa fa-table'></i> Department List</h1>
 <!-- Page Heading End-->
-
-    <!-- Modal fade in scale up -->
-    <div class="md-modal md-fade-in-scale-up" id="md-fade-in-scale-up">
-        <div class="md-content">
-            <h3>Modal Dialog</h3>
-            <div>
-                <p>This is a modal window. You can do the following things with it:</p>
-                <ul>
-                    <li><strong>Read:</strong> modal windows will probably tell you something important so don't forget to read what they say.</li>
-                    <li><strong>Look:</strong> a modal window enjoys a certain kind of attention; just look at it and appreciate its presence.</li>
-                    <li><strong>Close:</strong> click on the button below to close the modal.</li>
-                </ul>
-                <p>
-                    <button class="btn btn-danger md-close">Close me!</button>
-                    <button class="btn btn-success md-close">Some button</button>
-                </p>
-            </div>
-        </div><!-- End div .md-content -->
-    </div><!-- End div .md-modal .md-fade-in-scale-up -->
-
-
-    <!-- Your awesome content goes here -->
-
+<!-- Your awesome content goes here -->
 <div class="row">
     <div class="col-md-12">
         <div class="widget">
@@ -35,20 +17,21 @@
                 </div>
             </div>
             <div class="widget-content">
+
                 <div class="data-table-toolbar">
+
                     <div class="row">
+
                         <div class="col-md-4">
+
                             <form role="form">
                                 <input type="text" class="form-control" placeholder="Search...">
                             </form>
                         </div>
                         <div class="col-md-8">
                             <div class="toolbar-btn-action">
-                                <?php echo $this->Html->link('<i class="fa fa-plus-circle"></i>Add new',['controller'=>'departments','action'=>'add','dep_add'],['data-modal'=>'form-add-department-modal','class' => "btn btn-success md-trigger",'escape' => false])?>
-                                <?php echo $this->Html->link('<i class="fa fa-trash-o"></i>Delete',['controller'=>'departments','action'=>'add','dep_add'],['class' => "btn btn-danger",'escape' => false])?>
-<!--                                <a href="--><?php //echo $this->Url->build(['controller'=>'departments','action'=>'add','dep_add'])?><!--" ><i class="fa fa-plus-circle"></i> Add new</a>-->
-                                <a class="btn btn-danger md-trigger"  data-modal="logout-modal"><i class="fa fa-trash-o"></i> Delete</a>
-                                <button data-modal="md-fade-in-scale-up" class="btn btn-default btn-sm md-trigger">Fade in &amp; Scale</button>
+                                <a data-modal="md-add-department" class="btn btn-success md-trigger"><i class="fa fa-plus-circle"></i>Add new</a>
+                                <a data-modal="md-add-department" class="btn btn-danger md-trigger"><i class="fa fa-trash-o"></i>Delete</a>
                             </div>
                         </div>
                     </div>
@@ -112,4 +95,3 @@
         <a href="#">About</a><a href="#">Support</a><a href="#">Terms of Service</a><a href="#">Legal</a><a href="#">Help</a><a href="#">Contact Us</a>
     </div>
 </footer>
-<!-- Footer End -->

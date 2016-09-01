@@ -144,12 +144,12 @@
                             <li><a href="#"><i class="icon-help-2"></i> Help</a></li>
                             <li><a href="lockscreen.html"><i class="icon-lock-1"></i> Lock me</a></li>
                             <li>
-                                <a href="<?php echo $this->Url->build([
-                                    "controller" => "home",
-                                    "action" => "logout",
-                                    "logout"
-                                ]);
-                                ?>" class="md-trigger" data-modal="logout-modal"><i class="icon-logout-1"></i> Logout</a></li>
+<!--                                <a href="--><?php //echo $this->Url->build([
+//                                    "controller" => "home",
+//                                    "action" => "logout",
+//                                    "logout"
+//                                ]);
+//                                ?><!--" class="md-trigger" data-modal="logout-modal"><i class="icon-logout-1"></i> Logout</a></li>-->
                         </ul>
                     </li>
                     <li class="right-opener">
