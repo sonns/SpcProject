@@ -25,8 +25,8 @@ class TblMasterCategories extends AbstractMigration
             ->addPrimaryKey(['id'])
             ->addColumn('name', 'string')
             ->addColumn('del_flg', 'integer', array('limit' => 1,'default'=>0))
-            ->addColumn('created', 'datetime')
-            ->addColumn('modified', 'datetime')
+            ->addColumn('created', 'datetime',['default'=> "CURRENT_TIMESTAMP"])
+            ->addColumn('modified', 'datetime', array('null' => true,'default'=>null))
             ->addIndex(
                 [
                     'name',

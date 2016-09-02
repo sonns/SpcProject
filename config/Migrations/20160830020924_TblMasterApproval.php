@@ -18,8 +18,8 @@ class TblMasterApproval extends AbstractMigration
         $requests->addColumn('user_id', 'integer')
             ->addColumn('dep_id', 'integer')
             ->addColumn('del_flg', 'integer', array('limit' => 1,'default'=>0))
-            ->addColumn('created', 'datetime')
-            ->addColumn('modified', 'datetime')
+            ->addColumn('created', 'datetime',['default'=> "CURRENT_TIMESTAMP"])
+            ->addColumn('modified', 'datetime', array('null' => true,'default'=>null))
             ->addForeignKey(
                 'user_id',
                 'tbl_master_users',

@@ -28,8 +28,8 @@ class TblMasterRules extends AbstractMigration
             ->addColumn('comparision_operator', 'string', array('limit' => 2,'default'=>1))
             ->addColumn('action', 'string')
             ->addColumn('is_active', 'integer', array('limit' => 1,'default'=>1))
-            ->addColumn('created', 'datetime')
-            ->addColumn('modified', 'datetime')
+            ->addColumn('created', 'datetime',['default'=> "CURRENT_TIMESTAMP"])
+            ->addColumn('modified', 'datetime', array('null' => true,'default'=>null))
             ->addForeignKey(
                 'dep_id',
                 'tbl_master_departments',

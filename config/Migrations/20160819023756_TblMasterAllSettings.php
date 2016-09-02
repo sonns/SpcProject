@@ -26,8 +26,8 @@ class TblMasterAllSettings extends AbstractMigration
             ->addColumn('skey', 'enum', array('values' => ['title']))
             ->addColumn('svalue', 'text')
             ->addColumn('del_flg', 'integer',['limit'=>1])
-            ->addColumn('created', 'datetime')
-            ->addColumn('modified', 'datetime', array('null' => true))
+            ->addColumn('created', 'datetime',['default'=> "CURRENT_TIMESTAMP"])
+            ->addColumn('modified', 'datetime', array('null' => true,'default'=>null))
             ->save();
     }
     public function down()

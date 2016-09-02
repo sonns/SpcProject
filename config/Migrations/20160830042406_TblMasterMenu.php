@@ -30,8 +30,8 @@ class TblMasterMenu extends AbstractMigration
             ->addColumn('icon', 'string', array('null'=>true))
             ->addColumn('active', 'integer', array('limit' => 1,'default'=>0))
             ->addColumn('del_flg', 'integer', array('limit' => 1,'default'=>0))
-            ->addColumn('created', 'datetime')
-            ->addColumn('modified', 'datetime')
+            ->addColumn('created', 'datetime',['default'=> "CURRENT_TIMESTAMP"])
+            ->addColumn('modified', 'datetime', array('null' => true,'default'=>null))
             ->addIndex(
                 [
                     'title',

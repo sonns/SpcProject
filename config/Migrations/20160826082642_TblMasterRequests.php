@@ -35,8 +35,8 @@ class TblMasterRequests extends AbstractMigration
             ->addColumn('appr_date', 'datetime')
             ->addColumn('del_flg', 'integer', array('limit' => 1,'default'=>0))
             ->addColumn('is_reject', 'integer', array('limit' => 1,'default'=>0))
-            ->addColumn('created', 'datetime')
-            ->addColumn('modified', 'datetime')
+            ->addColumn('created', 'datetime',['default'=> "CURRENT_TIMESTAMP"])
+            ->addColumn('modified', 'datetime', array('null' => true,'default'=>null))
 
             ->addForeignKey(
                 'user_id',

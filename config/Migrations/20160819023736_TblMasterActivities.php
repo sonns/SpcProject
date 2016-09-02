@@ -28,8 +28,8 @@ class TblMasterActivities extends AbstractMigration
             ->addColumn('start_time', 'date')
             ->addColumn('end_time', 'date')
             ->addColumn('del_flg', 'integer', array('limit' => 1))
-            ->addColumn('created', 'datetime')
-            ->addColumn('modified', 'datetime')
+            ->addColumn('created', 'datetime',['default'=> "CURRENT_TIMESTAMP"])
+            ->addColumn('modified', 'datetime', array('null' => true,'default'=>null))
             ->save();
 
     }

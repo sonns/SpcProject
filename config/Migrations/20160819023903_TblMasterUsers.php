@@ -23,19 +23,26 @@ class TblMasterUsers extends AbstractMigration
             'limit' => 11,
             'null' => false,
         ])
+
             ->addPrimaryKey(['id'])
             ->addColumn('dep_id', 'integer')
-            ->addColumn('first_name', 'string', array('limit' => 20,'null' => true))
-            ->addColumn('last_name', 'string', array('limit' => 20,'null' => true))
-            ->addColumn('full_name', 'string', array('limit' => 100,'null' => true))
+            ->addColumn('first_name', 'string', array('limit' => 50,'null' => true))
+            ->addColumn('last_name', 'string', array('limit' => 50,'null' => true))
             ->addColumn('email', 'string')
             ->addColumn('username', 'string')
             ->addColumn('password', 'blob', array('limit' => MysqlAdapter::BLOB_REGULAR))
-            ->addColumn('tel', 'string', array('limit' => 50,'null' => true))
-            ->addColumn('employee_level','enum', array('values' => ['top', 'manager','sub_manager','normal','develop'],'default' => 'normal'))
+            ->addColumn('remember_token', 'string', array('limit' => 255,'null' => true,'default'=>null))
+            ->addColumn('confirmation_code', 'string', array('limit' => 200,'null' => true,'default'=>null))
+            ->addColumn('confirmed', 'integer', array('limit' => 50,'null' => true,'default'=>0))
+            ->addColumn('provider', 'string', array('limit' => 100,'null' => true,'default'=>null))
+            ->addColumn('last_login', 'datetime', array('limit' => 50,'null' => true,'default'=>null))
+            ->addColumn('last_login_ip', 'string', array('limit' => 100,'null' => true,'default'=>null))
+            ->addColumn('last_login_now', 'datetime', array('limit' => 50,'null' => true,'default'=>null))
+            ->addColumn('last_login_ip_now', 'string', array('limit' => 100,'null' => true,'default'=>null))
+//            ->addColumn('employee_level','enum', array('values' => ['top', 'manager','sub_manager','normal','develop'],'default' => 'normal'))
             ->addColumn('del_flg', 'integer' , ['limit'=>1,'default'=>0])
-            ->addColumn('created', 'datetime')
-            ->addColumn('modified', 'datetime', array('null' => true))
+            ->addColumn('created', 'datetime',['default'=> "CURRENT_TIMESTAMP"])
+            ->addColumn('modified', 'datetime', array('null' => true,'default'=>null))
             ->addIndex(array('email','username'), array('unique' => true))
             ->addIndex(
                 [
@@ -53,10 +60,15 @@ class TblMasterUsers extends AbstractMigration
                 ]
             )
             ->save();
+
+
+
+
     }
     public function down()
     {
         $this->table('tbl_master_approval')->dropForeignKey(['user_id']);
+        $this->table('tbl_master_profile')->dropForeignKey(['user_id']);
         $this->table('tbl_master_requests')->dropForeignKey(['user_id']);
         $this->table('tbl_master_users')->drop();
     }
