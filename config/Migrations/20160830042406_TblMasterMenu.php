@@ -45,7 +45,6 @@ class TblMasterMenu extends AbstractMigration
     }
     public function down()
     {
-        $this->table('tbl_master_requests')->dropForeignKey(['cate_id']);
-        $this->table('tbl_master_categories')->drop();
+        $this->table('tbl_master_menu')->drop();
     }
 }

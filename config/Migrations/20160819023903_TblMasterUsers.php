@@ -54,11 +54,6 @@ class TblMasterUsers extends AbstractMigration
                     'email',
                 ]
             )
-            ->addIndex(
-                [
-                    'full_name',
-                ]
-            )
             ->save();
 
 

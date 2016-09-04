@@ -26,13 +26,6 @@ class TblMasterPermissions extends AbstractMigration
             ->addColumn('display_name', 'string', array('limit' => 100))
             ->addColumn('created', 'datetime',['default'=> "CURRENT_TIMESTAMP"])
             ->addColumn('modified', 'datetime', array('null' => true,'default'=>null))
-            ->addForeignKey( 'user_id',
-                'tbl_master_users',
-                'id',
-                [
-                    'update' => 'CASCADE',
-                    'delete' => 'CASCADE'
-                ])
             ->save();
     }
     public function down()

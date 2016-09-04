@@ -19,44 +19,38 @@ class TblMasterUsersSeed extends AbstractSeed
      */
     public function run()
     {
-        $common = new FunctionCommon();
-
-        $pass  = $common->cipher_encrypt('123456',MCRYPT_KEY);
-
-        $data = [
-            [
-                'id'    => 1,
-                'dep_id'    => 1,
-                'password'  => $pass,
-                'first_name'  => 'Son',
-                'last_name'  => 'Nguyen',
-                'full_name'  => 'Nguyen Truong Son',
-                'email'  => 'truongsonns@gmail.com',
-                'username'  => 'sonns',
-                'tel'  => '0932647746',
-                'employee_level'  => 'develop',
-                'del_flg'  => 0,
-                'created'  => '2016-08-27 13:23:29',
-                'modified'  => '2016-08-27 13:23:29',
-            ],
-            [
-                'id'    => 2,
-                'dep_id'    => 1,
-                'password'  => $pass,
-                'first_name'  => 'Son',
-                'last_name'  => 'Nguyen',
-                'full_name'  => 'Nguyen Truong Son',
-                'email'  => 'truongsonns1@gmail.com',
-                'username'  => 'sonns1',
-                'tel'  => '0932647746',
-                'employee_level'  => 'develop',
-                'del_flg'  => 0,
-                'created'  => '2016-08-27 13:23:29',
-                'modified'  => '2016-08-27 13:23:29',
-            ]
-        ];
-
-        $table = $this->table('tbl_master_users');
-        $table->insert($data)->save();
+//        $common = new FunctionCommon();
+//
+//        $pass  = $common->cipher_encrypt('123456',MCRYPT_KEY);
+//
+//        $data = [
+//            [
+//                'id'    => 1,
+//                'dep_id'    => 1,
+//                'password'  => $pass,
+//                'first_name'  => 'Son',
+//                'last_name'  => 'Nguyen',
+//                'email'  => 'truongsonns@gmail.com',
+//                'username'  => 'sonns',
+//                'del_flg'  => 0,
+//                'created'  => '2016-08-27 13:23:29',
+//                'modified'  => '2016-08-27 13:23:29',
+//            ],
+//            [
+//                'id'    => 2,
+//                'dep_id'    => 1,
+//                'password'  => $pass,
+//                'first_name'  => 'Son',
+//                'last_name'  => 'Nguyen',
+//                'email'  => 'truongsonns1@gmail.com',
+//                'username'  => 'sonns1',
+//                'del_flg'  => 0,
+//                'created'  => '2016-08-27 13:23:29',
+//                'modified'  => '2016-08-27 13:23:29',
+//            ]
+//        ];
+//
+//        $table = $this->table('tbl_master_users');
+//        $table->insert($data)->save();
     }
 }
