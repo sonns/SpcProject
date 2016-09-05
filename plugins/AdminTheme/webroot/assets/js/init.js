@@ -343,6 +343,7 @@ function nifty_modal_alert(effect,header,text){
     window.setTimeout(function () {
         $("#"+uniqid).addClass("md-show");
         $(".md-overlay,.md-close").click(function(){
+
           $("#"+uniqid).removeClass("md-show");
           window.setTimeout(function () {$("#"+uniqid).remove();},500);
         });

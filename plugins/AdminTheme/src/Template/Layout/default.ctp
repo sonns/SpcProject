@@ -71,7 +71,7 @@ echo $this->element('task_progress');
 ?>
 <!--Modal Logout-->
 <?php
-$this->element('logout');
+echo $this->element('logout');
 ?>
     <!-- Begin page -->
     <div id="wrapper">
@@ -100,7 +100,6 @@ $this->element('logout');
             <!-- Start Content here -->
             <!-- ============================================================== -->
             <div class="content">
-<!--                --><?php //echo $this->element('content') ?>
                 <?php echo $this->fetch('content'); ?>
             </div>
             <!-- ============================================================== -->
@@ -109,10 +108,6 @@ $this->element('logout');
 
         </div>
         <!-- End right content -->
-
-
-
-<!--        --><?//= $this->fetch('content') ?>
     </div>
     <!-- End of page -->
     <!-- the overlay modal element -->

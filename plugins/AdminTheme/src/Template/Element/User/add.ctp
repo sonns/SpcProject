@@ -6,7 +6,7 @@
         <div>
             <div class="row">
                 <div class="col-sm-12">
-                    <?php echo $this->Form->create($depart,['url'=>['controller'=>'department','action'=>'add'],'id'=>'createDepartment'])?>
+                    <?php echo $this->Form->create($userE,['url'=>['controller'=>'department','action'=>'add'],'id'=>'createDepartment'])?>
                     <div class="form-group">
                         <label for="lblUsername">Name</label>
                         <input type="text" class="form-control" id="dep_name" name="dep_name" placeholder="Enter department name">

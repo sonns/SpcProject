@@ -41,6 +41,9 @@ class UsersController extends AppController
         return parent::isAuthorized($user);
     }
 
+    public function myProfile(){
+
+    }
     /**
      * Index method
      *
@@ -49,6 +52,14 @@ class UsersController extends AppController
     public function index()
     {
         $this->set('users', $this->Users->find('all'));
+        $userE = $this->Users->newEntity();
+        $users = $this->paginate($this->Users);
+        $this->set(compact('users'));
+        $this->set('_serialize', ['users']);
+        $this->set(compact('userE'));
+        $this->set('_serialize', ['userE']);
+
+
 //        $this->set('_serialize', ['users']);
     }
 

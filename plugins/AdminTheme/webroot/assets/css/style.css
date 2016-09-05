@@ -1092,7 +1092,7 @@ i.i-xs {
   font-size: 10px;
 }
 .widget-tabbed .nav-tabs:first-child {
-  margin-top: -39px;
+  margin-top: 0px;
 }
 .navbar-default .navbar-nav > .active > a,
 .navbar-default .navbar-nav > .active > a:hover,
@@ -4716,14 +4716,14 @@ fieldset[disabled] .btn-default.active {
   box-shadow: 2px 0px 4px rgba(0,0,0,0.1);
 }
 .avatar-container {
-  height: 300px;
+  height: 160px;
   text-align: center;
 }
 .profile-avatar {
-  width: 200px;
+  width: 170px;
   position: relative;
   margin: 0px auto;
-  margin-top: 196px;
+  margin-top: 0 px;
   border: 4px solid #f3f3f3;
 }
 .profile-actions {
@@ -4731,7 +4731,7 @@ fieldset[disabled] .btn-default.active {
   bottom: 20px;
 }
 .user-profile-2 {
-  margin-top: 50px;
+  margin-top: 10px;
 }
 .user-profile-sidebar {
   margin: 0 0 20px 0;

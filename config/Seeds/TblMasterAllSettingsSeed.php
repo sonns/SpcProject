@@ -20,8 +20,8 @@ class TblMasterAllSettingsSeed extends AbstractSeed
     {
         $data = [];
 
-//        $table = $this->table('tbl_master_all_settings');
-//        if(!empty($data))
-//            $table->insert($data)->save();
+        $table = $this->table('tbl_master_all_settings');
+        if(!empty($data))
+            $table->insert($data)->save();
     }
 }

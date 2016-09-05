@@ -25,7 +25,7 @@ class TblMasterMenu extends AbstractMigration
             ->addPrimaryKey(['id'])
             ->addColumn('parent_id', 'string')
             ->addColumn('title', 'string')
-            ->addColumn('link', 'integer')
+            ->addColumn('link', 'string')
             ->addColumn('index', 'integer', array('null'=>true,'default'=>0))
             ->addColumn('icon', 'string', array('null'=>true))
             ->addColumn('active', 'integer', array('limit' => 1,'default'=>0))

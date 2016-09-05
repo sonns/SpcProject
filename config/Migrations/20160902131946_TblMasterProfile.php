@@ -27,6 +27,7 @@ class TblMasterProfile extends AbstractMigration
             ->addColumn('contact_number', 'string', array('limit' => 100,'null' => true,'default'=>null))
             ->addColumn('alternate_contact_number', 'string', array('limit' => 100,'null' => true,'default'=>null))
             ->addColumn('alternate_email', 'string',['limit' => 100,'null'=>true,'default'=>null])
+            ->addColumn('birthday', 'datetime',['null'=> true,'default'=> null])
             ->addColumn('address', 'text', ['null'=> true,'default'=>null])
             ->addColumn('created', 'datetime',['default'=> "CURRENT_TIMESTAMP"])
             ->addColumn('modified', 'datetime', array('null' => true,'default'=>null))

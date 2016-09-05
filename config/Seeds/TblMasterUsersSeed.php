@@ -19,38 +19,92 @@ class TblMasterUsersSeed extends AbstractSeed
      */
     public function run()
     {
-//        $common = new FunctionCommon();
+        $data = [
+            [
+                'id'    => 1,
+                'name'  => 'Admin',
+                'display_name'  => 'Admin',
+                'created'  => '2016-08-27 13:23:29',
+                'modified'  => '2016-08-27 13:23:29',
+            ],
+            [
+                'id'    => 2,
+                'name'  => 'Top',
+                'display_name'  => 'Top',
+                'created'  => '2016-08-27 13:23:29',
+                'modified'  => '2016-08-27 13:23:29',
+            ],
+            [
+                'id'    => 3,
+                'name'  => 'Manager',
+                'display_name'  => 'Manager',
+                'created'  => '2016-08-27 13:23:29',
+                'modified'  => '2016-08-27 13:23:29',
+            ],
+            [
+                'id'    => 4,
+                'name'  => 'Sub-manager',
+                'display_name'  => 'Nguyen',
+                'created'  => '2016-08-27 13:23:29',
+                'modified'  => '2016-08-27 13:23:29',
+            ],
+            [
+                'id'    => 5,
+                'name'  => 'Staff',
+                'display_name'  => 'Staff',
+                'created'  => '2016-08-27 13:23:29',
+                'modified'  => '2016-08-27 13:23:29',
+            ]
+        ];
 //
-//        $pass  = $common->cipher_encrypt('123456',MCRYPT_KEY);
-//
-//        $data = [
-//            [
-//                'id'    => 1,
-//                'dep_id'    => 1,
-//                'password'  => $pass,
-//                'first_name'  => 'Son',
-//                'last_name'  => 'Nguyen',
-//                'email'  => 'truongsonns@gmail.com',
-//                'username'  => 'sonns',
-//                'del_flg'  => 0,
-//                'created'  => '2016-08-27 13:23:29',
-//                'modified'  => '2016-08-27 13:23:29',
-//            ],
-//            [
-//                'id'    => 2,
-//                'dep_id'    => 1,
-//                'password'  => $pass,
-//                'first_name'  => 'Son',
-//                'last_name'  => 'Nguyen',
-//                'email'  => 'truongsonns1@gmail.com',
-//                'username'  => 'sonns1',
-//                'del_flg'  => 0,
-//                'created'  => '2016-08-27 13:23:29',
-//                'modified'  => '2016-08-27 13:23:29',
-//            ]
-//        ];
-//
-//        $table = $this->table('tbl_master_users');
-//        $table->insert($data)->save();
+        $table = $this->table('tbl_master_roles');
+        $table->insert($data)->save();
+
+        $common = new FunctionCommon();
+
+        $pass  = $common->cipher_encrypt('123456',MCRYPT_KEY);
+
+        $data = [
+            [
+                'id'    => 1,
+                'dep_id'    => 1,
+                'password'  => $pass,
+                'first_name'  => 'Son',
+                'last_name'  => 'Nguyen',
+                'email'  => 'truongsonns@gmail.com',
+                'username'  => 'sonns',
+                'del_flg'  => 0,
+                'created'  => '2016-08-27 13:23:29',
+                'modified'  => '2016-08-27 13:23:29',
+            ],
+            [
+                'id'    => 2,
+                'dep_id'    => 1,
+                'password'  => $pass,
+                'first_name'  => 'Son',
+                'last_name'  => 'Nguyen',
+                'email'  => 'truongsonns1@gmail.com',
+                'username'  => 'sonns1',
+                'del_flg'  => 0,
+                'created'  => '2016-08-27 13:23:29',
+                'modified'  => '2016-08-27 13:23:29',
+            ]
+        ];
+
+        $table = $this->table('tbl_master_users');
+        $table->insert($data)->save();
+
+
+
+        $data = [
+            [
+                'id'    => 1,
+                'user_id'    => 1,
+                'role_id'  => 1,
+            ]
+        ];
+
+        $table = $this->table('tbl_master_role_user');
+        $table->insert($data)->save();
     }
 }

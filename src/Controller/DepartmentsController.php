@@ -62,6 +62,17 @@ class DepartmentsController extends AppController
      */
     public function add()
     {
+//        $this -> autoRender = false;
+//
+////        if ($this -> request -> is('ajax')) {
+//
+//            $status['msg']= "this is a message from cake controller";
+//        $this->set(compact('status'));
+//        $this->set('_serialize', ['status']);
+//            return json_encode($status);
+        echo 123;exit;
+
+
         $department = $this->Departments->newEntity();
         if ($this->request->is('post')) {
             $department = $this->Departments->patchEntity($department, $this->request->data);

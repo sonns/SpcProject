@@ -85,6 +85,8 @@ class AppController extends Controller
         ]);
         if($this->Auth->user()){
             $this->set('userInfo', $this->Auth->user());
+//            print_r($this->request->params);exit;
+            $this->set('params', $this->params);
         }
 
     }

@@ -59,7 +59,7 @@
                                 <td><strong><?php echo $department->name;?></strong></td>
                                 <td><strong><?php echo $department->tel;?></strong></td>
                                 <td><strong><?php echo $department->address;?></strong></td>
-                                <td><strong><?php echo $department->status;?></strong></td>
+                                <td> <span class="label <?php echo ($department->status) ? 'label-success' :'label-danger' ?>"><?php echo ($department->status) ? 'Active' :'Suspended' ?></span></td>
                                 <td><strong><?php echo $department->created;?></strong></td>
                                 <td>
                                     <div class="btn-group btn-group-xs">
@@ -90,7 +90,7 @@
 
 <!-- Footer Start -->
 <footer>
-    Huban Creative &copy; 2014
+    Son Nguyen &copy; 2014
     <div class="footer-links pull-right">
         <a href="#">About</a><a href="#">Support</a><a href="#">Terms of Service</a><a href="#">Legal</a><a href="#">Help</a><a href="#">Contact Us</a>
     </div>
