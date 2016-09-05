@@ -5,7 +5,7 @@
         <hr />
         <div class="row">
 
-            <form role="form" id="editProfile" method="post">
+            <form role="form" id="editProfile" method="post" enctype="multipart/form-data" >
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label for="lblContactNum"><b>Contact Number</b></label>

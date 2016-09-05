@@ -49,7 +49,7 @@
                 <?php echo $this->element('User/activities') ?>
                 <!-- End Tab user activities -->
                 <!-- Tab user messages -->
-                <?php echo $this->element('User/mymassage') ?>
+                <?php echo $this->element('User/mymessage') ?>
                 <!-- End Tab user messages -->
             </div><!-- End div .tab-content -->
         </div><!-- End div .box-info -->
