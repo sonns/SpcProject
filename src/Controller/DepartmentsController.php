@@ -66,10 +66,6 @@ class DepartmentsController extends AppController
         $department = $this->Departments->newEntity();
         try{
             if ($this->request->is('post')) {
-                $result = [
-                    'status' => 'Success',
-                    'response' => __('The department has been saved.')
-                ];
                 $department = $this->Departments->patchEntity($department, $this->request->data);
                 $result = [];
                 if ($this->Departments->save($department)) {

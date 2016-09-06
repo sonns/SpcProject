@@ -59,6 +59,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/user/edit', ['controller' => 'Users', 'action' => 'edit','edit_user']);
     $routes->connect('/user/delete', ['controller' => 'Users', 'action' => 'delete','del_user']);
     $routes->connect('/user/profile', ['controller' => 'Users', 'action' => 'myProfile','profile']);
+    $routes->connect('/user/checkunique', ['controller' => 'Users', 'action' => 'checkUnique','check_unique']);
 //Department router
     $routes->connect('/department/list', ['controller' => 'Departments', 'action' => 'index','manage_dep']);
     $routes->connect('/department/add', ['controller' => 'Departments', 'action' => 'add','add_dep']);

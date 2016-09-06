@@ -45,6 +45,17 @@ class UsersTable extends Table
 //            'joinType' => 'INNER'
 //        ]);
     }
+    public function findExistsOr(Query $query, array $conditions)
+    {
+        return (bool)count(
+            $query
+                ->select(['existing' => 1])
+                ->orWhere($conditions)
+                ->limit(1)
+                ->hydrate(false)
+                ->toArray()
+        );
+    }
 
     /**
      * Default validation rules.

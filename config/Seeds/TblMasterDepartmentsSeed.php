@@ -36,6 +36,25 @@ class TblMasterDepartmentsSeed extends AbstractSeed
                 'del_flg'  => 0,
                 'created'  => '2016-08-27 13:23:29',
                 'modified'  => '2016-08-27 13:23:29',
+            ],
+            [
+                'id'    => 3,
+                'name'  => 'Branch(Viet Nam)',
+                'tel'  => '0932093940',
+                'address'  => 'Viet Nam',
+                'del_flg'  => 0,
+                'created'  => '2016-08-27 13:23:29',
+                'modified'  => '2016-08-27 13:23:29',
+            ]
+            ,
+            [
+                'id'    => 4,
+                'name'  => 'Branch(Lao)',
+                'tel'  => '0932093940',
+                'address'  => 'Lao',
+                'del_flg'  => 0,
+                'created'  => '2016-08-27 13:23:29',
+                'modified'  => '2016-08-27 13:23:29',
             ]
         ];
 

@@ -2,13 +2,15 @@
 use Cake\Core\Configure;
 use Cake\Core\Exception\MissingPluginException;
 use Cake\Core\Plugin;
+use Cake\Routing\Router;
 
+Router::extensions(['json']);
 Configure::write('Admin', [
     'debug'=>true,
     'title' => 'SPCProject',
     'logo' => [
         'mini' => '<b>A</b>LT',
-        'large' => '<b>Admin</b>LTE'
+        'large' => '<b>Admin</b>'
     ],
     'login' => [
         'show_remember' => true,

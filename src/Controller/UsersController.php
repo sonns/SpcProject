@@ -58,6 +58,7 @@ class UsersController extends AppController
 //                $this->Session->setFlash(__('There was an error updating the profile.'), 'default', array('class' => 'error-message'));
 //            }
         }
+//      Get and set profile info
         $listTimezone = new FunctionCommon();
         $this->set('timezone', $listTimezone->getTimeZone());
         $this->set('_serialize', ['timezone']);
@@ -66,10 +67,56 @@ class UsersController extends AppController
 
     private function saveProfile($data){
 
-
+        $userE = $this->Profiles->newEntity();
+        try{
+            $userE = $this->Profiles->patchEntity($userE, $data);
+                $result = [];
+                if ($this->Profiles->save($userE)) {
+                    $result = [
+                        'status' => 'Success',
+                        'response' => __('Your profile has been saved.')
+                    ];
+                } else {
+                    $result = [
+                        'status' => 'Error',
+                        'response' => __('Your profile could not be saved. Please, try again.')
+                    ];
+                }
+        }catch (Exception $e){
+//            debug
+            $result = [
+                'status' => 'Success',
+                'response' => $e->getMessage()
+            ];
+        }
+        $this->set(compact('result'));
+        $this->set('_serialize', ['result']);
     }
     private function resetPassword($data){
-
+        $userE = $this->Users->newEntity();
+        try{
+            $userE = $this->Users->patchEntity($userE, $data);
+            $result = [];
+            if ($this->Users->save($userE)) {
+                $result = [
+                    'status' => 'Success',
+                    'response' => __('Your profile has been saved.')
+                ];
+            } else {
+                $result = [
+                    'status' => 'Error',
+                    'response' => __('Your profile could not be saved. Please, try again.')
+                ];
+            }
+        }catch (Exception $e){
+//            debug
+            $result = [
+                'status' => 'Success',
+                'response' => $e->getMessage()
+            ];
+        }
+        $this->set(compact('result'));
+        $this->set('_serialize', ['result']);
     }
     /**
      * Index method
@@ -116,21 +163,40 @@ class UsersController extends AppController
      */
     public function add()
     {
+
+
+        $roles = TableRegistry::get('Roles');
+        $listRoles = $roles->find('list', [
+            'keyField' => 'id',
+            'valueField' => 'display_name',
+            'conditions' => ['status' => true]
+        ]);
+        $department = TableRegistry::get('Departments');
+        $listDepartments = $department->find('list', [
+            'keyField' => 'id',
+            'valueField' => 'name',
+            'conditions' => ['status' => true]
+        ]);
+
         $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->data);
             if ($this->Users->save($user)) {
-                echo 1;exit;
                 $this->Flash->success(__('The User has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                echo 2;exit;
                 $this->Flash->error(__('The User could not be saved. Please, try again.'));
             }
         }
         $this->set(compact('user'));
-//        $this->set('_serialize', ['User']);
+        $this->set(compact('listRoles'));
+        $this->set(compact('listDepartments'));
+    }
+    public function checkUnique(){
+         $isCheck =   $this->Users->find('existsOr',['username'=>$this->request->data['username'],'email'=>$this->request->data['email']]);
+        print_r($isCheck);
+        echo $this->Users->lastQuery();exit;
     }
 
     /**

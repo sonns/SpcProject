@@ -24,6 +24,8 @@ class TblMasterRoles extends AbstractMigration
         ]) ->addPrimaryKey(['id'])
             ->addColumn('name', 'string', array('limit' => 255))
             ->addColumn('display_name', 'string', array('limit' => 100))
+            ->addColumn('status', 'integer', array('limit' => 1,'default'=>1))
+            ->addColumn('del_flg', 'integer', array('limit' => 1,'default'=>0))
             ->addColumn('created', 'datetime',['default'=> "CURRENT_TIMESTAMP"])
             ->addColumn('modified', 'datetime', array('null' => true,'default'=>null))
             ->save();
