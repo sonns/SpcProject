@@ -47,10 +47,12 @@ class UsersTable extends Table
     }
     public function findExistsOr(Query $query, array $conditions)
     {
+        $query = $query->select(['existing' => 1]);
+        foreach($conditions as $condition){
+            $query = $query->orWhere($conditions);
+        }
         return (bool)count(
             $query
-                ->select(['existing' => 1])
-                ->orWhere($conditions)
                 ->limit(1)
                 ->hydrate(false)
                 ->toArray()

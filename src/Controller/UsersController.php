@@ -195,8 +195,7 @@ class UsersController extends AppController
     }
     public function checkUnique(){
          $isCheck =   $this->Users->find('existsOr',['username'=>$this->request->data['username'],'email'=>$this->request->data['email']]);
-        print_r($isCheck);
-        echo $this->Users->lastQuery();exit;
+        print_r($isCheck);exit;
     }
 
     /**
