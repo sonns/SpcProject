@@ -6,6 +6,7 @@
         <div class="row">
 
             <form role="form" id="editProfile" method="post" enctype="multipart/form-data" >
+                <input type="hidden" value="profile" id="hdnmode" name="hdnmode">
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label for="lblContactNum"><b>Contact Number</b></label>
@@ -29,8 +30,16 @@
                         <label for="lblContactNum"><b>Timezone</b></label>
                         <select class="form-control" name="timezone">
                             <option value="">-- Select a timezone --</option>
-                            <option value="1">Africa/Abidjan</option>
-                            <option value="2">Africa/Accra</option>
+                            <?php
+                            foreach($timezone as $key=>$value){
+                                $selected = '';
+
+                                if($key == $this->Session->read('Auth.User.timezone')){
+                                    $selected = 'selected';
+                                }
+                                echo '<option value="'.$key.'" '.$selected.'>'.$value.'</option>';
+                            }
+                            ?>
                         </select>
                     </div>
                     <div class="form-group">

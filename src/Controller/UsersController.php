@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use App\Utility\FunctionCommon;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 
@@ -42,6 +43,32 @@ class UsersController extends AppController
     }
 
     public function myProfile(){
+
+        if($this->request->is('post')){
+            if($this->request->data['hdnmode'] === 'profile')
+                $this->saveProfile($this->request->data);
+            else if($this->request->data['hdnmode'] === 'resetpass')
+                $this->resetPassword($this->request->data);
+
+//            $this->Session->write('Auth.User.timezone', $this->request->data['selectedZone']);
+
+//            if($this->User->updateTimezone($this->request->data)){
+//                $this->Session->setFlash(__('The profile has been updated.'));
+//            }else{
+//                $this->Session->setFlash(__('There was an error updating the profile.'), 'default', array('class' => 'error-message'));
+//            }
+        }
+        $listTimezone = new FunctionCommon();
+        $this->set('timezone', $listTimezone->getTimeZone());
+        $this->set('_serialize', ['timezone']);
+
+    }
+
+    private function saveProfile($data){
+
+
+    }
+    private function resetPassword($data){
 
     }
     /**

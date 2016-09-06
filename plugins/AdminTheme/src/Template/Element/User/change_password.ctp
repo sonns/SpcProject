@@ -2,7 +2,8 @@
     <h4><strong>Reset </strong> Password</h4>
     <hr />
     <div class="row">
-        <form role="form">
+        <form role="form" method="post" id="resetPassword" name="resetPassword">
+            <input type="hidden" value="resetpass" id="hdnmode" name="hdnmode">
             <div class="form-group">
                 <label for="txtPassword">Password</label>
                 <input type="password" class="form-control" id="password" name="password" placeholder="Enter New Password">

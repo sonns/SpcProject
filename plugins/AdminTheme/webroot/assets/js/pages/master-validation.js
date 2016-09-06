@@ -39,15 +39,17 @@ $(document).ready(function() {
             }
         },
         submitHandler: function (form) {
+
             $.ajax({
                 type: "POST",
-                url:   "add",
-                data: $(form).serialize(),
-                success: function () {
+                url:   "add.json",
+                dataType: 'text',
+                async:false,
+                data: $("form").serialize(),
+                success: function (data) {
                     // ev.stopPropagation();
                     // removeModalHandler();
                     $("#md-add-department").removeClass("md-show");
-                    // $(form).data('formValidation').resetForm();
                     $('#createDepartment').trigger('reset');
                     // window.setTimeout(function () {$("#md-add-department").remove();},500);
                     return true;

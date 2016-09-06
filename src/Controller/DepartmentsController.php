@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Aura\Intl\Exception;
 
 /**
  * Departments Controller
@@ -62,32 +63,39 @@ class DepartmentsController extends AppController
      */
     public function add()
     {
-//        $this -> autoRender = false;
-//
-////        if ($this -> request -> is('ajax')) {
-//
-//            $status['msg']= "this is a message from cake controller";
-//        $this->set(compact('status'));
-//        $this->set('_serialize', ['status']);
-//            return json_encode($status);
-        echo 123;exit;
-
-
         $department = $this->Departments->newEntity();
-        if ($this->request->is('post')) {
-            $department = $this->Departments->patchEntity($department, $this->request->data);
-            if ($this->Departments->save($department)) {
-                $this->Flash->success(__('The department has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The department could not be saved. Please, try again.'));
+        try{
+            if ($this->request->is('post')) {
+                $result = [
+                    'status' => 'Success',
+                    'response' => __('The department has been saved.')
+                ];
+                $department = $this->Departments->patchEntity($department, $this->request->data);
+                $result = [];
+                if ($this->Departments->save($department)) {
+                    $result = [
+                        'status' => 'Success',
+                        'response' => __('The department has been saved.')
+                    ];
+                } else {
+                    $result = [
+                        'status' => 'Error',
+                        'response' => __('The department could not be saved. Please, try again.')
+                    ];
+                }
             }
+        }catch (Exception $e){
+//            debug
+            $result = [
+                'status' => 'Success',
+                'response' => $e->getMessage()
+            ];
         }
-        $this->set(compact('department'));
-        $this->set('_serialize', ['department']);
-    }
 
+        $this->set(compact('department'));
+        $this->set(compact('result'));
+        $this->set('_serialize', ['result']);
+    }
     /**
      * Edit method
      *

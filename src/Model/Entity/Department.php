@@ -16,7 +16,7 @@ use Cake\ORM\Entity;
  *
  * @property \App\Model\Entity\Login $login
  */
-class User extends Entity
+class Department extends Entity
 {
 
     /**
@@ -32,24 +32,7 @@ class User extends Entity
         '*' => true,
         'id' => false
     ];
-    protected $_virtual = ['alias_name'];
-    protected $_hidden = ['password'];
 
-    protected function _setPassword($password)
-    {
-        return (new FunctionCommon)->cipher_encrypt($password);
-    }
-
-    protected function _getPassword($password)
-    {
-        // convert binary to string
-        return fread($password, 256);
-    }
-
-    protected function _getAliasName()
-    {
-        return $this->_properties['first_name'] . '  ' . $this->_properties['last_name'];
-    }
 
 
 

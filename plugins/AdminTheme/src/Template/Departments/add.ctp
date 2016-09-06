@@ -7,7 +7,7 @@
         <div class="widget-content padding">
             <div id="basic-form">
 <!--                <form href="users/add" method="post">-->
-                <?php echo $this->Form->create($department,['id'=>'createDepartment'])?>
+                <?php echo $this->Form->create($department,['id'=>'createDepartment1'])?>
                     <div class="form-group">
                         <label for="lblUsername">Name</label>
                         <input type="text" class="form-control" id="dep_name" name="dep_name" placeholder="Enter department name">
