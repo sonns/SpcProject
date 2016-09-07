@@ -8,10 +8,10 @@ use Cake\Controller\Component\AuthComponent as CakeAuthComponent;
 use Cake\Core\Configure;
 use Cake\Core\Exception\Exception;
 use Cake\Event\Event;
-use TinyAuth\Utility\Utility;
+use SpcAuth\Utility\Utility;
 
 /**
- * TinyAuth AuthComponent to handle all authentication in a central ini file.
+ * SpcAuth AuthComponent to handle all authentication in a central ini file.
  */
 class AuthComponent extends CakeAuthComponent {
 
@@ -37,7 +37,7 @@ class AuthComponent extends CakeAuthComponent {
 		parent::__construct($registry, $config);
 
 		if (!in_array($config['cache'], Cache::configured())) {
-			throw new Exception(sprintf('Invalid TinyAuth cache `%s`', $config['cache']));
+			throw new Exception(sprintf('Invalid SpcAuth cache `%s`', $config['cache']));
 		}
 	}
 

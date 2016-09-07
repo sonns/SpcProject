@@ -39,9 +39,14 @@ class AppController extends Controller
      *
      * @return void
      */
+
     private $Common;
     public function initialize()
     {
+        $this->loadComponent('TinyAuth.Auth', [
+            'filePath' => ...
+    ]);
+
         $this->Common = new Common();
         parent::initialize();
         $this->loadComponent('RequestHandler');
@@ -81,6 +86,8 @@ class AppController extends Controller
                 'action' => 'login',
                 'login'
             ],
+            'SpcAuth.Auth', [
+                'filePath' => ''
 
         ]);
         if($this->Auth->user()){

@@ -4,6 +4,10 @@
         <div class="widget-header transparent">
             <h2>Add<strong>Users</strong> </h2>
         </div>
+        <div class="alertMessage">
+
+        </div>
+
         <div class="widget-content padding">
             <div id="basic-form">
                 <form method="post" id="createUser">
@@ -25,7 +29,7 @@
                 </div>
                 <div class="form-group">
                     <?php  echo $this->Form->input(
-                        'role_id',
+                        'dep_id',
                         array('options' => $listDepartments ,'empty' => 'Select Department')
 
                     );?>

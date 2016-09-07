@@ -68,6 +68,16 @@ $(document).ready(function() {
     $('#createUser').bootstrapValidator({
         message: 'This value is not valid',
         fields: {
+            email: {
+                validators: {
+                    notEmpty: {
+                        message: 'The email address is required and can\'t be empty'
+                    },
+                    emailAddress: {
+                        message: 'The input is not a valid email address'
+                    }
+                }
+            },
             username: {
                 message: 'The username is not valid',
                 validators: {
@@ -85,13 +95,32 @@ $(document).ready(function() {
                     }
                 }
             },
-            email: {
+
+            role_id: {
                 validators: {
                     notEmpty: {
-                        message: 'The email address is required and can\'t be empty'
-                    },
-                    emailAddress: {
-                        message: 'The input is not a valid email address'
+                        message: 'The role is required and can\'t be empty'
+                    }
+                }
+            },
+            dep_id: {
+                validators: {
+                    notEmpty: {
+                        message: 'The department is required and can\'t be empty'
+                    }
+                }
+            },
+            first_name: {
+                validators: {
+                    notEmpty: {
+                        message: 'The first name is required and can\'t be empty'
+                    }
+                }
+            },
+            last_name: {
+                validators: {
+                    notEmpty: {
+                        message: 'The last name is required and can\'t be empty'
                     }
                 }
             },
@@ -132,37 +161,44 @@ $(document).ready(function() {
                 type: "POST",
                 url:   "checkunique.json",
                 dataType: 'text',
-                async:false,
                 data: $("form").serialize(),
                 success: function (data) {
-                    alert(data);
-                    // $('#createDepartment').trigger('reset');
+                    var returnedData = JSON.parse(data);
+                    if(returnedData.result.status){
+                        $.ajax({
+                            type: "POST",
+                            url: "add.json",
+                            dataType: 'text',
+                            data: $("form").serialize(),
+                            beforeSend: function (xhr) {
+                                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                            },
+                            success: function (response) {
+                                var res = JSON.parse(response);
+                                $( ".alertMessage" ).replaceWith( res.content );
+                                $('#createUser').trigger('reset');
+s                            }
+                        });
+                    }else {
+                        if(returnedData.result.mode === 1)
+                        {
+                            $("#email").parent().switchClass("has-success","has-error");
+                            $("#email").focus();
+                        }else if(returnedData.result.mode === 2){
+                            $("#username").parent().switchClass("has-success","has-error");
+                            $("#email").focus();
+                        }
+                        else {
+                        //    do something
+                        }
+                        $( ".alertMessage" ).replaceWith( returnedData.content );
+                    }
+
                 }
             });
-            // return true;
-            // $.ajax({
-            //     type: "POST",
-            //     url:   "add.json",
-            //     dataType: 'text',
-            //     async:false,
-            //     data: $("form").serialize(),
-            //     success: function (data) {
-            //         // ev.stopPropagation();
-            //         // removeModalHandler();
-            //         $("#md-add-department").removeClass("md-show");
-            //         $('#createDepartment').trigger('reset');
-            //         // window.setTimeout(function () {$("#md-add-department").remove();},500);
-            //         return true;
-            //
-            //     }
-            //     // ,
-            //     // error: function (xhr, ajaxOptions, thrownError) {
-            //     //     alert(xhr.status);
-            //     //     alert(thrownError);
-            //     //     alert(xhr.responseText);
-            //     // }
-            // });
-            // return false; // required to block normal submit since you used ajax
+            $("html, body").animate({ scrollTop: 0 }, "slow");
+            return false;
+
         },
     });
 

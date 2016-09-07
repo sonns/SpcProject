@@ -38,10 +38,10 @@ if (!defined('ACL_FILE')) {
  * Or with admin prefix protection only
  * 'authorize' => ['Tools.Tiny' => ['allowUser' => true]];
  *
- * @author Mark Scherer
+ * @author Son Nguyen
  * @license MIT
  */
-class TinyAuthorize extends BaseAuthorize {
+class SpcAuthorize extends BaseAuthorize {
 
 	/**
 	 * @var array|null
@@ -81,16 +81,16 @@ class TinyAuthorize extends BaseAuthorize {
 	 * @throws \Cake\Core\Exception\Exception
 	 */
 	public function __construct(ComponentRegistry $registry, array $config = []) {
-		$config += (array)Configure::read('TinyAuth');
+		$config += (array)Configure::read('SpcAuth');
 		$config += $this->_defaultConfig;
 		if (!$config['prefixes'] && !empty($config['authorizeByPrefix'])) {
-			throw new Exception('Invalid TinyAuthorization setup for `authorizeByPrefix`. Please declare `prefixes`.');
+			throw new Exception('Invalid SpcAuthorization setup for `authorizeByPrefix`. Please declare `prefixes`.');
 		}
 
 		parent::__construct($registry, $config);
 
 		if (!in_array($config['cache'], Cache::configured())) {
-			throw new Exception(sprintf('Invalid TinyAuthorization cache `%s`', $config['cache']));
+			throw new Exception(sprintf('Invalid SpcAuthorization cache `%s`', $config['cache']));
 		}
 
 		// BC only
@@ -333,7 +333,7 @@ class TinyAuthorize extends BaseAuthorize {
 		})->toArray();
 
 		if (count($roles) < 1) {
-			throw new Exception('Invalid TinyAuth role setup (roles table `' . $this->_config['rolesTable'] . '` has no roles)');
+			throw new Exception('Invalid SpcAuth role setup (roles table `' . $this->_config['rolesTable'] . '` has no roles)');
 		}
 		return $roles;
 	}
@@ -356,7 +356,7 @@ class TinyAuthorize extends BaseAuthorize {
 			if (isset($user[$this->_config['roleColumn']])) {
 				return [$user[$this->_config['roleColumn']]];
 			}
-			throw new Exception(sprintf('Missing TinyAuth role id (%s) in user session', $this->_config['roleColumn']));
+			throw new Exception(sprintf('Missing SpcAuth role id (%s) in user session', $this->_config['roleColumn']));
 		}
 
 		// Multi-role case : load the pivot table
@@ -381,7 +381,7 @@ class TinyAuthorize extends BaseAuthorize {
 			->toArray();
 
 		if (!count($roles)) {
-			throw new Exception('Missing TinyAuth roles for user in pivot table');
+			throw new Exception('Missing SpcAuth roles for user in pivot table');
 		}
 		return $roles;
 	}

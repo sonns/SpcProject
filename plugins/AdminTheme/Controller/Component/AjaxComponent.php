@@ -1,5 +1,5 @@
 <?php
-namespace Ajax\Controller\Component;
+namespace AdminTheme\Controller\Component;
 use Cake\Controller\Component;
 use Cake\Controller\ComponentRegistry;
 use Cake\Controller\Controller;

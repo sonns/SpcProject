@@ -214,9 +214,8 @@ define("MCRYPT_KEY","master4561");
 if (Configure::read('debug')) {
     Plugin::load('DebugKit', ['bootstrap' => true]);
 }
-
 Plugin::load('Migrations');
 
-
-
 Plugin::load('AdminTheme', ['bootstrap' => true, 'routes' => true]);
+
+Plugin::load('SpcAuth', ['bootstrap' => false, 'routes' => true]);

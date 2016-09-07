@@ -4,7 +4,7 @@ use Cake\Core\Exception\MissingPluginException;
 use Cake\Core\Plugin;
 use Cake\Routing\Router;
 
-Router::extensions(['json']);
+
 Configure::write('Admin', [
     'debug'=>true,
     'title' => 'SPCProject',
@@ -18,3 +18,4 @@ Configure::write('Admin', [
         'show_social' => true
     ]
 ]);
+Router::extensions(['json']);

@@ -164,40 +164,71 @@ class UsersController extends AppController
     public function add()
     {
 
-
-        $roles = TableRegistry::get('Roles');
-        $listRoles = $roles->find('list', [
-            'keyField' => 'id',
-            'valueField' => 'display_name',
-            'conditions' => ['status' => true]
-        ]);
-        $department = TableRegistry::get('Departments');
-        $listDepartments = $department->find('list', [
-            'keyField' => 'id',
-            'valueField' => 'name',
-            'conditions' => ['status' => true]
-        ]);
-
-        $user = $this->Users->newEntity();
-        if ($this->request->is('post')) {
-            $user = $this->Users->patchEntity($user, $this->request->data);
-            if ($this->Users->save($user)) {
-                $this->Flash->success(__('The User has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The User could not be saved. Please, try again.'));
+        if(!$this->request->is('ajax')){
+            $roles = TableRegistry::get('Roles');
+            $listRoles = $roles->find('list', [
+                'keyField' => 'id',
+                'valueField' => 'display_name',
+                'conditions' => ['status' => true]
+            ]);
+            $department = TableRegistry::get('Departments');
+            $listDepartments = $department->find('list', [
+                'keyField' => 'id',
+                'valueField' => 'name',
+                'conditions' => ['status' => true]
+            ]);
+            $this->set(compact('listRoles'));
+            $this->set(compact('listDepartments'));
+        }else{
+            $createUserE = $this->Users->newEntity();
+            $this->request->allowMethod('ajax');
+            $this->viewBuilder()->className('AdminTheme.Ajax');
+            $isCheck = false;
+            $this->set(compact('result'));
+            if ($this->request->is('post')) {
+                $createUserE = $this->Users->patchEntity($createUserE, $this->request->data);
+                if ($this->Users->save($createUserE)) {
+                    $isCheck = true;
+                }
+                $result = [
+                    'status'=> $isCheck,
+                    'response'=> $isCheck ?  __('The user has been saved.'): __('The User could not be saved. Please, try again.')
+                ];
             }
+            $this->set(compact('result'));
+            $this->set(compact('_serialize', ['result']));
         }
-        $this->set(compact('user'));
-        $this->set(compact('listRoles'));
-        $this->set(compact('listDepartments'));
     }
     public function checkUnique(){
-         $isCheck =   $this->Users->find('existsOr',['username'=>$this->request->data['username'],'email'=>$this->request->data['email']]);
-        print_r($isCheck);exit;
-    }
+        $this->request->allowMethod('ajax');
+        $this->viewBuilder()->className('AdminTheme.Ajax');
 
+//        Check email
+        $status = false;
+        if($this->checkExist('email')){
+            $mode = 1;
+            $response = __('This e-mail already exists, please change it');
+        }elseif($this->checkExist('username'))
+        {
+            $mode = 2;
+            $response = __('This username already exists, please change it');
+        }else{
+//            check rule or  return true
+            $mode = 3;
+            $response =  __("OK!!!");
+            $status = true;
+        }
+        $result = [
+            'status'=> $status,
+            'mode'=>$mode,
+            'response'=>$response
+        ];
+        $this->set(compact('result'));
+        $this->set('_serialize', ['result']);
+    }
+    public function checkExist($key){
+        return $this->Users->find('existsOr',[$key=>$this->request->data[$key]]);
+    }
     /**
      * Edit method
      *

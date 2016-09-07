@@ -47,12 +47,9 @@ class UsersTable extends Table
     }
     public function findExistsOr(Query $query, array $conditions)
     {
-        $query = $query->select(['existing' => 1]);
-        foreach($conditions as $condition){
-            $query = $query->orWhere($conditions);
-        }
         return (bool)count(
-            $query
+            $query->select(['existing' => 1])
+                ->orWhere($conditions)
                 ->limit(1)
                 ->hydrate(false)
                 ->toArray()
@@ -88,5 +85,18 @@ class UsersTable extends Table
     {
         $rules->add($rules->isUnique(['email','username']));
         return $rules;
+    }
+    public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)
+    {
+//        Define data to mapping entity
+        if (isset($data['dep_name'])) {
+            $data['name'] = $data['dep_name'];
+        }
+        if (isset($data['dep_tel'])) {
+            $data['tel'] = $data['dep_tel'];
+        }
+        if (isset($data['dep_address'])) {
+            $data['address'] = $data['dep_address'];
+        }
     }
 }
