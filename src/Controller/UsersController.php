@@ -41,7 +41,7 @@ class UsersController extends AuthMasterController
         return parent::isAuthorized($user);
     }
 
-    public function myProfile(){
+    public function profile(){
 
         if($this->request->is('post')){
             if($this->request->data['hdnmode'] === 'profile')

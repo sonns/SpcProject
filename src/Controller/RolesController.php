@@ -16,10 +16,11 @@ class RolesController extends AuthMasterController
      */
     public function index()
     {
-//        $roles = $this->paginate($this->Roles);
-//
+        $this->set('roles', $this->Roles->find('all'));
+//        $roles = $this->Roles;
+//        print_r($roles);exit;
 //        $this->set(compact('roles'));
-//        $this->set('_serialize', ['roles']);
+        $this->set('_serialize', ['roles']);
     }
 
     /**

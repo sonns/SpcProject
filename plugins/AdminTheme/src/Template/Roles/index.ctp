@@ -29,7 +29,7 @@
                     <!-- Tab panes -->
                     <div class="tab-content">
                         <!-- Tab about -->
-                        <?php echo $this->element('User/empty') ?>
+                        <?php echo $this->element('Configuration/role') ?>
                         <!-- End Tab about -->
                         <div class="tab-pane animated fadeInRight" >
                             <?php echo $this->element('User/empty') ?>
