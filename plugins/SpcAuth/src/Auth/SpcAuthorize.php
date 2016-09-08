@@ -160,7 +160,6 @@ class SpcAuthorize extends BaseAuthorize {
 
 		if ($this->_acl === null) {
 			$this->_acl = $this->_getAcl($this->_config['aclPath']);
-//            print_r($this->_acl);exit;
 
         }
 

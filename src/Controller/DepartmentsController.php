@@ -9,7 +9,7 @@ use Aura\Intl\Exception;
  *
  * @property \App\Model\Table\DepartmentsTable $Departments
  */
-class DepartmentsController extends AppController
+class DepartmentsController extends AuthMasterController
 {
 
     /**

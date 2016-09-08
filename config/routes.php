@@ -43,7 +43,6 @@ use Cake\Routing\Route\DashedRoute;
  */
 Router::defaultRouteClass(DashedRoute::class);
 Router::scope('/', function (RouteBuilder $routes) {
-    $routes->extensions(['json', 'xml','html']);
     /**
      * Here, we are connecting '/' (base path) to a controller called 'Pages',
      * its action called 'display', and we pass a param to select the view file
@@ -52,20 +51,11 @@ Router::scope('/', function (RouteBuilder $routes) {
 //    $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
     $routes->connect('/login', ['controller' => 'AuthMaster', 'action' => 'login', 'login']);
     $routes->connect('/logout', ['controller' => 'AuthMaster', 'action' => 'logout', 'logout']);
-    $routes->connect('/access-denied', ['controller' => 'AuthMaster', 'action' => 'accessDenied', 'access_denied']);
+    $routes->connect('/403', ['controller' => 'AuthMaster', 'action' => 'accessDenied', 'access_denied']);
+    $routes->connect('/404', ['controller' => 'AuthMaster', 'action' => 'pageNotFound', 'page_not_found']);
     $routes->connect('/', ['controller' => 'AuthMaster', 'action' => 'index','home']);
-    $routes->connect('/register', ['controller' => 'Home', 'action' => 'register']);
-    $routes->connect('/user/list', ['controller' => 'Users', 'action' => 'index','manage_user']);
-    $routes->connect('/user/add', ['controller' => 'Users', 'action' => 'add','add_user']);
-    $routes->connect('/user/edit', ['controller' => 'Users', 'action' => 'edit','edit_user']);
-    $routes->connect('/user/delete', ['controller' => 'Users', 'action' => 'delete','del_user']);
-    $routes->connect('/user/profile', ['controller' => 'Users', 'action' => 'myProfile','profile']);
-    $routes->connect('/user/checkunique', ['controller' => 'Users', 'action' => 'checkUnique','check_unique']);
-//Department router
-    $routes->connect('/department/list', ['controller' => 'Departments', 'action' => 'index','manage_dep']);
-    $routes->connect('/department/add', ['controller' => 'Departments', 'action' => 'add','add_dep']);
-    $routes->connect('/department/edit', ['controller' => 'Departments', 'action' => 'edit','edit_dep']);
-    $routes->connect('/department/delete', ['controller' => 'Departments', 'action' => 'delete','del_dep']);
+
+
 
     /**
      * ...and connect the rest of 'Pages' controller's URLs.
@@ -90,11 +80,23 @@ Router::scope('/', function (RouteBuilder $routes) {
      */
     $routes->fallbacks('DashedRoute');
 });
-
-/**
- * Load all plugin routes.  See the Plugin documentation on
- * how to customize the loading of plugin routes.
- */
-
+//Department router
+Router::scope('/department', function (RouteBuilder $routes) {
+    $routes->connect('/', ['controller' => 'Departments', 'action' => 'index'], ['routeClass' => 'DashedRoute']);
+    $routes->connect('/:action/*', ['controller' => 'Departments'], ['routeClass' => 'DashedRoute']);
+    $routes->fallbacks('DashedRoute');
+});
+//User router
+Router::scope('/user', function (RouteBuilder $routes) {
+    $routes->connect('/', ['controller' => 'Users', 'action' => 'index'], ['routeClass' => 'DashedRoute']);
+    $routes->connect('/:action/*', ['controller' => 'Users'], ['routeClass' => 'DashedRoute']);
+    $routes->fallbacks('DashedRoute');
+});
+//Role router
+Router::scope('/configuration', function (RouteBuilder $routes) {
+    $routes->connect('/', ['controller' => 'Roles', 'action' => 'index'], ['routeClass' => 'DashedRoute']);
+    $routes->connect('/:action/*', ['controller' => 'Roles'], ['routeClass' => 'DashedRoute']);
+    $routes->fallbacks('DashedRoute');
+});
 
 Plugin::routes();

@@ -137,7 +137,7 @@
                     <li class="dropdown topbar-profile">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="rounded-image topbar-profile-image">
                                 <?php echo $this->Html->image('AdminTheme./images/users/user-35.jpg', array('class' => 'xs-avatar ava-dropdown','alt'=>'Avatar'));?>
-                                </span> <strong><?php echo $userInfo['alias_name'];?></strong> <i class="fa fa-caret-down"></i>
+                                </span> <strong><?php echo $userInfo['first_name'] . ' ' .$userInfo['last_name'] ;?></strong> <i class="fa fa-caret-down"></i>
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="<?php echo $this->Url->build(['controller'=>'users','action'=>'myProfile','profile'])?>">My Profile</a></li>

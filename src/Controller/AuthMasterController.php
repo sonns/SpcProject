@@ -63,8 +63,7 @@ class AuthMasterController extends AppController
             ],
             'loginRedirect' => [
                 'controller' => 'Users',
-                'action' => 'index',
-                'manage_user'
+                'action' => 'index'
             ],
             'logoutRedirect' => [
                 'controller' => 'AuthMaster',
@@ -92,11 +91,14 @@ class AuthMasterController extends AppController
 
     protected function _allowActions()
     {
-        $this->Auth->allow(['login', 'logout' , 'accessDenied']);
+        $this->Auth->allow(['login', 'logout' , 'accessDenied','pageNotFound']);
     }
 
     public function accessDenied(){
-        echo 'access denied';exit;
+
+    }
+    public function pageNotFound(){
+
     }
     /**
      * Login method

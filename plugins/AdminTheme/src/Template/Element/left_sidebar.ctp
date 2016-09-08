@@ -44,12 +44,12 @@
                 </ul>
             </li>
             <li>
-                <a class="<?php echo (!empty($this->request->params['controller']) && ($this->request->params['controller']=='Departments') )?'active' :'' ?>" href='<?php echo $this->Url->build(['controller'=>'departments','action'=>'index','manage_dep'])?>'>
+                <a class="<?php echo (!empty($this->request->params['controller']) && ($this->request->params['controller']=='Departments') )?'active' :'' ?>" href='<?php echo $this->Url->build(['controller'=>'departments','action'=>'index'])?>'>
                     <i class='icon-home-3'></i><span>Departments</span>
                 </a>
             </li>
             <li>
-                <a class="<?php echo (!empty($this->request->params['controller']) && ($this->request->params['controller']=='Users') )?'active' :'' ?>" href='<?php echo $this->Url->build(['controller'=>'users','action'=>'index','manage_user'])?>'>
+                <a class="<?php echo (!empty($this->request->params['controller']) && ($this->request->params['controller']=='Users') )?'active' :'' ?>" href='<?php echo $this->Url->build(['controller'=>'users','action'=>'index'])?>'>
                     <i class='icon-home-3'></i><span>Users</span>
                 </a>
             </li>

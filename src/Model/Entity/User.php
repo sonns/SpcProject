@@ -33,7 +33,7 @@ class User extends Entity
         'id' => false
     ];
     protected $_virtual = ['alias_name'];
-    protected $_hidden = ['password'];
+//    protected $_hidden = ['password'];
 
     protected function _setPassword($password)
     {
