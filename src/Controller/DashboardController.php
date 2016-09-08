@@ -11,6 +11,7 @@ use App\Controller\AppController;
 class DashboardController extends AppController
 {
 
+
     /**
      * Index method
      *

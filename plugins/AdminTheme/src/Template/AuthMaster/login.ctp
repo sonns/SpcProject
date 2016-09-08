@@ -6,7 +6,7 @@
         <div class="login-block">
             <?php echo $this->Html->image('AdminTheme./assets/img/avata.png', ['alt' => 'avata','class'=>'img-circle not-logged-avatar']);?>
 
-            <?php echo $this->Form->create(null,['url'=>['controller' => 'home','action'=>'login','login']])?>
+            <?php echo $this->Form->create(null,['url'=>['controller' => 'AuthMaster','action'=>'login','login']])?>
                 <div class="form-group login-input">
                     <i class="fa fa-user overlay"></i>
                     <input type="text" class="form-control text-input" placeholder="username" name="username" id="username">

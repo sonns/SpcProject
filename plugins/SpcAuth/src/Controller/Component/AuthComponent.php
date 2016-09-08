@@ -1,6 +1,6 @@
 <?php
 
-namespace TinyAuth\Controller\Component;
+namespace SpcAuth\Controller\Component;
 
 use Cake\Cache\Cache;
 use Cake\Controller\ComponentRegistry;
@@ -18,9 +18,9 @@ class AuthComponent extends CakeAuthComponent {
 	/**
 	 * @var array
 	 */
-	protected $_defaultTinyAuthConfig = [
+	protected $_defaultSpcAuthConfig = [
 		'cache' => '_cake_core_',
-		'cacheKey' => 'tiny_auth_allow',
+		'cacheKey' => 'spc_auth_allow',
 		'autoClearCache' => false, // Set to true to delete cache automatically in debug mode
 		'filePath' => null, // Possible to locate ini file at given path e.g. Plugin::configPath('Admin')
 		'file' => 'auth_allow.ini',
@@ -32,7 +32,7 @@ class AuthComponent extends CakeAuthComponent {
 	 * @throws \Cake\Core\Exception\Exception
 	 */
 	public function __construct(ComponentRegistry $registry, array $config = []) {
-		$config += $this->_defaultTinyAuthConfig;
+		$config += $this->_defaultSpcAuthConfig;
 
 		parent::__construct($registry, $config);
 

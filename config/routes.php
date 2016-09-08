@@ -50,9 +50,10 @@ Router::scope('/', function (RouteBuilder $routes) {
      * to use (in this case, src/Template/Pages/home.ctp)...
      */
 //    $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
-    $routes->connect('/login', ['controller' => 'Home', 'action' => 'login', 'login']);
-    $routes->connect('/logout', ['controller' => 'Home', 'action' => 'logout', 'logout']);
-    $routes->connect('/', ['controller' => 'Home', 'action' => 'index','home']);
+    $routes->connect('/login', ['controller' => 'AuthMaster', 'action' => 'login', 'login']);
+    $routes->connect('/logout', ['controller' => 'AuthMaster', 'action' => 'logout', 'logout']);
+    $routes->connect('/access-denied', ['controller' => 'AuthMaster', 'action' => 'accessDenied', 'access_denied']);
+    $routes->connect('/', ['controller' => 'AuthMaster', 'action' => 'index','home']);
     $routes->connect('/register', ['controller' => 'Home', 'action' => 'register']);
     $routes->connect('/user/list', ['controller' => 'Users', 'action' => 'index','manage_user']);
     $routes->connect('/user/add', ['controller' => 'Users', 'action' => 'add','add_user']);

@@ -1,7 +1,6 @@
 <?php
 namespace App\Controller;
 
-use App\Controller\AppController;
 use App\Utility\FunctionCommon;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
@@ -11,7 +10,7 @@ use Cake\ORM\TableRegistry;
  *
  * @property \App\Model\Table\UsersTable $Users
  */
-class UsersController extends AppController
+class UsersController extends AuthMasterController
 {
     public function  initialize()
     {
@@ -132,13 +131,12 @@ class UsersController extends AppController
         $this->set('_serialize', ['users']);
         $this->set(compact('userE'));
         $this->set('_serialize', ['userE']);
-
-
-//        $this->set('_serialize', ['users']);
     }
 
 
-
+    protected function _allowActions() {
+//        $this->Auth->allow(['index']);
+    }
     /**
      * View method
      *

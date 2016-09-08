@@ -24,19 +24,6 @@ if (!defined('ACL_FILE')) {
 }
 
 /**
- * Probably the most simple and fastest ACL out there.
- * Only one config file `acl.ini` necessary,
- * doesn't even need a Roles Table / roles table.
- * Uses most persistent _cake_core_ cache by default.
- *
- * @link http://www.dereuromark.de/2011/12/18/tinyauth-the-fastest-and-easiest-authorization-for-cake2
- *
- * Usage:
- * Include it in your beforeFilter() method of the AppController with the following config:
- * 'authorize' => ['Tools.Tiny']
- *
- * Or with admin prefix protection only
- * 'authorize' => ['Tools.Tiny' => ['allowUser' => true]];
  *
  * @author Son Nguyen
  * @license MIT
@@ -55,7 +42,7 @@ class SpcAuthorize extends BaseAuthorize {
 		'idColumn' => 'id', // ID Column in users table
 		'roleColumn' => 'role_id', // Foreign key for the Role ID in users table or in pivot table
 		'userColumn' => 'user_id', // Foreign key for the User id in pivot table. Only for multi-roles setup
-		'aliasColumn' => 'alias', // Name of column in roles table holding role alias/slug
+		'aliasColumn' => 'name', // Name of column in roles table holding role alias/slug
 		'rolesTable' => 'Roles', // name of Configure key holding available roles OR class name of roles table
 		'usersTable' => 'Users', // name of the Users table
 		'pivotTable' => null, // Should be used in multi-roles setups
@@ -68,11 +55,12 @@ class SpcAuthorize extends BaseAuthorize {
 		'allowUser' => false, // enable to allow ALL roles access to all actions except prefixed with 'adminPrefix'
 		'adminPrefix' => 'admin', // name of the admin prefix route (only used when allowUser is enabled)
 		'cache' => '_cake_core_',
-		'cacheKey' => 'tiny_auth_acl',
+		'cacheKey' => 'spc_auth_acl',
 		'autoClearCache' => false, // Set to true to delete cache automatically in debug mode
 		'aclPath' => null, // @deprecated Use filePath
 		'filePath' => null, // Possible to locate ini file at given path e.g. Plugin::configPath('Admin')
 		'file' => 'acl.ini',
+		'deniedRedirect' => '/access-denied',
 	];
 
 	/**
@@ -113,6 +101,7 @@ class SpcAuthorize extends BaseAuthorize {
 	 * @return bool Success
 	 */
 	public function authorize($user, Request $request) {
+//	    echo $this->_config['superAdmin'];exit;
 		if (!empty($this->_config['superAdmin'])) {
 			if (empty($this->_config['superAdminColumn'])) {
 				$this->_config['superAdminColumn'] = $this->_config['idColumn'];
@@ -124,7 +113,7 @@ class SpcAuthorize extends BaseAuthorize {
 				return true;
 			}
 		}
-		return $this->validate($this->_getUserRoles($user), $request);
+        return $this->validate($this->_getUserRoles($user), $request);
 	}
 
 	/**
@@ -171,7 +160,9 @@ class SpcAuthorize extends BaseAuthorize {
 
 		if ($this->_acl === null) {
 			$this->_acl = $this->_getAcl($this->_config['aclPath']);
-		}
+//            print_r($this->_acl);exit;
+
+        }
 
 		// Allow access if user has a role with wildcard access to the resource
 		$iniKey = $this->_constructIniKey($request);
@@ -186,16 +177,16 @@ class SpcAuthorize extends BaseAuthorize {
 
 		// Allow access if user has been granted access to the specific resource
 		if (isset($this->_acl[$iniKey]['actions'])) {
-			if (array_key_exists($request->action, $this->_acl[$iniKey]['actions']) && !empty($this->_acl[$iniKey]['actions'][$request->action])) {
+            if (array_key_exists($request->action, $this->_acl[$iniKey]['actions']) && !empty($this->_acl[$iniKey]['actions'][$request->action])) {
 				$matchArray = $this->_acl[$iniKey]['actions'][$request->action];
-				foreach ($userRoles as $userRole) {
+                foreach ($userRoles as $userRole) {
 					if (in_array((string)$userRole, $matchArray)) {
 						return true;
 					}
 				}
 			}
 		}
-		return false;
+        return false;
 	}
 
 	/**
@@ -331,10 +322,10 @@ class SpcAuthorize extends BaseAuthorize {
 		$roles = $rolesTable->find()->formatResults(function ($results) {
 			return $results->combine($this->_config['aliasColumn'], 'id');
 		})->toArray();
-
 		if (count($roles) < 1) {
 			throw new Exception('Invalid SpcAuth role setup (roles table `' . $this->_config['rolesTable'] . '` has no roles)');
 		}
+
 		return $roles;
 	}
 

@@ -28,27 +28,6 @@ class RolesTable extends Table
         $this->addBehavior('Timestamp');
     }
 
-
-//    public function findAllBy(Query $query, array $options)
-//    {
-//        foreach ($options as $key => $value){
-//            $query =  $query->where([$key => $value]);
-//        }
-//        return $query;
-//    }
-    /**
-     * Default validation rules.
-     *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
-     */
-    public function validationDefault(Validator $validator)
-    {
-//        return $validator
-//            ->notEmpty('dep_name', 'The Name field is required')
-//            ->notEmpty('dep_address', 'The address field is required');
-    }
-
     public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)
     {
 //        Define data to mapping entity

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "bb2ba4e573dd2ed11d40cc3effa8cc67",
-    "content-hash": "f56eb9a4fbc7e1e96197c975a74e5be5",
+    "hash": "9b64ebf0bd17a893649fedc9d66b846a",
+    "content-hash": "f9c116aae450043bd1aa7f354e80f695",
     "packages": [
         {
             "name": "aura/installer-default",
@@ -343,6 +343,57 @@
             ],
             "description": "A composer installer for CakePHP 3.0+ plugins.",
             "time": "2016-04-28 03:01:34"
+        },
+        {
+            "name": "friendsofcake/authenticate",
+            "version": "dev-cake3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/FriendsOfCake/Authenticate.git",
+                "reference": "92145e66cf52abdb6fa065101ff74e8d6e70c4a4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/FriendsOfCake/Authenticate/zipball/92145e66cf52abdb6fa065101ff74e8d6e70c4a4",
+                "reference": "92145e66cf52abdb6fa065101ff74e8d6e70c4a4",
+                "shasum": ""
+            },
+            "require": {
+                "cakephp/cakephp": "~3.0",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.1.*"
+            },
+            "type": "cakephp-plugin",
+            "autoload": {
+                "psr-4": {
+                    "FOC\\Authenticate\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ceeram",
+                    "role": "Author"
+                },
+                {
+                    "name": "ADmad",
+                    "homepage": "https://github.com/ADmad",
+                    "role": "Developer"
+                }
+            ],
+            "description": "CakePHP plugin with authentication classes for AuthComponent.",
+            "homepage": "http://github.com/FriendsOfCake/Authenticate",
+            "keywords": [
+                "authenticate",
+                "cakephp"
+            ],
+            "abandoned": true,
+            "time": "2015-06-17 19:04:56"
         },
         {
             "name": "mobiledetect/mobiledetectlib",
@@ -1331,6 +1382,7 @@
     "aliases": [],
     "minimum-stability": "beta",
     "stability-flags": {
+        "friendsofcake/authenticate": 20,
         "psy/psysh": 0
     },
     "prefer-stable": true,

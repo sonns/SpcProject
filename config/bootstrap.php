@@ -219,3 +219,5 @@ Plugin::load('Migrations');
 Plugin::load('AdminTheme', ['bootstrap' => true, 'routes' => true]);
 
 Plugin::load('SpcAuth', ['bootstrap' => false, 'routes' => true]);
+
+Plugin::load('FOC/Authenticate');

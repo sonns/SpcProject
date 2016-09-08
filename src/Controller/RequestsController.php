@@ -1,16 +1,13 @@
 <?php
 namespace App\Controller;
 
-use App\Controller\AppController;
-
 /**
  * Base Controller
  *
- * @property \App\Model\Table\BaseTable $Base
+ * @property \App\Model\Table\RequestsTable $Requests
  */
-class BaseController extends AppController
+class RequestsController extends AuthMasterController
 {
-
     /**
      * Index method
      *
@@ -18,12 +15,8 @@ class BaseController extends AppController
      */
     public function index()
     {
-        $base = $this->paginate($this->Base);
 
-        $this->set(compact('base'));
-        $this->set('_serialize', ['base']);
     }
-
     /**
      * View method
      *
@@ -33,12 +26,8 @@ class BaseController extends AppController
      */
     public function view($id = null)
     {
-        $base = $this->Base->get($id, [
-            'contain' => []
-        ]);
 
-        $this->set('base', $base);
-        $this->set('_serialize', ['base']);
+
     }
 
     /**
@@ -88,7 +77,6 @@ class BaseController extends AppController
         $this->set(compact('base'));
         $this->set('_serialize', ['base']);
     }
-
     /**
      * Delete method
      *
@@ -105,7 +93,6 @@ class BaseController extends AppController
         } else {
             $this->Flash->error(__('The base could not be deleted. Please, try again.'));
         }
-
         return $this->redirect(['action' => 'index']);
     }
 }

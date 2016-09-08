@@ -39,7 +39,7 @@ class UsersTable extends Table
         $this->displayField('id');
         $this->primaryKey('id');
         $this->addBehavior('Timestamp');
-
+        $this->belongsTo('Roles');
 //        $this->belongsTo('Logins', [
 //            'foreignKey' => 'login_id',
 //            'joinType' => 'INNER'
@@ -47,6 +47,7 @@ class UsersTable extends Table
     }
     public function findExistsOr(Query $query, array $conditions)
     {
+
         return (bool)count(
             $query->select(['existing' => 1])
                 ->orWhere($conditions)
@@ -54,6 +55,7 @@ class UsersTable extends Table
                 ->hydrate(false)
                 ->toArray()
         );
+
     }
 
     /**

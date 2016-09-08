@@ -41,94 +41,16 @@ class AppController extends Controller
      */
 
     private $Common;
+
     public function initialize()
     {
-        $this->loadComponent('TinyAuth.Auth', [
-            'filePath' => ...
-    ]);
-
         $this->Common = new Common();
         parent::initialize();
         $this->loadComponent('RequestHandler');
-        $this->loadComponent('Flash');
-//        echo 123;exit;
-//           $this->Auth->config('authenticate', [
-//            AuthComponent::ALL => [
-//               'userModel' => 'Users',
-//               'scope' => ['Users.active' => 1]
-//          ],
-//          'Form',
-//          'Basic'
-//       ]);
-        $this->loadComponent('Auth', [
-                'authenticate' => ['all' => array(
-                    'userModel' => 'Users'
-                ),
-                'Form' => [
-                    'fields' => ['username' => 'username', 'password' => 'password'],
-                    'passwordHasher' => [
-                        'className' => 'Legacy',
-                    ]
-                ]
-            ],
-            'loginAction' => [
-                'controller' => 'home',
-                'action' => 'login',
-                'login'
-            ],
-            'loginRedirect' => [
-                'controller' => 'home',
-                'action' => 'index',
-                'home'
-            ],
-            'logoutRedirect' => [
-                'controller' => 'home',
-                'action' => 'login',
-                'login'
-            ],
-            'SpcAuth.Auth', [
-                'filePath' => ''
-
-        ]);
-        if($this->Auth->user()){
-            $this->set('userInfo', $this->Auth->user());
-//            print_r($this->request->params);exit;
-            $this->set('params', $this->params);
-        }
-
     }
-
-    public function isAuthorized($user = null)
-    {
-
-        // Any registered user can access public functions
-        if (empty($this->request->params['prefix'])) {
-            return true;
-        }
-
-        // Only admins can access admin functions
-        if ($this->request->params['prefix'] === 'admin') {
-
-            return (bool)($user['role'] === 'admin');
-        }
-
-        // Default deny
-        return false;
-    }
-
-//    // Deny all actions.
-//$this->Auth->deny();
-//
-//// Deny one action
-//$this->Auth->deny('add');
-//
-//// Deny a group of actions.
-//$this->Auth->deny(['add', 'edit']);
     public function beforeFilter(Event $event)
     {
-        $this->Auth->allow(['login','logout','register']);
-
-
+        parent::beforeFilter($event);
     }
     /**
      * Before render callback.
