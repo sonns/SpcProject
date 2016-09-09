@@ -214,8 +214,10 @@ class SpcAuthorize extends BaseAuthorize {
 		$availableRoles = $this->_getAvailableRoles();
 
 		$res = [];
+
 		foreach ($iniArray as $key => $array) {
-		    $tempRes = Utility::deconstructIniKey($key);
+
+			$tempRes = Utility::deconstructIniKey($key);
 			$res[$tempRes['controller']] =$tempRes;
 
 			$res[$tempRes['controller']]['map'] = $array;
@@ -223,8 +225,16 @@ class SpcAuthorize extends BaseAuthorize {
 			foreach ($array as $actions => $roles) {
 				// Get all roles used in the current ini section
 				$roles = explode(',', $roles);
+				if($actions === 'actions' ){
+					$tempActions = [];
+					foreach($roles as $act) {
+						list($k, $v) = explode('|', $act);
+						$tempActions[ $k ] = $v;
+					}
+					$res[$tempRes['controller']]['roles'] = $tempActions;
+					continue;
+				}
 				$actions = explode(',', $actions);
-
 				foreach ($roles as $roleId => $role) {
 					$role = trim($role);
 					if (!$role) {
@@ -252,14 +262,15 @@ class SpcAuthorize extends BaseAuthorize {
 						if (!$role || $role === '*') {
 							continue;
 						}
-
 						// Lookup role id by name in roles array
 						$newRole = $availableRoles[strtolower($role)];
 						$res[$tempRes['controller']]['actions'][$action][] = $newRole;
 					}
 				}
+
 			}
 		}
+
 		Cache::write($this->_config['cacheKey'], $res, $this->_config['cache']);
 		return $res;
 	}

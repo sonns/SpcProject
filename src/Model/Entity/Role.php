@@ -20,4 +20,8 @@ class Role extends Entity
         '*' => true,
         'id' => false
     ];
+    protected function _getName()
+    {
+        return strtolower($this->_properties['name']);
+    }
 }

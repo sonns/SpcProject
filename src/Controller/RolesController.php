@@ -28,6 +28,7 @@ class RolesController extends AuthMasterController
      */
     public function index()
     {
+//        print_r($this->MyAuth->getACL());exit;
         $this->set('roles', $this->Roles->find('all'));
         $this->set('listAcl', $this->MyAuth->getACL());
         $this->set('_serialize', ['roles']);

@@ -91,6 +91,7 @@ class UsersController extends AuthMasterController
         $this->set(compact('result'));
         $this->set('_serialize', ['result']);
     }
+
     private function resetPassword($data){
         $userE = $this->Users->newEntity();
         try{
@@ -117,6 +118,7 @@ class UsersController extends AuthMasterController
         $this->set(compact('result'));
         $this->set('_serialize', ['result']);
     }
+
     /**
      * Index method
      *
@@ -132,28 +134,9 @@ class UsersController extends AuthMasterController
         $this->set(compact('userE'));
         $this->set('_serialize', ['userE']);
     }
-
-
     protected function _allowActions() {
 //        $this->Auth->allow(['index']);
     }
-    /**
-     * View method
-     *
-     * @param string|null $id User id.
-     * @return \Cake\Network\Response|null
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function view($id = null)
-    {
-        $user = $this->users->get($id, [
-            'contain' => []
-        ]);
-
-        $this->set('userDetail', $user);
-//        $this->set('_serialize', ['User']);
-    }
-
     /**
      * Add method
      *
@@ -224,7 +207,7 @@ class UsersController extends AuthMasterController
         $this->set(compact('result'));
         $this->set('_serialize', ['result']);
     }
-    public function checkExist($key){
+    private function checkExist($key){
         return $this->Users->find('existsOr',[$key=>$this->request->data[$key]]);
     }
     /**

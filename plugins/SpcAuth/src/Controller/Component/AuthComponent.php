@@ -150,50 +150,60 @@ class AuthComponent extends CakeAuthComponent {
         $iniArray = Utility::parseFile($path . $this->_config['file_alc']);
         $availableRoles = $this->_getAvailableRoles();
         $res = [];
-        foreach ($iniArray as $key => $array) {
-            $tempRes = Utility::deconstructIniKey($key);
-            $res[$tempRes['controller']] =$tempRes;
-            $res[$tempRes['controller']]['map'] = $array;
+		foreach ($iniArray as $key => $array) {
 
-            foreach ($array as $actions => $roles) {
-                // Get all roles used in the current ini section
-                $roles = explode(',', $roles);
-                $actions = explode(',', $actions);
+			$tempRes = Utility::deconstructIniKey($key);
+			$res[$tempRes['controller']] =$tempRes;
 
-                foreach ($roles as $roleId => $role) {
-                    $role = trim($role);
-                    if (!$role) {
-                        continue;
-                    }
-                    // Prevent undefined roles appearing in the iniMap
-                    if (!array_key_exists($role, $availableRoles) && $role !== '*') {
-                        unset($roles[$roleId]);
-                        continue;
-                    }
-                    if ($role === '*') {
-                        unset($roles[$roleId]);
-                        $roles = array_merge($roles, array_keys($availableRoles));
-                    }
-                }
+			$res[$tempRes['controller']]['map'] = $array;
 
-                foreach ($actions as $action) {
-                    $action = trim($action);
-                    if (!$action) {
-                        continue;
-                    }
+			foreach ($array as $actions => $roles) {
+				// Get all roles used in the current ini section
+				$roles = explode(',', $roles);
+				if($actions === 'actions' ){
+					$tempActions = [];
+					foreach($roles as $act) {
+						list($k, $v) = explode('|', $act);
+						$tempActions[ $k ] = $v;
+					}
+					$res[$tempRes['controller']]['roles'] = $tempActions;
+					continue;
+				}
+				$actions = explode(',', $actions);
+				foreach ($roles as $roleId => $role) {
+					$role = trim($role);
+					if (!$role) {
+						continue;
+					}
+					// Prevent undefined roles appearing in the iniMap
+					if (!array_key_exists($role, $availableRoles) && $role !== '*') {
+						unset($roles[$roleId]);
+						continue;
+					}
+					if ($role === '*') {
+						unset($roles[$roleId]);
+						$roles = array_merge($roles, array_keys($availableRoles));
+					}
+				}
 
-                    foreach ($roles as $role) {
-                        $role = trim($role);
-                        if (!$role || $role === '*') {
-                            continue;
-                        }
+				foreach ($actions as $action) {
+					$action = trim($action);
+					if (!$action) {
+						continue;
+					}
 
-                        // Lookup role id by name in roles array
-                        $newRole = $availableRoles[strtolower($role)];
-                        $res[$tempRes['controller']]['actions'][$action][] = $newRole;
-                    }
-                }
-            }
+					foreach ($roles as $role) {
+						$role = trim($role);
+						if (!$role || $role === '*') {
+							continue;
+						}
+						// Lookup role id by name in roles array
+						$newRole = $availableRoles[strtolower($role)];
+						$res[$tempRes['controller']]['actions'][$action][] = $newRole;
+					}
+				}
+
+			}
         }
 
         Cache::write($this->_config['cacheKeyAcl'], $res, $this->_config['cache']);

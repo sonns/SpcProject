@@ -1,18 +1,11 @@
 <div class="tab-pane animated fadeInRight" id="permissions">
-    <div class="row">
+    <div class="row"  style="padding-left:25px;">
         <h4><strong> Manage </strong> Permission</h4>
-        <div class="col-sm-12">
+        <div class="col-sm-11 center">
             <div class="widget">
-                <div class="widget-header   " >
-                    <h2 style="color: white"><strong>Roles</strong> Table</h2>
-                    <div class="additional-btn">
-                        <a href="#" class="hidden reload"><i class="icon-ccw-1"></i></a>
-                        <a href="#" class="widget-toggle"><i class="icon-down-open-2"></i></a>
-                    </div>
-                </div>
                 <div class="widget-content">
                     <div class="table-responsive">
-                        <table data-sortable class="table">
+                        <table  class="table">
                             <thead>
                             <tr >
                                 <th>Permission
@@ -30,16 +23,21 @@
                                         <td><td>
                                     <?php endforeach;?>
                                 </tr>
-                                <tr>
-                                <td style="padding: 20px;"><?php echo $acls['alias'];?></td>
-                                <?php foreach ($roles as $key1 => $role): ?>
-                                    <td>
-                                        <label class="icheckbox">
-                                            <input type="checkbox" id="inlineCheckbox1" value="<?php echo $acls['controller'].$role->name;?>">
-                                        </label>
-                                    </td>
-                                <?php endforeach;?>
-                                </tr>
+
+                                    <?php foreach ($acls['roles'] as $key1 => $acl): ?>
+                                    <tr>
+                                        <td style="padding: 20px;"><?php echo $acl;?></td>
+                                        <?php foreach ($roles as $key2 => $role): ?>
+                                            <td>
+                                                <label class="icheckbox">
+                                                    <input type="checkbox" id="inlineCheckbox1" value="<?php echo $acls['controller'].$key1;?>">
+                                                </label>
+                                            </td>
+                                        <?php endforeach;?>
+                                    </tr>
+                                    <?php endforeach;?>
+
+
                                 <tr>
 
 

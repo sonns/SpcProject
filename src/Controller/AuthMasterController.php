@@ -98,9 +98,7 @@ class AuthMasterController extends AppController
     public function accessDenied(){
 
     }
-    public function pageNotFound(){
 
-    }
     /**
      * Login method
      *
@@ -132,24 +130,6 @@ class AuthMasterController extends AppController
         return $this->redirect($this->Auth->logout());
     }
 
-    /**
-     * Once you are logged in you can access this
-     *
-     * @return void
-     */
-    public function forAll()
-    {
-    }
-
-    /**
-     * Only Users can access this
-     *
-     * @return void
-     */
-    public function forUsers()
-    {
-
-    }
 
     public function index()
     {

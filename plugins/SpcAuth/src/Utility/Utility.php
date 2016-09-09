@@ -47,6 +47,7 @@ class Utility {
 
 		if (function_exists('parse_ini_file')) {
 			$iniArray = parse_ini_file($ini, true);
+
 		} else {
 			$iniArray = parse_ini_string(file_get_contents($ini), true);
 		}
