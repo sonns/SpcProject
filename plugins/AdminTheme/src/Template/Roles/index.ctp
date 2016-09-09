@@ -19,10 +19,8 @@
                     <!-- Nav tab -->
                     <ul class="nav nav-tabs nav-justified">
 
-                        <li class="active"><a href="#Role" data-toggle="tab"><i class="fa fa-user"></i> Role</a></li>
-                        <li><a href="#reset_password" data-toggle="tab"><i class="fa fa-pencil"></i> Reset Password</a></li>
-                        <li><a href="#user-activities" data-toggle="tab"><i class="fa fa-laptop"></i> Activities</a></li>
-                        <li><a href="#mymessage" data-toggle="tab"><i class="fa fa-envelope"></i> Message</a></li>
+                        <li class="active"><a href="#roles" data-toggle="tab"><i class="fa fa-user"></i> Roles</a></li>
+                        <li><a href="#permissions" data-toggle="tab"><i class="fa fa-pencil"></i> Pemission</a></li>
                     </ul>
                     <!-- End nav tab -->
 
@@ -31,14 +29,10 @@
                         <!-- Tab about -->
                         <?php echo $this->element('Configuration/role') ?>
                         <!-- End Tab about -->
-                        <div class="tab-pane animated fadeInRight" >
-                            <?php echo $this->element('User/empty') ?>
-                        </div>
+                        <?php echo $this->element('Configuration/permission') ?>
                         <!-- Tab user activities -->
-                        <?php echo $this->element('User/empty') ?>
                         <!-- End Tab user activities -->
                         <!-- Tab user messages -->
-                        <?php echo $this->element('User/empty') ?>
                         <!-- End Tab user messages -->
                     </div><!-- End div .tab-content -->
                 </div><!-- End div .box-info -->

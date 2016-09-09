@@ -33,7 +33,7 @@ class SpcAuthorize extends BaseAuthorize {
 	/**
 	 * @var array|null
 	 */
-	protected $_acl = null;
+	public $_acl = null;
 
 	/**
 	 * @var array
@@ -59,8 +59,7 @@ class SpcAuthorize extends BaseAuthorize {
 		'autoClearCache' => false, // Set to true to delete cache automatically in debug mode
 		'aclPath' => null, // @deprecated Use filePath
 		'filePath' => null, // Possible to locate ini file at given path e.g. Plugin::configPath('Admin')
-		'file' => 'acl.ini',
-		'deniedRedirect' => '/access-denied',
+		'file' => 'acl.ini'
 	];
 
 	/**
@@ -162,10 +161,9 @@ class SpcAuthorize extends BaseAuthorize {
 			$this->_acl = $this->_getAcl($this->_config['aclPath']);
 
         }
-
-		// Allow access if user has a role with wildcard access to the resource
+        // Allow access if user has a role with wildcard access to the resource
 		$iniKey = $this->_constructIniKey($request);
-		if (isset($this->_acl[$iniKey]['actions']['*'])) {
+        if (isset($this->_acl[$iniKey]['actions']['*'])) {
 			$matchArray = $this->_acl[$iniKey]['actions']['*'];
 			foreach ($userRoles as $userRole) {
 				if (in_array((string)$userRole, $matchArray)) {
@@ -173,9 +171,9 @@ class SpcAuthorize extends BaseAuthorize {
 				}
 			}
 		}
-
 		// Allow access if user has been granted access to the specific resource
-		if (isset($this->_acl[$iniKey]['actions'])) {
+
+        if (isset($this->_acl[$iniKey]['actions'])) {
             if (array_key_exists($request->action, $this->_acl[$iniKey]['actions']) && !empty($this->_acl[$iniKey]['actions'][$request->action])) {
 				$matchArray = $this->_acl[$iniKey]['actions'][$request->action];
                 foreach ($userRoles as $userRole) {
@@ -217,8 +215,10 @@ class SpcAuthorize extends BaseAuthorize {
 
 		$res = [];
 		foreach ($iniArray as $key => $array) {
-			$res[$key] = Utility::deconstructIniKey($key);
-			$res[$key]['map'] = $array;
+		    $tempRes = Utility::deconstructIniKey($key);
+			$res[$tempRes['controller']] =$tempRes;
+
+			$res[$tempRes['controller']]['map'] = $array;
 
 			foreach ($array as $actions => $roles) {
 				// Get all roles used in the current ini section
@@ -255,12 +255,11 @@ class SpcAuthorize extends BaseAuthorize {
 
 						// Lookup role id by name in roles array
 						$newRole = $availableRoles[strtolower($role)];
-						$res[$key]['actions'][$action][] = $newRole;
+						$res[$tempRes['controller']]['actions'][$action][] = $newRole;
 					}
 				}
 			}
 		}
-
 		Cache::write($this->_config['cacheKey'], $res, $this->_config['cache']);
 		return $res;
 	}
@@ -299,6 +298,9 @@ class SpcAuthorize extends BaseAuthorize {
 		if (!empty($request->params['plugin'])) {
 			$res = $request->params['plugin'] . ".$res";
 		}
+        if (!empty($request->params['alias'])) {
+            $res = $request->params['alias'] . ".$res";
+        }
 		return $res;
 	}
 

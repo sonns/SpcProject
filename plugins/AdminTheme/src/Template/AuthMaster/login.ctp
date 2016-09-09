@@ -9,13 +9,21 @@
             <?php echo $this->Form->create(null,['url'=>['controller' => 'AuthMaster','action'=>'login','login']])?>
                 <div class="form-group login-input">
                     <i class="fa fa-user overlay"></i>
-                    <input type="text" class="form-control text-input" placeholder="username" name="username" id="username">
+                    <input type="text" class="form-control text-input" placeholder="Enter your email or username" name="username" id="username">
                 </div>
                 <div class="form-group login-input">
                     <i class="fa fa-key overlay"></i>
                     <input type="password" id="login_pass" name="password" class="form-control text-input" placeholder="********">
                 </div>
-
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="remember" id="remember"> Remember me
+                        </label>
+                    </div>
+                </div>
+            </div>
                 <div class="row">
                     <div class="col-sm-6">
                         <button type="submit" class="btn btn-success btn-block">LOGIN</button>

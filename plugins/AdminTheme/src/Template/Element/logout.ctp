@@ -7,7 +7,7 @@
             <p class="text-center">
                 <button class="btn btn-danger md-close">Nope!</button>
                 <a href="<?php echo $this->Url->build([
-                    "controller" => "home",
+                    "controller" => "AuthMaster",
                     "action" => "logout",
                     "logout"
                 ])?>" class="btn btn-success md-close">Yeah, I'm sure</a>

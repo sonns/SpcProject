@@ -2,6 +2,7 @@
 namespace SpcAuth\Utility;
 
 use Cake\Core\Exception\Exception;
+use Cake\ORM\TableRegistry;
 
 class Utility {
 
@@ -14,7 +15,8 @@ class Utility {
 	public static function deconstructIniKey($key) {
 		$res = [
 			'plugin' => null,
-			'prefix' => null
+			'prefix' => null,
+			'alias' => null
 		];
 
 		if (strpos($key, '.') !== false) {
@@ -23,6 +25,10 @@ class Utility {
 		if (strpos($key, '/') !== false) {
 			list($res['prefix'], $key) = explode('/', $key);
 		}
+        if (strpos($key, '>') !== false) {
+
+            list($key , $res['alias']) = explode('>', $key);
+        }
 		$res['controller'] = $key;
 		return $res;
 	}

@@ -127,8 +127,6 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 
     <?= $this->Html->script('AdminTheme./assets/libs/pace/pace.min.js') ?>
 
-    <?= $this->Html->script('AdminTheme./assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.js') ?>
-
     <?= $this->Html->script('AdminTheme./assets/libs/jquery-icheck/icheck.min.js') ?>
 
     <!-- Demo Specific JS Libraries -->

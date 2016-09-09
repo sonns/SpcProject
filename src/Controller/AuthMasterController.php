@@ -39,7 +39,8 @@ class AuthMasterController extends AppController
 
     protected function _authInit()
     {
-        $this->loadComponent('Auth', [
+        $this->loadComponent(
+            'Auth', [
             'authenticate' => [
                 'FOC/Authenticate.Cookie' => [
                     'fields' => ['username' => 'username', 'password' => 'password'],
