@@ -63,7 +63,7 @@ class AuthMasterController extends AppController
                 'login'
             ],
             'loginRedirect' => [
-                'controller' => 'Users',
+                'controller' => 'AuthMaster',
                 'action' => 'index'
             ],
             'logoutRedirect' => [

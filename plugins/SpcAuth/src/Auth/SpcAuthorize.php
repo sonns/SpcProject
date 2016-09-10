@@ -270,7 +270,6 @@ class SpcAuthorize extends BaseAuthorize {
 
 			}
 		}
-
 		Cache::write($this->_config['cacheKey'], $res, $this->_config['cache']);
 		return $res;
 	}

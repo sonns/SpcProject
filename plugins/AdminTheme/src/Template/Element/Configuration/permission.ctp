@@ -30,7 +30,22 @@
                                         <?php foreach ($roles as $key2 => $role): ?>
                                             <td>
                                                 <label class="icheckbox">
-                                                    <input type="checkbox" id="inlineCheckbox1" value="<?php echo $acls['controller'].$key1;?>">
+                                                    <input type="checkbox" <?php
+                                                    //$key! = action
+                                                    if(isset($acls['actions']['*']) or isset($acls['actions'][$key1]))
+                                                    {
+                                                        if(in_array($role->id,$acls['actions']['*'])){
+                                                            echo 'checked';
+                                                        }elseif(isset($acls['actions'][$key1]) and in_array($role->id, $acls['actions'][$key1])){
+                                                            echo 'checked';
+                                                        }
+                                                        else
+                                                            echo '';
+                                                    }else{
+                                                        echo 'checked';
+                                                    }
+
+                                                    ?> id="inlineCheckbox1" value="<?php echo $acls['controller'].'_'.$key1;?>">
                                                 </label>
                                             </td>
                                         <?php endforeach;?>
