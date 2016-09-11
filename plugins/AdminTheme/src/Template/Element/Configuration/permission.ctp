@@ -5,6 +5,9 @@
             <div class="widget">
                 <div class="widget-content">
                     <div class="table-responsive">
+                        <form method="post" href="/configuration">
+                        <input type="hidden" id="mode" name="mode" value="1">
+
                         <table  class="table">
                             <thead>
                             <tr >
@@ -34,7 +37,7 @@
                                                     //$key! = action
                                                     if(isset($acls['actions']['*']) or isset($acls['actions'][$key1]))
                                                     {
-                                                        if(in_array($role->id,$acls['actions']['*'])){
+                                                        if( is_array($acls['actions']['*']) and in_array($role->id,$acls['actions']['*']) ){
                                                             echo 'checked';
                                                         }elseif(isset($acls['actions'][$key1]) and in_array($role->id, $acls['actions'][$key1])){
                                                             echo 'checked';
@@ -42,10 +45,10 @@
                                                         else
                                                             echo '';
                                                     }else{
-                                                        echo 'checked';
+                                                        echo '';
                                                     }
 
-                                                    ?> id="inlineCheckbox1" value="<?php echo $acls['controller'].'_'.$key1;?>">
+                                                    ?> id="" name="<?php echo$acls['controller'].'['.$role->name.'][]' ?>" value="<?php echo $key1;?>">
                                                 </label>
                                             </td>
                                         <?php endforeach;?>
@@ -60,6 +63,11 @@
                             <?php endforeach;?>
                             </tbody>
                         </table>
+                            <div class="col-sm-4">
+                                <button type="submit" class="btn btn-success">Submit</button>
+                                <button type="reset" class="btn btn-default">Cancel</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

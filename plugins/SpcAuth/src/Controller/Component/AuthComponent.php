@@ -134,7 +134,7 @@ class AuthComponent extends CakeAuthComponent {
 		return $res;
 	}
 
-	public function getACL($path = null){
+	public function getACL($availableRoles = null,$path = null){
         if ($path === null) {
             $path = ROOT . DS . 'config' . DS;
         }
@@ -144,19 +144,21 @@ class AuthComponent extends CakeAuthComponent {
         }
         $roles = Cache::read($this->_config['cacheKeyAcl'], $this->_config['cache']);
         if ($roles !== false) {
+			print_r($roles);exit;
             return $roles;
         }
 
         $iniArray = Utility::parseFile($path . $this->_config['file_alc']);
-        $availableRoles = $this->_getAvailableRoles();
+
+		if ($availableRoles === null) {
+			$availableRoles = $this->_getAvailableRoles();
+		}
         $res = [];
 		foreach ($iniArray as $key => $array) {
 
 			$tempRes = Utility::deconstructIniKey($key);
 			$res[$tempRes['controller']] =$tempRes;
-
-			$res[$tempRes['controller']]['map'] = $array;
-
+			$res[$tempRes['controller']]['map'] = array('controllers' => $key ,'actions' => $array['actions']);
 			foreach ($array as $actions => $roles) {
 				// Get all roles used in the current ini section
 				$roles = explode(',', $roles);
@@ -205,7 +207,6 @@ class AuthComponent extends CakeAuthComponent {
 
 			}
         }
-
         Cache::write($this->_config['cacheKeyAcl'], $res, $this->_config['cache']);
         return $res;
     }
@@ -231,7 +232,6 @@ class AuthComponent extends CakeAuthComponent {
         if (count($roles) < 1) {
             throw new Exception('Invalid SpcAuth role setup (roles table `' . $this->_config['rolesTable'] . '` has no roles)');
         }
-
         return $roles;
     }
 }
