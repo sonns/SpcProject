@@ -56,14 +56,17 @@
                         </thead>
 
                         <tbody>
-                        <?php foreach ($departments as $key => $department): ?>
+                        <?php foreach ($requests as $key => $request): ?>
                             <tr>
                                 <td><?php echo $key+1;?></td><td><input type="checkbox" class="rows-check"></td>
-                                <td><strong><?php echo $department->name;?></strong></td>
-                                <td><strong><?php echo $department->tel;?></strong></td>
-                                <td><strong><?php echo $department->address;?></strong></td>
-                                <td> <span class="label <?php echo ($department->status) ? 'label-success' :'label-danger' ?>"><?php echo ($department->status) ? 'Active' :'Suspended' ?></span></td>
-                                <td><strong><?php echo $department->created;?></strong></td>
+                                <td><strong><?php echo $request->user_id;?></strong></td>
+                                <td><strong><?php echo $request->dep_id;?></strong></td>
+                                <td><strong><?php echo $request->cate_id;?></strong></td>
+                                <td><strong><?php echo $request->cate_id;?></strong></td>
+                                <td><strong><?php echo $request->cate_id;?></strong></td>
+                                <td><strong><?php echo $request->cate_id;?></strong></td>
+                                <td> <span class="label <?php echo ($request->status) ? 'label-success' :'label-danger' ?>"><?php echo ($request->status) ? 'Active' :'Suspended' ?></span></td>
+                                <td><strong><?php echo $request->created;?></strong></td>
                                 <td>
                                     <div class="btn-group btn-group-xs">
                                         <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'fa fa-edit')),array('controller'=>'departments','action'=>'edit','edit_dep'),array('style' => 'margin-right:4px;' ,'class'=>'btn btn-default','title'=>'Edit','data-toggle'=>"tooltip",'escape' => false ))?>
