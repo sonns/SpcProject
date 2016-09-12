@@ -13,9 +13,17 @@ class RequestsController extends AuthMasterController
      *
      * @return \Cake\Network\Response|null
      */
+    public $paginate = [
+        'limit' => 1,
+        'order' => [
+            'Requests.id' => 'desc'
+        ]
+    ];
     public function index()
     {
-
+        $requests = $this->paginate($this->Requests);
+        $this->set(compact('requests'));
+        $this->set('_serialize', ['requests']);
     }
     /**
      * View method

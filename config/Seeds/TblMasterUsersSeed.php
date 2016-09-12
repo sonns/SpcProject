@@ -1,5 +1,4 @@
 <?php
-use App\Utility\FunctionCommon;
 use Migrations\AbstractSeed;
 
 /**
@@ -59,44 +58,6 @@ class TblMasterUsersSeed extends AbstractSeed
 //
         $table = $this->table('tbl_master_roles');
         $table->insert($data)->save();
-
-        $common = new FunctionCommon();
-
-        $pass  = $common->cipher_encrypt('123456',MCRYPT_KEY);
-
-        $data = [
-            [
-                'id'    => 1,
-                'dep_id'    => 1,
-                'password'  => $pass,
-                'first_name'  => 'Son',
-                'last_name'  => 'Nguyen',
-                'email'  => 'truongsonns@gmail.com',
-                'username'  => 'sonns',
-                'confirmed'=>1,
-                'del_flg'  => 0,
-                'created'  => '2016-08-27 13:23:29',
-                'modified'  => '2016-08-27 13:23:29',
-            ],
-            [
-                'id'    => 2,
-                'dep_id'    => 1,
-                'password'  => $pass,
-                'first_name'  => 'Son',
-                'last_name'  => 'Nguyen',
-                'email'  => 'truongsonns1@gmail.com',
-                'username'  => 'sonns1',
-                'confirmed'=>0,
-                'del_flg'  => 0,
-                'created'  => '2016-08-27 13:23:29',
-                'modified'  => '2016-08-27 13:23:29',
-            ]
-        ];
-
-        $table = $this->table('tbl_master_users');
-        $table->insert($data)->save();
-
-
 
         $data = [
             [

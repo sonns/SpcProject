@@ -99,4 +99,12 @@ Router::scope('/configuration', function (RouteBuilder $routes) {
     $routes->fallbacks('DashedRoute');
 });
 
+//Requests router
+Router::scope('/request', function (RouteBuilder $routes) {
+    $routes->connect('/', ['controller' => 'Requests', 'action' => 'index'], ['routeClass' => 'DashedRoute']);
+    $routes->connect('/:action/*', ['controller' => 'Requests'], ['routeClass' => 'DashedRoute']);
+    $routes->fallbacks('DashedRoute');
+});
+
+
 Plugin::routes();

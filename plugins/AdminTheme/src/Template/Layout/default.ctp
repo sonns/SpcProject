@@ -166,6 +166,6 @@ echo $this->element('logout');
 
     <?= $this->Html->script('AdminTheme./assets/js/init.js') ?>
 
-    <?php echo $this->fetch('script'); ?>
+    <?php echo $this->fetch('scriptBlock'); ?>
 </body>
 </html>

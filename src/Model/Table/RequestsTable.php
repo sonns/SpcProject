@@ -13,17 +13,17 @@ use Cake\Event\Event;
  *
  * @property \Cake\ORM\Association\BelongsTo $Logins
  *
- * @method \App\Model\Entity\DepartmentsTable get($primaryKey, $options = [])
- * @method \App\Model\Entity\DepartmentsTable newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\DepartmentsTable[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\DepartmentsTable|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\DepartmentsTable patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\DepartmentsTable[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\DepartmentsTable findOrCreate($search, callable $callback = null)
+ * @method \App\Model\Entity\RequestsTable get($primaryKey, $options = [])
+ * @method \App\Model\Entity\RequestsTable newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\RequestsTable[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\RequestsTable|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\RequestsTable patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\RequestsTable[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\RequestsTable findOrCreate($search, callable $callback = null)
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
-class DepartmentsTable extends Table
+class RequestsTable extends Table
 {
 
 
@@ -37,7 +37,7 @@ class DepartmentsTable extends Table
     {
         parent::initialize($config);
 
-        $this->table('tbl_master_departments');
+        $this->table('tbl_master_requests');
         $this->displayField('id');
         $this->primaryKey('id');
         $this->addBehavior('Timestamp');

@@ -11,7 +11,7 @@
                         <table  class="table">
                             <thead>
                             <tr >
-                                <th>Permission
+                                <th>Permission</th>
                                 <?php foreach ($roles as $key => $role): ?>
                                     <th><?php echo $role->display_name;?></th>
                                 <?php endforeach;?>
@@ -20,7 +20,7 @@
 
                             <tbody>
                             <?php foreach ($listAcl as $key => $acls): ?>
-                                <tr class="btn-success">
+                                <tr class="btn-success" <?php echo ($key === 'AuthMaster') ? "style='display:none;'" : ''; ?>>
                                     <td><?php echo $acls['alias'];?></td>
                                     <?php foreach ($roles as $key1 => $role): ?>
                                         <td><td>
@@ -28,7 +28,7 @@
                                 </tr>
 
                                     <?php foreach ($acls['roles'] as $key1 => $acl): ?>
-                                    <tr>
+                                    <tr <?php echo ($key === 'AuthMaster') ? "style='display:none;'" : ''; ?>>
                                         <td style="padding: 20px;"><?php echo $acl;?></td>
                                         <?php foreach ($roles as $key2 => $role): ?>
                                             <td>
@@ -74,3 +74,7 @@
         </div>
     </div>
 </div>
+
+
+
+

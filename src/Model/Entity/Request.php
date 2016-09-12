@@ -16,7 +16,7 @@ use Cake\ORM\Entity;
  *
  * @property \App\Model\Entity\Login $login
  */
-class Department extends Entity
+class Request extends Entity
 {
 
     /**
