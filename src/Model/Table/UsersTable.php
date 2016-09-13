@@ -23,7 +23,15 @@ use Cake\Validation\Validator;
  */
 class UsersTable extends Table
 {
+    public  $hasMany = array( 'Requests' => array( 'className' => 'Requests' ) );
+    public $hasOne = array(
+        'Profiles' => array(
+            'className' => 'Profiles',
+//            'conditions' => array('Profiles.published' => '1'),
+            'dependent' => true
+        )
 
+    );
 
     /**
      * Initialize method

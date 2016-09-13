@@ -64,11 +64,6 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->fetch('script') ?>
 </head>
 <body>
-<!-- Modal Task Progress -->
-
-<?php
-echo $this->element('task_progress');
-?>
 <!--Modal Logout-->
 <?php
 echo $this->element('logout');

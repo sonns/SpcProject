@@ -15,14 +15,10 @@
                     <i class="fa fa-key overlay"></i>
                     <input type="password" id="login_pass" name="password" class="form-control text-input" placeholder="********">
                 </div>
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" name="remember" id="remember"> Remember me
-                        </label>
-                    </div>
-                </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox"> Remember me
+                </label>
             </div>
                 <div class="row">
                     <div class="col-sm-6">

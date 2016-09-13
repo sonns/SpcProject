@@ -1,5 +1,6 @@
 <?php
 namespace App\Controller;
+use Cake\ORM\TableRegistry;
 
 /**
  * Base Controller
@@ -14,16 +15,31 @@ class RequestsController extends AuthMasterController
      * @return \Cake\Network\Response|null
      */
     public $paginate = [
-        'limit' => 1,
+        'limit' => 4,
         'order' => [
             'Requests.id' => 'desc'
+        ],
+//        'fields' => array('Requests' =>'*'),
+        'contain' =>[
+            'Users'=>array('fields'=>['first_name','last_name']),
+            'Departments' =>['fields'=>['name']],
+            'Categories' => ['fields'=>['name']]
         ]
     ];
     public function index()
     {
+        $roles = TableRegistry::get('Categories');
+        $listCate = $roles->find('list', [
+            'keyField' => 'id',
+            'valueField' => 'name',
+            'conditions' => ''
+        ]);
         $requests = $this->paginate($this->Requests);
+//        echo '<pre>';print_r($requests) ; echo '</pre>';exit;
         $this->set(compact('requests'));
+        $this->set(compact('listCate'));
         $this->set('_serialize', ['requests']);
+        $this->set('_serialize', ['listCate']);
     }
     /**
      * View method
@@ -45,6 +61,7 @@ class RequestsController extends AuthMasterController
      */
     public function add()
     {
+
         $base = $this->Base->newEntity();
         if ($this->request->is('post')) {
             $base = $this->Base->patchEntity($base, $this->request->data);
@@ -57,7 +74,9 @@ class RequestsController extends AuthMasterController
             }
         }
         $this->set(compact('base'));
+
         $this->set('_serialize', ['base']);
+        $this->set('_serialize', ['listCate']);
     }
 
     /**

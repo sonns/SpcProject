@@ -1,10 +1,11 @@
 <!-- Modal add department-->
-<?php echo $this->element('Department/add') ?>
+<?php echo $this->element('Request/add') ?>
 <!-- End div .md-modal .md-fade-in-scale-up -->
 
 <!-- Page Heading Start -->
 <div class="page-heading">
     <h1><i class='fa fa-table'></i> Requests List</h1>
+</div>
 <!-- Page Heading End-->
 <!-- Your awesome content goes here -->
 <div class="row">
@@ -43,13 +44,13 @@
                         <tr>
                             <th>No</th>
                             <th style="width: 30px" data-sortable="false"><input type="checkbox" class="rows-check"></th>
-                            <th>user_id</th>
-                            <th>dep_id</th>
-                            <th>cate_id</th>
-                            <th>title</th>
-                            <th>subject</th>
-                            <th>appr_date</th>
-                            <th>status</th>
+                            <th>User</th>
+                            <th>Department</th>
+                            <th>Category</th>
+                            <th>Title</th>
+                            <th>Subject</th>
+                            <th>Approve-date</th>
+                            <th>Status</th>
                             <th>Created Date</th>
                             <th data-sortable="false">Action</th>
                         </tr>
@@ -59,12 +60,12 @@
                         <?php foreach ($requests as $key => $request): ?>
                             <tr>
                                 <td><?php echo $key+1;?></td><td><input type="checkbox" class="rows-check"></td>
-                                <td><strong><?php echo $request->user_id;?></strong></td>
-                                <td><strong><?php echo $request->dep_id;?></strong></td>
-                                <td><strong><?php echo $request->cate_id;?></strong></td>
-                                <td><strong><?php echo $request->cate_id;?></strong></td>
-                                <td><strong><?php echo $request->cate_id;?></strong></td>
-                                <td><strong><?php echo $request->cate_id;?></strong></td>
+                                <td><strong><?php echo $request->user->alias_name;?></strong></td>
+                                <td><strong><?php echo $request->department->name;?></strong></td>
+                                <td><strong><?php echo $request->category->name;?></strong></td>
+                                <td><strong><?php echo $request->title;?></strong></td>
+                                <td><strong><?php echo $request->subject;?></strong></td>
+                                <td><strong><?php echo $request->appr_date;?></strong></td>
                                 <td> <span class="label <?php echo ($request->status) ? 'label-success' :'label-danger' ?>"><?php echo ($request->status) ? 'Active' :'Suspended' ?></span></td>
                                 <td><strong><?php echo $request->created;?></strong></td>
                                 <td>

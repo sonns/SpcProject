@@ -5,6 +5,7 @@
 <!-- Page Heading Start -->
 <div class="page-heading">
     <h1><i class='fa fa-table'></i> Department List</h1>
+</div>
 <!-- Page Heading End-->
 <!-- Your awesome content goes here -->
 <div class="row">

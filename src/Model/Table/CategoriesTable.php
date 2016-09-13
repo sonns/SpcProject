@@ -13,18 +13,20 @@ use Cake\Event\Event;
  *
  * @property \Cake\ORM\Association\BelongsTo $Logins
  *
- * @method \App\Model\Entity\RequestsTable get($primaryKey, $options = [])
- * @method \App\Model\Entity\RequestsTable newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\RequestsTable[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\RequestsTable|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\RequestsTable patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\RequestsTable[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\RequestsTable findOrCreate($search, callable $callback = null)
+ * @method \App\Model\Entity\DepartmentsTable get($primaryKey, $options = [])
+ * @method \App\Model\Entity\DepartmentsTable newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\DepartmentsTable[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\DepartmentsTable|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\DepartmentsTable patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\DepartmentsTable[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\DepartmentsTable findOrCreate($search, callable $callback = null)
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
-class RequestsTable extends Table
+class CategoriesTable extends Table
 {
+
+
     /**
      * Initialize method
      *
@@ -35,27 +37,10 @@ class RequestsTable extends Table
     {
         parent::initialize($config);
 
-        $this->table('tbl_master_requests');
+        $this->table('tbl_master_categories');
         $this->displayField('id');
         $this->primaryKey('id');
         $this->addBehavior('Timestamp');
-        $this->belongsTo('Users', [
-            'className' => 'Users'
-        ]);
-        $this->belongsTo('Departments', [
-            'className' => 'Departments',
-            'foreignKey' => 'dep_id'
-        ]);
-        $this->belongsTo('Categories', [
-            'className' => 'Categories',
-            'foreignKey' => 'cate_id'
-        ]);
-//        $this->belongsTo('Users',[
-//                'className'=>['Users'],
-//                'propertyName'=>['alias_name']
-//            ]
-//        );
-
     }
 
     /**
