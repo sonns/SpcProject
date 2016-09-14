@@ -57,7 +57,13 @@ class RequestsTable extends Table
 //        );
 
     }
-
+    public function findOrWhere(Query $query, array $conditions){
+        if(isset($conditions['OR']))
+        {
+             $query= $query->orWhere($conditions['OR']);
+        }
+        return $query->hydrate(true);
+    }
     /**
      * Default validation rules.
      *

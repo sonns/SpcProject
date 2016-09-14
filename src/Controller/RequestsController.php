@@ -16,10 +16,10 @@ class RequestsController extends AuthMasterController
      */
     public $paginate = [
         'limit' => 4,
+        'finder' => 'orWhere',
         'order' => [
             'Requests.id' => 'desc'
         ],
-//        'fields' => array('Requests' =>'*'),
         'contain' =>[
             'Users'=>array('fields'=>['first_name','last_name']),
             'Departments' =>['fields'=>['name']],
@@ -34,12 +34,38 @@ class RequestsController extends AuthMasterController
             'valueField' => 'name',
             'conditions' => ''
         ]);
-        $requests = $this->paginate($this->Requests);
+        //check staff
+//        echo '<pre>';
+//        print_r($this->uses);
+//        echo '<pre>';exit;
+        $conditions = [];
+        if($this->uses->role[0]->name ==='staff') {
+            $conditions = ['conditions' => ['user_id' => $this->uses->id]];
+        }elseif ($this->uses->role[0]->name ==='top'){
+            $conditions = ['conditions' => ['status >=' => 4] , 'OR' => ['user_id' => $this->uses->role[0]->id]];
+        }elseif ($this->uses->role[0]->name ==='manager'){
+            $conditions = ['conditions' => ['status' => 3] , 'OR' => ['user_id' => $this->uses->role[0]->id]];
+        }
+        elseif ($this->uses->role[0]->name ==='sub-manager'){
+            $conditions = ['conditions' => ['status' => 2] , 'OR' => ['user_id' => $this->uses->role[0]->id]];
+        }else{
+            $conditions = [];
+        }
+        $requests = $this->paginate($this->Requests,$conditions);
+//        print_r($requests);exit;
+
 //        echo '<pre>';print_r($requests) ; echo '</pre>';exit;
         $this->set(compact('requests'));
         $this->set(compact('listCate'));
         $this->set('_serialize', ['requests']);
         $this->set('_serialize', ['listCate']);
+    }
+    protected function _checkHead($data){
+        if($data['id'] === 2 )
+            return true;
+        else{
+            return false;
+        }
     }
     /**
      * View method

@@ -246,6 +246,7 @@ $('input[type=file]').bootstrapFileInput();
 $('.datepicker-input').datepicker();
 
 
+
 //ICHECK
 $('input:not(.ios-switch)').iCheck({
   checkboxClass: 'icheckbox_square-aero',

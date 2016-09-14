@@ -26,6 +26,12 @@ class RolesTable extends Table
         $this->displayField('id');
         $this->primaryKey('id');
         $this->addBehavior('Timestamp');
+        $this->belongsToMany('user', [
+            'through' => 'RoleUsers',
+            'className' => 'Users',
+            'foreignKey' => 'role_id',
+            'targetForeignKey' => 'user_id'
+        ]);
     }
 
     public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)

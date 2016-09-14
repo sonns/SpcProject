@@ -48,6 +48,12 @@ class UsersTable extends Table
         $this->primaryKey('id');
         $this->addBehavior('Timestamp');
         $this->belongsTo('Roles');
+        $this->belongsToMany('role', [
+            'through' => 'RoleUsers',
+            'className' => 'Roles',
+            'foreignKey' => 'user_id',
+            'targetForeignKey' => 'role_id'
+        ]);
 //        $this->belongsTo('Logins', [
 //            'foreignKey' => 'login_id',
 //            'joinType' => 'INNER'

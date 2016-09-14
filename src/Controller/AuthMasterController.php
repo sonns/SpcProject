@@ -91,7 +91,11 @@ class AuthMasterController extends AppController
 
         ]);
         if ($this->Auth->user()) {
-            $this->set('userInfo', $this->Auth->user());
+            $users = TableRegistry::get('Users');
+//            print_r($this->Auth->user());exit;
+            $this->uses = $users->find()->where(['id'=>$this->Auth->user()['id']])->contain('role')->first();
+//            $this->uses = $this->Auth->user();
+            $this->set('userInfo', $this->uses);
             $this->set('params', $this->params);
         }
     }

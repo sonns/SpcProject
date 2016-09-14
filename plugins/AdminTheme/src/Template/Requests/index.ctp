@@ -37,7 +37,7 @@
                         </div>
                     </div>
                 </div>
-
+                <?php  if(count($requests)):?>
                 <div class="table-responsive">
                     <table data-sortable class="table table-hover table-striped">
                         <thead>
@@ -57,6 +57,7 @@
                         </thead>
 
                         <tbody>
+
                         <?php foreach ($requests as $key => $request): ?>
                             <tr>
                                 <td><?php echo $key+1;?></td><td><input type="checkbox" class="rows-check"></td>
@@ -78,8 +79,10 @@
                                 </td>
                             </tr>
                         <?php endforeach;?>
+
                         </tbody>
                     </table>
+
                 </div>
                 <div class="data-table-toolbar">
                     <ul class="pagination" style="margin-bottom: 8px;">
@@ -90,6 +93,12 @@
                     </ul>
                     <p style="marrgin-left:40px;"><?php echo $this->Paginator->counter(); ?></p>
                 </div>
+                <?php else:?>
+                    <div>
+                        <h1 style="text-align: center;" > No Data </h1>
+                    </div>
+
+                <?php endif;?>
             </div>
         </div>
     </div>

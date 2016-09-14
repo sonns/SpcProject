@@ -12,7 +12,13 @@
                                 <?php echo  $this->Form->select(
                                     'sltCategory',
                                     $listCate,
-                                    ['empty' => 'Select Category']
+                                    [
+                                        'empty' => 'Select Category',
+                                        'class' => 'form-control',
+                                        'name'=> 'sltCategory',
+                                        'id'=> 'sltCategory'
+
+                                    ]
                                 );?>
                             </div>
                         </div>
@@ -21,15 +27,15 @@
                             <div class="col-sm-9">
                                 <div class="input-group">
                                     <span class="input-group-addon">$</span>
-                                    <input type="text" class="form-control">
+                                    <input type="text" name="txtPrice" class="form-control">
                                     <span class="input-group-addon">.00</span>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-sm-3"></div>
+                            <label class="col-sm-3 control-label">Approve Date</label>
                             <div class="col-sm-9">
-                                <input type="file" class="btn btn-default" name="fileAttach" title="Attach file">
+                                <input type="text" class="form-control datepicker-input" data-mask="99-99-9999" placeholder="mm-dd-yyyy">
                             </div>
                         </div>
                         <div class="form-group">
@@ -58,13 +64,15 @@
                                 <input type="text" class="form-control" id="dep_address" name="dep_address" placeholder="Enter department address">
                             </div>
                         </div>
+
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Approve Date</label>
+                            <div class="col-sm-3"></div>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control datepicker-input" data-mask="99-99-9999" placeholder="mm-dd-yyyy">
+                                <input type="file" class="btn btn-default" name="fileAttach" title="Attach file">
                             </div>
                         </div>
                         <div class="form-group">
+                            <div class="col-sm-3"></div>
                             <div class="col-sm-8">
                                 <button type="submit" class="btn btn-success">Submit</button>
                                 <button type="reset" class="btn btn-default">Cancel</button>

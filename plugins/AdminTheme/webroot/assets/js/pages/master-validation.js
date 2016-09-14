@@ -268,4 +268,62 @@ s                            }
     });
 
 
+    $('#frRequest').bootstrapValidator({
+        fields: {
+            sltCategory: {
+                validators: {
+                    notEmpty: {
+                        message: 'The category is required and can\'t be empty'
+                    },
+                }
+            },
+            txtPrice: {
+                validators: {
+                    notEmpty: {
+                        message: 'The category is required and can\'t be empty'
+                    },
+                    digits: {
+                        message: 'The value can contain only digits'
+                    }
+                }
+            },
+            dep_address: {
+                validators: {
+                    notEmpty: {
+                        message: 'Message is required and can\'t be empty'
+                    },
+                    stringLength: {
+                        min: 6,
+                        message: 'Message must be more than 6 characters long'
+                    }
+                }
+            }
+        },
+        submitHandler: function (form) {
+            $.ajax({
+                type: "POST",
+                url:   "add",
+                data: $(form).serialize(),
+                success: function () {
+                    // ev.stopPropagation();
+                    // removeModalHandler();
+                    $("#md-add-department").removeClass("md-show");
+                    // $(form).data('formValidation').resetForm();
+                    $('#createDepartment').trigger('reset');
+                    // window.setTimeout(function () {$("#md-add-department").remove();},500);
+                    return true;
+
+                }
+                // ,
+                // error: function (xhr, ajaxOptions, thrownError) {
+                //     alert(xhr.status);
+                //     alert(thrownError);
+                //     alert(xhr.responseText);
+                // }
+            });
+            return false; // required to block normal submit since you used ajax
+        },
+    });
+
+
 });
