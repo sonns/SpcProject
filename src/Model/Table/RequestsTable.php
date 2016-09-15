@@ -79,14 +79,26 @@ class RequestsTable extends Table
 
     public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)
     {
-        if (isset($data['dep_name'])) {
-            $data['name'] = $data['dep_name'];
+        if (isset($data['sltCategory'])) {
+            $data['cate_id'] = $data['sltCategory'];
         }
-        if (isset($data['dep_tel'])) {
-            $data['tel'] = $data['dep_tel'];
+        if (isset($data['txtPrice'])) {
+            $data['price'] = $data['txtPrice'];
         }
-        if (isset($data['dep_address'])) {
-            $data['address'] = $data['dep_address'];
+        if (isset($data['txtApproveDate'])) {
+            $data['appr_date'] = $data['txtApproveDate'];
+        }
+        if (isset($data['txtTitle'])) {
+            $data['title'] = $data['txtTitle'];
+        }
+        if (isset($data['txtDescription'])) {
+            $data['description'] = $data['txtDescription'];
+        }
+        if (isset($data['txtReason'])) {
+            $data['reason'] = $data['txtReason'];
+        }
+        if (isset($data['txtNote'])) {
+            $data['note'] = $data['txtNote'];
         }
     }
 }

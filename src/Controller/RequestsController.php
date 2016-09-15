@@ -1,5 +1,6 @@
 <?php
 namespace App\Controller;
+use Cake\I18n\Time;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -87,22 +88,92 @@ class RequestsController extends AuthMasterController
      */
     public function add()
     {
-
-        $base = $this->Base->newEntity();
+        $roles = TableRegistry::get('Categories');
+        $listCate = $roles->find('list', [
+            'keyField' => 'id',
+            'valueField' => 'name',
+            'conditions' => ''
+        ]);
+        $request = $this->Requests->newEntity();
         if ($this->request->is('post')) {
-            $base = $this->Base->patchEntity($base, $this->request->data);
-            if ($this->Base->save($base)) {
-                $this->Flash->success(__('The base has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+            //Check if image has been uploaded
+            if (!empty($this->request->data['fileAttach']['name'])) {
+                $file = $this->request->data['fileAttach'];
+
+                $ext = substr(strtolower(strrchr($file['name'], '.')), 1);
+                $arr_ext = array('jpg', 'jpeg', 'gif','png');
+                if (in_array($ext, $arr_ext)) {
+                    $path =  WWW_ROOT . 'file\request\\';
+                    if(!is_dir($path)){
+                        mkdir($path, 777,true);
+                    }
+                    move_uploaded_file($file['tmp_name'], $path . $file['name']);
+                    //prepare the filename for database entry
+                    $this->request->data['attach'] = $file['name'];
+                }
+            }
+            $this->request->data['user_id'] = $this->uses->id;
+            $this->request->data['dep_id'] = $this->uses->dep_id;
+            $this->request->data['txtApproveDate'] = Time::parse($this->request->data['txtApproveDate']);
+//            echo '<pre>';
+//            print_r($this->request->data);
+//            echo '</pre>';
+//            exit;
+            $request = $this->Requests->patchEntity($request, $this->request->data);
+            if ($this->Requests->save($request)) {
+                $this->Flash->success(__('The base has been saved.'));
+                return $this->redirect(['action' => 'add']);
             } else {
                 $this->Flash->error(__('The base could not be saved. Please, try again.'));
             }
         }
-        $this->set(compact('base'));
-
-        $this->set('_serialize', ['base']);
+        $this->set(compact('request'));
+        $this->set(compact('listCate'));
+        $this->set('_serialize', ['request']);
         $this->set('_serialize', ['listCate']);
+    }
+    public function addRequest()
+    {
+        if($this->request->is('ajax')){
+//            print_r($this->request->data);exit;
+            $request = $this->Requests->newEntity();
+            if ($this->request->is('post')) {
+
+                //Check if image has been uploaded
+                if (!empty($this->request->data['fileAttach']['name'])) {
+                    $file = $this->request->data['fileAttach'];
+
+                    $ext = substr(strtolower(strrchr($file['name'], '.')), 1);
+                    $arr_ext = array('jpg', 'jpeg', 'gif','png');
+                    if (in_array($ext, $arr_ext)) {
+                        $path =  WWW_ROOT . 'file\request\\';
+                        if(!is_dir($path)){
+                            mkdir($path, 777,true);
+                        }
+                        move_uploaded_file($file['tmp_name'], $path . $file['name']);
+                        //prepare the filename for database entry
+                        $this->request->data['attach'] = $file['name'];
+                    }
+                }
+                $this->request->data['user_id'] = $this->uses->id;
+                $this->request->data['dep_id'] = $this->uses->dep_id;
+                $this->request->data['txtApproveDate'] = Time::parse($this->request->data['txtApproveDate']);
+//            echo '<pre>';
+//            print_r($this->request->data);
+//            echo '</pre>';
+//            exit;
+                $request = $this->Requests->patchEntity($request, $this->request->data);
+                if ($this->Requests->save($request)) {
+//                    $this->Flash->success(__('The base has been saved.'));
+//                    return $this->redirect(['action' => 'add']);
+                } else {
+//                    $this->Flash->error(__('The base could not be saved. Please, try again.'));
+                }
+            }
+            $this->set(compact('request'));
+            $this->set('_serialize', ['request']);
+        }
     }
 
     /**

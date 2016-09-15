@@ -243,6 +243,7 @@ $('input[type=file]').bootstrapFileInput();
 
 
 //DATE PICKER
+// $('#txtApproveDate').datepicker();
 $('.datepicker-input').datepicker();
 
 

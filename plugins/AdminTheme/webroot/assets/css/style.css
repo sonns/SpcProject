@@ -1,6 +1,6 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700);
 .datepicker{
-  z-index:1151 !important;
+  z-index:9999999 !important;
 }
 .bg-white-1 {
   background-color: #ffffff !important;

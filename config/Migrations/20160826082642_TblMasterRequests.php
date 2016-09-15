@@ -27,11 +27,11 @@ class TblMasterRequests extends AbstractMigration
             ->addColumn('dep_id', 'integer')
             ->addColumn('cate_id', 'integer')
             ->addColumn('title', 'string')
-            ->addColumn('subject', 'string')
             ->addColumn('price', 'float',['precision' => 10,  'scale' => 2,'null'=>true])
             ->addColumn('description', 'text',['null'=>true])
             ->addColumn('effectiveness', 'text',['null'=>true])
             ->addColumn('attach', 'text',['null'=>true])
+            ->addColumn('reason', 'text',['null'=>true])
             ->addColumn('note', 'text',['null'=>true])
             ->addColumn('appr_date', 'datetime')
             ->addColumn('del_flg', 'integer', array('limit' => 1,'default'=>0))
@@ -70,11 +70,6 @@ class TblMasterRequests extends AbstractMigration
             ->addIndex(
                 [
                     'title',
-                ]
-            )
-            ->addIndex(
-                [
-                    'subject',
                 ]
             )
 

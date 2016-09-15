@@ -54,6 +54,10 @@ class UsersTable extends Table
             'foreignKey' => 'user_id',
             'targetForeignKey' => 'role_id'
         ]);
+        $this->belongsTo('dep', [
+            'className' => 'Departments',
+            'foreignKey' => 'dep_id',
+        ]);
 //        $this->belongsTo('Logins', [
 //            'foreignKey' => 'login_id',
 //            'joinType' => 'INNER'

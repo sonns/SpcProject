@@ -355,6 +355,28 @@
             return this._getMessageContainer($parent);
         },
 
+        getMessageContainer: function($field) {
+            var $parent = $field.parent();
+            if ($parent.hasClass('form-group')) {
+                return $parent;
+            }
+
+            var cssClasses = $parent.attr('class');
+            if (!cssClasses) {
+                return this._getMessageContainer($parent);
+            }
+
+            cssClasses = cssClasses.split(' ');
+            var n = cssClasses.length;
+            for (var i = 0; i < n; i++) {
+                if (/^col-(xs|sm|md|lg)-\d+$/.test(cssClasses[i]) || /^col-(xs|sm|md|lg)-offset-\d+$/.test(cssClasses[i])) {
+                    return $parent;
+                }
+            }
+
+            return this._getMessageContainer($parent);
+        },
+
         /**
          * Called when all validations are completed
          */

@@ -273,56 +273,94 @@ s                            }
             sltCategory: {
                 validators: {
                     notEmpty: {
-                        message: 'The category is required and can\'t be empty'
+                        message: 'The Category is required and can\'t be empty'
                     },
                 }
             },
             txtPrice: {
                 validators: {
                     notEmpty: {
-                        message: 'The category is required and can\'t be empty'
+                        message: 'The Price is required and can\'t be empty'
                     },
                     digits: {
                         message: 'The value can contain only digits'
+                    },
+                    callback: {
+                        // message: 'This '+ $('#sltCategory').val() +' category have a minimum price must be up',
+                        callback: function(value, validator) {
+                            var cate = $('#sltCategory').val();
+                            // if(!$('#sltCategory').val() || 0 === $('#sltCategory').val().length){
+                            //     validator.updateStatus('sltCategory', 'INVALID ', 'notEmpty');
+                            // }
+                            if(value < 10000 && cate === '4' )
+                            {
+                                // var fields = validator.getMessageContainer('txtPrice');
+                                // alert(fields);exit;
+                                // validator.option.message = 'This \''+ $('#sltCategory').val() +'\' category have a minimum sale price must be up';
+
+                                $("small[data-bv-validator-for='txtPrice']:last").html(
+                                    'This \' '+ $('#sltCategory').find(":selected").text() +' \' category have a minimum price must be up 10.000'
+                                );
+                                return false;
+                            }else if(value < 5000 && cate === '6'){
+                                // validator.option.message = 'This \''+ $('#sltCategory').val() +'\' category have a minimum sale price must be up';
+                                $("small[data-bv-validator-for='txtPrice']:last").html(
+                                    'This \''+ $('#sltCategory').find(":selected").text() +'\' category have a minimum price must be up 5.000'
+                                );
+                                return false;
+                            }
+                            // var items = $('#captchaOperation').html().split(' '), sum = parseInt(items[0]) + parseInt(items[2]);
+                            return true;
+                        }
                     }
                 }
             },
-            dep_address: {
+            txtApproveDate: {
                 validators: {
                     notEmpty: {
-                        message: 'Message is required and can\'t be empty'
+                        message: 'The Approve_Date is required and can\'t be empty'
                     },
-                    stringLength: {
-                        min: 6,
-                        message: 'Message must be more than 6 characters long'
+                    date: {
+                        format: 'MM/DD/YYYY'
+                    }
+                }
+            },
+            txtTitle: {
+                validators: {
+                    notEmpty: {
+                        message: 'The Title is required and can\'t be empty'
+                    }
+                }
+            },
+            txtDescription: {
+                validators: {
+                    notEmpty: {
+                        message: 'The Description is required and can\'t be empty'
+                    }
+                }
+            },
+            txtReason: {
+                validators: {
+                    notEmpty: {
+                        message: 'The Reason is required and can\'t be empty'
                     }
                 }
             }
         },
-        submitHandler: function (form) {
-            $.ajax({
-                type: "POST",
-                url:   "add",
-                data: $(form).serialize(),
-                success: function () {
-                    // ev.stopPropagation();
-                    // removeModalHandler();
-                    $("#md-add-department").removeClass("md-show");
-                    // $(form).data('formValidation').resetForm();
-                    $('#createDepartment').trigger('reset');
-                    // window.setTimeout(function () {$("#md-add-department").remove();},500);
-                    return true;
-
-                }
-                // ,
-                // error: function (xhr, ajaxOptions, thrownError) {
-                //     alert(xhr.status);
-                //     alert(thrownError);
-                //     alert(xhr.responseText);
-                // }
-            });
-            return false; // required to block normal submit since you used ajax
-        },
+        // submitHandler: function (form) {
+        //     $.ajax({
+        //         type: "POST",
+        //         url:   "request/addRequest.json",
+        //         dataType: 'text',
+        //         data: $("form").serialize(),
+        //         success: function (data) {
+        //             var returnedData = JSON.parse(data);
+        //             alert(returnedData);
+        //         }
+        //     });
+        //     $("html, body").animate({ scrollTop: 0 }, "slow");
+        //     return false;
+        // },
     });
 
 

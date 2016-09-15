@@ -354,7 +354,27 @@
 
             return this._getMessageContainer($parent);
         },
+        getMessageContainer: function($field) {
+            var $parent = $field.parent();
+            if ($parent.hasClass('form-group')) {
+                return $parent;
+            }
 
+            var cssClasses = $parent.attr('class');
+            if (!cssClasses) {
+                return this._getMessageContainer($parent);
+            }
+
+            cssClasses = cssClasses.split(' ');
+            var n = cssClasses.length;
+            for (var i = 0; i < n; i++) {
+                if (/^col-(xs|sm|md|lg)-\d+$/.test(cssClasses[i]) || /^col-(xs|sm|md|lg)-offset-\d+$/.test(cssClasses[i])) {
+                    return $parent;
+                }
+            }
+
+            return this._getMessageContainer($parent);
+        },
         /**
          * Called when all validations are completed
          */
@@ -447,6 +467,12 @@
             var fields = this.options.fields[field].selector ? $(this.options.fields[field].selector) : this.$form.find('[name="' + field + '"]');
             return (fields.length == 0) ? null : fields;
         },
+
+        setMessage: function(field,message) {
+            this.options.fields[field].validators[field] = message;
+            return $this;
+        },
+
 
         /**
          * Set live validating mode
