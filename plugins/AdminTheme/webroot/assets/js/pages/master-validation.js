@@ -321,6 +321,7 @@ s                            }
                         message: 'The Approve_Date is required and can\'t be empty'
                     },
                     date: {
+                        message: 'Please enter a valid date',
                         format: 'MM/DD/YYYY'
                     }
                 }
@@ -347,21 +348,66 @@ s                            }
                 }
             }
         },
-        // submitHandler: function (form) {
-        //     $.ajax({
-        //         type: "POST",
-        //         url:   "request/addRequest.json",
-        //         dataType: 'text',
-        //         data: $("form").serialize(),
-        //         success: function (data) {
-        //             var returnedData = JSON.parse(data);
-        //             alert(returnedData);
-        //         }
-        //     });
-        //     $("html, body").animate({ scrollTop: 0 }, "slow");
-        //     return false;
-        // },
+
+         submitHandler: function (form) {
+             $("form").on('submit',(function(e) {
+                 e.preventDefault();
+                 $.ajax({
+                     type: "POST",
+                     url:   "request/addRequest.json",
+                     dataType: 'text
+                     data:  new FormData(this),
+                     contentType: false,
+                     cache: false,
+                     processData:false,
+                     success: function(data)
+                     {
+                         var returnedData = JSON.parse(data);
+                         alert(data);
+                         //$("#targetLayer").html(data);
+                     },
+                     error: function()
+                     {
+                     }
+                 })
+
+             }));
+             $("html, body").animate({ scrollTop: 0 }, "slow");
+             return false;
+
+         },
     });
 
+    $('#txtApproveDate')
+        .on('changeDate show', function(e) {
+            // Validate the date when user change it
+            //$('#frRequest').validateField('datepicker');
+            //$('#frRequest').formValidation('revalidateField', 'txtApproveDate');
+            $('#frRequest')
+                .bootstrapValidator('updateStatus', 'txtApproveDate', 'NOT_VALIDATED')
+                .bootstrapValidator('validateField', 'txtApproveDate');
+        });
+    //
+    //
+    //$("#frRequest").on('submit',(function(e) {
+    //    e.preventDefault();
+    //    $.ajax({
+    //        url: "upload.php",
+    //        type: "POST",
+    //        dataType: 'text',
+    //        data:  new FormData(this),
+    //        contentType: false,
+    //        cache: false,
+    //        processData:false,
+    //        success: function(data)
+    //        {
+    //            alert(data);
+    //            //$("#targetLayer").html(data);
+    //        },
+    //        error: function()
+    //        {
+    //        }
+    //    });
+    //}));
 
 });
