@@ -1,5 +1,5 @@
 <!-- Modal End -->
-<div class="md-modal md-slide-stick-top" id="md-add-department" >
+<div class="md-modal md-slide-stick-top" id="md-add-request" >
     <div class="md-content" style="height: 600px !important;overflow-y: scroll;">
         <div class="md-close-btn"><a class="md-close"><i class="fa fa-times"></i></a></div>
         <h3>Add <strong>Request Form</strong></h3>
@@ -42,27 +42,27 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label" for="lblTitle">Title</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="txtTitle" name="txtTitle" placeholder="Enter department name">
+                                <input type="text" class="form-control" id="txtTitle" name="txtTitle" placeholder="Enter Title">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label"  for="lblDescription">Description</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="txtDescription" name="txtDescription" placeholder="Enter department address">
+                                <input type="text" class="form-control" id="txtDescription" name="txtDescription" placeholder="Enter description">
                             </div>
                         </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label"  for="lblReason">Reason</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="txtReason" name="txtReason" placeholder="Enter department address">
+                            <input type="text" class="form-control" id="txtReason" name="txtReason" placeholder="Enter reason">
                         </div>
                     </div>
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label"  for="lblNote">Note</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="txtNote" name="txtNote" placeholder="Enter department address">
+                                <input type="text" class="form-control" id="txtNote" name="txtNote" placeholder="Enter note">
                             </div>
                         </div>
 

@@ -1,7 +1,6 @@
 <!-- Modal End -->
 <div id="md-add-department" >
     <div class="md-content">
-        <div class="md-close-btn"><a class="md-close"><i class="fa fa-times"></i></a></div>
         <h3>Add <strong>Request Form</strong></h3>
         <div class="widget">
             <div class="widget-content padding">

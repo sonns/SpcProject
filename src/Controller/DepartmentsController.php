@@ -18,7 +18,7 @@ class DepartmentsController extends AuthMasterController
      * @return \Cake\Network\Response|null
      */
     public $paginate = [
-        'limit' => 1,
+        'limit' => 4,
         'order' => [
             'Departments.title' => 'asc'
         ]

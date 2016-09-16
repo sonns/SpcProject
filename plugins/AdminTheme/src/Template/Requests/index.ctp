@@ -4,7 +4,7 @@
 
 <!-- Page Heading Start -->
 <div class="page-heading">
-    <h1><i class='fa fa-table'></i> Requests List</h1>
+    <h1><i class='fa fa-table'></i> Request List</h1>
 </div>
 <!-- Page Heading End-->
 <!-- Your awesome content goes here -->
@@ -31,8 +31,8 @@
                         </div>
                         <div class="col-md-8">
                             <div class="toolbar-btn-action">
-                                <a data-modal="md-add-department" class="btn btn-success md-trigger"><i class="fa fa-plus-circle"></i>Add new</a>
-                                <a data-modal="md-add-department" class="btn btn-danger md-trigger"><i class="fa fa-trash-o"></i>Delete</a>
+                                <a data-modal="md-add-request" class="btn btn-success md-trigger"><i class="fa fa-plus-circle"></i>Add new</a>
+                                <a data-modal="md-add-request" class="btn btn-danger md-trigger"><i class="fa fa-trash-o"></i>Delete</a>
                             </div>
                         </div>
                     </div>
@@ -48,7 +48,6 @@
                             <th>Department</th>
                             <th>Category</th>
                             <th>Title</th>
-                            <th>Subject</th>
                             <th>Approve-date</th>
                             <th>Status</th>
                             <th>Created Date</th>
@@ -65,7 +64,6 @@
                                 <td><strong><?php echo $request->department->name;?></strong></td>
                                 <td><strong><?php echo $request->category->name;?></strong></td>
                                 <td><strong><?php echo $request->title;?></strong></td>
-                                <td><strong><?php echo $request->subject;?></strong></td>
                                 <td><strong><?php echo $request->appr_date;?></strong></td>
                                 <td> <span class="label <?php echo ($request->status) ? 'label-success' :'label-danger' ?>"><?php echo ($request->status) ? 'Active' :'Suspended' ?></span></td>
                                 <td><strong><?php echo $request->created;?></strong></td>

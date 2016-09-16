@@ -136,52 +136,36 @@ class RequestsController extends AuthMasterController
     public function addRequest()
     {
         if($this->request->is('ajax')){
-//            print_r($this->request->data);exit;
             $request = $this->Requests->newEntity();
+            $result = [];
             if ($this->request->is('post')) {
-
-                if(is_array($_FILES)) {
-                    $result = array('ok'=>implode(" ",$_FILES));
-//                    $result['name'] = $_POST['txtPrice'];
-                }
-
                 //Check if image has been uploaded
-//                if (!empty($this->request->data['fileAttach']['name'])) {
-//                    $file = $this->request->data['fileAttach'];
-//
-//                    $ext = substr(strtolower(strrchr($file['name'], '.')), 1);
-//                    $arr_ext = array('jpg', 'jpeg', 'gif','png');
-//                    if (in_array($ext, $arr_ext)) {
-//                        $path =  WWW_ROOT . 'file\request\\';
-//                        if(!is_dir($path)){
-//                            mkdir($path, 777,true);
-//                        }
-//                        move_uploaded_file($file['tmp_name'], $path . $file['name']);
-//                        //prepare the filename for database entry
-//                        $this->request->data['attach'] = $file['name'];
-//                    }
-//                }
-//                $this->request->data['user_id'] = $this->uses->id;
-//                $this->request->data['dep_id'] = $this->uses->dep_id;
-//                $this->request->data['txtApproveDate'] = Time::parse($this->request->data['txtApproveDate']);
-//            echo '<pre>';
-//            print_r($this->request->data);
-//            echo '</pre>';
-//            exit;
-//                $result =$_FILES;
-                $this->set(compact('result'));
+                if (!empty($this->request->data['fileAttach']['name'])) {
+                    $file = $this->request->data['fileAttach'];
 
-//                $this->set('_serialize', ['result']);
-//                $request = $this->Requests->patchEntity($request, $this->request->data);
-//                if ($this->Requests->save($request)) {
-////                    $this->Flash->success(__('The base has been saved.'));
-////                    return $this->redirect(['action' => 'add']);
-//                } else {
-////                    $this->Flash->error(__('The base could not be saved. Please, try again.'));
-//                }
+                    $ext = substr(strtolower(strrchr($file['name'], '.')), 1);
+                    $arr_ext = array('jpg', 'jpeg', 'gif','png');
+                    if (in_array($ext, $arr_ext)) {
+                        $path =  WWW_ROOT . 'file\request\\';
+                        if(!is_dir($path)){
+                            mkdir($path, 777,true);
+                        }
+                        move_uploaded_file($file['tmp_name'], $path . $file['name']);
+                        //prepare the filename for database entry
+                        $this->request->data['attach'] = $file['name'];
+                    }
+                }
+                $this->request->data['user_id'] = $this->uses->id;
+                $this->request->data['dep_id'] = $this->uses->dep_id;
+                $this->request->data['txtApproveDate'] = Time::parse($this->request->data['txtApproveDate']);
+                $request = $this->Requests->patchEntity($request, $this->request->data);
+                if ($this->Requests->save($request)) {
+                    $result  = ['params'=>$request , 'status' => 'Success' , 'responseData'=> __('The base has been saved.')];
+                } else {
+                    $result  = ['params'=>$request , 'status' => 'Error' , 'responseData'=> __('The base could not be saved. Please, try again.')];
+                }
             }
-//            $this->set(compact('request'));
-//            $this->set('_serialize', ['request']);
+            $this->set(compact('result'));
             $this->set('_serialize', ['result']);
         }
     }

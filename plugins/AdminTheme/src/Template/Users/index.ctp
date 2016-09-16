@@ -31,8 +31,8 @@
                             </div>
                             <div class="col-md-8">
                                 <div class="toolbar-btn-action">
-                                    <a data-modal="md-add-department" class="btn btn-success md-trigger"><i class="fa fa-plus-circle"></i>Add new</a>
-                                    <a data-modal="md-add-department" class="btn btn-danger md-trigger"><i class="fa fa-trash-o"></i>Delete</a>
+                                    <a data-modal="md-add-user" class="btn btn-success md-trigger"><i class="fa fa-plus-circle"></i>Add new</a>
+                                    <a data-modal="md-add-user" class="btn btn-danger md-trigger"><i class="fa fa-trash-o"></i>Delete</a>
                                 </div>
                             </div>
                         </div>

@@ -347,37 +347,8 @@ s                            }
                     }
                 }
             }
-        },
-
-         submitHandler: function (form) {
-             $("form").on('submit',(function(e) {
-                 e.preventDefault();
-                 $.ajax({
-                     type: "POST",
-                     url:   "request/addRequest.json",
-                     dataType: 'text',
-                     data:  new FormData(this),
-                     contentType: false,
-                     cache: false,
-                     processData:false,
-                     success: function(data)
-                     {
-                         var returnedData = JSON.parse(data);
-                         alert(data);
-                         //$("#targetLayer").html(data);
-                     },
-                     error: function()
-                     {
-                     }
-                 })
-
-             }));
-             $("html, body").animate({ scrollTop: 0 }, "slow");
-             return false;
-
-         },
+        }
     });
-
     $('#txtApproveDate')
         .on('changeDate show', function(e) {
             // Validate the date when user change it
@@ -387,27 +358,34 @@ s                            }
                 .bootstrapValidator('updateStatus', 'txtApproveDate', 'NOT_VALIDATED')
                 .bootstrapValidator('validateField', 'txtApproveDate');
         });
-    //
-    //
-    //$("#frRequest").on('submit',(function(e) {
-    //    e.preventDefault();
-    //    $.ajax({
-    //        url: "upload.php",
-    //        type: "POST",
-    //        dataType: 'text',
-    //        data:  new FormData(this),
-    //        contentType: false,
-    //        cache: false,
-    //        processData:false,
-    //        success: function(data)
-    //        {
-    //            alert(data);
-    //            //$("#targetLayer").html(data);
-    //        },
-    //        error: function()
-    //        {
-    //        }
-    //    });
-    //}));
 
+    $("#frRequest").on('submit',(function(e) {
+        $.ajax({
+            type: "POST",
+            url:   "request/addRequest.json",
+            dataType: 'text',
+            data:  new FormData(this),
+            contentType: false,
+            cache: false,
+            processData:false,
+            success: function(data)
+            {
+                var returnedData = JSON.parse(data);
+                $("#md-add-request").removeClass("md-show");
+
+                $('#frRequest').trigger('reset');
+                // $('form').data('bootstrapValidator').resetForm();
+                $("#alert-modal").addClass("md-show");
+                console.log(data);
+                // alert(data);
+                //$("#targetLayer").html(data);
+            },
+            error: function()
+            {
+
+            }
+        })
+        $("html, body").animate({ scrollTop: 0 }, "slow");
+        return false;
+    }));
 });

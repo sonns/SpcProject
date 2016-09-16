@@ -70,7 +70,19 @@ echo $this->element('logout');
 ?>
     <!-- Begin page -->
     <div id="wrapper">
+        <!-- Alert Start -->
+        <div class="md-modal md-slide-stick-top" id="alert-modal" style="max-width: 400px;">
+            <div class="md-content">
+                <div class="md-close-btn"><a class="md-close"><i class="fa fa-times"></i></a></div>
+<!--                alert-danger -->
+                <div class="alert alert-info fade in nomargin">
+                    <h4 style="text-align: center;">{{HEADER}}</h4>
+                    <p>{{MESSAGE}}</p>
+                </div>
+            </div>
 
+        </div>
+        <!-- Alert End -->
         <!-- Top Bar Start -->
         <div class="topbar">
             <?php echo $this->element('topbar') ?>
