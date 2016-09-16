@@ -170,6 +170,9 @@ class RequestsController extends AuthMasterController
         }
     }
 
+    public function changeStatus($id,$mode){
+        
+    }
     /**
      * Edit method
      *
