@@ -355,7 +355,7 @@ s                            }
                  $.ajax({
                      type: "POST",
                      url:   "request/addRequest.json",
-                     dataType: 'text
+                     dataType: 'text',
                      data:  new FormData(this),
                      contentType: false,
                      cache: false,
