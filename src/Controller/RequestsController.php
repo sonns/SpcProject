@@ -160,9 +160,9 @@ class RequestsController extends AuthMasterController
                 $this->request->data['txtApproveDate'] = Time::parse($this->request->data['txtApproveDate']);
                 $request = $this->Requests->patchEntity($request, $this->request->data);
                 if ($this->Requests->save($request)) {
-                    $result  = ['params'=>$request , 'status' => 'Success' , 'responseData'=> __('The base has been saved.')];
+                    $result  = ['params'=>$request , 'status' => 'Success' , 'response'=> __('The request has been saved.')];
                 } else {
-                    $result  = ['params'=>$request , 'status' => 'Error' , 'responseData'=> __('The base could not be saved. Please, try again.')];
+                    $result  = ['params'=>$request , 'status' => 'Error' , 'response'=> __('The request could not be saved. Please, try again or contact for admin page.')];
                 }
             }
             $this->set(compact('result'));

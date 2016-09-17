@@ -371,14 +371,25 @@ s                            }
             success: function(data)
             {
                 var returnedData = JSON.parse(data);
-                $("#md-add-request").removeClass("md-show");
 
+                if(returnedData.result.status === 'Success'){
+                    $("#alertDiv").removeClass("alert-danger");
+                    $("#alertDiv").addClass("alert-info");
+                }else{
+                    $("#alertDiv").removeClass("alert-info");
+                    $("#alertDiv").addClass("alert-danger");
+                }
+
+                $("#alertHeader").text(returnedData.result.status);
+                $("#alertMessage").text(returnedData.result.response);
+                $("#alertMessage").text(returnedData.result.response);
+                setTimeout(function () {
+                    $("#alert-modal").removeClass("md-show");
+                }, 8000);
+                $("#md-add-request").removeClass("md-show");
                 $('#frRequest').trigger('reset');
-                // $('form').data('bootstrapValidator').resetForm();
                 $("#alert-modal").addClass("md-show");
                 console.log(data);
-                // alert(data);
-                //$("#targetLayer").html(data);
             },
             error: function()
             {
