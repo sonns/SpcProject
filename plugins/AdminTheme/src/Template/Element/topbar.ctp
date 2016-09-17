@@ -41,6 +41,20 @@
     <!--                        </div>-->
     <!--                    </li>-->
                     <li class="language_bar dropdown hidden-xs">
+
+<!--                        --><?php //echo  $this->Form->select(
+//                            'sltCategory',
+//                            $ddlLanguage,
+//                            [
+//                                'empty' => 'Select Category',
+//                                'class' => 'dropdown-menu pull-right',
+//                                'name'=> 'sltCategory',
+//                                'id'=> 'sltCategory'
+//
+//                            ]
+//                        );?>
+
+
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">English (US) <i class="fa fa-caret-down"></i></a>
                         <ul class="dropdown-menu pull-right">
                             <li><a href="#">German</a></li>

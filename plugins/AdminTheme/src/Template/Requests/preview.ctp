@@ -2,7 +2,7 @@
     <div class="col-sm-12 portlets">
         <div class="widget">
             <div class="widget-header text-center">
-                <h2><strong>Inline</strong> Editing</h2>
+                <h2><strong><?= __("form_request")?></strong></h2>
                 <br>
                 <br>
             </div>

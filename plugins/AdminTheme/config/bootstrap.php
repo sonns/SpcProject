@@ -17,5 +17,12 @@ Configure::write('Admin', [
         'show_register' => true,
         'show_social' => true
     ]
+]
+
+);
+Configure::write('language',[
+    'en_US' => 'English',
+    'jp_JP' => 'Japan',
+    'vi_VN' => 'Vietnamese'
 ]);
 Router::extensions(['json']);

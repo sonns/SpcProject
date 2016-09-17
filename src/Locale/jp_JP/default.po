@@ -2,4 +2,4 @@ msgid "My name is {0}"
 msgstr "Je m'appelle {0}"
 
 msgid "form_request"
-msgstr "Form Requests"
+msgstr "稟議書"
