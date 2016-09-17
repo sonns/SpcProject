@@ -198,6 +198,9 @@ class RequestsController extends AuthMasterController
         $this->set(compact('base'));
         $this->set('_serialize', ['base']);
     }
+    public function preview(){
+
+    }
     /**
      * Delete method
      *

@@ -44,7 +44,6 @@ return [
         'dir' => 'src',
         'webroot' => 'webroot',
         'wwwRoot' => WWW_ROOT,
-        'defaultLocale' => env('APP_DEFAULT_LOCALE', 'en_US'),
         // 'baseUrl' => env('SCRIPT_NAME'),
         'fullBaseUrl' => false,
         'imageBaseUrl' => 'img/',
