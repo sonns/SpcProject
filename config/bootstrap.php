@@ -168,6 +168,12 @@ Request::addDetector('tablet', function ($request) {
     return $detector->isTablet();
 });
 
+
+use App\Error\AppError;
+$errorHandler = new AppError();
+$errorHandler->register();
+
+
 /**
  * Enable immutable time objects in the ORM.
  *

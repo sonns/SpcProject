@@ -14,11 +14,9 @@
  */
 namespace App\Controller;
 use App\Utility\FunctionCommon as Common;
-use Cake\Controller\Component\AuthComponent;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Event\Event;
-use Cake\I18n\I18n;
 
 /**
  * Application Controller
@@ -71,6 +69,9 @@ class AppController extends Controller
         $this->viewBuilder()->theme('AdminTheme');
         $this->set('theme', Configure::read('Admin'));
     }
+
+
+
 
 
 
