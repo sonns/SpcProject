@@ -75,7 +75,6 @@ class AppController extends Controller
     }
 
     public function missing_controller(){
-        echo 123;exit;
         // your coding goes here.
 
     }

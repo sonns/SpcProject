@@ -144,7 +144,6 @@ class AuthComponent extends CakeAuthComponent {
         }
         $roles = Cache::read($this->_config['cacheKeyAcl'], $this->_config['cache']);
         if ($roles !== false) {
-			print_r($roles);exit;
             return $roles;
         }
 

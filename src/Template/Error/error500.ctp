@@ -3,7 +3,7 @@
     use Cake\Core\Configure;
     use Cake\Error\Debugger;
 
-    $this->layout = 'AdminTheme.error1';
+    $this->layout = 'AdminTheme.error';
 
     if (Configure::read('debug')):
 //    $this->layout = 'dev_error';
