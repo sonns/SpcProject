@@ -2,7 +2,6 @@
 <?php
 use Cake\Core\Configure;
 use Cake\Error\Debugger;
-
 $this->layout = 'AdminTheme.error';
 
 if (Configure::read('debug')):

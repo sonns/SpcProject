@@ -154,17 +154,11 @@
                                 </span> <strong><?php echo $userInfo['first_name'] . ' ' .$userInfo['last_name'] ;?></strong> <i class="fa fa-caret-down"></i>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="<?php echo $this->Url->build(['controller'=>'users','action'=>'myProfile','profile'])?>">My Profile</a></li>
-                            <li><a href="#">Change Password</a></li>
-                            <li><a href="#">Account Setting</a></li>
+                            <li><a href="<?php echo $this->Url->build(['controller'=>'users','action'=>'profile'])?>">My Profile</a></li>
                             <li class="divider"></li>
-                            <li><a href="lockscreen.html"><i class="icon-lock-1"></i> Lock me</a></li>
                             <li>
                                 <a class="md-trigger" data-modal="logout-modal"><i class="icon-logout-1"></i> Logout</a></li>
                         </ul>
-                    </li>
-                    <li class="right-opener">
-                        <a href="javascript:;" class="open-right"><i class="fa fa-angle-double-left"></i><i class="fa fa-angle-double-right"></i></a>
                     </li>
                 </ul>
             </div>

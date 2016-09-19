@@ -34,8 +34,7 @@
 <body class="fixed-left full-content">
 <!-- Begin page -->
 <div class="container">
-    <div class="full-content-center animated flipInX">
-        <h1><?= __('Error') ?></h1>
+    <div class="animated flipInX" style="width: 100%;margin: 5% auto;text-align: center;">
         <?= $this->Flash->render() ?>
 
         <?= $this->fetch('content') ?>

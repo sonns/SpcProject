@@ -69,7 +69,16 @@ class AppController extends Controller
         $this->viewBuilder()->theme('AdminTheme');
         $this->set('theme', Configure::read('Admin'));
     }
+    public function not_found(){
+        // your coding goes here.
 
+    }
+
+    public function missing_controller(){
+        echo 123;exit;
+        // your coding goes here.
+
+    }
 
 
 

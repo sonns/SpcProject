@@ -94,11 +94,6 @@ echo $this->element('logout');
             <?php echo $this->element('left_sidebar') ?>
         </div>
         <!-- Left Sidebar End -->
-        <!-- Right Sidebar Start -->
-        <div class="right side-menu">
-            <?php echo $this->element('right_sidebar') ?>
-        </div>
-        <!-- Right Sidebar End -->
 <!--        --><?php //echo $this->Flash->render(); ?>
 <!--        --><?php //echo $this->Flash->render('auth'); ?>
         <!-- Start right content -->

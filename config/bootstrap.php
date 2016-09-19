@@ -45,6 +45,7 @@ require __DIR__ . '/paths.php';
  */
 require CORE_PATH . 'config' . DS . 'bootstrap.php';
 
+use App\Error\AppExceptionRenderer;
 use Cake\Cache\Cache;
 use Cake\Console\ConsoleErrorHandler;
 use Cake\Core\App;
@@ -227,3 +228,4 @@ Plugin::load('AdminTheme', ['bootstrap' => true, 'routes' => true]);
 Plugin::load('SpcAuth', ['bootstrap' => false, 'routes' => true]);
 
 Plugin::load('FOC/Authenticate');
+Configure::write('Exception.renderer', 'AppExceptionRenderer');
