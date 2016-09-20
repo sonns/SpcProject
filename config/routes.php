@@ -50,6 +50,7 @@ Router::scope('/', function (RouteBuilder $routes) {
      */
 //    $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
     $routes->connect('/login', ['controller' => 'AuthMaster', 'action' => 'login', 'login']);
+    $routes->connect('/changeLanguage', ['controller' => 'AuthMaster', 'action' => 'changeLanguage']);
     $routes->connect('/logout', ['controller' => 'AuthMaster', 'action' => 'logout', 'logout']);
     $routes->connect('/403', ['controller' => 'AuthMaster', 'action' => 'accessDenied', 'access_denied']);
     $routes->connect('/404', ['controller' => 'AuthMaster', 'action' => 'pageNotFound', 'page_not_found']);

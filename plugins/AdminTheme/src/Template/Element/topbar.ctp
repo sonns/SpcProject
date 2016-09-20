@@ -55,12 +55,11 @@
 //                        );?>
 
 
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">English (US) <i class="fa fa-caret-down"></i></a>
-                        <ul class="dropdown-menu pull-right">
-                            <li><a href="#">German</a></li>
-                            <li><a href="#">French</a></li>
-                            <li><a href="#">Italian</a></li>
-                            <li><a href="#">Spanish</a></li>
+                        <a href="#" id="languageValue" class="dropdown-toggle" data-toggle="dropdown"><?= $selectLanguage.' ' ;?><i class="fa fa-caret-down"></i></a>
+                        <ul class="dropdown-menu pull-right" id="ddlLanguage">
+                            <?php foreach ($ddlLanguage as $key => $language):?>
+                                <li data-value="<?= $key;?>" data-name="<?= $language?>"><a href="#"><?= $language;?></a></li>
+                            <?php endforeach;?>
                         </ul>
                     </li>
                 </ul>
@@ -165,3 +164,36 @@
             <!--/.nav-collapse -->
         </div>
     </div>
+<?php
+$this->Html->scriptStart(['block' => 'scriptBlock']);?>
+$("#ddlLanguage a").on("click", function(e){
+    e.preventDefault();
+    var $this = $(this).parent();
+    $this.addClass("select").siblings().removeClass("select");
+    console.log($this.data);
+    $("#languageValue").html($this.data("name")+' <i class=\"fa fa-caret-down\"></i>');
+    // Call ajax
+    $.ajax({
+    type: "GET",
+    url:   "changeLanguage.json",
+    dataType: 'text',
+    data:  'keyLanguage='+$this.data("value"),
+    success: function(data)
+    {
+        console.log(data);
+        location.reload();
+    }
+    })
+})
+<?php
+$this->Html->scriptEnd();
+?>
+
+
+<!--    $("form[name=size-form]").submit(function(e) {-->
+<!--    //do your validation here-->
+<!--    if ($(this).find("li.select").length == 0) {-->
+<!--    alert( "Please select a size." );-->
+<!--    e.preventDefault();-->
+<!--    }-->
+<!--    });-->

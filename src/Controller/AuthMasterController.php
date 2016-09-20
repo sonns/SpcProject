@@ -191,33 +191,41 @@ class AuthMasterController extends AppController
     }
     private function _init_language(){
         $this->set('ddlLanguage', Configure::read('language'));
-        $language = (!empty($this->request->session()->read('Config.language')))   ?   $this->request->session()->read('Config.language') : 'en';
+        $language = (!empty($this->request->session()->read('Config.language')))   ?   $this->request->session()->read('Config.language') : 'en_US';
+        $this->set('selectLanguage', isset(Configure::read('language')[$language]) ? Configure::read('language')[$language] : 'English (US)');
         switch($language)
         {
-            case "ja_JP":
-                I18n::locale('ja_JP');
+            case "jp_JP":
+                I18n::locale('jp_JP');
+                $result[] = array(
+                    'ok'=>I18n::locale()
+                );
                 break;
             default:
                 I18n::locale('en_US');
                 break;
         }
+
     }
-    protected function setLanguage($language)
+    public function changeLanguage()
     {
-        try{
-            $session = $this->request->session();
+        $session = $this->request->session();
+        if($this->request->is('ajax')){
+            if (!empty($this->request->query('keyLanguage')) && $this->request->query('keyLanguage') !=  $session->read('Config.language')) {
+                $session->write('Config.language', $this->request->query('keyLanguage'));
+                $this->Cookie->write('language', $this->request->query('keyLanguage'), false, '20 days');
+            }
+            $result = array(
+                'language'=>$this->request->query('keyLanguage')
+            );
+        }else{
             if ($this->Cookie->read('language') && !$session->check('Config.language')) {
                 $session->write('Config.language', $this->Cookie->read('language'));
             }
-            else if ($language !=  $session->read('Config.language')) {
-                $session->write('Config.language', $language);
-                $this->Cookie->write('language', $language, false, '20 days');
-            }
-        }catch(Exception $e){
-            return false;
         }
-
-        return true;
+//        $this->_init_language();
+        $this->set(compact('result'));
+        $this->set('_serialize', ['result']);
     }
     protected function responseData($status = false , $data = null){
          $strStatus = $status ? 'Success' : 'Error';

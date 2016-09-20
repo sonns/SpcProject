@@ -40,6 +40,9 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <!-- Extra CSS Libraries Start -->
     <?= $this->Html->css('AdminTheme./assets/css/style.css') ?>
 
+    <?php echo $this->fetch('cssBlock'); ?>
+
+
     <!-- Extra CSS Libraries End -->
     <?= $this->Html->css('AdminTheme./assets/css/style-responsive.css') ?>
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

@@ -21,8 +21,8 @@ Configure::write('Admin', [
 
 );
 Configure::write('language',[
-    'en_US' => 'English',
-    'jp_JP' => 'Japan',
-    'vi_VN' => 'Vietnamese'
+    'en_US' => 'English (US)',
+    'jp_JP' => 'Japan (JP)',
+    'vi_VN' => 'Vietnamese (VN)'
 ]);
 Router::extensions(['json']);

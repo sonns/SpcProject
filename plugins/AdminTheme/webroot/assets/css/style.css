@@ -4888,16 +4888,19 @@ section.step {
   color: #4393D8;
 }
 .popover {
-  border-radius: 3px;
-  box-shadow: none;
-  opacity: 0.9;
+  /*border-radius: 3px;*/
+  /*box-shadow: none;*/
+  /*opacity: 0.9;*/
   border: none;
+  padding: 0px;
 }
 .popover .arrow {
-  border-top: none;
+  /*border-top: none;*/
 }
 .popover .popover-title {
-  background: none repeat scroll 0 0 rgba(0,0,0,0.025);
+  background: #4a525f;
+  color: #fff;
+  font-weight:600;
   font-family: "Open Sans";
 }
 .popover .popover-content {
