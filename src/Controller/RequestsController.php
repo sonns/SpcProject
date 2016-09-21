@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller;
 use Cake\I18n\Time;
+use Cake\Network\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -170,8 +171,26 @@ class RequestsController extends AuthMasterController
         }
     }
 
-    public function changeStatus($id,$mode){
-        
+    public function changeStatus(){
+        $this->request->allowMethod('ajax');
+        $id = $this->request->query('request_id');
+        $mod = $this->request->query('mod') ;
+        if (!$id || !$this->request->query('mod')) {
+            throw new NotFoundException();
+        }
+        if($mod === 'appr' || $mod === 'del'){
+            $request = $this->Requests->get($id);
+            if (!$request) {
+                throw new NotFoundException();
+            }
+            $request->status = ($mod==='appr') ? 1 : 2;
+            $result = $this->Requests->save($request);
+        }elseif($mod === 'multiDel' || $mod === 'multiAppr'){
+            $arrId = explode(',',$id);
+            $result = $this->Requests->updateAll(['status'=> ($mod==='multiAppr') ? 1 : 2 ],$arrId);
+        }
+        $this->set(compact('result'));
+        $this->set('_serialize', ['result']);
     }
     /**
      * Edit method

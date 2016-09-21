@@ -70,7 +70,7 @@
                                 <td>
                                     <div class="btn-group btn-group-xs">
                                         <?php if($request->status !==  1){ ?>
-                                            <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'icon-ok-circled','id'=>'approveRequest')),array('controller'=>'departments','action'=>'edit','edit_dep'),array('style' => 'margin-right:4px;' ,'class'=>'btn btn-success','title'=>'Approve','data-toggle'=>"tooltip",'escape' => false ))?>
+                                            <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'icon-ok-circled')),array('controller'=>'departments','action'=>'edit','edit_dep'),array('style' => 'margin-right:4px;' ,'class'=>'btn btn-success approveRequest','title'=>'Approve','data-toggle'=>"tooltip",'escape' => false ,'data-value'=>$request->id ))?>
                                             <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'icon-cancel-circled')),array('controller'=>'departments','action'=>'delete','del_dep'),array('class'=>'btn btn-danger','title'=>'Reject','data-toggle'=>"tooltip",'escape' => false ))?>
                                         <?php }else{ ?>
                                             <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'icon-eye-off')),array('controller'=>'departments','action'=>'delete','del_dep'),array('class'=>'btn btn-danger','title'=>'Delete','data-toggle'=>"tooltip",'escape' => false ))?>
@@ -114,26 +114,23 @@
 
 <?php
 $this->Html->scriptStart(['block' => 'scriptBlock']);?>
-$("#ddlLanguage a").on("click", function(e){
-e.preventDefault();
-var $this = $(this).parent();
-$this.addClass("select").siblings().removeClass("select");
-console.log($this.data);
-$("#languageValue").html($this.data("name")+' <i class=\"fa fa-caret-down\"></i>');
-// Call ajax
-$.ajax({
-type: "GET",
-url:   "changeLanguage.json",
-dataType: 'text',
-data:  'keyLanguage='+$this.data("value"),
-success: function(data)
-{
-console.log(data);
-location.reload();
-}
-})
-})
+
 <?php
 $this->Html->scriptEnd();
 ?>
 
+<script>
+    $(".approveRequest").on("click", function(e){
+        e.preventDefault();
+        $.ajax({
+            type: "GET",
+            url:   "request/change_status.json",
+            dataType: 'text',
+            data:  'request_id='+$(this).data("value")+'&mod=approve'+,
+            success: function(data)
+            {
+                console.log(data);
+            }
+        })
+    })
+</script>
