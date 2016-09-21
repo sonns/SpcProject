@@ -107,5 +107,4 @@ Router::scope('/request', function (RouteBuilder $routes) {
     $routes->fallbacks('DashedRoute');
 });
 
-
 Plugin::routes();

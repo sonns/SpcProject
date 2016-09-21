@@ -19,7 +19,7 @@
             <div class="profile-buttons">
                 <a href="javascript:;"><i class="fa fa-envelope-o pulse"></i></a>
                 <a href="#connect" class="open-right"><i class="fa fa-comments"></i></a>
-                <a href="javascript:;" title="Sign Out"><i class="fa fa-power-off text-red-1"></i></a>
+                <a title="Sign Out"  class="md-trigger" data-modal="logout-modal"><i class="fa fa-power-off text-red-1"></i></a>
             </div>
         </div>
     </div>
@@ -30,39 +30,31 @@
     <!--- Divider -->
     <div id="sidebar-menu">
         <ul>
-            <li class='has_sub'>
-                <a href='javascript:void(0);'>
-                    <i class='icon-home-3'></i><span>Dashboard</span>
-                    <span class="pull-right"><i class="fa fa-angle-down"></i></span>
-                </a>
-                <ul>
-                    <li>
-                        <a href='index.html'><span>Dashboard v1</span></a>
-                    </li>
-                    <li><a href='index2.html'><span>Dashboard v2</span></a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a class="<?php echo (!empty($this->request->params['controller']) && ($this->request->params['controller']=='Departments') )?'active' :'' ?>" href='<?php echo $this->Url->build(['controller'=>'departments','action'=>'index'])?>'>
-                    <i class='icon-home-3'></i><span>Departments</span>
-                </a>
-            </li>
-            <li>
-                <a class="<?php echo (!empty($this->request->params['controller']) && ($this->request->params['controller']=='Users') )?'active' :'' ?>" href='<?php echo $this->Url->build(['controller'=>'users','action'=>'index'])?>'>
-                    <i class='icon-home-3'></i><span>Users</span>
-                </a>
-            </li>
-            <li>
-                <a class="<?php echo (!empty($this->request->params['Permission']) && ($this->request->params['controller']=='Permission') )?'active' :'' ?>" href='javascript:void(0);'>
-                    <i class='icon-home-3'></i><span>Permissions</span>
-                </a>
-            </li>
-            <li>
-                <a class="<?php echo (!empty($this->request->params['Rules']) && ($this->request->params['controller']=='Rules') )?'active' :'' ?>" href='javascript:void(0);'>
-                    <i class='icon-home-3'></i><span>Rules</span>
-                </a>
-            </li>
+            <?php
+//                print_r($sidebar);exit;
+            foreach ($sidebar as $menu){
+                    if ($menu['hasPermission'] >= 1) {
+                        ?>
+                        <li class='<?= (isset($menu['children']) && count($menu['children']) > 0) ? 'has_sub' : ''; ?>'>
+                            <a href='<?= (isset($menu['children']) && count($menu['children']) > 0) ? 'javascript:void(0);' : $this->Url->build($menu['url']); ?>'>
+                                <i class='icon-home-3'></i><span><?= $menu['title'] ?></span>
+                                <?php if (isset($menu['children']) && count($menu['children']) > 0): ?>
+                                    <span class="pull-right"><i class="fa fa-angle-down"></i></span>
+                                <?php endif; ?>
+                            </a>
+                            <?php if (isset($menu['children']) && count($menu['children']) > 0) : ?>
+                                <ul>
+                                    <?php foreach ($menu['children'] as $child): ?>
+                                        <li>
+                                            <a href='<?= $this->Url->build($child['url']); ?>'><span><?= $child['title']; ?></span></a>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            <?php endif; ?>
+                        </li>
+                        <?php
+                    }}
+            ?>
         </ul>
         <div class="clearfix"></div>
     </div>

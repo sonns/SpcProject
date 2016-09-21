@@ -20,7 +20,6 @@ class AppError extends BaseErrorHandler
 {
     public function _displayError($error, $debug)
     {
-
         return 'There has been an error!';
     }
     public function _displayException($exception)

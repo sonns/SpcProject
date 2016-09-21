@@ -31,8 +31,8 @@
                         </div>
                         <div class="col-md-8">
                             <div class="toolbar-btn-action">
-                                <a data-modal="md-add-request" class="btn btn-success md-trigger"><i class="fa fa-plus-circle"></i>Add new</a>
-                                <a data-modal="md-add-request" class="btn btn-danger md-trigger"><i class="fa fa-trash-o"></i>Delete</a>
+                                <a data-modal="md-add-request" class="btn btn-success md-trigger"><i class="fa fa-plus-circle"></i> Add new</a>
+                                <a data-modal="md-add-request" class="btn btn-danger md-trigger"><i class="icon-eye-off"></i> Delete</a>
                             </div>
                         </div>
                     </div>
@@ -65,14 +65,16 @@
                                 <td><strong><?php echo $request->category->name;?></strong></td>
                                 <td><strong><?php echo $request->title;?></strong></td>
                                 <td><strong><?php echo $request->appr_date;?></strong></td>
-                                <td> <span class="label <?php echo ($request->status) ? 'label-success' :'label-danger' ?>"><?php echo ($request->status) ? 'Active' :'Suspended' ?></span></td>
+                                <td> <span class="label <?php echo ($request->status) ? 'label-success' :'label-danger' ?>"><?php echo ($request->status) ? 'Active' :'Pending' ?></span></td>
                                 <td><strong><?php echo $request->created;?></strong></td>
                                 <td>
                                     <div class="btn-group btn-group-xs">
-                                        <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'fa fa-edit')),array('controller'=>'departments','action'=>'edit','edit_dep'),array('style' => 'margin-right:4px;' ,'class'=>'btn btn-default','title'=>'Edit','data-toggle'=>"tooltip",'escape' => false ))?>
-                                        <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'fa fa-remove')),array('controller'=>'departments','action'=>'delete','del_dep'),array('class'=>'btn btn-danger','title'=>'Delete','data-toggle'=>"tooltip",'escape' => false ))?>
-<!--                                        <a data-toggle="tooltip" title="Off" class="btn btn-default"><i class="fa fa-power-off"></i></a>-->
-<!--                                        <a data-toggle="tooltip" title="Edit" class="btn btn-default"><i class="fa fa-edit"></i></a>-->
+                                        <?php if($request->status !==  1){ ?>
+                                            <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'icon-ok-circled','id'=>'approveRequest')),array('controller'=>'departments','action'=>'edit','edit_dep'),array('style' => 'margin-right:4px;' ,'class'=>'btn btn-success','title'=>'Approve','data-toggle'=>"tooltip",'escape' => false ))?>
+                                            <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'icon-cancel-circled')),array('controller'=>'departments','action'=>'delete','del_dep'),array('class'=>'btn btn-danger','title'=>'Reject','data-toggle'=>"tooltip",'escape' => false ))?>
+                                        <?php }else{ ?>
+                                            <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'icon-eye-off')),array('controller'=>'departments','action'=>'delete','del_dep'),array('class'=>'btn btn-danger','title'=>'Delete','data-toggle'=>"tooltip",'escape' => false ))?>
+                                        <?php } ?>
                                     </div>
                                 </td>
                             </tr>
@@ -104,8 +106,34 @@
 
 <!-- Footer Start -->
 <footer>
-    Son Nguyen &copy; 2014
+    Son Nguyen &copy; 2016
     <div class="footer-links pull-right">
-        <a href="#">About</a><a href="#">Support</a><a href="#">Terms of Service</a><a href="#">Legal</a><a href="#">Help</a><a href="#">Contact Us</a>
+<!--        <a href="#">About</a><a href="#">Support</a><a href="#">Terms of Service</a><a href="#">Legal</a><a href="#">Help</a><a href="#">Contact Us</a>-->
     </div>
 </footer>
+
+<?php
+$this->Html->scriptStart(['block' => 'scriptBlock']);?>
+$("#ddlLanguage a").on("click", function(e){
+e.preventDefault();
+var $this = $(this).parent();
+$this.addClass("select").siblings().removeClass("select");
+console.log($this.data);
+$("#languageValue").html($this.data("name")+' <i class=\"fa fa-caret-down\"></i>');
+// Call ajax
+$.ajax({
+type: "GET",
+url:   "changeLanguage.json",
+dataType: 'text',
+data:  'keyLanguage='+$this.data("value"),
+success: function(data)
+{
+console.log(data);
+location.reload();
+}
+})
+})
+<?php
+$this->Html->scriptEnd();
+?>
+
