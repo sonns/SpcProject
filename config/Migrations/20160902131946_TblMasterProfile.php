@@ -23,10 +23,10 @@ class TblMasterProfile extends AbstractMigration
             'null' => false,
         ]) ->addPrimaryKey(['id'])
             ->addColumn('user_id', 'integer')
+            ->addColumn('first_name', 'string', array('limit' => 50,'null' => true))
+            ->addColumn('last_name', 'string', array('limit' => 50,'null' => true))
             ->addColumn('photo', 'string', array('limit' => 255,'null' => true,'default'=>null))
             ->addColumn('contact_number', 'string', array('limit' => 100,'null' => true,'default'=>null))
-            ->addColumn('alternate_contact_number', 'string', array('limit' => 100,'null' => true,'default'=>null))
-            ->addColumn('alternate_email', 'string',['limit' => 100,'null'=>true,'default'=>null])
             ->addColumn('timezone', 'string',['null'=> true,'default'=> null])
             ->addColumn('birthday', 'datetime',['null'=> true,'default'=> null])
             ->addColumn('address', 'text', ['null'=> true,'default'=>null])

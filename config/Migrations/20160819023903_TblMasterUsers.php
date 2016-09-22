@@ -26,8 +26,7 @@ class TblMasterUsers extends AbstractMigration
 
             ->addPrimaryKey(['id'])
             ->addColumn('dep_id', 'integer')
-            ->addColumn('first_name', 'string', array('limit' => 50,'null' => true))
-            ->addColumn('last_name', 'string', array('limit' => 50,'null' => true))
+
             ->addColumn('email', 'string')
             ->addColumn('username', 'string')
             ->addColumn('password', 'blob', array('limit' => MysqlAdapter::BLOB_REGULAR))

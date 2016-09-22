@@ -46,10 +46,10 @@ class User extends Entity
         return fread($password, 256);
     }
 
-    protected function _getAliasName()
-    {
-        return $this->_properties['first_name'] . '  ' . $this->_properties['last_name'];
-    }
+//    protected function _getAliasName()
+//    {
+//        return $this->_properties['first_name'] . '  ' . $this->_properties['last_name'];
+//    }
 
 
 

@@ -46,11 +46,14 @@ class UsersController extends AuthMasterController
 
     public function profile(){
 
+
+
+
         if($this->request->is('post')){
-            if($this->request->data['hdnmode'] === 'profile')
-                $this->saveProfile($this->request->data);
-            else if($this->request->data['hdnmode'] === 'resetpass')
-                $this->resetPassword($this->request->data);
+//            if($this->request->data['hdnmode'] === 'profile')
+//                $this->saveProfile($this->request->data);
+//            else if($this->request->data['hdnmode'] === 'resetpass')
+//                $this->resetPassword($this->request->data);
 
 //            $this->Session->write('Auth.User.timezone', $this->request->data['selectedZone']);
 
@@ -67,32 +70,14 @@ class UsersController extends AuthMasterController
 
     }
 
-    private function saveProfile($data){
-
-        $userE = $this->Profiles->newEntity();
-        try{
-            $userE = $this->Profiles->patchEntity($userE, $data);
-                $result = [];
-                if ($this->Profiles->save($userE)) {
-                    $result = [
-                        'status' => 'Success',
-                        'response' => __('Your profile has been saved.')
-                    ];
-                } else {
-                    $result = [
-                        'status' => 'Error',
-                        'response' => __('Your profile could not be saved. Please, try again.')
-                    ];
-                }
-        }catch (Exception $e){
-//            debug
-            $result = [
-                'status' => 'Success',
-                'response' => $e->getMessage()
-            ];
-        }
-        $this->set(compact('result'));
+    public function saveProfile(){
+        $this->request->allowMethod('ajax');
+//        echo 123;exit;
+        $result = $this->request->data['first_name'];
+        print_r($result);exit;
+        $this->set('result',$result);
         $this->set('_serialize', ['result']);
+
     }
 
     private function resetPassword($data){

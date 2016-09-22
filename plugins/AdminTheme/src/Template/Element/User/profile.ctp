@@ -5,31 +5,32 @@
         <hr />
         <div class="row">
 
-            <form role="form" id="editProfile" method="post" enctype="multipart/form-data" >
+            <form role="form" id="editProfile" method="post" name="editProfile" >
                 <input type="hidden" value="profile" id="hdnmode" name="hdnmode">
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label for="lblContactNum"><b>Contact Number</b></label>
-                        <input type="text" class="form-control" id="contact_num" name="contact_num" placeholder="Enter Contact Number">
+                        <label for="lblFirstName"><b><?= __('First Name')?></b></label>
+                        <input type="text" class="form-control" id="first_name" name="first_name" placeholder="<?= __('Enter Your First Name')?>">
                     </div>
                     <div class="form-group">
-                        <label for="lblAltContactNum"><b>Alternate Contact Number</b></label>
-                        <input type="text" class="form-control" id="contact_num" name="contact_num" placeholder="Enter Alternate Contact Number">
+                        <label for="lblAltContactEmail"><b><?= __('Last Name')?></b></label>
+                        <input type="text" class="form-control" id="last_name" name="last_name" placeholder="<?= __('Enter Your Last Name')?>">
                     </div>
                     <div class="form-group">
-                        <label for="lblAltContactEmail"><b>Alternate Email</b></label>
-                        <input type="email" class="form-control" id="contact_email" name="contact_email" placeholder="Enter Alternate Email">
+                        <label for="lblPhoneNumber"><b><?= __('Phone Number')?></b></label>
+                        <input type="text" class="form-control" id="phone_num" name="phone_num" placeholder="<?= __('Enter Your Phone Number')?>">
                     </div>
+
                     <div class="form-group">
-                        <label for="lblAddress"><b>Address</b></label>
-                        <input type="text" class="form-control" id="contact_address" name="contact_address" placeholder="Enter Your Address">
+                        <label for="lblAddress"><b><?= __('Address')?></b></label>
+                        <input type="text" class="form-control" id="address" name="address" placeholder="<?= __('Enter Your Address')?>">
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label for="lblContactNum"><b>Timezone</b></label>
+                        <label for="lblContactNum"><b><?= __('Timezone')?></b></label>
                         <select class="form-control" name="timezone">
-                            <option value="">-- Select a timezone --</option>
+                            <option value="">-- <?= __('Select a timezone')?> --</option>
                             <?php
                             foreach($timezone as $key=>$value){
                                 $selected = '';
@@ -43,13 +44,13 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <input type="file" class="btn btn-default" title="Select Profile Photo">
+                        <input type="file" name="imgProfile" id="imgProfile" class="btn btn-default" title="Select Profile Photo">
                     </div>
                     <div class="form-group">
-                        <label class="control-label">Your Birthday</label>
-                        <input type="text" class="form-control datepicker-input">
+                        <label class="control-label"><?= __('Your Birthday')?></label>
+                        <input type="text" name="birthday" id="birthday" class="form-control datepicker-input"  placeholder="<?= __('mm/dd/yyyy')?>">
                     </div>
-                    <button type="submit" class="btn btn-success">Submit</button>
+                    <button type="submit" class="btn btn-success"><?= __('Submit')?></button>
                 </div>
             </form>
         </div><!-- End div .row -->

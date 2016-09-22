@@ -24,6 +24,7 @@ class RequestsController extends AuthMasterController
         ],
         'contain' =>[
             'Users'=>array('fields'=>['first_name','last_name']),
+            'Users'=>array('fields'=>['first_name','last_name']),
             'Departments' =>['fields'=>['name']],
             'Categories' => ['fields'=>['name']]
         ]
