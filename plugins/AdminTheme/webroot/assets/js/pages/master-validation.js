@@ -222,7 +222,7 @@ s                            }
                     }
                 }
             },
-            dep_tel: {
+            contact_num: {
                 validators: {
                     digits: {
                         message: 'The value can contain only digits'
@@ -256,12 +256,6 @@ s                            }
                     return true;
 
                 }
-                // ,
-                // error: function (xhr, ajaxOptions, thrownError) {
-                //     alert(xhr.status);
-                //     alert(thrownError);
-                //     alert(xhr.responseText);
-                // }
             });
             return false; // required to block normal submit since you used ajax
         },

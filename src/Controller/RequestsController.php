@@ -178,16 +178,31 @@ class RequestsController extends AuthMasterController
         if (!$id || !$this->request->query('mod')) {
             throw new NotFoundException();
         }
-        if($mod === 'appr' || $mod === 'del'){
+        if($mod === 'app' || $mod === 'del' || $mod === 'rej'){
             $request = $this->Requests->get($id);
             if (!$request) {
                 throw new NotFoundException();
             }
-            $request->status = ($mod==='appr') ? 1 : 2;
-            $result = $this->Requests->save($request);
-        }elseif($mod === 'multiDel' || $mod === 'multiAppr'){
+            if($mod === 'app'){
+                $request->status = 1;
+            }elseif ($mod === 'rej'){
+                $request->status = 2;
+            }else{
+                $request->status = 3;
+            }
+            $temp = $this->Requests->save($request);
+            $result = $this->responseData(true,count($temp));
+        }elseif($mod === 'multiDel' || $mod === 'multiApp'|| $mod === 'multiRej'){
+            if($mod === 'multiApp'){
+                $status = 1;
+            }elseif ($mod === 'multiRej'){
+                $status = 2;
+            }else{
+                $status = 3;
+            }
             $arrId = explode(',',$id);
-            $result = $this->Requests->updateAll(['status'=> ($mod==='multiAppr') ? 1 : 2 ],$arrId);
+            $temp = $this->Requests->updateAll(['status'=> $status],['id IN'=>$arrId]);
+            $result = $this->responseData(true,$temp);
         }
         $this->set(compact('result'));
         $this->set('_serialize', ['result']);

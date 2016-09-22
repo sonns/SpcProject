@@ -56,3 +56,7 @@
     </div><!-- End div .user-profile-content -->
 </div><!-- End div .tab-pane -->
 <!-- End Tab about -->
+<div class="md-overlay"></div>
+<?= $this->Html->script('AdminTheme./assets/libs/jquery/jquery-1.11.1.min.js') ?>
+<?= $this->Html->script('AdminTheme./assets/libs/bootstrap-validator/js/bootstrapValidator.js') ?>
+<?= $this->Html->script('AdminTheme./assets/js/pages/master-validation.js') ?>
