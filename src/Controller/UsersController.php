@@ -73,8 +73,8 @@ class UsersController extends AuthMasterController
     public function saveProfile(){
         $this->request->allowMethod('ajax');
 //        echo 123;exit;
-        $result = $this->request->data['first_name'];
-        print_r($result);exit;
+        $result = $this->request->data;
+//        print_r($result);exit;
         $this->set('result',$result);
         $this->set('_serialize', ['result']);
 

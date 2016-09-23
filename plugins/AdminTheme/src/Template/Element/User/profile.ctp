@@ -5,7 +5,7 @@
         <hr />
         <div class="row">
 
-            <form role="form" id="editProfile" method="post" name="editProfile" >
+            <form role="form" id="editProfile" method="post" name="editProfile"  enctype="multipart/form-data" >
                 <input type="hidden" value="profile" id="hdnmode" name="hdnmode">
                 <div class="col-sm-6">
                     <div class="form-group">
