@@ -10,20 +10,20 @@
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label for="lblFirstName"><b><?= __('First Name')?></b></label>
-                        <input type="text" class="form-control" id="first_name" name="first_name" placeholder="<?= __('Enter Your First Name')?>">
+                        <input type="text" value="<?= isset($userInfo['profile']) ? $userInfo['profile']['first_name'] : '' ?>" class="form-control" id="first_name" name="first_name" placeholder="<?= __('Enter Your First Name')?>">
                     </div>
                     <div class="form-group">
                         <label for="lblAltContactEmail"><b><?= __('Last Name')?></b></label>
-                        <input type="text" class="form-control" id="last_name" name="last_name" placeholder="<?= __('Enter Your Last Name')?>">
+                        <input type="text" value="<?= isset($userInfo['profile']) ? $userInfo['profile']['last_name'] : '' ?>" class="form-control" id="last_name" name="last_name" placeholder="<?= __('Enter Your Last Name')?>">
                     </div>
                     <div class="form-group">
                         <label for="lblPhoneNumber"><b><?= __('Phone Number')?></b></label>
-                        <input type="text" class="form-control" id="phone_num" name="phone_num" placeholder="<?= __('Enter Your Phone Number')?>">
+                        <input type="text" value="<?= isset($userInfo['profile']) ? $userInfo['profile']['contact_number'] : '' ?>" class="form-control" id="phone_num" name="phone_num" placeholder="<?= __('Enter Your Phone Number')?>">
                     </div>
 
                     <div class="form-group">
                         <label for="lblAddress"><b><?= __('Address')?></b></label>
-                        <input type="text" class="form-control" id="address" name="address" placeholder="<?= __('Enter Your Address')?>">
+                        <input type="text" value="<?= isset($userInfo['profile']) ? $userInfo['profile']['address'] : '' ?>" class="form-control" id="address" name="address" placeholder="<?= __('Enter Your Address')?>">
                     </div>
                 </div>
                 <div class="col-sm-6">
@@ -34,8 +34,7 @@
                             <?php
                             foreach($timezone as $key=>$value){
                                 $selected = '';
-
-                                if($key == $this->Session->read('Auth.User.timezone')){
+                                if(isset($userInfo['profile']) || $key == $userInfo['profile']['timezone']){
                                     $selected = 'selected';
                                 }
                                 echo '<option value="'.$key.'" '.$selected.'>'.$value.'</option>';
@@ -48,7 +47,7 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label"><?= __('Your Birthday')?></label>
-                        <input type="text" name="birthday" id="birthday" class="form-control datepicker-input"  placeholder="<?= __('mm/dd/yyyy')?>">
+                        <input type="text" name="birthday" value="<?= isset($userInfo['profile']) ? $userInfo['profile']['birthday'] : '' ?>" id="birthday" class="form-control datepicker-input"  placeholder="<?= __('mm/dd/yyyy')?>">
                     </div>
                     <button type="submit" class="btn btn-success"><?= __('Submit')?></button>
                 </div>

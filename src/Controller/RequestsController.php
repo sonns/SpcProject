@@ -23,8 +23,8 @@ class RequestsController extends AuthMasterController
             'Requests.id' => 'desc'
         ],
         'contain' =>[
-            'Users'=>array('fields'=>['first_name','last_name']),
-            'Users'=>array('fields'=>['first_name','last_name']),
+            'Users'=>array('fields'=>['username']),
+//            'Users'=>array('fields'=>['first_name','last_name']),
             'Departments' =>['fields'=>['name']],
             'Categories' => ['fields'=>['name']]
         ]

@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Utility\FunctionCommon;
 use Cake\Event\Event;
+use Cake\I18n\Time;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -45,24 +46,6 @@ class UsersController extends AuthMasterController
     }
 
     public function profile(){
-
-
-
-
-        if($this->request->is('post')){
-//            if($this->request->data['hdnmode'] === 'profile')
-//                $this->saveProfile($this->request->data);
-//            else if($this->request->data['hdnmode'] === 'resetpass')
-//                $this->resetPassword($this->request->data);
-
-//            $this->Session->write('Auth.User.timezone', $this->request->data['selectedZone']);
-
-//            if($this->User->updateTimezone($this->request->data)){
-//                $this->Session->setFlash(__('The profile has been updated.'));
-//            }else{
-//                $this->Session->setFlash(__('There was an error updating the profile.'), 'default', array('class' => 'error-message'));
-//            }
-        }
 //      Get and set profile info
         $listTimezone = new FunctionCommon();
         $this->set('timezone', $listTimezone->getTimeZone());
@@ -72,9 +55,54 @@ class UsersController extends AuthMasterController
 
     public function saveProfile(){
         $this->request->allowMethod('ajax');
-//        echo 123;exit;
-        $result = $this->request->data;
-//        print_r($result);exit;
+        $result = $this->responseData(false,__('The request could not be saved. Please, try again or contact for admin page.'));
+        if ($this->request->is('post')) {
+            if(isset($this->request->data['hdnmode']) && $this->request->data['hdnmode'] === 'profile'){
+                $profile = TableRegistry::get('profiles');
+                $profileInfo = $profile->find()->where(['user_id'=>1])->first();
+                if (!empty($this->request->data['imgProfile']['name'])) {
+                    $file = $this->request->data['imgProfile'];
+
+                    $ext = substr(strtolower(strrchr($file['name'], '.')), 1);
+                    $arr_ext = array('jpg', 'jpeg', 'gif','png');
+                    if (in_array($ext, $arr_ext)) {
+                        $path =  WWW_ROOT . 'file\profile\\';
+                        if(!is_dir($path)){
+                            mkdir($path, 777,true);
+                        }
+                        move_uploaded_file($file['tmp_name'], $path . $file['name']);
+                        //prepare the filename for database entry
+                        $this->request->data['photo'] = $file['name'];
+                        unset($this->request->data['imgProfile']);
+                        unset($this->request->data['hdnmode']);
+                    }
+                }
+                if(!count($profileInfo)){
+                    $profileE = $profile->newEntity();
+                    $this->request->data['user_id'] = $this->uses->id;
+                    $this->request->data['birthday'] = Time::parse($this->request->data['birthday']);
+                    $profileE = $profile->patchEntity($profileE, $this->request->data);
+                    if ($profile->save($profileE)) {
+                        $result  = ['params'=>$this->request->data , 'status' => 'Success' , 'response'=> __('The request has been saved.')];
+                    }
+                }else{
+                    $profileInfo->first_name = $this->request->data['first_name'];
+                    $profileInfo->last_name = $this->request->data['last_name'];
+                    $profileInfo->photo = $this->request->data['photo'];
+                    $profileInfo->contact_number = $this->request->data['phone_num'];
+                    $profileInfo->timezone = $this->request->data['timezone'];
+                    $profileInfo->address = $this->request->data['address'];
+                    $profileInfo->birthday = Time::parse($this->request->data['birthday']);
+                    $profileInfo->modified = Time::now();
+                    if ($profile->save($profileInfo)) {
+                        $result  = ['params'=>$this->request->data , 'status' => 'Success' , 'response'=> __('Update The request has been saved.')];
+                    }
+                }
+            }elseif (isset($this->request->data['hdnmode']) && $this->request->data['hdnmode'] === 'changePass'){
+
+            }
+
+        }
         $this->set('result',$result);
         $this->set('_serialize', ['result']);
 

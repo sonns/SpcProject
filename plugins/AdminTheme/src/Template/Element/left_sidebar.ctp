@@ -11,7 +11,8 @@
     <div class="profile-info">
         <div class="col-xs-4">
             <a href="profile.html" class="rounded-image profile-image">
-                <?php echo $this->Html->image('AdminTheme./images/users/user-100.jpg');?>
+<!--                --><?php //echo $this->Html->image('AdminTheme./images/users/user-100.jpg');?>
+                <?php echo $this->Html->image((empty($userInfo['profile'])) ? 'AdminTheme./images/users/user-100.jpg' : '../file/profile/'.$userInfo['profile']['photo'] , array(  'alt'=>'User avatar'));?>
             </a>
         </div>
         <div class="col-xs-8">

@@ -102,14 +102,25 @@ class AuthMasterController extends AppController
 
         if ($this->Auth->user()) {
             $users = TableRegistry::get('Users');
-            $this->uses = $users->find()->where(['Users.id'=>$this->Auth->user()['id']])->contain(['role','dep'])->first();
+            $this->uses = $users->find()->where(['Users.id'=>$this->Auth->user()['id']])
+                ->contain(['role','dep','profiles'])->first();
             $this->set('userInfo', $this->uses);
             $this->set('params', $this->params);
-
             $this->_initMenu();
+            if(empty($this->uses->profile)){
+                if(!$this->_isUpdateProfile())
+                    return $this->redirect('user/profile');
+            }
         }
     }
 
+    private function _isUpdateProfile(){
+        if($this->request->params['action'] === 'saveProfile' && $this->request->params['controller'] === 'Users')
+            return true;
+        if($this->request->params['action'] !== 'profile' || $this->request->params['controller'] !== 'Users')
+            return false;
+        return true;
+    }
     protected function _allowActions()
     {
         $this->Auth->allow(['login', 'logout' , 'accessDenied','pageNotFound']);

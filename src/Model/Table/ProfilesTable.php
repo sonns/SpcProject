@@ -26,6 +26,7 @@ class ProfilesTable extends Table
         $this->displayField('id');
         $this->primaryKey('id');
         $this->addBehavior('Timestamp');
+        $this->belongsTo('Users');
     }
 
     /**
@@ -36,22 +37,22 @@ class ProfilesTable extends Table
      */
     public function validationDefault(Validator $validator)
     {
-//        return $validator
-//            ->notEmpty('dep_name', 'The Name field is required')
-//            ->notEmpty('dep_address', 'The address field is required');
+        return $validator
+            ->notEmpty('first_name', 'The Name field is required')
+            ->notEmpty('last_name', 'The address field is required');
     }
 
     public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)
     {
 //        Define data to mapping entity
-//        if (isset($data['dep_name'])) {
-//            $data['name'] = $data['dep_name'];
-//        }
-//        if (isset($data['dep_tel'])) {
-//            $data['tel'] = $data['dep_tel'];
-//        }
-//        if (isset($data['dep_address'])) {
-//            $data['address'] = $data['dep_address'];
-//        }
+        if (isset($data['phone_num'])) {
+            $data['contact_number'] = $data['phone_num'];
+        }
+        if (isset($data['dep_tel'])) {
+            $data['tel'] = $data['dep_tel'];
+        }
+        if (isset($data['dep_address'])) {
+            $data['address'] = $data['dep_address'];
+        }
     }
 }

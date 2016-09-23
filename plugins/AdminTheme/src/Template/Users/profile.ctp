@@ -2,28 +2,10 @@
 <div class="row">
     <div class="col-sm-3 portlets">
         <div class="avatar-container">
-            <?php echo $this->Html->image('AdminTheme./images/users/user-256.jpg', array('class' => 'img-circle profile-avatar','alt'=>'User avatar'));?>
-<!--            <img src="AdminTheme./images/users/user-256.jpg" class="img-circle profile-avatar" alt="User avatar">-->
+            <?php echo $this->Html->image((empty($userInfo['profile'])) ? 'AdminTheme./images/users/user-256.jpg' : '../file/profile/'.$userInfo['profile']['photo'] , array('class' => 'img-circle profile-avatar','alt'=>'User avatar'));?>
         </div>
         <!-- Begin user profile -->
-        <div class="text-center user-profile-2">
-            <h4>Hi, <b><?php echo $userInfo['first_name'];?></b></h4>
-            <h5>Administrator</h5>
-            <ul class="list-group">
-                <li class="list-group-item">
-                    <span class="badge">221</span>
-                    Managers
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">134</span>
-                    Sub-Managers
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">1,245</span>
-                    Staff
-                </li>
-            </ul>
-        </div>
+        <?= $this->cell('User::display', [$userInfo] )?>
     </div>
     <div class="col-sm-9">
         <div class="widget widget-tabbed">
@@ -45,11 +27,11 @@
                 <div class="tab-pane animated fadeInRight" id="reset_password">
                     <?php echo $this->element('User/change_password') ?>
                 </div>
-                <!-- Tab user activities -->
-                <?php echo $this->element('User/activities') ?>
-                <!-- End Tab user activities -->
-                <!-- Tab user messages -->
-                <?php echo $this->element('User/mymessage') ?>
+<!--                <!-- Tab user activities -->
+<!--                --><?php //echo $this->element('User/activities') ?>
+<!--                <!-- End Tab user activities -->
+<!--                <!-- Tab user messages -->
+                <!--                --><?php //echo $this->element('User/mymessage') ?>
                 <!-- End Tab user messages -->
             </div><!-- End div .tab-content -->
         </div><!-- End div .box-info -->

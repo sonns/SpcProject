@@ -12,34 +12,6 @@
         <div class="container">
             <div class="navbar-collapse2">
                 <ul class="nav navbar-nav hidden-xs">
-    <!--                    <li class="dropdown">-->
-    <!--                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-th"></i></a>-->
-    <!--                        <div class="dropdown-menu grid-dropdown">-->
-    <!--                            <div class="row stacked">-->
-    <!--                                <div class="col-xs-4">-->
-    <!--                                    <a href="javascript:;" data-app="notes-app" data-status="active"><i class="icon-edit"></i>Notes</a>-->
-    <!--                                </div>-->
-    <!--                                <div class="col-xs-4">-->
-    <!--                                    <a href="javascript:;" data-app="todo-app" data-status="active"><i class="icon-check"></i>Todo List</a>-->
-    <!--                                </div>-->
-    <!--                                <div class="col-xs-4">-->
-    <!--                                    <a href="javascript:;" data-app="calc" data-status="inactive"><i class="fa fa-calculator"></i>Calculator</a>-->
-    <!--                                </div>-->
-    <!--                            </div>-->
-    <!--                            <div class="row stacked">-->
-    <!--                                <div class="col-xs-4">-->
-    <!--                                    <a href="javascript:;" data-app="weather-widget" data-status="active"><i class="icon-cloud-3"></i>Weather</a>-->
-    <!--                                </div>-->
-    <!--                                <div class="col-xs-4">-->
-    <!--                                    <a href="javascript:;" data-app="calendar-widget2" data-status="active"><i class="icon-calendar"></i>Calendar</a>-->
-    <!--                                </div>-->
-    <!--                                <div class="col-xs-4">-->
-    <!--                                    <a href="javascript:;" data-app="stock-app" data-status="inactive"><i class="icon-chart-line"></i>Stocks</a>-->
-    <!--                                </div>-->
-    <!--                            </div>-->
-    <!--                            <div class="clearfix"></div>-->
-    <!--                        </div>-->
-    <!--                    </li>-->
                     <li class="language_bar dropdown hidden-xs">
 
 <!--                        --><?php //echo  $this->Form->select(
@@ -149,7 +121,7 @@
                     <li class="dropdown iconify hide-phone"><a href="#" onclick="javascript:toggle_fullscreen()"><i class="icon-resize-full-2"></i></a></li>
                     <li class="dropdown topbar-profile">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="rounded-image topbar-profile-image">
-                                <?php echo $this->Html->image('AdminTheme./images/users/user-35.jpg', array('class' => 'xs-avatar ava-dropdown','alt'=>'Avatar'));?>
+                                <?php echo $this->Html->image( (empty($userInfo['profile'])) ? 'AdminTheme./images/users/user-35.jpg' : '../file/profile/'.$userInfo['profile']['photo'] , array('class' => 'xs-avatar ava-dropdown','style'=> 'height:34px !important','alt'=>'Avatar'));?>
                                 </span> <strong><?php echo $userInfo['first_name'] . ' ' .$userInfo['last_name'] ;?></strong> <i class="fa fa-caret-down"></i>
                         </a>
                         <ul class="dropdown-menu">

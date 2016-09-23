@@ -231,10 +231,13 @@ s                            }
                     }
                 }
             }
+        },
+        submitHandler: function (form) {
+            isUpdateProfile = true;
         }
     });
 
-
+    var isAddRequest = false;
     $('#frRequest').bootstrapValidator({
         fields: {
             sltCategory: {
@@ -314,6 +317,9 @@ s                            }
                     }
                 }
             }
+        },
+        submitHandler: function (form) {
+            isAddRequest = true;
         }
     });
     $('#txtApproveDate')
@@ -334,82 +340,66 @@ s                            }
     });
 
     $("#frRequest").on('submit',(function(e) {
-        $.ajax({
-            type: "POST",
-            url:   "request/addRequest.json",
-            dataType: 'text',
-            data:  new FormData(this),
-            contentType: false,
-            cache: false,
-            processData:false,
-            success: function(data)
-            {
-                var returnedData = JSON.parse(data);
-
-                if(returnedData.result.status === 'Success'){
-                    $("#alertDiv").removeClass("alert-danger");
-                    $("#alertDiv").addClass("alert-info");
-                }else{
-                    $("#alertDiv").removeClass("alert-info");
-                    $("#alertDiv").addClass("alert-danger");
-                }
-
-                $("#alertHeader").text(returnedData.result.status);
-                $("#alertMessage").text(returnedData.result.response);
-                $("#alertMessage").text(returnedData.result.response);
-                setTimeout(function () {
-                    $("#alert-modal").removeClass("md-show");
-                }, 8000);
-                $("#md-add-request").removeClass("md-show");
-                $('#frRequest').trigger('reset');
-                $("#alert-modal").addClass("md-show");
-                console.log(data);
-            },
-            error: function()
-            {
-
-            }
-        })
-        $("html, body").animate({ scrollTop: 0 }, "slow");
-        return false;
-    }));
-
-    $("#editProfile").on('submit',(function(e) {
-        if(true){
+        if(isAddRequest){
             $.ajax({
                 type: "POST",
-                url:   "saveProfile.json",
+                url:   "addRequest.json",
                 dataType: 'text',
                 data:  new FormData(this),
-                //contentType: false,
+                contentType: false,
                 cache: false,
                 processData:false,
                 success: function(data)
                 {
-                    alert(data);
-                    //var returnedData = JSON.parse(data);
-                    //if(returnedData.result.status === 'Success'){
-                    //    $("#alertDiv").removeClass("alert-danger");
-                    //    $("#alertDiv").addClass("alert-info");
-                    //}else{
-                    //    $("#alertDiv").removeClass("alert-info");
-                    //    $("#alertDiv").addClass("alert-danger");
-                    //}
-                    //
-                    //$("#alertHeader").text(returnedData.result.status);
-                    //$("#alertMessage").text(returnedData.result.response);
-                    //$("#alertMessage").text(returnedData.result.response);
-                    //setTimeout(function () {
-                    //    $("#alert-modal").removeClass("md-show");
-                    //}, 8000);
-                    //$("#md-add-request").removeClass("md-show");
-                    //$('#frRequest').trigger('reset');
-                    //$("#alert-modal").addClass("md-show");
+                    var returnedData = JSON.parse(data);
+
+                    if(returnedData.result.status === 'Success'){
+                        $("#alertDiv").removeClass("alert-danger");
+                        $("#alertDiv").addClass("alert-info");
+                    }else{
+                        $("#alertDiv").removeClass("alert-info");
+                        $("#alertDiv").addClass("alert-danger");
+                    }
+
+                    $("#alertHeader").text(returnedData.result.status);
+                    $("#alertMessage").text(returnedData.result.response);
+                    $("#alertMessage").text(returnedData.result.response);
+                    setTimeout(function () {
+                        $("#alert-modal").removeClass("md-show");
+                    }, 8000);
+                    $("#md-add-request").removeClass("md-show");
+                    $('#frRequest').trigger('reset');
+                    $("#alert-modal").addClass("md-show");
+                    isAddRequest = false;
                     console.log(data);
+                    location.reload();
                 },
                 error: function()
                 {
-                    alert('12')
+
+                }
+            })
+            $("html, body").animate({ scrollTop: 0 }, "slow");
+        }
+
+        return false;
+    }));
+
+    $("#editProfile").on('submit',(function(e) {
+        if(isUpdateProfile){
+            $.ajax({
+                type: "POST",
+                url:   "save_profile.json",
+                dataType: 'text',
+                data:  new FormData(this),
+                contentType: false,
+                cache: false,
+                processData:false,
+                success: function(data)
+                {
+                    isUpdateProfile = false;
+                    console.log(data);
+                    location.reload();
                 }
             })
         }

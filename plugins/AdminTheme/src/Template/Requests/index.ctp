@@ -68,7 +68,7 @@
                             <tr>
                                 <td><?php echo $key+1;?></td>
                                 <td><input value="<?= $request->id; ?>" name="request_id[]" type="checkbox" class="rows-check"></td>
-                                <td><strong><?php echo $request->user->alias_name;?></strong></td>
+                                <td><strong><?php echo $request->user->username;?></strong></td>
                                 <td><strong><?php echo $request->department->name;?></strong></td>
                                 <td><strong><?php echo $request->category->name;?></strong></td>
                                 <td><strong><?php echo $request->title;?></strong></td>
@@ -136,12 +136,12 @@ $this->Html->scriptEnd();
             $("input[name='request_id[]']").iCheck('uncheck');
         });
 
-    $(".approveRequest").on("click", function(e){
+    $(".statusRequest").on("click", function(e){
         e.preventDefault();
         var $this = $(this);
         $.ajax({
             type: "GET",
-            url:   "request/change_status.json",
+            url:   "change_status.json",
             dataType: 'text',
             data:  'request_id='+$this.data("value")+'&mod='+$this.data("mode"),
             success: function(data)
@@ -168,7 +168,7 @@ $this->Html->scriptEnd();
         console.log( 'request_id='+values.join()+'&mod='+$this.data("mode"));
         $.ajax({
             type: "GET",
-            url:   "request/change_status.json",
+            url:   "change_status.json",
             dataType: 'text',
             data:  'request_id='+values.join()+'&mod='+$this.data("mode"),
             success: function(data)
