@@ -59,7 +59,7 @@ class UsersController extends AuthMasterController
         if ($this->request->is('post')) {
             if(isset($this->request->data['hdnmode']) && $this->request->data['hdnmode'] === 'profile'){
                 $profile = TableRegistry::get('profiles');
-                $profileInfo = $profile->find()->where(['user_id'=>1])->first();
+                $profileInfo = $profile->find()->where(['user_id'=>$this->user->id])->first();
                 if (!empty($this->request->data['imgProfile']['name'])) {
                     $file = $this->request->data['imgProfile'];
 
@@ -77,29 +77,32 @@ class UsersController extends AuthMasterController
                         unset($this->request->data['hdnmode']);
                     }
                 }
+                unset($this->request->data['imgProfile']);
                 if(!count($profileInfo)){
                     $profileE = $profile->newEntity();
-                    $this->request->data['user_id'] = $this->uses->id;
+                    $this->request->data['user_id'] = $this->user->id;
                     $this->request->data['birthday'] = Time::parse($this->request->data['birthday']);
                     $profileE = $profile->patchEntity($profileE, $this->request->data);
                     if ($profile->save($profileE)) {
                         $result  = ['params'=>$this->request->data , 'status' => 'Success' , 'response'=> __('The request has been saved.')];
                     }
                 }else{
-                    $profileInfo->first_name = $this->request->data['first_name'];
-                    $profileInfo->last_name = $this->request->data['last_name'];
-                    $profileInfo->photo = $this->request->data['photo'];
-                    $profileInfo->contact_number = $this->request->data['phone_num'];
-                    $profileInfo->timezone = $this->request->data['timezone'];
-                    $profileInfo->address = $this->request->data['address'];
-                    $profileInfo->birthday = Time::parse($this->request->data['birthday']);
-                    $profileInfo->modified = Time::now();
+                    $this->request->data['modified'] = Time::now();
+                    $this->request->data['birthday'] = Time::parse($this->request->data['birthday'])->i18nFormat('MM/dd/yyyy');
+                    $profileInfo = $profile->patchEntity($profileInfo, $this->request->data);
                     if ($profile->save($profileInfo)) {
-                        $result  = ['params'=>$this->request->data , 'status' => 'Success' , 'response'=> __('Update The request has been saved.')];
+                        $result  = ['params'=>$this->request->data , 'status' => 'Success' , 'response'=> __('Your information has been changed !!!.')];
                     }
                 }
-            }elseif (isset($this->request->data['hdnmode']) && $this->request->data['hdnmode'] === 'changePass'){
-
+            }elseif (isset($this->request->data['hdnmode']) && $this->request->data['hdnmode'] === 'resetpass'){
+                $query = $this->Users->query();
+                $userInfo =  $query->update()
+                    ->set(['password' => (new FunctionCommon)->cipher_encrypt($this->request->data['password'],MCRYPT_KEY)])
+                    ->where(['id' => $this->user->id])
+                    ->execute();
+                if ($userInfo) {
+                    $result  = ['params'=>$userInfo , 'status' => 'Success' , 'response'=> __('Your password has been changed !!!.')];
+                }
             }
 
         }
@@ -107,34 +110,6 @@ class UsersController extends AuthMasterController
         $this->set('_serialize', ['result']);
 
     }
-
-    private function resetPassword($data){
-        $userE = $this->Users->newEntity();
-        try{
-            $userE = $this->Users->patchEntity($userE, $data);
-            $result = [];
-            if ($this->Users->save($userE)) {
-                $result = [
-                    'status' => 'Success',
-                    'response' => __('Your profile has been saved.')
-                ];
-            } else {
-                $result = [
-                    'status' => 'Error',
-                    'response' => __('Your profile could not be saved. Please, try again.')
-                ];
-            }
-        }catch (Exception $e){
-//            debug
-            $result = [
-                'status' => 'Success',
-                'response' => $e->getMessage()
-            ];
-        }
-        $this->set(compact('result'));
-        $this->set('_serialize', ['result']);
-    }
-
     /**
      * Index method
      *
@@ -149,9 +124,6 @@ class UsersController extends AuthMasterController
         $this->set('_serialize', ['users']);
         $this->set(compact('userE'));
         $this->set('_serialize', ['userE']);
-    }
-    protected function _allowActions() {
-//        $this->Auth->allow(['index']);
     }
     /**
      * Add method

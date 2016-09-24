@@ -136,8 +136,7 @@
             <!--/.nav-collapse -->
         </div>
     </div>
-<?php
-$this->Html->scriptStart(['block' => 'scriptBlock']);?>
+<?php $this->Html->scriptStart(['block' => 'scriptBlock']);?>
 $("#ddlLanguage a").on("click", function(e){
     e.preventDefault();
     var $this = $(this).parent();
@@ -157,9 +156,7 @@ $("#ddlLanguage a").on("click", function(e){
     }
     })
 })
-<?php
-$this->Html->scriptEnd();
-?>
+<?php $this->Html->scriptEnd(); ?>
 
 
 <!--    $("form[name=size-form]").submit(function(e) {-->

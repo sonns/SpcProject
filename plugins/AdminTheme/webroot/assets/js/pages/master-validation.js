@@ -1,5 +1,5 @@
 $(document).ready(function() {
-        $('#createDepartment').bootstrapValidator({
+    $('#createDepartment').bootstrapValidator({
         message: 'This value is not valid',
         fields: {
             dep_name: {
@@ -65,6 +65,52 @@ $(document).ready(function() {
             return false; // required to block normal submit since you used ajax
         },
     });
+
+    $('#resetPassword').bootstrapValidator({
+        message: 'This value is not valid',
+        fields: {
+            password: {
+                validators: {
+                    notEmpty: {
+                        message: 'The password is required and can\'t be empty'
+                    },
+                    identical: {
+                        field: 'confirmPassword',
+                        message: 'The password and its confirm are not the same'
+                    }
+                }
+            },
+            confirmPassword: {
+                validators: {
+                    notEmpty: {
+                        message: 'The confirm password is required and can\'t be empty'
+                    },
+                    identical: {
+                        field: 'password',
+                        message: 'The password and its confirm are not the same'
+                    }
+                }
+            }
+        },
+        submitHandler: function (form) {
+            $.ajax({
+                type: "POST",
+                url:   "save_profile.json",
+                dataType: 'text',
+                async:false,
+                data: $("form").serialize(),
+                success: function (data) {
+                    var res = JSON.parse(data);
+                    console.log(data);
+                    notify('success',{title:'Update!!!',message: res.result.response});
+                    //location.reload();
+                }
+            });
+            return false; // required to block normal submit since you used ajax
+        }
+    });
+
+
     $('#createUser').bootstrapValidator({
         message: 'This value is not valid',
         fields: {

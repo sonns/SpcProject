@@ -16,7 +16,7 @@
             </a>
         </div>
         <div class="col-xs-8">
-            <div class="profile-text">Welcome <b><?php echo $userInfo['first_name']?></b></div>
+            <div class="profile-text">Welcome <b><?php echo  (empty($userInfo['profile'])) ? $userInfo['username'] : $userInfo['profile']['first_name'] . ' ' . $userInfo['profile']['last_name'];?></b></div>
             <div class="profile-buttons">
                 <a href="javascript:;"><i class="fa fa-envelope-o pulse"></i></a>
                 <a href="#connect" class="open-right"><i class="fa fa-comments"></i></a>
@@ -37,7 +37,7 @@
                     if ($menu['hasPermission'] >= 1) {
                         ?>
                         <li class='<?= (isset($menu['children']) && count($menu['children']) > 0) ? 'has_sub' : ''; ?>'>
-                            <a href='<?= (isset($menu['children']) && count($menu['children']) > 0) ? 'javascript:void(0);' : $this->Url->build($menu['url']); ?>'>
+                            <a class="<?= ($menu['active']) ? 'active' : ''?>" href='<?= (isset($menu['children']) && count($menu['children']) > 0) ? 'javascript:void(0);' : $this->Url->build($menu['url']); ?>'>
                                 <i class='icon-home-3'></i><span><?= $menu['title'] ?></span>
                                 <?php if (isset($menu['children']) && count($menu['children']) > 0): ?>
                                     <span class="pull-right"><i class="fa fa-angle-down"></i></span>
@@ -47,7 +47,7 @@
                                 <ul>
                                     <?php foreach ($menu['children'] as $child): ?>
                                         <li>
-                                            <a href='<?= $this->Url->build($child['url']); ?>'><span><?= $child['title']; ?></span></a>
+                                            <a  class="<?= ($child['active']) ? 'active' : ''?>" href='<?= $this->Url->build($child['url']); ?>'><span><?= $child['title']; ?></span></a>
                                         </li>
                                     <?php endforeach; ?>
                                 </ul>

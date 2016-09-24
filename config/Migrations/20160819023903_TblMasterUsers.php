@@ -26,7 +26,6 @@ class TblMasterUsers extends AbstractMigration
 
             ->addPrimaryKey(['id'])
             ->addColumn('dep_id', 'integer')
-
             ->addColumn('email', 'string')
             ->addColumn('username', 'string')
             ->addColumn('password', 'blob', array('limit' => MysqlAdapter::BLOB_REGULAR))
@@ -38,7 +37,6 @@ class TblMasterUsers extends AbstractMigration
             ->addColumn('last_login_ip', 'string', array('limit' => 100,'null' => true,'default'=>null))
             ->addColumn('last_login_now', 'datetime', array('limit' => 50,'null' => true,'default'=>null))
             ->addColumn('last_login_ip_now', 'string', array('limit' => 100,'null' => true,'default'=>null))
-//            ->addColumn('employee_level','enum', array('values' => ['top', 'manager','sub_manager','normal','develop'],'default' => 'normal'))
             ->addColumn('del_flg', 'integer' , ['limit'=>1,'default'=>0])
             ->addColumn('created', 'datetime',['default'=> "CURRENT_TIMESTAMP"])
             ->addColumn('modified', 'datetime', array('null' => true,'default'=>null))

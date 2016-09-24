@@ -21,11 +21,16 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo isset($theme['title']) ? $theme['title'] : 'SPCProject'; ?></title>
-    <?= $this->Html->meta('icon') ?>
-
+    <?= $this->Html->meta(
+        [
+            'link' => 'http://spcproject.local/favicon.ico',
+            'rel' => 'icon'
+        ]
+    );?>
+    <?= $this->Html->css('AdminTheme./assets/libs/jquery-notifyjs/styles/metro/notify-metro.css') ?>
     <?= $this->Html->css('AdminTheme./assets/libs/jqueryui/ui-lightness/jquery-ui-1.10.4.custom.min.css') ?>
     <?= $this->Html->css('AdminTheme./assets/libs/bootstrap/css/bootstrap.min.css') ?>
-    <?= $this->Html->css('AdminTheme./assets/libs/font-awesome/css/font-awesome.min.css') ?>
+    <?= $this->Html->css('AdminTheme./assets/libs/font-awesome/css/font-awesome.css') ?>
     <?= $this->Html->css('AdminTheme./assets/libs/fontello/css/fontello.css') ?>
     <?= $this->Html->css('AdminTheme./assets/libs/animate-css/animate.min.css') ?>
     <?= $this->Html->css('AdminTheme./assets/libs/nifty-modal/css/component.css') ?>
@@ -64,9 +69,11 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
-    <?= $this->fetch('script') ?>
+
 </head>
 <body>
+<?= $this->Flash->render() ?>
+
 <!--Modal Logout-->
 <?php
 echo $this->element('logout');
@@ -166,11 +173,18 @@ echo $this->element('logout');
 
     <?= $this->Html->script('AdminTheme./assets/libs/jquery-icheck/icheck.min.js') ?>
 
+    <?= $this->Html->script('AdminTheme./assets/libs/jquery-notifyjs/notify.min.js') ?>
+
+    <?= $this->Html->script('AdminTheme./assets/libs/jquery-notifyjs/styles/metro/notify-metro.js') ?>
+
+    <?= $this->Html->script('AdminTheme./assets/js/pages/notifications.js') ?>
+
     <!-- Demo Specific JS Libraries -->
     <?= $this->Html->script('AdminTheme./assets/libs/prettify/prettify.js') ?>
 
     <?= $this->Html->script('AdminTheme./assets/js/init.js') ?>
 
     <?php echo $this->fetch('scriptBlock'); ?>
+    <?= $this->fetch('script') ?>
 </body>
 </html>

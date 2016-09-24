@@ -14,8 +14,11 @@
 
                 <li  class="active"><a href="#about" data-toggle="tab"><i class="fa fa-user"></i> About</a></li>
                 <li><a href="#reset_password" data-toggle="tab"><i class="fa fa-pencil"></i> Reset Password</a></li>
-                <li><a href="#user-activities" data-toggle="tab"><i class="fa fa-laptop"></i> Activities</a></li>
-                <li><a href="#mymessage" data-toggle="tab"><i class="fa fa-envelope"></i> Message</a></li>
+                <?php if($userInfo['role'][0]->name === 'admin'): ?>
+                    <li><a href="#user-activities" data-toggle="tab"><i class="fa fa-laptop"></i> Activities</a></li>
+                    <li><a href="#mymessage" data-toggle="tab"><i class="fa fa-envelope"></i> Message</a></li>
+                <?php endif; ?>
+
             </ul>
             <!-- End nav tab -->
 
@@ -24,15 +27,14 @@
                 <!-- Tab about -->
                 <?php echo $this->element('User/profile') ?>
                 <!-- End Tab about -->
-                <div class="tab-pane animated fadeInRight" id="reset_password">
-                    <?php echo $this->element('User/change_password') ?>
-                </div>
-<!--                <!-- Tab user activities -->
-<!--                --><?php //echo $this->element('User/activities') ?>
-<!--                <!-- End Tab user activities -->
-<!--                <!-- Tab user messages -->
-                <!--                --><?php //echo $this->element('User/mymessage') ?>
-                <!-- End Tab user messages -->
+                <?php echo $this->element('User/change_password') ?>
+                <?php if($userInfo['role'][0]->name === 'admin'): ?>
+                    <?php echo $this->element('User/activities') ?>
+                    <?php echo $this->element('User/mymessage') ?>
+                <?php endif;?>
+
+
+
             </div><!-- End div .tab-content -->
         </div><!-- End div .box-info -->
     </div>

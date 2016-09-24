@@ -39,9 +39,10 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->Html->css('AdminTheme./assets/libs/jquery-icheck/skins/all.css') ?>
     <!-- Extra CSS Libraries Start -->
     <?= $this->Html->css('AdminTheme./assets/css/style.css') ?>
-
+    <?= $this->Html->css('AdminTheme./assets/libs/jquery-notifyjs/styles/metro/notify-metro.css') ?>
     <!-- Extra CSS Libraries End -->
     <?= $this->Html->css('AdminTheme./assets/css/style-responsive.css') ?>
+    <?php echo $this->fetch('cssBlock'); ?>
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -61,9 +62,10 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
-    <?= $this->fetch('script') ?>
 </head>
 <body>
+<?= $this->Flash->render() ?>
+
     <!-- Modal Start -->
     <!-- Modal Task Progress -->
         <?php
@@ -134,6 +136,10 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 
     <?= $this->Html->script('AdminTheme./assets/js/init.js') ?>
 
-    <?php echo $this->fetch('script'); ?>
+    <?= $this->Html->script('AdminTheme./assets/libs/jquery-notifyjs/notify.min.js') ?>
+
+    <?= $this->Html->script('AdminTheme./assets/libs/jquery-notifyjs/styles/metro/notify-metro.js') ?>
+
+    <?= $this->fetch('script') ?>
 </body>
 </html>

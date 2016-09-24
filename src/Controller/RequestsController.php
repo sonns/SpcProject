@@ -39,18 +39,18 @@ class RequestsController extends AuthMasterController
         ]);
         //check staff
 //        echo '<pre>';
-//        print_r($this->uses);
+//        print_r($this->user);
 //        echo '<pre>';exit;
         $conditions = [];
-        if($this->uses->role[0]->name ==='staff') {
-            $conditions = ['conditions' => ['user_id' => $this->uses->id]];
-        }elseif ($this->uses->role[0]->name ==='top'){
-            $conditions = ['conditions' => ['status >=' => 4] , 'OR' => ['user_id' => $this->uses->role[0]->id]];
-        }elseif ($this->uses->role[0]->name ==='manager'){
-            $conditions = ['conditions' => ['status' => 3] , 'OR' => ['user_id' => $this->uses->role[0]->id]];
+        if($this->user->role[0]->name ==='staff') {
+            $conditions = ['conditions' => ['user_id' => $this->user->id]];
+        }elseif ($this->user->role[0]->name ==='top'){
+            $conditions = ['conditions' => ['status >=' => 4] , 'OR' => ['user_id' => $this->user->role[0]->id]];
+        }elseif ($this->user->role[0]->name ==='manager'){
+            $conditions = ['conditions' => ['status' => 3] , 'OR' => ['user_id' => $this->user->role[0]->id]];
         }
-        elseif ($this->uses->role[0]->name ==='sub-manager'){
-            $conditions = ['conditions' => ['status' => 2] , 'OR' => ['user_id' => $this->uses->role[0]->id]];
+        elseif ($this->user->role[0]->name ==='sub-manager'){
+            $conditions = ['conditions' => ['status' => 2] , 'OR' => ['user_id' => $this->user->role[0]->id]];
         }else{
             $conditions = [];
         }
@@ -115,8 +115,8 @@ class RequestsController extends AuthMasterController
                     $this->request->data['attach'] = $file['name'];
                 }
             }
-            $this->request->data['user_id'] = $this->uses->id;
-            $this->request->data['dep_id'] = $this->uses->dep_id;
+            $this->request->data['user_id'] = $this->user->id;
+            $this->request->data['dep_id'] = $this->user->dep_id;
             $this->request->data['txtApproveDate'] = Time::parse($this->request->data['txtApproveDate']);
 //            echo '<pre>';
 //            print_r($this->request->data);
@@ -157,8 +157,8 @@ class RequestsController extends AuthMasterController
                         $this->request->data['attach'] = $file['name'];
                     }
                 }
-                $this->request->data['user_id'] = $this->uses->id;
-                $this->request->data['dep_id'] = $this->uses->dep_id;
+                $this->request->data['user_id'] = $this->user->id;
+                $this->request->data['dep_id'] = $this->user->dep_id;
                 $this->request->data['txtApproveDate'] = Time::parse($this->request->data['txtApproveDate']);
                 $request = $this->Requests->patchEntity($request, $this->request->data);
                 if ($this->Requests->save($request)) {

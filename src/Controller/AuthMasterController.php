@@ -19,8 +19,8 @@ use Symfony\Component\Config\Definition\Exception\Exception;
 class AuthMasterController extends AppController
 {
 
-    public $uses = [];
-    public $components = ['Cookie'];
+    public $user = [];
+    public $components = ['Cookie','Flash'];
     public $paginate = [
         'limit' => 1
     ];
@@ -31,17 +31,16 @@ class AuthMasterController extends AppController
         $this->_authInit();
         $this->_init_language();
 
-//        print_r($this->Cookie->read('RememberMe')) ;exit;
     }
 
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
         // set default authentication for all users
-
         // Allow users to register and logout.
         // You should not add the "login" action to allow list. Doing so would
         // cause problems with normal functioning of AuthComponent.
+        $this->_authInit();
         $this->_allowActions();
 
     }
@@ -102,15 +101,16 @@ class AuthMasterController extends AppController
 
         if ($this->Auth->user()) {
             $users = TableRegistry::get('Users');
-            $this->uses = $users->find()->where(['Users.id'=>$this->Auth->user()['id']])
+            $this->user = $users->find()->where(['Users.id'=>$this->Auth->user()['id']])
                 ->contain(['role','dep','profiles'])->first();
-            $this->set('userInfo', $this->uses);
+            $this->set('userInfo', $this->user);
             $this->set('params', $this->params);
-            $this->_initMenu();
-            if(empty($this->uses->profile)){
+
+            if(empty($this->user->profile)){
                 if(!$this->_isUpdateProfile())
                     return $this->redirect('user/profile');
             }
+            $this->_initMenu();
         }
     }
 
@@ -144,13 +144,12 @@ class AuthMasterController extends AppController
             if ($user) {
                 $this->Auth->setUser($user);
                 $this->_setCookie();
+                $this->Flash->success(__('Login success!!!'));
                 return $this->redirect($this->Auth->redirectUrl());
             }
 //            show error
-//            $this->Flash->error(__('Invalid username or password, try again'));
+            $this->Flash->error(__('Invalid username or password, try again'));
         }else{
-//
-
             $user = $this->Auth->identify();
             if ($user) {
                 $this->Auth->setUser($user);
@@ -191,14 +190,16 @@ class AuthMasterController extends AppController
                     'position'=>1,
                     'title'=>"Dashboard",
                     'url' => ['controller'=>"AuthMaster",'action'=>'index'],
-                    'hasPermission' => false
+                    'hasPermission' => false,
+                    'active' => false
 
                 ],
                 [
                     'position'=>2,
                     'title'=>"Department",
                     'url' => ['controller'=>"Departments",'action'=>'index'],
-                    'hasPermission' => false
+                    'hasPermission' => false,
+                    'active' => false
                 ],
                 [
                     'position'=>3,
@@ -209,39 +210,47 @@ class AuthMasterController extends AppController
                             'position'=>1,
                             'title'=>'Profile',
                             'url' => ['controller'=>"Users",'action'=>'profile'],
+                            'active' => false,
                             'hasPermission' => false
+
                         ],
                         [
                             'position'=>2,
                             'title'=>'Manage User',
                             'url' => ['controller'=>"Users",'action'=>'index'],
+                            'active' => false,
                             'hasPermission' => false
                         ],
                         [
                             'position'=>3,
                             'title'=>'Create User',
                             'url' => ['controller'=>"Users",'action'=>'add'],
+                            'active' => false,
                             'hasPermission' => false
                         ]
                     ],
+                    'active' => false,
                     'hasPermission' => false
                 ],
                 [
                     'position'=>4,
                     'title'=>"Configuration",
                     'url' => ['controller'=>"Roles",'action'=>'index'],
+                    'active' => false,
                     'hasPermission' => false
                 ],
                 [
                     'position'=>5,
                     'title'=>'Request',
                     'url' => ['controller'=>"Requests",'action'=>'index'],
+                    'active' => false,
                     'hasPermission' => false
                 ],
                 [
                     'position'=>6,
                     'title'=>"Message",
                     'url' => ['controller'=>"Messages",'action'=>'index'],
+                    'active' => false,
                     'hasPermission' => false
                 ]
             ]
@@ -265,6 +274,13 @@ class AuthMasterController extends AppController
             }
             if(isset($listAcl[$menu['url']['controller']]) && ( in_array('*',$listAcl[$menu['url']['controller']]) || in_array($menu['url']['action'],$listAcl[$menu['url']['controller']]))){
                 $menus[$key]['hasPermission'] = true;
+                if($menu['url']['controller'] === $this->request->params['controller']){
+                    if(isset($menu['children'])){
+                        $menus[$key]['active'] = true;
+                    }elseif($menu['url']['action'] === $this->request->params['action']){
+                        $menus[$key]['active'] = true;
+                    }
+                }
             }
         }
 

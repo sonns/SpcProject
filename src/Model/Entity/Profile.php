@@ -2,6 +2,7 @@
 namespace App\Model\Entity;
 
 use App\Utility\FunctionCommon;
+use Cake\I18n\Time;
 use Cake\ORM\Entity;
 
 /**
@@ -32,4 +33,15 @@ class Profile extends Entity
         '*' => true,
         'id' => false
     ];
+    protected function _getBirthday($birthday)
+    {
+        // convert binary to string
+//        return Time::createFromFormat(
+//            'Y-m-d H:i:s',
+//            $birthday,
+//            'America/New_York'
+//        );
+
+        return  Time::parse($birthday)->i18nFormat('MM/dd/yyyy');
+    }
 }

@@ -1,6 +1,8 @@
 <?php
 namespace App\Model\Table;
 
+use ArrayObject;
+use Cake\Event\Event;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -85,12 +87,12 @@ class UsersTable extends Table
     {
         return $validator
             ->notEmpty('username', 'A username is required')
-            ->notEmpty('password', 'A password is required')
-            ->notEmpty('role', 'A role is required')
-            ->add('role', 'inList', [
-                'rule' => ['inList', ['admin', 'author']],
-                'message' => 'Please enter a valid role'
-            ]);
+            ->notEmpty('password', 'A password is required');
+//            ->notEmpty('role', 'A role is required')
+//            ->add('role', 'inList', [
+//                'rule' => ['inList', ['admin', 'author']],
+//                'message' => 'Please enter a valid role'
+//            ]);
     }
 
     /**
