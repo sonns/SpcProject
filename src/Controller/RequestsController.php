@@ -24,7 +24,6 @@ class RequestsController extends AuthMasterController
         ],
         'contain' =>[
             'Users'=>array('fields'=>['username']),
-//            'Users'=>array('fields'=>['first_name','last_name']),
             'Departments' =>['fields'=>['name']],
             'Categories' => ['fields'=>['name']]
         ]
@@ -45,7 +44,8 @@ class RequestsController extends AuthMasterController
         if($this->user->role[0]->name ==='staff') {
             $conditions = ['conditions' => ['user_id' => $this->user->id]];
         }elseif ($this->user->role[0]->name ==='top'){
-            $conditions = ['conditions' => ['status >=' => 4] , 'OR' => ['user_id' => $this->user->role[0]->id]];
+            $conditions = ['conditions' => ['Requests.status >=' => 4] , 'OR' => ['user_id' => $this->user->role[0]->id]];
+//            print_r($conditions);exit;
         }elseif ($this->user->role[0]->name ==='manager'){
             $conditions = ['conditions' => ['status' => 3] , 'OR' => ['user_id' => $this->user->role[0]->id]];
         }
@@ -161,7 +161,13 @@ class RequestsController extends AuthMasterController
                 $this->request->data['dep_id'] = $this->user->dep_id;
                 $this->request->data['txtApproveDate'] = Time::parse($this->request->data['txtApproveDate']);
                 $request = $this->Requests->patchEntity($request, $this->request->data);
-                if ($this->Requests->save($request)) {
+                $request = $this->Requests->save($request);
+                if ($request) {
+                    if($this->user->role[0]->name === 'top' || ($this->user->role[0]->name === 'manager' && $this->user->dep_id === 2)){
+                        $request->status = 1;
+                        $this->Requests->save($request);
+                        $this->_autoApprove($request->id);
+                    }
                     $result  = ['params'=>$request , 'status' => 'Success' , 'response'=> __('The request has been saved.')];
                 } else {
                     $result  = ['params'=>$request , 'status' => 'Error' , 'response'=> __('The request could not be saved. Please, try again or contact for admin page.')];
@@ -170,6 +176,20 @@ class RequestsController extends AuthMasterController
             $this->set(compact('result'));
             $this->set('_serialize', ['result']);
         }
+    }
+    private function _autoApprove($req_id){
+        if(!empty($req_id)){
+            $approval = TableRegistry::get('Approvals');
+            $approvalInfo = $approval->find()->where(['user_id'=>$this->user->id,'req_id'=>$req_id])->first();
+            if(!count($approvalInfo)){
+                $approvalE = $approval->newEntity();
+                $approvalE->user_id = $this->user->id;
+                $approvalE->req_id = $req_id;
+                $approval->save($approvalE);
+            }
+            return true;
+        }
+        return false;
     }
 
     public function changeStatus(){

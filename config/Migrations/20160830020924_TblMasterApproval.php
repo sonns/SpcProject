@@ -13,13 +13,15 @@ class TblMasterApproval extends AbstractMigration
     public function up()
     {
         $requests = $this->table('tbl_master_approval', [
-            'id' => false
+            'autoIncrement' => true,
+            'default' => null,
+            'limit' => 11,
+            'null' => false,
         ]);
         $requests->addColumn('user_id', 'integer')
-            ->addColumn('dep_id', 'integer')
+            ->addColumn('req_id', 'integer')
             ->addColumn('del_flg', 'integer', array('limit' => 1,'default'=>0))
             ->addColumn('created', 'datetime',['default'=> "CURRENT_TIMESTAMP"])
-            ->addColumn('modified', 'datetime', array('null' => true,'default'=>null))
             ->addForeignKey(
                 'user_id',
                 'tbl_master_users',
@@ -30,8 +32,8 @@ class TblMasterApproval extends AbstractMigration
                 ]
             )
             ->addForeignKey(
-                'dep_id',
-                'tbl_master_departments',
+                'req_id',
+                'tbl_master_requests',
                 'id',
                 [
                     'update' => 'CASCADE',
@@ -40,13 +42,13 @@ class TblMasterApproval extends AbstractMigration
             )
             ->addIndex(
                 [
-                    'dep_id',
+                    'req_id',
                 ]
             )->save();
     }
     public function down()
     {
-
+        $this->table('tbl_master_requests')->dropForeignKey(['req_id']);
         $this->table('tbl_master_approval')->drop();
     }
 }

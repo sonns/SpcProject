@@ -33,8 +33,8 @@ class TblMasterCategories extends AbstractMigration
                 ]
             )
             ->save();
-        $users = $this->table('tbl_master_requests');
-        $users->addForeignKey(
+        $req = $this->table('tbl_master_requests');
+        $req->addForeignKey(
         'cate_id',
         'tbl_master_categories',
         'id',

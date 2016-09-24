@@ -389,7 +389,7 @@ s                            }
         if(isAddRequest){
             $.ajax({
                 type: "POST",
-                url:   "addRequest.json",
+                url:   "/request/addRequest.json",
                 dataType: 'text',
                 data:  new FormData(this),
                 contentType: false,
