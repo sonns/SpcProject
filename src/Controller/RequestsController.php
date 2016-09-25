@@ -16,18 +16,38 @@ class RequestsController extends AuthMasterController
      *
      * @return \Cake\Network\Response|null
      */
+//    public $paginate = [
+//        'limit' => 4,
+//        'finder' => 'orWhere',
+//        'order' => [
+//            'Requests.id' => 'desc'
+//        ],
+//        'contain' =>[
+//            'Users'=>array('fields'=>['username']),
+//            'Departments' =>['fields'=>['name']],
+//            'Categories' => ['fields'=>['name']]
+//        ]
+//    ];
     public $paginate = [
-        'limit' => 4,
-        'finder' => 'orWhere',
+        'limit' => 6,
+        'finder' => 'requestList',
         'order' => [
-            'Requests.id' => 'desc'
-        ],
-        'contain' =>[
-            'Users'=>array('fields'=>['username']),
-            'Departments' =>['fields'=>['name']],
-            'Categories' => ['fields'=>['name']]
+            'Requests.id' => 'asc'
         ]
     ];
+
+//SELECT Req.*, de.name as department_name ,
+//max(CASE WHEN ro.name = 'top' and ap.status = 'approved'  THEN TRUE ELSE FALSE END ) `top_status`,
+//max(CASE WHEN ro.name = 'manager' and ap.status = 'approved' THEN TRUE ELSE FALSE END) `manager_status`,
+//max(CASE WHEN ro.name = 'sub-manager' and ap.status = 'approved' THEN TRUE ELSE FALSE END) `sub_manager_status`
+//FROM tbl_master_requests as Req
+//LEFT JOIN tbl_master_approval as ap ON req.id = ap.req_id LEFT JOIN tbl_master_departments as de ON de.id = Req.dep_id
+//LEFT JOIN tbl_master_roles as ro ON ro.id = ap.role_id
+//GROUP BY Req.id
+
+
+
+
     public function index()
     {
         $roles = TableRegistry::get('Categories');
@@ -36,27 +56,25 @@ class RequestsController extends AuthMasterController
             'valueField' => 'name',
             'conditions' => ''
         ]);
-        //check staff
-//        echo '<pre>';
-//        print_r($this->user);
-//        echo '<pre>';exit;
+
         $conditions = [];
         if($this->user->role[0]->name ==='staff') {
-            $conditions = ['conditions' => ['user_id' => $this->user->id]];
+//            $conditions = ['group'=>['Requests.id'], 'conditions' => ['Requests.user_id' => $this->user->id]];
+            $conditions = ['group'=>['Requests.id Having Requests.user_id = '.$this->user->id.''],'conditions' => ['OR'=> ['Requests.status ' => 1]]];
         }elseif ($this->user->role[0]->name ==='top'){
-            $conditions = ['conditions' => ['Requests.status >=' => 4] , 'OR' => ['user_id' => $this->user->role[0]->id]];
-//            print_r($conditions);exit;
+//            $conditions = ['group'=>['Requests.id Having manager_status = 1'],'conditions' => ['OR'=> ['Requests.user_id ' => $this->user->id]]];
+            $conditions = ['group'=>['Requests.id Having manager_status = 1 or Requests.user_id = '.$this->user->id.''],'conditions' => ['OR'=> ['Requests.status ' => 1]]];
         }elseif ($this->user->role[0]->name ==='manager'){
-            $conditions = ['conditions' => ['status' => 3] , 'OR' => ['user_id' => $this->user->role[0]->id]];
+            $conditions = ['group'=>['Requests.id Having (department_id = 2 and department_id = '.$this->user->dep_id.' or Requests.user_id = '.$this->user->id.')
+            or ( department_id <> 2 and department_id = '.$this->user->dep_id.' and sub_manager_status = 1 or Requests.user_id = '.$this->user->id.' )'],'conditions' => ['OR'=> ['Requests.status ' => 1]]];
         }
         elseif ($this->user->role[0]->name ==='sub-manager'){
-            $conditions = ['conditions' => ['status' => 2] , 'OR' => ['user_id' => $this->user->role[0]->id]];
+            $conditions = ['group'=>['Requests.id Having  department_id <> 2 and role_name =\'staff\' and department_id = '.$this->user->dep_id.' or Requests.user_id = '.$this->user->id.' '],'conditions' => ['OR'=> ['Requests.status ' => 1]]];
         }else{
             $conditions = [];
         }
         $requests = $this->paginate($this->Requests,$conditions);
 //        print_r($requests);exit;
-
 //        echo '<pre>';print_r($requests) ; echo '</pre>';exit;
         $this->set(compact('requests'));
         $this->set(compact('listCate'));

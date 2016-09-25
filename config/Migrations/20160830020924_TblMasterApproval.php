@@ -20,7 +20,8 @@ class TblMasterApproval extends AbstractMigration
         ]);
         $requests->addColumn('user_id', 'integer')
             ->addColumn('req_id', 'integer')
-            ->addColumn('del_flg', 'integer', array('limit' => 1,'default'=>0))
+            ->addColumn('role_id', 'integer')
+            ->addColumn('status', 'enum', array('values' => ['approved','rejected' ]))
             ->addColumn('created', 'datetime',['default'=> "CURRENT_TIMESTAMP"])
             ->addForeignKey(
                 'user_id',
@@ -48,6 +49,7 @@ class TblMasterApproval extends AbstractMigration
     }
     public function down()
     {
+        $this->table('tbl_master_approval')->dropForeignKey(['role_id']);
         $this->table('tbl_master_requests')->dropForeignKey(['req_id']);
         $this->table('tbl_master_approval')->drop();
     }

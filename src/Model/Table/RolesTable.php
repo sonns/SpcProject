@@ -32,6 +32,10 @@ class RolesTable extends Table
             'foreignKey' => 'role_id',
             'targetForeignKey' => 'user_id'
         ]);
+        $this->belongsToMany('Approvals', [
+            'through' => 'Approvals',
+            'foreignKey' => 'role_id',
+        ]);
     }
 
     public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)

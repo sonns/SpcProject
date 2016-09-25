@@ -50,6 +50,11 @@ class RequestsTable extends Table
             'className' => 'Categories',
             'foreignKey' => 'cate_id'
         ]);
+
+        $this->belongsToMany('Approvals', [
+            'through' => 'Approvals',
+            'foreignKey' => 'req_id'
+        ]);
 //        $this->belongsTo('Users',[
 //                'className'=>['Users'],
 //                'propertyName'=>['alias_name']
@@ -64,6 +69,75 @@ class RequestsTable extends Table
         }
         return $query->hydrate(true);
     }
+
+    public function findRequestList(Query $query, array $conditions)
+    {
+        $top_status = $query->newExpr()
+            ->addCase([
+                $query->newExpr()->add(['Roles.name' => 'top','Approvals.status'=>'approved']),
+                $query->newExpr()->add(['Roles.name' => 'top','Approvals.status'=>'rejected']),
+            ],
+                [1,2,0],
+                ['integer', 'integer', 'integer']
+            );
+        $manager_status = $query->newExpr()
+            ->addCase([
+                $query->newExpr()->add(['Roles.name' => 'manager','Approvals.status'=>'approved']),
+                $query->newExpr()->add(['Roles.name' => 'manager','Approvals.status'=>'rejected']),
+            ],
+                [1,2,0],
+                ['integer', 'integer', 'integer']
+            );
+        $sub_manager_status = $query->newExpr()
+            ->addCase(
+                [
+                    $query->newExpr()->add(['Roles.name' => 'sub-manager','Approvals.status'=>'approved']),
+                    $query->newExpr()->add(['Roles.name' => 'sub-manager','Approvals.status'=>'rejected']),
+                ],
+                [1,2,0],
+                ['integer', 'integer', 'integer']
+            );
+
+        $query = $query->autoFields(true)->select([
+            'department_id' => 'Departments.id',
+            'department_name' => 'Departments.name',
+            'role_name' => 'Roles1.name',
+            'categories_name' => 'Categories.name',
+            'username' => 'Users.username',
+            'top_status' => $query->func()->max($top_status),
+            'manager_status' => $query->func()->max($manager_status),
+            'sub_manager_status' => $query->func()->max($sub_manager_status)
+        ])->leftJoinWith('Departments')->leftJoinWith('Users')->leftJoinWith('Categories')->hydrate(false)
+            ->join([
+                'table' => 'tbl_master_approval',
+                'alias' => 'Approvals',
+                'type' => 'LEFT',
+                'conditions' => 'Requests.id = Approvals.req_id',
+            ])
+            ->join([
+                'table' => 'tbl_master_roles',
+                'alias' => 'Roles',
+                'type' => 'LEFT',
+                'conditions' => 'Roles.id = Approvals.role_id',
+            ])
+            ->join([
+                'table' => 'tbl_master_role_user',
+                'alias' => 'RoleUser',
+                'type' => 'LEFT',
+                'conditions' => 'RoleUser.user_id = Requests.user_id',
+            ])
+            ->join([
+                'table' => 'tbl_master_roles',
+                'alias' => 'Roles1',
+                'type' => 'LEFT',
+                'conditions' => 'Roles1.id = RoleUser.role_id',
+            ]);
+//            ->where($conditions)
+//            ->group('Requests.id');
+        return $query->hydrate(true);
+
+    }
+
     /**
      * Default validation rules.
      *

@@ -12,6 +12,10 @@
  * @since         0.10.8
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+define('REQUEST_APPROVAL', 1);
+define('REQUEST_REJECT', 2);
+define('REQUEST_PENDING', 0);
+
 
 // You can remove this if you are confident that your PHP version is sufficient.
 if (version_compare(PHP_VERSION, '5.5.9') < 0) {
