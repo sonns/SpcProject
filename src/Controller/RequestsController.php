@@ -177,15 +177,15 @@ class RequestsController extends AuthMasterController
                 }
                 $this->request->data['user_id'] = $this->user->id;
                 $this->request->data['dep_id'] = $this->user->dep_id;
+                $request->status = 1;
                 $this->request->data['txtApproveDate'] = Time::parse($this->request->data['txtApproveDate']);
                 $request = $this->Requests->patchEntity($request, $this->request->data);
                 $request = $this->Requests->save($request);
                 if ($request) {
-                    if($this->user->role[0]->name === 'top' || ($this->user->role[0]->name === 'manager' && $this->user->dep_id === 2)){
-                        $request->status = 1;
-                        $this->Requests->save($request);
-                        $this->_autoApprove($request->id);
-                    }
+                    $this->Requests->save($request);
+//                    if($this->user->role[0]->name === 'top' || ($this->user->role[0]->name === 'manager' && $this->user->dep_id === 2)){
+//                        $this->_autoApprove($request->id);
+//                    }
                     $result  = ['params'=>$request , 'status' => 'Success' , 'response'=> __('The request has been saved.')];
                 } else {
                     $result  = ['params'=>$request , 'status' => 'Error' , 'response'=> __('The request could not be saved. Please, try again or contact for admin page.')];
@@ -195,20 +195,20 @@ class RequestsController extends AuthMasterController
             $this->set('_serialize', ['result']);
         }
     }
-    private function _autoApprove($req_id){
-        if(!empty($req_id)){
-            $approval = TableRegistry::get('Approvals');
-            $approvalInfo = $approval->find()->where(['user_id'=>$this->user->id,'req_id'=>$req_id])->first();
-            if(!count($approvalInfo)){
-                $approvalE = $approval->newEntity();
-                $approvalE->user_id = $this->user->id;
-                $approvalE->req_id = $req_id;
-                $approval->save($approvalE);
-            }
-            return true;
-        }
-        return false;
-    }
+//    private function _autoApprove($req_id){
+//        if(!empty($req_id)){
+//            $approval = TableRegistry::get('Approvals');
+//            $approvalInfo = $approval->find()->where(['user_id'=>$this->user->id,'req_id'=>$req_id])->first();
+//            if(!count($approvalInfo)){
+//                $approvalE = $approval->newEntity();
+//                $approvalE->user_id = $this->user->id;
+//                $approvalE->req_id = $req_id;
+//                $approval->save($approvalE);
+//            }
+//            return true;
+//        }
+//        return false;
+//    }
 
     public function changeStatus(){
         $this->request->allowMethod('ajax');
@@ -222,20 +222,31 @@ class RequestsController extends AuthMasterController
             if (!$request) {
                 throw new NotFoundException();
             }
-            if($mod === 'app'){
-                $request->status = 1;
-            }elseif ($mod === 'rej'){
-                $request->status = 2;
-            }else{
-                $request->status = 3;
+            $approval = TableRegistry::get('Approvals');
+            $approvalInfo = $approval->find()->where(['user_id'=>$this->user->id,'req_id'=>$id])->first();
+
+            if($mod !== 'app' && $mod !== 'rej'){
+                $request->status = 0;
+            }
+            else{
+                if(!count($approvalInfo)){
+                    $approvalE = $approval->newEntity();
+                    $approvalE->user_id = $this->user->id;
+                    $approvalE->req_id = $id;
+                    $approvalE->role_id = $this->user->role[0]->id;
+                    $approvalE->status = ($mod === 'app' ) ? 'approved' : 'rejected' ;
+                    $approval->save($approvalE);
+                }else{
+                    throw new NotFoundException();
+                }
             }
             $temp = $this->Requests->save($request);
             $result = $this->responseData(true,count($temp));
         }elseif($mod === 'multiDel' || $mod === 'multiApp'|| $mod === 'multiRej'){
             if($mod === 'multiApp'){
-                $status = 1;
+                throw new NotFoundException();
             }elseif ($mod === 'multiRej'){
-                $status = 2;
+                throw new NotFoundException();
             }else{
                 $status = 3;
             }

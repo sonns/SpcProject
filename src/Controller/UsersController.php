@@ -138,7 +138,7 @@ class UsersController extends AuthMasterController
             $listRoles = $roles->find('list', [
                 'keyField' => 'id',
                 'valueField' => 'display_name',
-                'conditions' => ['status' => true]
+                'conditions' => ['status' => true,'id >'=>2]
             ]);
             $department = TableRegistry::get('Departments');
             $listDepartments = $department->find('list', [

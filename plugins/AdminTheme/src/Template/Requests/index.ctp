@@ -90,9 +90,9 @@
                                             else
                                                 $status = ['class' => 'label-warning', 'value' => 'pending', 'status' => true];
                                         }else{
-                                            if ((int)$request->manager_status === 1 && $userInfo->role[0]->name === 'manager') {
+                                            if ((int)$request->top_status === 1 && $userInfo->role[0]->name === 'manager') {
                                                 $status = ['class' => 'label-success', 'value' => 'Approved', 'status' => false];
-                                            } elseif ((int)$request->sub_manager_status === 1 && $userInfo->role[0]->name === 'sub-manager') {
+                                            } elseif ((int)$request->top_status === 1 && $userInfo->role[0]->name === 'sub-manager') {
                                                 $status = ['class' => 'label-success', 'value' => 'Approved', 'status' => false];
                                             } elseif ((int)$request->top_status === 1 && $userInfo->role[0]->name === 'top') {
                                                 $status = ['class' => 'label-success', 'value' => 'Approved', 'status' => false];
@@ -109,14 +109,15 @@
                                 <td><strong><?php echo $request->created;?></strong></td>
                                 <td>
                                     <div class="btn-group btn-group-xs">
-                                        <?php if($userInfo->role[0]->name === 'admin'){?>
+                                        <?php if($userInfo->role[0]->name === 'admin' || $userInfo->role[0]->name === 'staff'){?>
                                          <span class="requestStatus label label-danger"><?= __('No Permission!')?></span>
                                         <?php }else{ ?>
                                             <?php if($status['status']){ ?>
                                                 <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'icon-ok-circled')),'javascript:;',array('style' => 'margin-right:4px;' ,'class'=>'btn btn-success statusRequest','title'=>'Approve','data-toggle'=>"tooltip",'escape' => false ,'data-value'=>$request->id,'data-mode' => 'app' ))?>
                                                 <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'icon-cancel-circled')),'javascript:;',array('class'=>'btn btn-danger statusRequest','title'=>'Reject','data-toggle'=>"tooltip",'escape' => false,'data-value'=>$request->id,'data-mode' => 'rej'  ))?>
-                                            <?php }else{ ?>
-                                                <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'icon-eye-off')),'javascript:;',array('class'=>'btn btn-danger statusRequest','title'=>'Delete','data-toggle'=>"tooltip",'escape' => false,'data-value'=>$request->id,'data-mode' => 'del'  ))?>
+                                            <?php }else{ if(($userInfo->role[0]->name === 'manager' && (int)$request->manager_status === 1) || ($userInfo->role[0]->name === 'sub-manager' && (int)$request->sub_manager_status === 1)) ?>
+                                                <span class="requestStatus label label-success"><?= __('Approved by me!')?></span>
+<!--                                                --><?php //echo $this->Html->link($this->Html->tag('i', '', array('class'=>'icon-eye-off')),'javascript:;',array('class'=>'btn btn-danger statusRequest','title'=>'Delete','data-toggle'=>"tooltip",'escape' => false,'data-value'=>$request->id,'data-mode' => 'del'  ))?>
                                             <?php } ?>
                                         <?php } ?>
                                     </div>
@@ -177,15 +178,16 @@ $this->Html->scriptEnd();
         var $this = $(this);
         $.ajax({
             type: "GET",
-            url:   "change_status.json",
+            url:   "/request/change_status.json",
             dataType: 'text',
             data:  'request_id='+$this.data("value")+'&mod='+$this.data("mode"),
             success: function(data)
             {
-                $this.parents(':eq(2)').find('.requestStatus').removeClass('label-danger').addClass('label-success').text('Active');
+                $this.parents(':eq(2)').find('.requestStatus').removeClass('label-danger').addClass('label-success').text('Approved');
                 var btnAction = $this.parent();
                 btnAction.empty();
-                btnAction.html('<?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'icon-eye-off')),'javascript:;',array('class'=>'btn btn-danger statusRequest','title'=>'Delete','data-toggle'=>"tooltip",'escape' => false,'data-value'=>$request->id,'data-mode' => 'del'  ))?>');
+//                btnAction.html('<?php //echo $this->Html->link($this->Html->tag('i', '', array('class'=>'icon-eye-off')),'javascript:;',array('class'=>'btn btn-danger statusRequest','title'=>'Delete','data-toggle'=>"tooltip",'escape' => false,'data-value'=>$request->id,'data-mode' => 'del'  ))?>//');
+                btnAction.html('<span class="requestStatus label label-success"><?= __('Approved by me!')?></span>');
                 console.log(data);
             }
         })
@@ -204,7 +206,7 @@ $this->Html->scriptEnd();
         console.log( 'request_id='+values.join()+'&mod='+$this.data("mode"));
         $.ajax({
             type: "GET",
-            url:   "change_status.json",
+            url:   "/request/change_status.json",
             dataType: 'text',
             data:  'request_id='+values.join()+'&mod='+$this.data("mode"),
             success: function(data)
@@ -215,7 +217,7 @@ $this->Html->scriptEnd();
                         if($this.data("mode") === 'multiDel'){
                             $(this).parents(':eq(2)').empty();
                         }else{
-                            $(this).parents(':eq(2)').find('.requestStatus').removeClass('label-danger').addClass('label-success').text('Active');
+                            $(this).parents(':eq(2)').find('.requestStatus').removeClass('label-danger').addClass('label-success').text('Approved');
                             $(this).parents(':eq(2)').find('.btn-group').empty();
                             $(this).parents(':eq(2)').find('.btn-group').html('<?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'icon-eye-off')),'javascript:;',array('class'=>'btn btn-danger statusRequest','title'=>'Delete','data-toggle'=>"tooltip",'escape' => false,'data-value'=>$request->id,'data-mode' => 'del'  ))?>');
                         }

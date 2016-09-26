@@ -1,13 +1,12 @@
 <!-- Your awesome content goes here -->
+<div class="md-content">
+    <h3>Add <strong>Users</strong></h3>
+    <div class="widget">
+
 <div class="row">
     <div class="col-sm-8 portlets">
-        <div class="widget-header transparent">
-            <h2>Add<strong>Users</strong> </h2>
-        </div>
         <div class="alertMessage">
-
         </div>
-
         <div class="widget-content padding">
             <div id="basic-form">
                 <form method="post" id="createUser">
@@ -23,24 +22,26 @@
 <!--                    <label for="lblUsername">Role</label>-->
                     <?php  echo $this->Form->input(
                         'role_id',
-                        array('options' => $listRoles ,'empty' => 'Select Role')
-
+                        array(
+                            'options' => $listRoles ,
+                            'class' => 'form-control',
+                            'name' => 'sltRole',
+                            'id' => 'sltRole',
+                            'empty' => 'Select Role'
+                        )
                     );?>
                 </div>
                 <div class="form-group">
                     <?php  echo $this->Form->input(
-                        'dep_id',
-                        array('options' => $listDepartments ,'empty' => 'Select Department')
+                        'Department_id',
+                        array('options' => $listDepartments ,
+                            'class' => 'form-control',
+                            'name' => 'sltDepartment',
+                            'id' => 'sltDepartment',
+                            'empty' => 'Select Department'
+                        )
 
                     );?>
-                </div>
-                <div class="form-group">
-                    <label for="lblEmail">First Name</label>
-                    <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Enter first name">
-                </div>
-                <div class="form-group">
-                    <label for="lblEmail">Last Name</label>
-                    <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Enter last name">
                 </div>
                 <div class="form-group">
                     <label for="lblPassword">Password</label>
@@ -58,6 +59,8 @@
             </div>
         </div>
     </div>
+</div>
+</div>
 </div>
 <?= $this->Html->script('AdminTheme./assets/libs/jquery/jquery-1.11.1.min.js') ?>
 <?= $this->Html->script('AdminTheme./assets/libs/bootstrap-validator/js/bootstrapValidator.min.js') ?>
