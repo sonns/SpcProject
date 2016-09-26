@@ -78,15 +78,17 @@ class UsersController extends AuthMasterController
                     }
                 }
                 unset($this->request->data['imgProfile']);
+                //add profile
                 if(!count($profileInfo)){
                     $profileE = $profile->newEntity();
                     $this->request->data['user_id'] = $this->user->id;
-                    $this->request->data['birthday'] = Time::parse($this->request->data['birthday']);
+                    $this->request->data['birthday'] = Time::parse($this->request->data['birthday'])->i18nFormat('MM/dd/yyyy');
                     $profileE = $profile->patchEntity($profileE, $this->request->data);
                     if ($profile->save($profileE)) {
                         $result  = ['params'=>$this->request->data , 'status' => 'Success' , 'response'=> __('The request has been saved.')];
                     }
                 }else{
+                    //update profile
                     $this->request->data['modified'] = Time::now();
                     $this->request->data['birthday'] = Time::parse($this->request->data['birthday'])->i18nFormat('MM/dd/yyyy');
                     $profileInfo = $profile->patchEntity($profileInfo, $this->request->data);
@@ -132,9 +134,9 @@ class UsersController extends AuthMasterController
      */
     public function add()
     {
-
+        $roles = TableRegistry::get('Roles');
         if(!$this->request->is('ajax')){
-            $roles = TableRegistry::get('Roles');
+
             $listRoles = $roles->find('list', [
                 'keyField' => 'id',
                 'valueField' => 'display_name',
@@ -150,13 +152,18 @@ class UsersController extends AuthMasterController
             $this->set(compact('listDepartments'));
         }else{
             $createUserE = $this->Users->newEntity();
-            $this->request->allowMethod('ajax');
             $this->viewBuilder()->className('AdminTheme.Ajax');
             $isCheck = false;
             $this->set(compact('result'));
             if ($this->request->is('post')) {
+                $this->request->data['confirmed'] =  true;
                 $createUserE = $this->Users->patchEntity($createUserE, $this->request->data);
                 if ($this->Users->save($createUserE)) {
+                    $roleUsers = TableRegistry::get('RoleUsers');
+                    $roleUserE = $roleUsers->newEntity();
+                    $roleUserE->user_id = $createUserE->id;
+                    $roleUserE->role_id = $this->request->data['role_id'];
+                    $roleUsers->save($roleUserE);
                     $isCheck = true;
                 }
                 $result = [
@@ -171,7 +178,6 @@ class UsersController extends AuthMasterController
     public function checkUnique(){
         $this->request->allowMethod('ajax');
         $this->viewBuilder()->className('AdminTheme.Ajax');
-
 //        Check email
         $status = false;
         if($this->checkExist('email')){
@@ -182,10 +188,24 @@ class UsersController extends AuthMasterController
             $mode = 2;
             $response = __('This username already exists, please change it');
         }else{
+            $roleUsers = TableRegistry::get('RoleUsers');
+            $row =  $roleUsers->find()
+                ->orWhere(['Users.dep_id'=>$this->request->data['dep_id'] ,'RoleUsers.role_id'=> $this->request->data['role_id'],'Roles.name'=>'top'])
+                ->orWhere([['Users.dep_id'=>$this->request->data['dep_id'] ,'RoleUsers.role_id'=> $this->request->data['role_id'],'Roles.name'=>'manager']])
+                ->orWhere([['Users.dep_id'=>$this->request->data['dep_id'] ,'RoleUsers.role_id'=> $this->request->data['role_id'],'Roles.name'=>'sub-manager']])
+                ->contain(['Users','Roles'])->first();
 //            check rule or  return true
-            $mode = 3;
-            $response =  __("OK!!!");
-            $status = true;
+            if(count($row)){
+                $mode = 3;
+                $response = __('We already have this role in this company');
+            }else
+            {
+                $mode = 4;
+                $response =  __("OK!!!");
+                $status = true;
+            }
+
+
         }
         $result = [
             'status'=> $status,

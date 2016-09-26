@@ -70,7 +70,7 @@ class RequestsTable extends Table
         return $query->hydrate(true);
     }
 
-    public function findRequestList(Query $query, array $conditions)
+    public function findRequestList(Query $query)
     {
         $top_status = $query->newExpr()
             ->addCase([

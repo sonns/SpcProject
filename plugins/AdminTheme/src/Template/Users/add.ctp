@@ -25,8 +25,8 @@
                         array(
                             'options' => $listRoles ,
                             'class' => 'form-control',
-                            'name' => 'sltRole',
-                            'id' => 'sltRole',
+                            'name' => 'role_id',
+                            'id' => 'role_id',
                             'empty' => 'Select Role'
                         )
                     );?>
@@ -36,8 +36,8 @@
                         'Department_id',
                         array('options' => $listDepartments ,
                             'class' => 'form-control',
-                            'name' => 'sltDepartment',
-                            'id' => 'sltDepartment',
+                            'name' => 'dep_id',
+                            'id' => 'dep_id',
                             'empty' => 'Select Department'
                         )
 

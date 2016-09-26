@@ -42,7 +42,7 @@ $(document).ready(function() {
 
             $.ajax({
                 type: "POST",
-                url:   "add.json",
+                url:   "/department/add.json",
                 dataType: 'text',
                 async:false,
                 data: $("form").serialize(),
@@ -51,16 +51,12 @@ $(document).ready(function() {
                     // removeModalHandler();
                     $("#md-add-department").removeClass("md-show");
                     $('#createDepartment').trigger('reset');
-                    // window.setTimeout(function () {$("#md-add-department").remove();},500);
+                    window.setTimeout(function () {$("#md-add-department").remove();},500);
+                    var res = JSON.parse(data);
+                    notify('success',{title: res.result.status ,message: res.result.response,position:'top center'});
+                    location.reload();
                     return true;
-
                 }
-                    // ,
-                    // error: function (xhr, ajaxOptions, thrownError) {
-                    //     alert(xhr.status);
-                    //     alert(thrownError);
-                    //     alert(xhr.responseText);
-                    // }
             });
             return false; // required to block normal submit since you used ajax
         },
@@ -163,7 +159,7 @@ $(document).ready(function() {
                         message: 'The password is required and can\'t be empty'
                     },
                     identical: {
-                        field: 'confirmPassword',
+                        field: 'password_confirmation',
                         message: 'The password and its confirm are not the same'
                     },
                     different: {
@@ -210,6 +206,7 @@ $(document).ready(function() {
                                 var res = JSON.parse(response);
                                 $( ".alertMessage" ).replaceWith( res.content );
                                 $('#createUser').trigger('reset');
+                                notify('success',{title:'Success!!!',message: returnedData.result.response,position:'top center'});
 s                            }
                         });
                     }else {
@@ -217,14 +214,21 @@ s                            }
                         {
                             $("#email").parent().switchClass("has-success","has-error");
                             $("#email").focus();
+                            notify('error',{title:'Alert!!!',message: returnedData.result.response,position:'top center'});
+
                         }else if(returnedData.result.mode === 2){
                             $("#username").parent().switchClass("has-success","has-error");
                             $("#email").focus();
+                            notify('error',{title:'Alert!!!',message: returnedData.result.response,position:'top center'});
+                        }
+                        else if(returnedData.result.mode === 3){
+                            $("#role_id").parent().switchClass("has-success","has-error");
+                            $("#role_id").focus();
+                            notify('error',{title:'Alert!!!',message: returnedData.result.response,position:'top center'});
                         }
                         else {
                         //    do something
                         }
-                        $( ".alertMessage" ).replaceWith( returnedData.content );
                     }
 
                 }

@@ -100,9 +100,7 @@ class DepartmentsController extends AuthMasterController
      */
     public function edit($id = null)
     {
-        $department = $this->Departments->get($id, [
-            'contain' => []
-        ]);
+        $department = $this->Departments->get($id);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $department = $this->Departments->patchEntity($department, $this->request->data);
             if ($this->Departments->save($department)) {

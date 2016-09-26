@@ -59,7 +59,6 @@ class RequestsController extends AuthMasterController
 
         $conditions = [];
         if($this->user->role[0]->name ==='staff') {
-//            $conditions = ['group'=>['Requests.id'], 'conditions' => ['Requests.user_id' => $this->user->id]];
             $conditions = ['group'=>['Requests.id Having Requests.user_id = '.$this->user->id.''],'conditions' => ['OR'=> ['Requests.status ' => 1]]];
         }elseif ($this->user->role[0]->name ==='top'){
 //            $conditions = ['group'=>['Requests.id Having manager_status = 1'],'conditions' => ['OR'=> ['Requests.user_id ' => $this->user->id]]];
@@ -282,8 +281,16 @@ class RequestsController extends AuthMasterController
         $this->set(compact('base'));
         $this->set('_serialize', ['base']);
     }
-    public function preview(){
-
+    public function preview($id = null){
+        $requestDetail = $this->Requests->find('requestList')->where(['Requests.id'=>$id])->groupBy('Requests.id')->first();
+        echo '<pre>';
+//        $time = new Time($requestDetail->created);
+//        print_r($time);
+        print_r($requestDetail[0]->created->format('Y-m-d'));
+        echo '</pre>';
+        exit;
+        $this->set(compact('requestDetail'));
+        $this->set('_serialize', ['requestDetail']);
     }
     /**
      * Delete method
