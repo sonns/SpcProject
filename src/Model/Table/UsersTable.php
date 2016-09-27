@@ -56,6 +56,15 @@ class UsersTable extends Table
             'foreignKey' => 'user_id',
             'targetForeignKey' => 'role_id'
         ]);
+
+        $this->belongsToMany('Approvals', [
+            'through' => 'Approvals',
+            'className' => 'Requests',
+            'foreignKey' => 'user_id',
+            'targetForeignKey' => 'req_id'
+        ]);
+
+
         $this->belongsTo('dep', [
             'className' => 'Departments',
             'foreignKey' => 'dep_id',

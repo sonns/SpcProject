@@ -283,13 +283,23 @@ class RequestsController extends AuthMasterController
     }
     public function preview($id = null){
         $requestDetail = $this->Requests->find('requestList')->where(['Requests.id'=>$id])->groupBy('Requests.id')->first();
+//        echo '<pre>';
+////        $time = new Time($requestDetail->created);
+////        print_r($time);
+//        print_r($requestDetail[0]->created->format('Y-m-d'));
+//        echo '</pre>';
+//        exit;
+        $tblApproval = TableRegistry::get('Approvals');
+        $data =  $tblApproval->find()->where(['req_id'=>$id])->contain(['Users'])->all();
         echo '<pre>';
-//        $time = new Time($requestDetail->created);
-//        print_r($time);
-        print_r($requestDetail[0]->created->format('Y-m-d'));
-        echo '</pre>';
-        exit;
-        $this->set(compact('requestDetail'));
+        print_r($data);
+        echo '</pre>';exit;
+
+        if(!count($requestDetail[0]))
+        {
+            throw new NotFoundException;
+        }
+        $this->set('requestDetail',$requestDetail[0]);
         $this->set('_serialize', ['requestDetail']);
     }
     /**

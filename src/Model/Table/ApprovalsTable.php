@@ -43,6 +43,7 @@ class ApprovalsTable extends Table
         $this->addBehavior('Timestamp');
         $this->belongsTo('Requests');
         $this->belongsTo('Roles');
+        $this->belongsTo('Users');
     }
 
     public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)

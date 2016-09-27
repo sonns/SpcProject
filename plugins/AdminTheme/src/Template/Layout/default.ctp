@@ -57,7 +57,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
   <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
   <![endif]-->
 
-  <link rel="shortcut icon" href="assets/img/favicon.ico">
+<!--  <link rel="shortcut icon" href="assets/img/favicon.ico">-->
   <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png" />
   <link rel="apple-touch-icon" sizes="57x57" href="assets/img/apple-touch-icon-57x57.png" />
   <link rel="apple-touch-icon" sizes="72x72" href="assets/img/apple-touch-icon-72x72.png" />

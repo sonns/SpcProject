@@ -1,15 +1,15 @@
 msgid "My name is {0}"
 msgstr "Je m'appelle {0}"
-
 msgid "form_request"
 msgstr "Form Requests"
 msgid "request_year_month_day"
-msgstr "Year　　Month　　Day"
-
+msgstr "{0}  Year　{1}　Month　{2}  Day"
 msgid "request_drafting_date"
 msgstr "Drafting Date"
 msgid "request_dep"
 msgstr "Department"
+msgid "request_cate"
+msgstr "Category"
 msgid "request_name"
 msgstr "Name"
 msgid "request_subject"

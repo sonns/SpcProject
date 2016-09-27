@@ -2,7 +2,7 @@
     <div class="col-sm-10 text-right">
     </div>
     <div class="col-sm-2 text-right">
-        <a href="#" class="btn btn-primary btn-sm invoice-print"><i class="icon-print-2"></i> Print</a>
+        <a id="btnPrint" name="btnPrint"  class="btn btn-primary btn-sm invoice-print"><i class="icon-print-2"></i> Print</a>
     </div>
     <div class="col-sm-12 portlets" id="frmRequests">
 
@@ -22,19 +22,15 @@
                         <td width="30%"><?= __("request_drafting_date")?></td>
                         <td width="70%">
 <!--                            <a href="#" id="drafting_date" data-type="combodate" data-maxYear="2030" data-value="2016-05-15" data-format="YYYY-MM-DD" data-viewformat="YYYY year MM/DD" data-template="YYYY  / MMM / D" data-pk="10"  data-title="Select Drafting Date"></a>-->
-                            <span style="float: right;"><?= __("request_year_month_day")?><?= $this->Time->format(
-                                    $requestDetail->created,
-                                    \IntlDateFormatter::FULL,
-                                    null
-                                ); ?></span></td>
+                            <span style="float: right;"><strong><?= __("request_year_month_day",[$requestDetail->created->format('Y'),$requestDetail->created->format('m'),$requestDetail->created->format('d')])?><strong></span></td>
                     </tr>
                     <tr>
                         <td width="30%"><?= __("request_dep")?></td>
-                        <td width="70%"><a href="#" id="request_dep" data-type="text" data-pk="1" data-title="Enter department">VN team</a></td>
+                        <td width="70%"><?= $requestDetail->department_name?></td>
                     </tr>
                     <tr>
                         <td width="30%"><?= __("request_name")?></td>
-                        <td width="70%"><a href="#" id="request_name" data-type="text" data-pk="1" data-title="Enter username">Son Nguyen</a></td>
+                        <td width="70%"><?= $requestDetail->username?></td>
                     </tr>
                     </tbody>
                 </table>
@@ -46,57 +42,52 @@
                     <tbody>
                     <tr>
                         <td width="15%"><?= __("request_subject")?></td>
-                        <td width="60%"><a href="#" id="username" data-type="text" data-pk="1" data-title="Enter username">Request abc</a></td>
+                        <td width="60%"><?= $requestDetail->title?></td>
                         <td width="10%"><?= __("request_money")?></td>
-                        <td width="15%"><a href="#" id="username" data-type="text" data-pk="1" data-title="Enter username">290.000</a></td>
+                        <td width="15%"><?= number_format($requestDetail->price)?></td>
                     </tr>
-                    <tr style="height: 150px;">
-                        <td><?= __("request_des")?></td>
-
+                    <tr>
+                        <td><?= __("request_cate")?></td>
                         <td colspan="3">
-
-                            <a href="#" id="txtDes" data-type="textarea" data-pk="1" data-placeholder="Your comments here..." data-title="Enter comments" class="editable editable-pre-wrapped editable-click" style="display: inline;">awesome user!</a>
-
-
+                            <?= $requestDetail->categories_name?>
                         </td>
                     </tr>
-                    <tr style="height: 150px;">
+                    <tr style="height: 120px;">
+                        <td><?= __("request_des")?></td>
+                        <td colspan="3">
+                            <?= $requestDetail->description?>
+                        </td>
+                    </tr>
+                    <tr style="height: 140px;">
                         <td><?= __("request_effect")?></td>
                         <td colspan="3">
-                            <a href="#" id="txtEffect" data-type="textarea" data-pk="1" data-placeholder="Your comments here..." data-title="Enter comments" class="editable editable-pre-wrapped editable-click" style="display: inline;">awesome user!</a>
-<!--                            <a href="#" id="event" data-type="combodate" data-template="D MMM YYYY  HH:mm" data-format="YYYY-MM-DD HH:mm" data-viewformat="MMM D, YYYY, HH:mm" data-pk="1"  data-title="Setup event date and time"></a>-->
+                            <?= $requestDetail->effectiveness?>
                         </td>
                     </tr>
-
-
-
                     <tr style="height: 120px;">
                         <td><?= __("request_reason")?></td>
                         <td colspan="3">
-                            <a href="#" id="txtReason" data-type="textarea" data-pk="1" data-placeholder="Your comments here..." data-title="Enter comments" class="editable editable-pre-wrapped editable-click" style="display: inline;">awesome user!</a>
+                            <?= $requestDetail->reason?>
                         </td>
                     </tr>
-
-
                     <tr>
                         <td><?= __("request_approve_date")?></td>
                         <td colspan="3">
-                            <a href="#" id="approve_date" data-type="date" data-viewformat="dd.mm.yyyy" data-pk="1" data-placement="right" data-title="When you want vacation to start?" class="editable editable-click" data-original-title="" title="" style="background-color: rgba(0, 0, 0, 0);">20.02.2013</a>
-                            </td>
+                            <?= $requestDetail->appr_date->format('Y/m/d')?>
+                        </td>
                     </tr>
-
                     <tr>
                         <td><?= __("request_attach")?></td>
-                        <td colspan="3"><a href="#" id="tags" data-type="select2" data-pk="1" data-title="Enter tags">html, javascript</a></td>
+                        <td colspan="3">
+                            <?= $requestDetail->attach?>
+                        </td>
                     </tr>
 
                     <tr style="height: 150px;">
                         <td><?= __("request_note")?></td>
                         <td colspan="3">
-                            <a href="#" id="txtNote" data-type="textarea" data-pk="1" data-placeholder="Your comments here..." data-title="Enter comments" class="editable editable-pre-wrapped editable-click" style="display: inline;">awesome user!</a></td>
-<!--                            <a href="#" id="comments" data-type="textarea" data-pk="1" data-placeholder="Your comments here..." data-title="Enter comments">awesome content!</a></td>-->
+                            <?= $requestDetail->note?>
                     </tr>
-
                     </tbody>
                 </table>
             </div>
@@ -145,7 +136,7 @@
 <?= $this->Html->script('AdminTheme./assets/js/printThis.js',array('block' => 'scriptBlock')) ?>
 <?php $this->Html->scriptStart(array('block' => 'scriptBlock')); ?>
 $(function () {
-$("#prints").click(function () {
+$("#btnPrint").click(function () {
 $("#frmRequests").printThis();
 });
 });

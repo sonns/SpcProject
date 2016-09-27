@@ -103,7 +103,6 @@ class RequestsTable extends Table
             'department_name' => 'Departments.name',
             'role_name' => 'Roles1.name',
             'categories_name' => 'Categories.name',
-            'username' => 'Users.username',
             'top_status' => $query->func()->max($top_status),
             'manager_status' => $query->func()->max($manager_status),
             'sub_manager_status' => $query->func()->max($sub_manager_status)
