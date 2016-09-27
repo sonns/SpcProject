@@ -61,11 +61,11 @@ class RequestsController extends AuthMasterController
         if($this->user->role[0]->name ==='staff') {
             $conditions = ['group'=>['Requests.id Having Requests.user_id = '.$this->user->id.''],'conditions' => ['OR'=> ['Requests.status ' => 1]]];
         }elseif ($this->user->role[0]->name ==='top'){
-//            $conditions = ['group'=>['Requests.id Having manager_status = 1'],'conditions' => ['OR'=> ['Requests.user_id ' => $this->user->id]]];
             $conditions = ['group'=>['Requests.id Having manager_status = 1 or Requests.user_id = '.$this->user->id.''],'conditions' => ['OR'=> ['Requests.status ' => 1]]];
         }elseif ($this->user->role[0]->name ==='manager'){
-            $conditions = ['group'=>['Requests.id Having (department_id = 2 and department_id = '.$this->user->dep_id.' or Requests.user_id = '.$this->user->id.')
-            or ( department_id <> 2 and department_id = '.$this->user->dep_id.' and sub_manager_status = 1 or Requests.user_id = '.$this->user->id.' )'],'conditions' => ['OR'=> ['Requests.status ' => 1]]];
+            $conditions = ['group'=>
+                ['Requests.id Having (department_id = 2 and role_name ="staff" or Requests.user_id = '.$this->user->id.')
+            or ( department_id <> 2  and sub_manager_status = 1 or Requests.user_id = '.$this->user->id.' )'],'conditions' => ['OR'=> ['Requests.status ' => 1]]];
         }
         elseif ($this->user->role[0]->name ==='sub-manager'){
             $conditions = ['group'=>['Requests.id Having  department_id <> 2 and role_name =\'staff\' and department_id = '.$this->user->dep_id.' or Requests.user_id = '.$this->user->id.' '],'conditions' => ['OR'=> ['Requests.status ' => 1]]];
@@ -216,7 +216,7 @@ class RequestsController extends AuthMasterController
         if (!$id || !$this->request->query('mod')) {
             throw new NotFoundException();
         }
-        if($mod === 'app' || $mod === 'del' || $mod === 'rej'){
+        if($mod === 'app' || $mod === 'rej'){
             $request = $this->Requests->get($id);
             if (!$request) {
                 throw new NotFoundException();
@@ -240,14 +240,14 @@ class RequestsController extends AuthMasterController
                 }
             }
             $temp = $this->Requests->save($request);
-            $result = $this->responseData(true,count($temp));
+            $result = $this->responseData(true,$temp);
         }elseif($mod === 'multiDel' || $mod === 'multiApp'|| $mod === 'multiRej'){
             if($mod === 'multiApp'){
                 throw new NotFoundException();
             }elseif ($mod === 'multiRej'){
                 throw new NotFoundException();
             }else{
-                $status = 3;
+                throw new NotFoundException();
             }
             $arrId = explode(',',$id);
             $temp = $this->Requests->updateAll(['status'=> $status],['id IN'=>$arrId]);
@@ -282,24 +282,39 @@ class RequestsController extends AuthMasterController
         $this->set('_serialize', ['base']);
     }
     public function preview($id = null){
-        $requestDetail = $this->Requests->find('requestList')->where(['Requests.id'=>$id])->groupBy('Requests.id')->first();
-//        echo '<pre>';
-////        $time = new Time($requestDetail->created);
-////        print_r($time);
-//        print_r($requestDetail[0]->created->format('Y-m-d'));
-//        echo '</pre>';
-//        exit;
         $tblApproval = TableRegistry::get('Approvals');
-        $data =  $tblApproval->find()->where(['req_id'=>$id])->contain(['Users'])->all();
-        echo '<pre>';
-        print_r($data);
-        echo '</pre>';exit;
+        $approvals =  $tblApproval->find()->where(['req_id'=>$id])->contain(['Requests'=>['Profiles'],'Roles','Profiles'])->all()->toArray();
+        if(count($approvals)){
+            echo '<pre>';
+            print_r($approvals);
+            echo '</pre>';
+            exit;
+            $result = [];
+            foreach($approvals as $app){
+                if(!count($result)){
+                    $result = $app->request;
+                    $result['alias_name']= $app->request->profile->first_name. ' ' . $app->request->profile->last_name;
+                    if($app->role->name === 'manager'){
+                        $result['manager'] = $app->profile;
+                        $result['manager']['']
+                    }elseif ($app->role->name === 'top'){
+                        $result['top'] = $app->profile;
+                    }
+                }else{
 
-        if(!count($requestDetail[0]))
-        {
-            throw new NotFoundException;
+                }
+            }
+            $this->set('requestDetail',$data[0]);
+        }else{
+            $requestDetail = $this->Requests->find('requestList')->where(['Requests.id'=>$id])->groupBy('Requests.id')->first();
+            if(!count($requestDetail[0]))
+            {
+                throw new NotFoundException;
+            }
+
+            $this->set('requestDetail',$requestDetail[0]);
+
         }
-        $this->set('requestDetail',$requestDetail[0]);
         $this->set('_serialize', ['requestDetail']);
     }
     /**

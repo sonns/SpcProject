@@ -35,13 +35,10 @@ class Profile extends Entity
     ];
     protected function _getBirthday($birthday)
     {
-        // convert binary to string
-//        return Time::createFromFormat(
-//            'Y-m-d H:i:s',
-//            $birthday,
-//            'America/New_York'
-//        );
-
-        return  Time::parse($birthday)->i18nFormat('MM/dd/yyyy');
+        return  Time::parse($birthday);
+    }
+    protected function _setBirthday($birthday)
+    {
+        return  Time::parse($birthday);
     }
 }

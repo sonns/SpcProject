@@ -27,7 +27,7 @@ class TblMasterRequests extends AbstractMigration
             ->addColumn('dep_id', 'integer')
             ->addColumn('cate_id', 'integer')
             ->addColumn('title', 'string')
-            ->addColumn('price', 'float',['precision' => 10,  'scale' => 2,'null'=>true])
+            ->addColumn('price', 'float',['precision' => 20,  'scale' => 2,'null'=>true])
             ->addColumn('description', 'text',['null'=>true])
             ->addColumn('effectiveness', 'text',['null'=>true])
             ->addColumn('attach', 'text',['null'=>true])

@@ -55,6 +55,10 @@ class RequestsTable extends Table
             'through' => 'Approvals',
             'foreignKey' => 'req_id'
         ]);
+        $this->belongsTo('Profiles', [
+            'className' => 'Profiles',
+            'foreignKey' => 'user_id'
+        ]);
 //        $this->belongsTo('Users',[
 //                'className'=>['Users'],
 //                'propertyName'=>['alias_name']
@@ -103,10 +107,11 @@ class RequestsTable extends Table
             'department_name' => 'Departments.name',
             'role_name' => 'Roles1.name',
             'categories_name' => 'Categories.name',
+            'alias_name' => $query->func()->concat(['Profiles.first_name' => 'identifier',' ','Profiles.last_name' => 'identifier']),
             'top_status' => $query->func()->max($top_status),
             'manager_status' => $query->func()->max($manager_status),
             'sub_manager_status' => $query->func()->max($sub_manager_status)
-        ])->leftJoinWith('Departments')->leftJoinWith('Users')->leftJoinWith('Categories')->hydrate(false)
+        ])->leftJoinWith('Departments')->leftJoinWith('Profiles')->leftJoinWith('Categories')->hydrate(false)
             ->join([
                 'table' => 'tbl_master_approval',
                 'alias' => 'Approvals',
@@ -136,6 +141,7 @@ class RequestsTable extends Table
         return $query->hydrate(true);
 
     }
+
 
     /**
      * Default validation rules.

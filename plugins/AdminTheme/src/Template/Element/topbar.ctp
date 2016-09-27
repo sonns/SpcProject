@@ -146,7 +146,7 @@ $("#ddlLanguage a").on("click", function(e){
     // Call ajax
     $.ajax({
     type: "GET",
-    url:   "changeLanguage.json",
+    url:   "/AuthMaster/changeLanguage.json",
     dataType: 'text',
     data:  'keyLanguage='+$this.data("value"),
     success: function(data)

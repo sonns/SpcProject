@@ -325,6 +325,7 @@ class AuthMasterController extends AppController
     }
     public function changeLanguage()
     {
+        $this->request->allowMethod('ajax');
         $session = $this->request->session();
         if($this->request->is('ajax')){
             if (!empty($this->request->query('keyLanguage')) && $this->request->query('keyLanguage') !=  $session->read('Config.language')) {
@@ -339,7 +340,7 @@ class AuthMasterController extends AppController
                 $session->write('Config.language', $this->Cookie->read('language'));
             }
         }
-//        $this->_init_language();
+        $this->_init_language();
         $this->set(compact('result'));
         $this->set('_serialize', ['result']);
     }

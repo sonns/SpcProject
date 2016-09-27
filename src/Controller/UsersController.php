@@ -82,15 +82,22 @@ class UsersController extends AuthMasterController
                 if(!count($profileInfo)){
                     $profileE = $profile->newEntity();
                     $this->request->data['user_id'] = $this->user->id;
-                    $this->request->data['birthday'] = Time::parse($this->request->data['birthday'])->i18nFormat('MM/dd/yyyy');
+                    $this->request->data['birthday'] = Time::parse($this->request->data['birthday']);
                     $profileE = $profile->patchEntity($profileE, $this->request->data);
                     if ($profile->save($profileE)) {
                         $result  = ['params'=>$this->request->data , 'status' => 'Success' , 'response'=> __('The request has been saved.')];
                     }
                 }else{
                     //update profile
+//                    print_r($this->request->data['birthday']);exit;
+
+                    ;
+
+
                     $this->request->data['modified'] = Time::now();
-                    $this->request->data['birthday'] = Time::parse($this->request->data['birthday'])->i18nFormat('MM/dd/yyyy');
+//                    $this->request->data['birthday'] = Time::parse($this->request->data['birthday']);
+//                    unset($this->request->data['birthday']);
+//                    print_r($this->request->data);exit;
                     $profileInfo = $profile->patchEntity($profileInfo, $this->request->data);
                     if ($profile->save($profileInfo)) {
                         $result  = ['params'=>$this->request->data , 'status' => 'Success' , 'response'=> __('Your information has been changed !!!.')];

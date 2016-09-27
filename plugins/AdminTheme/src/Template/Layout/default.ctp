@@ -23,7 +23,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <title><?php echo isset($theme['title']) ? $theme['title'] : 'SPCProject'; ?></title>
     <?= $this->Html->meta(
         [
-            'link' => 'http://spcproject.local/favicon.ico',
+            'link' => 'http://cake.local/favicon.ico',
             'rel' => 'icon'
         ]
     );?>
