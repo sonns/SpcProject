@@ -283,28 +283,34 @@ class RequestsController extends AuthMasterController
     }
     public function preview($id = null){
         $tblApproval = TableRegistry::get('Approvals');
-        $approvals =  $tblApproval->find()->where(['req_id'=>$id])->contain(['Requests'=>['Profiles'],'Roles','Profiles'])->all()->toArray();
+        $approvals =  $tblApproval->find()->where(['req_id'=>$id])->contain(['Requests'=>['Profiles','Departments','Categories'],'Roles','Profiles'])->all()->toArray();
         if(count($approvals)){
-            echo '<pre>';
-            print_r($approvals);
-            echo '</pre>';
-            exit;
+
             $result = [];
             foreach($approvals as $app){
                 if(!count($result)){
                     $result = $app->request;
                     $result['alias_name']= $app->request->profile->first_name. ' ' . $app->request->profile->last_name;
-                    if($app->role->name === 'manager'){
-                        $result['manager'] = $app->profile;
-                        $result['manager']['']
-                    }elseif ($app->role->name === 'top'){
-                        $result['top'] = $app->profile;
-                    }
-                }else{
 
                 }
+                $result['categories_name'] = $app->request->category->name;
+                $result['department_name'] = $app->profile->department->name;
+                if($app->role->name === 'manager'){
+                    $result['manager'] = $app->profile;
+                    $result['manager_status'] = ($app->status === 'approved') ? 1 : 2 ;
+                }elseif ($app->role->name === 'top'){
+                    $result['top'] = $app->profile;
+                    $result['top_status'] = ($app->status === 'approved') ? 1 : 2 ;
+                }else{
+                    $result['sub'] = $app->profile;
+                    $result['sub_manager_status'] = ($app->status === 'approved') ? 1 : 2 ;
+                }
             }
-            $this->set('requestDetail',$data[0]);
+//            echo '<pre>';
+//            print_r($approvals);
+//            echo '</pre>';
+//            exit;
+            $this->set('requestDetail',$result);
         }else{
             $requestDetail = $this->Requests->find('requestList')->where(['Requests.id'=>$id])->groupBy('Requests.id')->first();
             if(!count($requestDetail[0]))
