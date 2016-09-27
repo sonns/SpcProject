@@ -22,15 +22,15 @@
                         <td width="30%"><?= __("request_drafting_date")?></td>
                         <td width="70%">
 <!--                            <a href="#" id="drafting_date" data-type="combodate" data-maxYear="2030" data-value="2016-05-15" data-format="YYYY-MM-DD" data-viewformat="YYYY year MM/DD" data-template="YYYY  / MMM / D" data-pk="10"  data-title="Select Drafting Date"></a>-->
-                            <span style="float: right;"><strong><?= __("request_year_month_day", [($requestDetail->request) ? $requestDetail->request->created->format('Y') : $requestDetail->created->format('Y'),($requestDetail->request) ? $requestDetail->request->created->format('m') : $requestDetail->created->format('m'),($requestDetail->request) ? $requestDetail->request->created->format('d') : $requestDetail->created->format('d')])?><strong></span></td>
+                            <span style="float: right;"><strong><?= __("request_year_month_day", [ $requestDetail->created->format('Y'), $requestDetail->created->format('m'), $requestDetail->created->format('d')])?><strong></span></td>
                     </tr>
                     <tr>
                         <td width="30%"><?= __("request_dep")?></td>
-                        <td width="70%"><?= ($requestDetail->request) ? $requestDetail->request->department_name : $requestDetail->department_name?></td>
+                        <td width="70%"><?= $requestDetail->department_name?></td>
                     </tr>
                     <tr>
                         <td width="30%"><?= __("request_name")?></td>
-                        <td width="70%"><?= ($requestDetail->request) ? $requestDetail->request->alias_name : $requestDetail->alias_name?></td>
+                        <td width="70%"><?= $requestDetail->alias_name?></td>
                     </tr>
                     </tbody>
                 </table>
@@ -42,51 +42,51 @@
                     <tbody>
                     <tr>
                         <td width="15%"><?= __("request_subject")?></td>
-                        <td width="60%"><?= ($requestDetail->request) ? $requestDetail->request->title :  $requestDetail->title?></td>
+                        <td width="60%"><?= $requestDetail->title?></td>
                         <td width="10%"><?= __("request_money")?></td>
-                        <td width="15%"><?= ($requestDetail->request) ? number_format($requestDetail->request->price) : number_format($requestDetail->price)?></td>
+                        <td width="15%"><?=  number_format($requestDetail->price)?></td>
                     </tr>
                     <tr>
                         <td><?= __("request_cate")?></td>
                         <td colspan="3">
-                            <?= ($requestDetail->request) ? $requestDetail->request->categories_name : $requestDetail->categories_name?>
+                            <?= $requestDetail->categories_name?>
                         </td>
                     </tr>
                     <tr style="height: 120px;">
                         <td><?= __("request_des")?></td>
                         <td colspan="3">
-                            <?= ($requestDetail->request) ? $requestDetail->request->description : $requestDetail->description?>
+                            <?= $requestDetail->description?>
                         </td>
                     </tr>
                     <tr style="height: 140px;">
                         <td><?= __("request_effect")?></td>
                         <td colspan="3">
-                            <?= ($requestDetail->request) ? $requestDetail->request->effectiveness : $requestDetail->effectiveness?>
+                            <?= $requestDetail->effectiveness?>
                         </td>
                     </tr>
                     <tr style="height: 120px;">
                         <td><?= __("request_reason")?></td>
                         <td colspan="3">
-                            <?= ($requestDetail->request) ? $requestDetail->request->reason : $requestDetail->reason?>
+                            <?= $requestDetail->reason?>
                         </td>
                     </tr>
                     <tr>
                         <td><?= __("request_approve_date")?></td>
                         <td colspan="3">
-                            <?= ($requestDetail->request) ? $requestDetail->request->appr_date->format('Y/m/d') : $requestDetail->appr_date->format('Y/m/d')?>
+                            <?= $requestDetail->appr_date->format('Y/m/d')?>
                         </td>
                     </tr>
                     <tr>
                         <td><?= __("request_attach")?></td>
                         <td colspan="3">
-                            <?= ($requestDetail->request) ? $requestDetail->request->attach :  $requestDetail->attach?>
+                            <?= $requestDetail->attach?>
                         </td>
                     </tr>
 
                     <tr style="height: 150px;">
                         <td><?= __("request_note")?></td>
                         <td colspan="3">
-                            <?=  ($requestDetail->request) ? $requestDetail->request->note :  $requestDetail->note?>
+                            <?= $requestDetail->note?>
                     </tr>
                     </tbody>
                 </table>
@@ -114,7 +114,7 @@
 
                             </td>
                             <td width="22%" style="text-align: center;vertical-align: middle;">
-                                <?=  ($requestDetail->request) ? $requestDetail->request->note : $requestDetail->alias_name?>
+                                <?= $requestDetail->alias_name?>
                             </td>
 
 
