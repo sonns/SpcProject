@@ -183,7 +183,67 @@ echo $this->element('logout');
     <?= $this->Html->script('AdminTheme./assets/libs/prettify/prettify.js') ?>
 
     <?= $this->Html->script('AdminTheme./assets/js/init.js') ?>
+    <?= $this->Html->script('AdminTheme./assets/js/abc.js') ?>
 
+    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+
+    <script>
+        $(document).ready(function()
+        {
+            $(".button-collapse").sideNav();
+            $(".flash-message").click(function(){
+                $(this).fadeOut("slow")
+            });
+        });
+        function notification(message)
+        {
+            var options = {
+                body: message,
+                icon: 'http://cornergeeks.com/wordpress/wp-content/uploads/2014/07/Polymer-logo.png'
+            };
+            if (!("Notification" in window)) {
+                alert("This browser does not support desktop notification");
+            }
+            else if (Notification.permission === "granted") {
+                var notification = new Notification("Nuevo mensaje!", options);
+            }
+            else if (Notification.permission !== 'denied') {
+                Notification.requestPermission(function (permission) {
+                    if (permission === "granted") {
+                        var notification = new Notification("Nuevo mensaje!", options);
+                    }
+                });
+            }
+        }
+
+
+        $(document).ready(function(){
+
+//            var http = require('http');
+//            var servidor = http.createServer();
+//            var io = require('socket.io').listen(servidor);
+//            var port = 5000;
+//
+//            io.sockets.on('connection', function(socket)
+//            {
+//                socket.on("cake_event", function(data){
+//                    io.sockets.emit("cake_response", data.arg);
+//                    console.log(data.arg);
+//                });
+//            });
+//
+//            servidor.listen(port, function(){
+//                console.log("localhost: " + port);
+//            });
+
+
+            var socket = io.connect('http://localhost:5000');
+            socket.on("cake_response", function(data){
+                console.log(data);
+                notification(data);
+            });
+        });
+    </script>
     <?php echo $this->fetch('scriptBlock'); ?>
     <?= $this->fetch('script') ?>
 </body>

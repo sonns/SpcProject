@@ -107,4 +107,11 @@ Router::scope('/request', function (RouteBuilder $routes) {
     $routes->fallbacks('DashedRoute');
 });
 
+//Requests router
+Router::scope('/notification', function (RouteBuilder $routes) {
+    $routes->connect('/', ['controller' => 'Notifications', 'action' => 'index'], ['routeClass' => 'DashedRoute']);
+    $routes->connect('/:action/*', ['controller' => 'Notifications'], ['routeClass' => 'DashedRoute']);
+    $routes->fallbacks('DashedRoute');
+});
+
 Plugin::routes();

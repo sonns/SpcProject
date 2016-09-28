@@ -233,3 +233,4 @@ Plugin::load('SpcAuth', ['bootstrap' => false, 'routes' => true]);
 
 Plugin::load('FOC/Authenticate');
 Configure::write('Exception.renderer', 'AppExceptionRenderer');
+Plugin::load('Notification', ['bootstrap' => false, 'routes' => true]);
