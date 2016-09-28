@@ -108,9 +108,18 @@
                         </tr>
                         <tr>
                             <td width="22%" style="height: 100px;text-align: center;vertical-align: middle;">
-
+                                <?php if(isset($requestDetail->top_status) && (int)$requestDetail->top_status === 1)
+                                {
+                                    echo $requestDetail->top_name;
+                                }
+                                ?>
                             </td>
                             <td width="22%" style="text-align: center;vertical-align: middle;">
+                                <?php if(isset($requestDetail->manager_status) && (int)$requestDetail->manager_status === 1)
+                                {
+                                    echo $requestDetail->manager_name;
+                                }
+                                ?>
 
                             </td>
                             <td width="22%" style="text-align: center;vertical-align: middle;">

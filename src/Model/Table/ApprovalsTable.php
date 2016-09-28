@@ -48,7 +48,6 @@ class ApprovalsTable extends Table
 
         $this->belongsTo('Roles');
         $this->belongsTo('Users');
-//        $this->belongsTo('Profiles');
         $this->belongsTo('Profiles', [
             'className' => 'Profiles',
             'foreignKey' => 'user_id'

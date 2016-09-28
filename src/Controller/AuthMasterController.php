@@ -102,7 +102,7 @@ class AuthMasterController extends AppController
         if ($this->Auth->user()) {
             $users = TableRegistry::get('Users');
             $this->user = $users->find()->where(['Users.id'=>$this->Auth->user()['id']])
-                ->contain(['role','dep','profiles'])->first();
+                ->contain(['role','dep','Profiles'])->first();
             $this->set('userInfo', $this->user);
             $this->set('params', $this->params);
 
@@ -275,11 +275,13 @@ class AuthMasterController extends AppController
             if(isset($listAcl[$menu['url']['controller']]) && ( in_array('*',$listAcl[$menu['url']['controller']]) || in_array($menu['url']['action'],$listAcl[$menu['url']['controller']]))){
                 $menus[$key]['hasPermission'] = true;
                 if($menu['url']['controller'] === $this->request->params['controller']){
-                    if(isset($menu['children'])){
-                        $menus[$key]['active'] = true;
-                    }elseif($menu['url']['action'] === $this->request->params['action']){
-                        $menus[$key]['active'] = true;
-                    }
+//                    echo $this->request->params['controller'];exit;
+                    $menus[$key]['active'] = true;
+//                    if(isset($menu['children'])){
+//
+//                    }elseif($menu['url']['action'] === $this->request->params['action']){
+//                        $menus[$key]['active'] = true;
+//                    }
                 }
             }
         }

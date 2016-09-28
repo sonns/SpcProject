@@ -282,42 +282,38 @@ class RequestsController extends AuthMasterController
         $this->set('_serialize', ['base']);
     }
     public function preview($id = null){
+        $tblApproval = TableRegistry::get('Approvals');
+        $approvals =  $tblApproval->find()->where(['req_id'=>$id])->contain(['Requests'=>['Users','Profiles','Departments','Categories'],'Roles','Profiles','Users'])->all()->toArray();
 //        echo '<pre>';
-//        print_r(->all());
+//        print_r($a);
 //        echo '</pre>';
 //        exit;
-//        $a = $this->Requests->find()->first();
-        exit;
-
-
-        $tblApproval = TableRegistry::get('Approvals');
-        $approvals =  $tblApproval->find()->where(['req_id'=>$id])->contain(['Requests'=>['Profiles','Departments','Categories'],'Roles','Profiles'])->all()->toArray();
         if(count($approvals)){
 
             $result = [];
             foreach($approvals as $app){
                 if(!count($result)){
                     $result = $app->request;
-                    $result['alias_name']= $app->request->profile->first_name. ' ' . $app->request->profile->last_name;
+                    $result['alias_name']= (isset($app->request->profile->first_name)) ? $app->request->profile->first_name. ' ' . $app->request->profile->last_name : $app->request->user->username;
 
                 }
                 $result['categories_name'] = $app->request->category->name;
                 $result['department_name'] = $app->request->department->name;
                 if($app->role->name === 'manager'){
-                    $result['manager'] = $app->profile;
+                    $result['manager_name'] = (isset($app->profile->first_name)) ? $app->profile->first_name.' '. $app->profile->last_name :  $app->user->username ;
                     $result['manager_status'] = ($app->status === 'approved') ? 1 : 2 ;
                 }elseif ($app->role->name === 'top'){
-                    $result['top'] = $app->profile;
+                    $result['top_name'] = (isset($app->profile->first_name)) ? $app->profile->first_name.' '. $app->profile->last_name :  $app->user->username;
                     $result['top_status'] = ($app->status === 'approved') ? 1 : 2 ;
                 }else{
-                    $result['sub'] = $app->profile;
+                    $result['sub_name'] = (isset($app->profile->first_name)) ? $app->profile->first_name.' '. $app->profile->last_name :  $app->user->username;
                     $result['sub_manager_status'] = ($app->status === 'approved') ? 1 : 2 ;
                 }
             }
-            echo '<pre>';
-            print_r($a);
-            echo '</pre>';
-            exit;
+//            echo '<pre>';
+//            print_r($result);
+//            echo '</pre>';
+//            exit;
             $this->set('requestDetail',$result);
         }else{
             $requestDetail = $this->Requests->find('requestList')->where(['Requests.id'=>$id])->groupBy('Requests.id')->first();

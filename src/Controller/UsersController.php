@@ -58,7 +58,7 @@ class UsersController extends AuthMasterController
         $result = $this->responseData(false,__('The request could not be saved. Please, try again or contact for admin page.'));
         if ($this->request->is('post')) {
             if(isset($this->request->data['hdnmode']) && $this->request->data['hdnmode'] === 'profile'){
-                $profile = TableRegistry::get('profiles');
+                $profile = TableRegistry::get('Profiles');
                 $profileInfo = $profile->find()->where(['user_id'=>$this->user->id])->first();
                 if (!empty($this->request->data['imgProfile']['name'])) {
                     $file = $this->request->data['imgProfile'];

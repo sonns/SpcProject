@@ -123,7 +123,7 @@
                 }
             }
 
-            $head.append("<style>@page {  margin: 0mm; }</style>");
+            $head.append("<style>@page { size: A4;  margin: 0mm; }</style>");
 
 
 
