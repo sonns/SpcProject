@@ -1,3 +1,3 @@
-D:
-cd D:\xampp\htdocs\SpcProject\plugins\Notification\webroot\WebSocket
+%~d0
+cd %cd%/plugins/Notification/webroot/WebSocket
 node app.js
