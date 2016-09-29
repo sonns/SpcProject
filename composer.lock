@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b5b33445a92e91433855140f571de147",
-    "content-hash": "1685c74fa185f67d9e2354519ec529b6",
+    "hash": "9d5f5b5924e8fca7ee698cca5ea382c0",
+    "content-hash": "9850e02ba0042b6f0645fcae9709c70b",
     "packages": [
         {
             "name": "aura/installer-default",
@@ -1035,16 +1035,16 @@
         },
         {
             "name": "cakephp/debug_kit",
-            "version": "3.3.3",
+            "version": "3.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/debug_kit.git",
-                "reference": "7e806572be46795664fe97478a0dc1b22bdf1a2d"
+                "reference": "8b3fa35ef51b35611ae285d3d35a84b945dea245"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/debug_kit/zipball/7e806572be46795664fe97478a0dc1b22bdf1a2d",
-                "reference": "7e806572be46795664fe97478a0dc1b22bdf1a2d",
+                "url": "https://api.github.com/repos/cakephp/debug_kit/zipball/8b3fa35ef51b35611ae285d3d35a84b945dea245",
+                "reference": "8b3fa35ef51b35611ae285d3d35a84b945dea245",
                 "shasum": ""
             },
             "require": {
@@ -1088,7 +1088,7 @@
                 "debug",
                 "kit"
             ],
-            "time": "2016-09-17 01:43:23"
+            "time": "2016-09-29 01:25:58"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",

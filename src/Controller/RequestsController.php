@@ -35,19 +35,6 @@ class RequestsController extends AuthMasterController
             'Requests.id' => 'asc'
         ]
     ];
-
-//SELECT Req.*, de.name as department_name ,
-//max(CASE WHEN ro.name = 'top' and ap.status = 'approved'  THEN TRUE ELSE FALSE END ) `top_status`,
-//max(CASE WHEN ro.name = 'manager' and ap.status = 'approved' THEN TRUE ELSE FALSE END) `manager_status`,
-//max(CASE WHEN ro.name = 'sub-manager' and ap.status = 'approved' THEN TRUE ELSE FALSE END) `sub_manager_status`
-//FROM tbl_master_requests as Req
-//LEFT JOIN tbl_master_approval as ap ON req.id = ap.req_id LEFT JOIN tbl_master_departments as de ON de.id = Req.dep_id
-//LEFT JOIN tbl_master_roles as ro ON ro.id = ap.role_id
-//GROUP BY Req.id
-
-
-
-
     public function index()
     {
         $roles = TableRegistry::get('Categories');
@@ -181,10 +168,7 @@ class RequestsController extends AuthMasterController
                 $request = $this->Requests->patchEntity($request, $this->request->data);
                 $request = $this->Requests->save($request);
                 if ($request) {
-                    $this->Requests->save($request);
-//                    if($this->user->role[0]->name === 'top' || ($this->user->role[0]->name === 'manager' && $this->user->dep_id === 2)){
-//                        $this->_autoApprove($request->id);
-//                    }
+                    $this->pushNotification($request,'add');
                     $result  = ['params'=>$request , 'status' => 'Success' , 'response'=> __('The request has been saved.')];
                 } else {
                     $result  = ['params'=>$request , 'status' => 'Error' , 'response'=> __('The request could not be saved. Please, try again or contact for admin page.')];
@@ -194,21 +178,43 @@ class RequestsController extends AuthMasterController
             $this->set('_serialize', ['result']);
         }
     }
-//    private function _autoApprove($req_id){
-//        if(!empty($req_id)){
-//            $approval = TableRegistry::get('Approvals');
-//            $approvalInfo = $approval->find()->where(['user_id'=>$this->user->id,'req_id'=>$req_id])->first();
-//            if(!count($approvalInfo)){
-//                $approvalE = $approval->newEntity();
-//                $approvalE->user_id = $this->user->id;
-//                $approvalE->req_id = $req_id;
-//                $approval->save($approvalE);
-//            }
-//            return true;
-//        }
-//        return false;
-//    }
-
+    private function pushNotification($request,$mode){
+        if($mode === 'add'){
+            if(isset($this->user->role[0]->name) && $this->user->role[0]->name === 'staff'){
+                $this->Notifications->notify([
+                    'recipientLists' => ($this->user->dep->name === 'Headquarter') ? ['manager'] : ['sub-manager'],
+                    'template' => 'notification',
+                    'message' => [
+                        'username' => $this->user->profile->first_name . ' ' .$this->user->profile->last_name,
+                        'title' => $request->title,
+                        'category' => 'Request',
+                    ]
+                ]);
+            }else if(isset($this->user->role[0]->name) && $this->user->role[0]->name === 'sub-manager'){
+                $this->Notifications->notify([
+                    'recipientLists' => ($this->user->dep->name === 'Headquarter') ? ['manager'] : ['top','sub-manager'],
+                    'template' => 'notification',
+                    'message' => [
+                        'username' => $this->user->profile->first_name . ' ' .$this->user->profile->last_name,
+                        'title' => $request->title,
+                        'category' => 'Request',
+                    ]
+                ]);
+            }else if(isset($this->user->role[0]->name) && $this->user->role[0]->name === 'manager'){
+                $this->Notifications->notify([
+                    'recipientLists' => ['top'] ,
+                    'template' => 'notification',
+                    'message' => [
+                        'username' => $this->user->profile->first_name . ' ' .$this->user->profile->last_name,
+                        'title' => $request->title,
+                        'category' => 'Request',
+                    ]
+                ]);
+            }else{
+                //nothing
+            }
+        }
+    }
     public function changeStatus(){
         $this->request->allowMethod('ajax');
         $id = $this->request->query('request_id');

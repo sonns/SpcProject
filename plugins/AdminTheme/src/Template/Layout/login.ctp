@@ -22,7 +22,6 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo isset($theme['title']) ? $theme['title'] : 'SPCProject'; ?></title>
     <?= $this->Html->meta('icon') ?>
-
     <?= $this->Html->css('AdminTheme./assets/libs/jqueryui/ui-lightness/jquery-ui-1.10.4.custom.min.css') ?>
     <?= $this->Html->css('AdminTheme./assets/libs/bootstrap/css/bootstrap.min.css') ?>
     <?= $this->Html->css('AdminTheme./assets/libs/font-awesome/css/font-awesome.min.css') ?>

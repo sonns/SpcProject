@@ -13,11 +13,12 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace Notification\Controller\Component;
+use Cake\Core\Configure;
 use Notification\Utility\NotificationManager;
 use Cake\Controller\Component;
 use Cake\ORM\TableRegistry;
 /**
- * Notifier component
+ * Notification component
  */
 class NotificationComponent extends Component
 {
@@ -66,18 +67,18 @@ class NotificationComponent extends Component
      * ### Examples
      * ```
      *  // if the user is logged in, this is the way to get all notifications
-     *  $this->Notifier->getNotifications();
+     *  $this->Notification->getNotifications();
      *
      *  // for a specific user, use the first parameter for the user_id
-     *  $this->Notifier->getNotifications(1);
+     *  $this->Notification->getNotifications(1);
      *
      *  // default all notifications are returned. Use the second parameter to define read / unread:
      *
      *  // get all unread notifications
-     *  $this->Notifier->getNotifications(1, true);
+     *  $this->Notification->getNotifications(1, true);
      *
      *  // get all read notifications
-     *  $this->Notifier->getNotifications(1, false);
+     *  $this->Notification->getNotifications(1, false);
      * ```
      * @param int|null $userId Id of the user.
      * @param bool|null $state The state of notifications: `true` for unread, `false` for read, `null` for all.
@@ -103,18 +104,18 @@ class NotificationComponent extends Component
      * ### Examples
      * ```
      *  // if the user is logged in, this is the way to count all notifications
-     *  $this->Notifier->countNotifications();
+     *  $this->Notification->countNotifications();
      *
      *  // for a specific user, use the first parameter for the user_id
-     *  $this->Notifier->countNotifications(1);
+     *  $this->Notification->countNotifications(1);
      *
      *  // default all notifications are counted. Use the second parameter to define read / unread:
      *
      *  // count all unread notifications
-     *  $this->Notifier->countNotifications(1, true);
+     *  $this->Notification->countNotifications(1, true);
      *
      *  // count all read notifications
-     *  $this->Notifier->countNotifications(1, false);
+     *  $this->Notification->countNotifications(1, false);
      * ```
      * @param int|null $userId Id of the user.
      * @param bool|null $state The state of notifications: `true` for unread, `false` for read, `null` for all.
@@ -195,4 +196,16 @@ class NotificationComponent extends Component
     {
         return NotificationManager::instance()->notify($data);
     }
+
+    public function addRecipientList($name, $userIds)
+    {
+        Configure::write('Notification.recipientLists.' . $name, $userIds);
+    }
+
+    public function getRecipientList($name)
+    {
+        return Configure::read('Notification.recipientLists.' . $name);
+    }
+
+
 }

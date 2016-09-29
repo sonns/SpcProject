@@ -309,6 +309,7 @@ class AuthComponent extends CakeAuthComponent {
             $pivotTableName = implode('', $tables);
         }
         $pivotTable = TableRegistry::get($pivotTableName);
+//        print_r($pivotTable);exit;
         $roleColumn = $this->_config['roleColumn'];
         $roles = $pivotTable->find()
             ->select($roleColumn)
@@ -317,7 +318,8 @@ class AuthComponent extends CakeAuthComponent {
             ->extract($roleColumn)
             ->toArray();
         if (!count($roles)) {
-            throw new Exception('Missing SpcAuth roles for user in pivot table');
+//            print_r($pivotTableName);exit;
+//            throw new Exception('Missing SpcAuth roles for user in pivot table');
         }
 
         return $roles;

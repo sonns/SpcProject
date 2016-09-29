@@ -1,14 +1,19 @@
 <?php
 namespace Notification\Utility;
 
+use Aura\Intl\Exception;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Text;
+use ElephantIO\Client as Elephant;
+use ElephantIO\Engine\SocketIO\Version1X;
+use ElephantIO\Exception\ServerConnectionFailureException;
 
 class NotificationManager {
 
     protected static $_generalManager = null;
+    protected static $_pushSocket = null;
     /**
      * instance
      *
@@ -17,7 +22,7 @@ class NotificationManager {
      * @param null $manager Possible different manager. (Helpfull for testing).
      * @return NotificationManager
      */
-    public static function instance($manager = null)
+    public static function instance($manager = null,$host =  null)
     {
         if ($manager instanceof NotificationManager) {
             static::$_generalManager = $manager;
@@ -25,6 +30,7 @@ class NotificationManager {
         if (empty(static::$_generalManager)) {
             static::$_generalManager = new NotificationManager();
         }
+        static::$_pushSocket =  new Elephant(new Version1X(empty($host) ? 'http://localhost:5000' : $host));
         return static::$_generalManager;
     }
     /**
@@ -79,6 +85,7 @@ class NotificationManager {
             $entity->set('user_id', $user);
             $model->save($entity);
         }
+        self::pushSocket($data);
         return $data['tracking_id'];
     }
     /**
@@ -92,7 +99,7 @@ class NotificationManager {
      *  $notificationManager->addRecipientList('administrators', [1,2,3,4]);
      * ```
      *
-     * The data will be stored in Cake's Configure: `Notifier.recipientLists.{name}`
+     * The data will be stored in Cake's Configure: `Notification.recipientLists.{name}`
      *
      * @param string $name Name of the list.
      * @param array $userIds Array with id's of users.
@@ -100,7 +107,7 @@ class NotificationManager {
      */
     public function addRecipientList($name, $userIds)
     {
-        Configure::write('Notifier.recipientLists.' . $name, $userIds);
+        Configure::write('Notification.recipientLists.' . $name, $userIds);
     }
     /**
      * getRecipientList
@@ -113,7 +120,7 @@ class NotificationManager {
      */
     public function getRecipientList($name)
     {
-        return Configure::read('Notifier.recipientLists.' . $name);
+        return Configure::read('Notification.recipientLists.' . $name);
     }
     /**
      * addTemplate
@@ -131,7 +138,7 @@ class NotificationManager {
      *
      * ### Example
      *
-     * $this->Notifier->addTemplate('newUser', [
+     * $this->Notification->addTemplate('newUser', [
      *  'title' => 'New User: :name',
      *  'body' => 'The user :email has been registered'
      * ]);
@@ -149,7 +156,7 @@ class NotificationManager {
             'body' => '',
         ];
         $options = array_merge($_options, $options);
-        Configure::write('Notifier.templates.' . $name, $options);
+        Configure::write('Notification.templates.' . $name, $options);
     }
     /**
      * getTemplate
@@ -163,7 +170,7 @@ class NotificationManager {
      */
     public function getTemplate($name, $type = null)
     {
-        $templates = Configure::read('Notifier.templates');
+        $templates = Configure::read('Notification.templates');
         if (array_key_exists($name, $templates)) {
             if ($type == 'title') {
                 return $templates[$name]['title'];
@@ -192,5 +199,14 @@ class NotificationManager {
         }
         return $trackingId;
     }
-
+    private function pushSocket($data){
+        try {
+            self::$_pushSocket->initialize();
+            self::$_pushSocket->emit('cake_event',[ 'arg' => $data ]);
+            self::$_pushSocket->close();
+        } catch (Exception $e) {
+            //Write log
+            return false;
+        }
+    }
 }

@@ -94,6 +94,8 @@ if (!Configure::read('debug')) {
     Configure::write('Cache._cake_core_.duration', '+1 years');
 }
 
+
+
 /**
  * Set server timezone to UTC. You can change it to another timezone of your
  * choice but using UTC makes time calculations / conversions easier.
@@ -234,3 +236,5 @@ Plugin::load('SpcAuth', ['bootstrap' => false, 'routes' => true]);
 Plugin::load('FOC/Authenticate');
 Configure::write('Exception.renderer', 'AppExceptionRenderer');
 Plugin::load('Notification', ['bootstrap' => false, 'routes' => true]);
+
+Plugin::load('DebugKit');

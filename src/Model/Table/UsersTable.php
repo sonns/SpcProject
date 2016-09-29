@@ -86,6 +86,27 @@ class UsersTable extends Table
         );
 
     }
+    public function findGroupUsers(Query $query, array $conditions)
+    {
+        $query = $query->select([
+                'Users.id'
+            ])->join([
+                'table' => 'tbl_master_role_user',
+                'alias' => 'RoleUser',
+                'type' => 'LEFT',
+                'conditions' => 'RoleUser.user_id = Users.id',
+            ])
+            ->join([
+                'table' => 'tbl_master_roles',
+                'alias' => 'Roles',
+                'type' => 'LEFT',
+                'conditions' => 'Roles.id = RoleUser.role_id',
+            ])
+            ;
+        $query = $query->where($conditions)->toArray();
+        $query = array_map(create_function('$query', 'return $query->id;'), $query);
+        return $query;
+    }
 
     /**
      * Default validation rules.

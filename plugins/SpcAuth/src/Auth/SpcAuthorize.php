@@ -383,6 +383,7 @@ class SpcAuthorize extends BaseAuthorize {
 			->toArray();
 
 		if (!count($roles)) {
+
 			throw new Exception('Missing SpcAuth roles for user in pivot table');
 		}
 		return $roles;

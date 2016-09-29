@@ -219,7 +219,6 @@ echo $this->element('logout');
             socket.on("cake_response", function(data){
                 notification(data)
                 console.log(data);
-
             });
         });
     </script>

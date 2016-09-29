@@ -82,7 +82,7 @@ class Notification extends Entity
      */
     protected function _getTitle()
     {
-        $templates = Configure::read('Notifier.templates');
+        $templates = Configure::read('Notification.templates');
         if (array_key_exists($this->_properties['template'], $templates)) {
             $template = $templates[$this->_properties['template']];
             $message = json_decode($this->_properties['message'], true);
@@ -101,7 +101,7 @@ class Notification extends Entity
      */
     protected function _getBody()
     {
-        $templates = Configure::read('Notifier.templates');
+        $templates = Configure::read('Notification.templates');
         if (array_key_exists($this->_properties['template'], $templates)) {
             $template = $templates[$this->_properties['template']];
             $message = json_decode($this->_properties['message'], true);
