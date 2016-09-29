@@ -41,11 +41,11 @@ class User extends Entity
         return (new FunctionCommon)->cipher_encrypt($password,MCRYPT_KEY);
     }
 
-    protected function _getPassword($password)
-    {
-        // convert binary to string
-        return fread($password, 256);
-    }
+//    protected function _getPassword($password)
+//    {
+//        // convert binary to string
+//        return fread($password, 256);
+//    }
 
 //    protected function _getAliasName()
 //    {
