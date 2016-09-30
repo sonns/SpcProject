@@ -85,7 +85,7 @@ class NotificationManager {
             $entity->set('user_id', $user);
             $model->save($entity);
         }
-        self::pushSocket($data);
+        self::pushSocket($data['tracking_id']);
         return $data['tracking_id'];
     }
     /**
@@ -202,7 +202,7 @@ class NotificationManager {
     private function pushSocket($data){
         try {
             self::$_pushSocket->initialize();
-            self::$_pushSocket->emit('cake_event',[ 'arg' => $data ]);
+            self::$_pushSocket->emit('cake_event',[ 'arg' => $data , 'id' => 3 ]);
             self::$_pushSocket->close();
         } catch (Exception $e) {
             //Write log

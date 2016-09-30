@@ -10,7 +10,7 @@ var port = 5000;
 io.sockets.on('connection', function(socket)
 {
     socket.on("cake_event", function(data){
-        io.sockets.emit("cake_response", data.arg);
+        io.sockets.emit("cake_response_" + data.id, data.arg);
         console.log(data.arg);
     });
 });

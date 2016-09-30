@@ -216,8 +216,19 @@ echo $this->element('logout');
         }
         $(document).ready(function(){
             var socket = io.connect('http://localhost:5000');
-            socket.on("cake_response", function(data){
-                notification(data)
+            socket.on("cake_response_<?= $userInfo->id; ?>", function(data){
+                $.ajax({
+                    type: "POST",
+                    url:   "/notification/get_notification.json",
+                    dataType: 'text',
+                    data:  {tracking_id:data},
+                    success: function(response)
+                    {
+//                        notification(response)
+                        console.log(response);
+                    }
+                })
+
                 console.log(data);
             });
         });
