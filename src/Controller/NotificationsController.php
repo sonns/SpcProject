@@ -57,13 +57,13 @@ class NotificationsController extends AuthMasterController
     public function index()
     {
 
-        $notificationManager = NotificationManager::instance();
-        $notificationManager->addTemplate(
-            'newBlog', [
-                'title' => 'New blog by :username',
-                'body' => ':username has posted a new blog named :name'
-            ]
-        );
+//        $notificationManager = NotificationManager::instance();
+//        $notificationManager->addTemplate(
+//            'newBlog', [
+//                'title' => 'New blog by :username',
+//                'body' => ':username has posted a new blog named :name'
+//            ]
+//        );
 //
 //        $notificationManager->notify([
 //            'users' => [1, 2, 3, 4, 5],
@@ -74,10 +74,15 @@ class NotificationsController extends AuthMasterController
 //                'name' => 'My great new blogpost'
 //            ]
 //        ]);
+        $notifier = TableRegistry::get('Notification.Notifications');
+        $result =  $notifier->find()->where([
+            'user_id'=>3,
+            'tracking_id'=> ''
+        ])->toArray();
 
-         $alert = $this->Notification->getNotifications();
+//         $alert = $this->Notification->getNotifications();
         echo '<pre>';
-        print_r($alert);
+        print_r($result);
         echo '</pre>';
         exit;
         $this->Notification->getNotifications;
