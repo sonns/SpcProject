@@ -33,13 +33,9 @@ class Notification extends Entity
         'user_id' => true,
         'state' => false,
         'user' => false,
+        'title' => true
     ];
-    /**
-     * Virtual fields
-     *
-     * @var array
-     */
-    protected $_virtual = ['title', 'body', 'unread', 'read'];
+
     /**
      * _getmessage
      *
@@ -86,9 +82,9 @@ class Notification extends Entity
         if (array_key_exists($this->_properties['template'], $templates)) {
             $template = $templates[$this->_properties['template']];
             $message = json_decode($this->_properties['message'], true);
-            return Text::insert($template['title'], $message);
+            return '123';// Text::insert($template['title'], $message);
         }
-        return '';
+        return '123';
     }
     /**
      * _getBody
@@ -137,5 +133,10 @@ class Notification extends Entity
         }
         return false;
     }
-
+    /**
+     * Virtual fields
+     *
+     * @var array
+     */
+    protected $_virtual = ['title', 'body', 'unread', 'read'];
 }

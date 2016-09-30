@@ -188,10 +188,10 @@ echo $this->element('logout');
     <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 
     <script>
-        function notification(message)
+        function notification(response)
         {
             var options = {
-                body: message,
+                body: response.response.message,
                 tag : 'greeting-notify',
                 icon: 'http://cake.local/admin_theme/images/alert_logo.png'
             };
@@ -224,11 +224,12 @@ echo $this->element('logout');
                     data:  {tracking_id:data},
                     success: function(response)
                     {
-//                        notification(response)
+                        var res = JSON.parse(response);
+//                        notification(res);
                         console.log(response);
                     }
                 })
-
+                //get tracking_id
                 console.log(data);
             });
         });

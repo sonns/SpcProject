@@ -146,4 +146,5 @@ class UsersTable extends Table
             $data['address'] = $data['dep_address'];
         }
     }
+
 }

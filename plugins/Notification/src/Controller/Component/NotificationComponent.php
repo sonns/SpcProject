@@ -84,15 +84,18 @@ class NotificationComponent extends Component
      * @param bool|null $state The state of notifications: `true` for unread, `false` for read, `null` for all.
      * @return array
      */
-    public function getNotifications($userId = null, $state = null)
+    public function getNotifications($userId = null, $tracking_id =null, $state = null )
     {
         if (!$userId) {
             $userId = $this->Controller->Auth->user('id');
         }
         $model = TableRegistry::get('Notification.Notifications');
-        $query = $model->find()->where(['Notifications.user_id' => $userId])->order(['created' => 'desc']);
+        $query = $model->find('all')->autoFields(true)->where(['Notifications.user_id' => $userId])->order(['created' => 'desc']);
         if (!is_null($state)) {
             $query->where(['Notifications.state' => $state]);
+        }
+        if (!is_null($tracking_id)) {
+            $query->where(['Notifications.tracking_id' => $tracking_id]);
         }
         return $query->toArray();
     }

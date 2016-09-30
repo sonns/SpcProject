@@ -238,3 +238,5 @@ Configure::write('Exception.renderer', 'AppExceptionRenderer');
 Plugin::load('Notification', ['bootstrap' => false, 'routes' => true]);
 
 Plugin::load('DebugKit');
+
+Plugin::load('LiveChat', ['bootstrap' => false, 'routes' => true]);

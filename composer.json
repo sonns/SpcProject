@@ -28,7 +28,8 @@
             "FunctionUtil\\": "./plugins/FunctionUtil/src",
             "AdminTheme\\": "plugins/AdminTheme/src",
             "SpcAuth\\": "./plugins/SpcAuth/src",
-            "Notification\\": "./plugins/Notification/src"
+            "Notification\\": "./plugins/Notification/src",
+            "LiveChat\\": "./plugins/LiveChat/src"
         },
         "classmap": [
             "Utility"
@@ -41,7 +42,8 @@
             "FunctionUtil\\Test\\": "./plugins/FunctionUtil/tests",
             "AdminTheme\\Test\\": "./plugins/AdminTheme/tests",
             "SpcAuth\\Test\\": "./plugins/SpcAuth/tests",
-            "Notification\\Test\\": "./plugins/Notification/tests"
+            "Notification\\Test\\": "./plugins/Notification/tests",
+            "LiveChat\\Test\\": "./plugins/LiveChat/tests"
         }
     },
     "scripts": {
