@@ -42,6 +42,8 @@ class RequestsController extends AuthMasterController
     ];
     public function index()
     {
+
+
         $roles = TableRegistry::get('Categories');
         $listCate = $roles->find('list', [
             'keyField' => 'id',
@@ -184,6 +186,8 @@ class RequestsController extends AuthMasterController
         }
     }
     private function pushNotification($request,$mode){
+
+
         if($mode === 'add'){
             if(isset($this->user->role[0]->name) && $this->user->role[0]->name === 'staff'){
                 $this->Notification->notify([
@@ -197,7 +201,7 @@ class RequestsController extends AuthMasterController
                 ]);
             }else if(isset($this->user->role[0]->name) && $this->user->role[0]->name === 'sub-manager'){
                 $this->Notification->notify([
-                    'recipientLists' => ($this->user->dep->name === 'Headquarter') ? ['manager'] : ['top','sub-manager'],
+                    'recipientLists' => ['manager'],
                     'template' => 'notification',
                     'message' => [
                         'username' => $this->user->profile->first_name . ' ' .$this->user->profile->last_name,
@@ -218,6 +222,78 @@ class RequestsController extends AuthMasterController
             }else{
                 //nothing
             }
+        }elseif($mode === 'changeStatus'){
+            $topInfo = $this->Notification->getRecipientList('top');
+            $managerInfo = $this->Notification->getRecipientList('manager');
+
+            if(count($topInfo)){
+                $top_name = (empty($topInfo[0]->first_name)) ? $topInfo[0]->username : $topInfo[0]->first_name . $topInfo[0]->last_name;
+            }else{
+                $top_name = '';
+            }
+            if(count($managerInfo)){
+                $manager_name = (empty($managerInfo[0]->first_name)) ? $managerInfo[0]->username : $managerInfo[0]->first_name . $managerInfo[0]->last_name;
+            }else{
+                $manager_name = '';
+            }
+            if($this->user->dep->name === 'Headquarter'){
+                $recipientLists = ['top','manager'];
+                $sub_manager_name = '';
+            }else{
+                $recipientLists = ['top','manager','sub-manager'];
+                $subManagerInfo = $this->Notification->getRecipientList('sub-manager');
+                if(count($subManagerInfo)){
+                    $sub_manager_name = (empty($subManagerInfo[0]->first_name)) ? $subManagerInfo[0]->username : $subManagerInfo[0]->first_name . $subManagerInfo[0]->last_name;
+                }else{
+                    $sub_manager_name = '';
+                }
+            }
+           if(isset($this->user->role[0]->name) && $this->user->role[0]->name === 'sub-manager'){
+                // notify for user
+                $this->Notification->notify([
+                    'users' => [$request->user_id],
+                    'recipientLists' => ['manager'],
+                    'template' => 'notifierBySubManager',
+                    'message' => [
+                        'sub_manager_name' => $sub_manager_name,
+                        'staff_name' => isset($request->profile->first_name) ? $request->profile->first_name . ' ' . $request->profile->last_name : $request->user->username,
+                        'title' => $request->title,
+                        'category' => 'Request'
+                    ]
+                ]);
+            }else if(isset($this->user->role[0]->name) && $this->user->role[0]->name === 'manager'){
+                // notify for user and sub-manager
+                $this->Notification->notify([
+                    'users' => [$request->user_id],
+                    'recipientLists' => (in_array("sub-manager", $recipientLists)) ? ['top','sub-manager'] : ['top'],
+                    'template' => 'notifierByManager',
+                    'message' => [
+                        'manager_name' => $manager_name,
+                        'sub_manager_name' =>$sub_manager_name,
+                        'staff_name' => isset($request->profile->first_name) ? $request->profile->first_name . ' ' . $request->profile->last_name : $request->user->username,
+                        'title' => $request->title,
+                        'category' => 'Request',
+                    ]
+                ]);
+            }else if(isset($this->user->role[0]->name) && $this->user->role[0]->name === 'top'){
+                // notify for user and sub-manager and manager
+                $this->Notification->notify([
+                    'users' => [$request->user_id],
+                    'recipientLists' => (in_array("sub-manager", $recipientLists)) ? ['manager','sub-manager'] : ['manager'],
+                    'template' => 'notifierByTop',
+                    'message' => [
+                        'top_name' => $top_name,
+                        'manager_name' => $manager_name,
+                        'sub_manager_name' =>$sub_manager_name,
+                        'staff_name' => isset($request->profile->first_name) ? $request->profile->first_name . ' ' . $request->profile->last_name : $request->user->username,
+                        'title' => $request->title,
+                        'category' => 'Request',
+                    ]
+                ]);
+            }
+            else{
+                //nothing
+            }
         }
     }
     public function changeStatus(){
@@ -228,8 +304,9 @@ class RequestsController extends AuthMasterController
             throw new NotFoundException();
         }
         if($mod === 'app' || $mod === 'rej'){
-            $request = $this->Requests->get($id);
-            if (!$request) {
+            $request = $this->Requests->find()->where(['Requests.id' => $id])
+                ->contain(['Profiles', 'Users'])->first();
+            if (!count($request)) {
                 throw new NotFoundException();
             }
             $approval = TableRegistry::get('Approvals');
@@ -246,12 +323,19 @@ class RequestsController extends AuthMasterController
                     $approvalE->role_id = $this->user->role[0]->id;
                     $approvalE->status = ($mod === 'app' ) ? 'approved' : 'rejected' ;
                     $approval->save($approvalE);
+                    //add push noti
+                    $this->pushNotification($request,'changeStatus');
+
                 }else{
                     throw new NotFoundException();
                 }
             }
-            $temp = $this->Requests->save($request);
-            $result = $this->responseData(true,$temp);
+            if($this->Requests->save($request)){
+                $result = $this->responseData(true,['id'=>$request->id]);
+            }else{
+                throw new NotFoundException();
+            }
+
         }elseif($mod === 'multiDel' || $mod === 'multiApp'|| $mod === 'multiRej'){
             if($mod === 'multiApp'){
                 throw new NotFoundException();

@@ -27,24 +27,6 @@ class UsersController extends AuthMasterController
         parent::beforeFilter($event);
     }
 
-    public function isAuthorized($user = null)
-    {
-
-        // All registered users can add articles
-        if ($this->request->action === 'add') {
-            return true;
-        }
-        // The owner of an article can edit and delete it
-        if (in_array($this->request->action, ['edit', 'delete'])) {
-
-            $userId = (int)$this->request->params[''][0];
-            if ($this->User->isOwnedBy($userId, $user['id'])) {
-                return true;
-            }
-        }
-        return parent::isAuthorized($user);
-    }
-
     public function profile(){
 //      Get and set profile info
         $listTimezone = new FunctionCommon();

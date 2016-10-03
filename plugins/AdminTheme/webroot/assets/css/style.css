@@ -1130,6 +1130,9 @@ i.i-xs {
   padding: 0px;
   border: 0px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  max-height: 480px;
+  overflow-y:auto;
+  overflow-x: hidden;
 }
 .navbar-nav > li > .dropdown-menu > li > a {
   -webkit-transition: all 200ms ease-in;
@@ -5289,6 +5292,18 @@ div.dataTables_info {
   border-color: #abb7b7;
   border-radius: 2px !important;
   color: #fff;
+
+}
+.pagination li.ellipsis {
+  background-color: #abb7b7;
+  border-color: #abb7b7;
+  border-radius: 2px !important;
+  color: #fff;
+  float: left;
+  padding: 7px 12px;
+  line-height : 1.42857143;
+  font-weight : bold;
+  margin-left : -1px;
 }
 .pagination li.active a,
 .pagination li:hover a,
@@ -5305,6 +5320,7 @@ div.dataTables_info {
 }
 .pagination li.active a {
   box-shadow: 0 3px 5px rgba(0,0,0,0.125) inset;
+  pointer-events: none;
 }
 .streetview {
   height: 300px;

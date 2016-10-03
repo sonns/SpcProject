@@ -84,7 +84,7 @@ class NotificationComponent extends Component
      * @param bool|null $state The state of notifications: `true` for unread, `false` for read, `null` for all.
      * @return array
      */
-    public function getNotifications($userId = null, $tracking_id =null, $state = null )
+    public function getNotifications($userId = null, $tracking_id =null, $state = null ,$limit = null )
     {
         if (!$userId) {
             $userId = $this->Controller->Auth->user('id');
@@ -97,6 +97,10 @@ class NotificationComponent extends Component
         if (!is_null($tracking_id)) {
             $query->where(['Notifications.tracking_id' => $tracking_id]);
         }
+        if (!is_null($limit)) {
+            $query->limit($limit);
+        }
+
         return $query->toArray();
     }
     /**

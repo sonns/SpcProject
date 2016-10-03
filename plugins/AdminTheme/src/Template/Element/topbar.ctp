@@ -37,44 +37,22 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right top-navbar">
                     <li class="dropdown iconify hide-phone">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-globe"></i><span class="label label-danger absolute">4</span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-globe"></i><span class="label label-danger absolute"><?= $arrNotification['count']?></span></a>
                         <ul class="dropdown-menu dropdown-message">
-                            <li class="dropdown-header notif-header"><i class="icon-bell-2"></i> New Notifications<a class="pull-right" href="#"><i class="fa fa-cog"></i></a></li>
-                            <li class="unread">
-                                <a href="#">
-                                    <p><strong>John Doe</strong> Uploaded a photo <strong>&#34;DSC000254.jpg&#34;</strong>
-                                        <br /><i>2 minutes ago</i>
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="unread">
-                                <a href="#">
-                                    <p><strong>John Doe</strong> Created an photo album  <strong>&#34;Fappening&#34;</strong>
-                                        <br /><i>8 minutes ago</i>
-                                    </p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <p><strong>John Malkovich</strong> Added 3 products
-                                        <br /><i>3 hours ago</i>
-                                    </p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <p><strong>Sonata Arctica</strong> Send you a message <strong>&#34;Lorem ipsum dolor...&#34;</strong>
-                                        <br /><i>12 hours ago</i>
-                                    </p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <p><strong>Johnny Depp</strong> Updated his avatar
-                                        <br /><i>Yesterday</i>
-                                    </p>
-                                </a>
-                            </li>
+                            <li  class="dropdown-header notif-header" style="float: left;background:#ABB7B7;padding: 6px 8px 5px;color: #fff;width: 318px;display: block;"><i class="icon-bell-2"></i> New Notifications<a class="pull-right" href="#"><i class="fa fa-cog"></i></a></li>
+                        </ul>
+<!--                        <div style="float: left;background:#ABB7B7;padding: 6px 8px 5px;color: #fff;width: 300px;display: block;" class="dropdown-header notif-header"><i class="icon-bell-2"></i> New Notifications<a class="pull-right" href="#"><i class="fa fa-cog"></i></a></div>-->
+                        <ul style="margin-top: 30px;" class="dropdown-menu dropdown-message">
+<!--                            <li class="dropdown-header notif-header"><i class="icon-bell-2"></i> New Notifications<a class="pull-right" href="#"><i class="fa fa-cog"></i></a></li>-->
+                            <?php foreach ($arrNotification['notificationList'] as $key => $notification):?>
+                                <li class="unread">
+                                    <a href="#">
+                                        <p><?= $notification->body; ?></strong>
+                                            <br /><i>2 minutes ago</i>
+                                        </p>
+                                    </a>
+                                </li>
+                            <?php endforeach;?>
                             <li class="dropdown-footer">
                                 <div class="btn-group btn-group-justified">
                                     <div class="btn-group">
@@ -90,34 +68,34 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="dropdown iconify hide-phone">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i><span class="label label-danger absolute">3</span></a>
-                        <ul class="dropdown-menu dropdown-message">
-                            <li class="dropdown-header notif-header"><i class="icon-mail-2"></i> New Messages</li>
-                            <li class="unread">
-                                <a href="#" class="clearfix">
-                                    <?php echo $this->Html->image('AdminTheme./images/users/chat/2.jpg', array('class' => 'xs-avatar ava-dropdown','alt'=>'Avatar'));?>
-                                    <strong>John Doe</strong><i class="pull-right msg-time">5 minutes ago</i><br />
-                                    <p>Duis autem vel eum iriure dolor in hendrerit ...</p>
-                                </a>
-                            </li>
-                            <li class="unread">
-                                <a href="#" class="clearfix">
-                                    <?php echo $this->Html->image('AdminTheme./images/users/chat/1.jpg', array('class' => 'xs-avatar ava-dropdown','alt'=>'Avatar'));?>
-                                    <strong>Sandra Kraken</strong><i class="pull-right msg-time">22 minutes ago</i><br />
-                                    <p>Duis autem vel eum iriure dolor in hendrerit ...</p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="clearfix">
-                                    <?php echo $this->Html->image('AdminTheme./images/users/chat/3.jpg', array('class' => 'xs-avatar ava-dropdown','alt'=>'Avatar'));?>
-                                    <strong>Zoey Lombardo</strong><i class="pull-right msg-time">41 minutes ago</i><br />
-                                    <p>Duis autem vel eum iriure dolor in hendrerit ...</p>
-                                </a>
-                            </li>
-                            <li class="dropdown-footer"><div class=""><a href="#" class="btn btn-sm btn-block btn-primary"><i class="fa fa-share"></i> See all messages</a></div></li>
-                        </ul>
-                    </li>
+<!--                    <li class="dropdown iconify hide-phone">-->
+<!--                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i><span class="label label-danger absolute">3</span></a>-->
+<!--                        <ul class="dropdown-menu dropdown-message">-->
+<!--                            <li class="dropdown-header notif-header"><i class="icon-mail-2"></i> New Messages</li>-->
+<!--                            <li class="unread">-->
+<!--                                <a href="#" class="clearfix">-->
+<!--                                    --><?php //echo $this->Html->image('AdminTheme./images/users/chat/2.jpg', array('class' => 'xs-avatar ava-dropdown','alt'=>'Avatar'));?>
+<!--                                    <strong>John Doe</strong><i class="pull-right msg-time">5 minutes ago</i><br />-->
+<!--                                    <p>Duis autem vel eum iriure dolor in hendrerit ...</p>-->
+<!--                                </a>-->
+<!--                            </li>-->
+<!--                            <li class="unread">-->
+<!--                                <a href="#" class="clearfix">-->
+<!--                                    --><?php //echo $this->Html->image('AdminTheme./images/users/chat/1.jpg', array('class' => 'xs-avatar ava-dropdown','alt'=>'Avatar'));?>
+<!--                                    <strong>Sandra Kraken</strong><i class="pull-right msg-time">22 minutes ago</i><br />-->
+<!--                                    <p>Duis autem vel eum iriure dolor in hendrerit ...</p>-->
+<!--                                </a>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <a href="#" class="clearfix">-->
+<!--                                    --><?php //echo $this->Html->image('AdminTheme./images/users/chat/3.jpg', array('class' => 'xs-avatar ava-dropdown','alt'=>'Avatar'));?>
+<!--                                    <strong>Zoey Lombardo</strong><i class="pull-right msg-time">41 minutes ago</i><br />-->
+<!--                                    <p>Duis autem vel eum iriure dolor in hendrerit ...</p>-->
+<!--                                </a>-->
+<!--                            </li>-->
+<!--                            <li class="dropdown-footer"><div class=""><a href="#" class="btn btn-sm btn-block btn-primary"><i class="fa fa-share"></i> See all messages</a></div></li>-->
+<!--                        </ul>-->
+<!--                    </li>-->
                     <li class="dropdown iconify hide-phone"><a href="#" onclick="javascript:toggle_fullscreen()"><i class="icon-resize-full-2"></i></a></li>
                     <li class="dropdown topbar-profile">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="rounded-image topbar-profile-image">

@@ -81,10 +81,9 @@
                     </div>
                     <div class="data-table-toolbar">
                         <ul class="pagination" style="margin-bottom: 8px;">
-                            <?php echo $this->Paginator->prev('«',  array('class' => 'disabled')); ?>
-                            <!--                        --><?php //echo $this->Paginator->numbers(array('before' => '<span class="pagenumber">')); ?>
-                            <?php echo $this->Paginator->numbers(['first' => 4, 'last' => 2]); ?>
-                            <?php echo $this->Paginator->next('»', array('class' => 'disabled')); ?>
+                            <?php echo $this->Paginator->prev('<i class="fa fa-chevron-left"></i>', array('class' => 'disabled','escape' => false)); ?>
+                            <?php echo $this->Paginator->numbers(array('modulus' => 2 ,"first"=>2,'last' => 2  )); ?>
+                            <?php echo $this->Paginator->next('<i class="fa fa-chevron-right"></i>', array('class' => 'disabled','escape' => false)); ?>
                         </ul>
                         <p style="marrgin-left:40px;"><?php echo $this->Paginator->counter(); ?></p>
                     </div>

@@ -59,32 +59,5 @@
         </ul>
         <div class="clearfix"></div>
     </div>
-    <div class="clearfix"></div>
-    <div class="portlets">
-        <div id="chat_groups" class="widget transparent nomargin">
-            <h2>Chat Groups</h2>
-            <div class="widget-content">
-                <ul class="list-unstyled">
-                    <li><a href="javascript:;"><i class="fa fa-circle-o text-red-1"></i> Company 1</a></li>
-                    <li><a href="javascript:;"><i class="fa fa-circle-o text-blue-1"></i> Company 2</a></li>
-                    <li><a href="javascript:;"><i class="fa fa-circle-o text-green-1"></i> Company 3</a></li>
-                </ul>
-            </div>
-        </div>
-
-        <div id="recent_tickets" class="widget transparent nomargin">
-            <h2>Recent Tickets</h2>
-            <div class="widget-content">
-                <ul class="list-unstyled">
-                    <li>
-                        <a href="javascript:;">My wordpress blog is broken <span>I was trying to save my page and...</span></a>
-                    </li>
-                    <li>
-                        <a href="javascript:;">Server down, need help!<span>My server is not responding for the last...</span></a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
     <div class="clearfix"></div><br><br><br>
 </div>

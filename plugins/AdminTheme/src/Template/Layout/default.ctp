@@ -181,17 +181,15 @@ echo $this->element('logout');
 
     <!-- Demo Specific JS Libraries -->
     <?= $this->Html->script('AdminTheme./assets/libs/prettify/prettify.js') ?>
+<!--    <script type="text/javascript" src="http://livechat.local/php/app.php?widget-init.js"></script>-->
 
     <?= $this->Html->script('AdminTheme./assets/js/init.js') ?>
-    <?= $this->Html->script('AdminTheme./assets/js/abc.js') ?>
-
     <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
-
     <script>
         function notification(response)
         {
             var options = {
-                body: response.response.message,
+                body: response.notification.response.body,
                 tag : 'greeting-notify',
                 icon: 'http://cake.local/admin_theme/images/alert_logo.png'
             };
@@ -199,14 +197,14 @@ echo $this->element('logout');
                 alert("This browser does not support desktop notification!!!Please enable it");
             }
             else if (Notification.permission === "granted") {
-                notify('info',{title: 'Notification' ,message: message,position:'top right'});
-                var notification = new Notification("Title!", options);
+                notify('info',{title: 'Notification' ,message: response.notification.response.body,position:'bottom right',autoHideDelay:20000});
+                var notification = new Notification(response.notification.response.title, options);
             }
             else if (Notification.permission !== 'denied') {
                 Notification.requestPermission(function (permission) {
                     if (permission === "granted") {
-                        notify('info',{title: 'warning' ,message: message,position:'top right'});
-                        var notification = new Notification("Title!", options);
+                        notify('info',{title: 'warning' ,message: response.notification.response.body,position:'bottom right',autoHideDelay:20000});
+                        var notification = new Notification(response.notification.response.title, options);
                         notification.onclick = function () {
                             window.open("http://cake.local");
                         };
@@ -215,22 +213,35 @@ echo $this->element('logout');
             }
         }
         $(document).ready(function(){
-            var socket = io.connect('http://localhost:5000');
-            socket.on("cake_response_<?= $userInfo->id; ?>", function(data){
-                $.ajax({
+//            var socket = io.connect('http://localhost:5000');
+            var socket = io.connect('http://localhost:5000', {
+                reconnection: false
+            });
+            socket.on("cake_response", function(data){
+                console.log(data);
+                var myID = <?= $userInfo->id; ?>;
+                if ( $.inArray( myID, data.id ) > -1 ){
+                    $.ajax({
                     type: "POST",
                     url:   "/notification/get_notification.json",
                     dataType: 'text',
-                    data:  {tracking_id:data},
+                    data:  {tracking_id:data.arg},
                     success: function(response)
                     {
                         var res = JSON.parse(response);
-//                        notification(res);
+                        notification(res);
                         console.log(response);
                     }
                 })
+
+                }else {
+                    //
+                    console.log('nothing');
+                }
+
+
                 //get tracking_id
-                console.log(data);
+
             });
         });
     </script>

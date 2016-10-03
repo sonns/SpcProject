@@ -21,7 +21,7 @@ class AuthMasterController extends AppController
     public $user = [];
     public $components = ['Cookie','Flash'];
     public $paginate = [
-        'limit' => 1
+        'limit' => 10
     ];
     public function initialize()
     {
@@ -31,16 +31,29 @@ class AuthMasterController extends AppController
 
         $this->_authInit();
         $this->_init_language();
-        $this->_initRecipient();
+        $this->_initNotification();
     }
-    private function _initRecipient(){
+    private function _initNotification(){
         if (!empty($this->user)) {
             $tblUser = TableRegistry::get('Users');
+//            echo '<pre>';
+//            print_r($tblUser->find('groupUsers', ['Roles.name' => 'top']));
+//            echo '<pre>'
+//            exit;
             $this->Notification->addRecipientList('top', $tblUser->find('groupUsers', ['Roles.name' => 'top']));
             $this->Notification->addRecipientList('manager', $tblUser->find('groupUsers', ['Roles.name' => 'manager','Users.dep_id'=> $this->user->dep_id]));
             if($this->user->role[0]->name !== 'top') {
                 $this->Notification->addRecipientList('sub-manager', $tblUser->find('groupUsers', ['Roles.name' => 'sub-manager','Users.dep_id'=> $this->user->dep_id]));
             }
+            // count all unread notifications
+            $countUnreadNoti =  $this->Notification->countNotifications($this->user->id,true);
+            // get all unread notifications;
+            $totalUnreadNoti = $this->Notification->getNotifications($this->user->id,null,true,15);
+            $arrNotification = [
+                'count' => $countUnreadNoti,
+                'notificationList' => $totalUnreadNoti
+            ];
+            $this->set(compact('arrNotification'));
         }
     }
     public function beforeFilter(Event $event)
@@ -60,7 +73,7 @@ class AuthMasterController extends AppController
         $this->loadComponent(
             'Auth', [
             'authenticate' => [
-                'SpcAuth.SPCCookie' => [
+                'FOC/Authenticate.Cookie' => [
                     'fields' => ['username' => 'username', 'password' => 'password'],
                     'userModel' => 'Users',
                     'passwordHasher' => [
@@ -84,7 +97,7 @@ class AuthMasterController extends AppController
                 'login'
             ],
             'loginRedirect' => [
-                'controller' => 'AuthMaster',
+                'controller' => 'Requests',
                 'action' => 'index',
                 'home'
             ],
@@ -107,19 +120,23 @@ class AuthMasterController extends AppController
 
         ]);
 
+        if (!$this->Auth->user()) {
+            $user = $this->Auth->identify();
+            $this->Auth->setUser($user);
+        }
         if ($this->Auth->user()) {
+//            echo 1234;exit;
             $users = TableRegistry::get('Users');
-            $this->user = $users->find()->where(['Users.id'=>$this->Auth->user()['id']])
-                ->contain(['role','dep','Profiles'])->first();
+            $this->user = $users->find()->where(['Users.id' => $this->Auth->user()['id']])
+                ->contain(['role', 'dep', 'Profiles'])->first();
             $this->set('userInfo', $this->user);
             $this->set('params', $this->params);
-//            echo '<pre>';
-//            print_r($this->user);
-//            echo '</pre>';
-//            exit;
-            if(empty($this->user->profile)){
-                if(!$this->_isUpdateProfile())
+            if (!empty($this->user) && empty($this->user->profile)) {
+                if (!$this->_isUpdateProfile())
                     return $this->redirect('user/profile');
+            } elseif(empty($this->user)){
+//                print_r($this->user);exit;
+                return $this->redirect($this->Auth->redirectUrl());
             }
             $this->_initMenu();
         }
@@ -157,14 +174,6 @@ class AuthMasterController extends AppController
             }
 //            show error
             $this->Flash->error(__('Invalid username or password, try again'));
-        }else{
-            $user = $this->Auth->identify();
-            if ($user) {
-                $this->Auth->setUser($user);
-//                $this->_setCookie();
-                return $this->redirect($this->Auth->redirectUrl());
-            }
-            $this->_initMenu();
         }
     }
     /**
@@ -175,6 +184,7 @@ class AuthMasterController extends AppController
     public function logout()
     {
         $this->Auth->logout();
+        $this->Cookie->delete('RememberMe');
         return $this->redirect($this->Auth->logout());
     }
     public function index()
@@ -192,14 +202,14 @@ class AuthMasterController extends AppController
         ]);
         $menus = [
             'left-menu'=>[
-                [
-                    'position'=>1,
-                    'title'=>"Dashboard",
-                    'url' => ['controller'=>"AuthMaster",'action'=>'index'],
-                    'hasPermission' => false,
-                    'active' => false
-
-                ],
+//                [
+//                    'position'=>1,
+//                    'title'=>"Dashboard",
+//                    'url' => ['controller'=>"AuthMaster",'action'=>'index'],
+//                    'hasPermission' => false,
+//                    'active' => false
+//
+//                ],
                 [
                     'position'=>2,
                     'title'=>"Department",
@@ -254,6 +264,13 @@ class AuthMasterController extends AppController
                 ],
                 [
                     'position'=>6,
+                    'title'=>'Notification',
+                    'url' => ['controller'=>"Notifications",'action'=>'index'],
+                    'active' => false,
+                    'hasPermission' => false
+                ],
+                [
+                    'position'=>7,
                     'title'=>"Message",
                     'url' => ['controller'=>"Messages",'action'=>'index'],
                     'active' => false,
@@ -315,8 +332,8 @@ class AuthMasterController extends AppController
     }
     private function _init_language(){
         $this->set('ddlLanguage', Configure::read('language'));
-        $language = (!empty($this->request->session()->read('Config.language')))   ?   $this->request->session()->read('Config.language') : 'en_US';
-        $this->set('selectLanguage', isset(Configure::read('language')[$language]) ? Configure::read('language')[$language] : 'English (US)');
+        $language = (!empty($this->request->session()->read('Config.language')))   ?   $this->request->session()->read('Config.language') : 'jp_JP';
+        $this->set('selectLanguage', isset(Configure::read('language')[$language]) ? Configure::read('language')[$language] : 'Japan (JP)');
         switch($language)
         {
             case "jp_JP":

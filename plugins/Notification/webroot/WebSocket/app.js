@@ -10,11 +10,11 @@ var port = 5000;
 io.sockets.on('connection', function(socket)
 {
     socket.on("cake_event", function(data){
-        io.sockets.emit("cake_response_" + data.id, data.arg);
-        console.log(data.arg);
+        console.log(data);
+        io.sockets.emit("cake_response", data);
     });
 });
 
 servidor.listen(port, function(){
-    console.log("localhost: " + port);
+    console.log("http://localhost: " + port);
 });

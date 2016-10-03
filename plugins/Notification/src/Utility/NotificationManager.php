@@ -73,9 +73,10 @@ class NotificationManager {
         $data = array_merge($_data, $data);
         foreach ((array)$data['recipientLists'] as $recipientList) {
             $list = (array)$this->getRecipientList($recipientList);
+            $list = array_map(create_function('$query', 'return $query->id;'), $list);
             $data['users'] = array_merge($data['users'], $list);
         }
-
+        $data['users'] = array_unique($data['users']);
         foreach ((array)$data['users'] as $user) {
             $entity = $model->newEntity();
             $entity->set('template', $data['template']);
@@ -85,7 +86,7 @@ class NotificationManager {
             $entity->set('user_id', $user);
             $model->save($entity);
         }
-        self::pushSocket($data['tracking_id']);
+        self::pushSocket($data['tracking_id'],$data['users']);
         return $data['tracking_id'];
     }
     /**
@@ -199,10 +200,10 @@ class NotificationManager {
         }
         return $trackingId;
     }
-    private function pushSocket($data){
+    private function pushSocket($data,$id){
         try {
             self::$_pushSocket->initialize();
-            self::$_pushSocket->emit('cake_event',[ 'arg' => $data , 'id' => 3 ]);
+            self::$_pushSocket->emit('cake_event',[ 'arg' => $data , 'id' => $id ]);
             self::$_pushSocket->close();
         } catch (Exception $e) {
             //Write log

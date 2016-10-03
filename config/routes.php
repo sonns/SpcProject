@@ -54,7 +54,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/logout', ['controller' => 'AuthMaster', 'action' => 'logout', 'logout']);
     $routes->connect('/403', ['controller' => 'AuthMaster', 'action' => 'accessDenied', 'access_denied']);
     $routes->connect('/404', ['controller' => 'AuthMaster', 'action' => 'pageNotFound', 'page_not_found']);
-    $routes->connect('/', ['controller' => 'AuthMaster', 'action' => 'index','home']);
+    $routes->connect('/', ['controller' => 'Requests', 'action' => 'index','home']);
 
 
 

@@ -18,7 +18,6 @@ class DepartmentsController extends AuthMasterController
      * @return \Cake\Network\Response|null
      */
     public $paginate = [
-        'limit' => 4,
         'order' => [
             'Departments.title' => 'asc'
         ]
@@ -33,9 +32,9 @@ class DepartmentsController extends AuthMasterController
         $depart = $this->Departments->newEntity();
         $departments = $this->paginate($this->Departments);
         $this->set(compact('departments'));
-        $this->set('_serialize', ['departments']);
         $this->set(compact('depart'));
-        $this->set('_serialize', ['depart']);
+        $this->set('_serialize', ['departments','depart']);
+
     }
 
     /**

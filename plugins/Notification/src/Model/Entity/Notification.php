@@ -82,9 +82,9 @@ class Notification extends Entity
         if (array_key_exists($this->_properties['template'], $templates)) {
             $template = $templates[$this->_properties['template']];
             $message = json_decode($this->_properties['message'], true);
-            return '123';// Text::insert($template['title'], $message);
+            return Text::insert($template['title'], $message);
         }
-        return '123';
+        return '';
     }
     /**
      * _getBody

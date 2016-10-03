@@ -73,7 +73,6 @@ class SPCCookieAuthenticate extends CookieAuthenticate
             ->where($conditions)
             ->hydrate(false)
             ->first();
-
         if (empty($result)) {
             return false;
         }

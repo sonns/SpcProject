@@ -22,7 +22,7 @@ function notify(style,data) {
         showAnimation: "show",
         showDuration: 0,
         hideDuration: 0,
-        autoHideDelay: 4000,
+        autoHideDelay: (data.hasOwnProperty('autoHideDelay')) ? data.autoHideDelay : 4000,
         autoHide: true,
         clickToHide: true
     });

@@ -232,6 +232,7 @@ Plugin::load('Migrations');
 Plugin::load('AdminTheme', ['bootstrap' => true, 'routes' => true]);
 
 Plugin::load('SpcAuth', ['bootstrap' => false, 'routes' => true]);
+Plugin::load('Notification', ['bootstrap' => true, 'routes' => false]);
 
 Plugin::load('FOC/Authenticate');
 Configure::write('Exception.renderer', 'AppExceptionRenderer');

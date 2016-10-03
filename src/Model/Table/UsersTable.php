@@ -89,8 +89,12 @@ class UsersTable extends Table
     public function findGroupUsers(Query $query, array $conditions)
     {
         $query = $query->select([
-                'Users.id'
-            ])->join([
+                'Users.id',
+                'Users.username',
+                'first_name' => 'Profiles.first_name',
+                'last_name' =>'Profiles.last_name'
+
+            ])->leftJoinWith('Profiles')->join([
                 'table' => 'tbl_master_role_user',
                 'alias' => 'RoleUser',
                 'type' => 'LEFT',
@@ -104,7 +108,7 @@ class UsersTable extends Table
             ])
             ;
         $query = $query->where($conditions)->toArray();
-        $query = array_map(create_function('$query', 'return $query->id;'), $query);
+//        $query = array_map(create_function('$query', 'return $query->id;'), $query);
         return $query;
     }
 
