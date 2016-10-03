@@ -60,11 +60,11 @@
                                 <td><strong><?php echo $department->name;?></strong></td>
                                 <td><strong><?php echo $department->tel;?></strong></td>
                                 <td><strong><?php echo $department->address;?></strong></td>
-                                <td> <span class="label <?php echo ($department->status) ? 'label-success' :'label-danger' ?>"><?php echo ($department->status) ? 'Active' :'Suspended' ?></span></td>
+                                <td data-status="<?= $department->status?>"> <span class="label <?php echo ($department->status) ? 'label-success' :'label-warning' ?>"><?php echo ($department->status) ? 'Active' :'Deactivate' ?></span></td>
                                 <td><strong><?php echo $department->created;?></strong></td>
                                 <td>
                                     <div class="btn-group btn-group-xs">
-                                        <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'fa fa-edit')),array('controller'=>'departments','action'=>'edit','edit_dep'),array('style' => 'margin-right:4px;' ,'class'=>'btn btn-default','title'=>'Edit','data-toggle'=>"tooltip",'escape' => false ))?>
+                                        <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'fa fa-edit')), '#' ,array( 'data-value' => $department->id , 'data-modal' => "md-add-department", 'style' => 'margin-right:4px;' ,'class'=>'btn btn-default md-trigger editDepartment','title'=>'Edit','data-toggle'=>"tooltip",'escape' => false ))?>
                                         <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'fa fa-remove')),array('controller'=>'departments','action'=>'delete','del_dep'),array('class'=>'btn btn-danger','title'=>'Delete','data-toggle'=>"tooltip",'escape' => false ))?>
 <!--                                        <a data-toggle="tooltip" title="Off" class="btn btn-default"><i class="fa fa-power-off"></i></a>-->
 <!--                                        <a data-toggle="tooltip" title="Edit" class="btn btn-default"><i class="fa fa-edit"></i></a>-->
@@ -95,3 +95,24 @@
         <a href="#">About</a><a href="#">Support</a><a href="#">Terms of Service</a><a href="#">Legal</a><a href="#">Help</a><a href="#">Contact Us</a>
     </div>
 </footer>
+
+
+<script>
+    $(".editDepartment").on("click", function(e){
+        $('#dep_name').val($(this).parents(':eq(2)').find( "td:eq(2)").text());
+        $('#dep_tel').val($(this).parents(':eq(2)').find( "td:eq(3)").text());
+        $('#dep_address').val($(this).parents(':eq(2)').find( "td:eq(4)").text());
+//        alert($(this).parents(':eq(2)').find( "td:eq(5)").data("status"));
+        if($(this).parents(':eq(2)').find( "td:eq(5)").data("status"))
+            $('input:radio[id="status1"]').iCheck('check');
+        else
+            $('input:radio[id="status2"]').iCheck('check');
+//        $('input:radio[name="status"]').attr("checked",true);
+        $('<input>').attr({
+            type: 'hidden',
+            id: 'department_id',
+            name: 'department_id',
+            value: $(this).data("value")
+        }).appendTo('#createDepartment');
+    });
+</script>

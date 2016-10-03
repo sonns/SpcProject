@@ -39,10 +39,14 @@ $(document).ready(function() {
             }
         },
         submitHandler: function (form) {
-
+            var url =  "/department/add.json";
+            if($('#elemId').length)
+            {
+                var url =  "/department/edit.json";
+            }
             $.ajax({
                 type: "POST",
-                url:   "/department/add.json",
+                url:   url,
                 dataType: 'text',
                 async:false,
                 data: $("form").serialize(),

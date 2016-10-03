@@ -212,7 +212,7 @@ $this->Html->scriptEnd();
 
             }
         })
-    })
+    });
 
     $(".requestAction").on("click", function(e){
         e.preventDefault();

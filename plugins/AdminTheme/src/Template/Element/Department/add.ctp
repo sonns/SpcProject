@@ -19,6 +19,23 @@
                         <label for="lblAddress">Address</label>
                         <input type="text" class="form-control" id="dep_address" name="dep_address" placeholder="Enter department address">
                     </div>
+                    <div class="form-group">
+                        <div class="col-sm-10">
+                            <div class="radio-inline iradio">
+                                <label>
+                                    <input type="radio" name="status" id="status1" value="1">
+                                    <?= __('Active'); ?>
+                                </label>
+                            </div>
+                            <div class="radio-inline iradio">
+                                <label>
+                                    <input type="radio" name="status" id="status2" value="0" checked>
+                                    <?= __('Deactivate'); ?>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="col-sm-8">
                         <button type="submit" class="btn btn-success">Submit</button>
                         <button type="reset" class="btn btn-default">Cancel</button>
