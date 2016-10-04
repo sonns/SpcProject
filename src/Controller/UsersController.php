@@ -127,7 +127,7 @@ class UsersController extends AuthMasterController
             $listDepartments = $department->find('list', [
                 'keyField' => 'id',
                 'valueField' => 'name',
-                'conditions' => ['status' => true]
+                'conditions' => ['status' => true,'del_flg' => false]
             ]);
             $this->set(compact('listRoles'));
             $this->set(compact('listDepartments'));

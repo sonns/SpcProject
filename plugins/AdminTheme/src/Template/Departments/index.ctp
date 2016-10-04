@@ -31,8 +31,8 @@
                         </div>
                         <div class="col-md-8">
                             <div class="toolbar-btn-action">
-                                <a data-modal="md-add-department" class="btn btn-success md-trigger"><i class="fa fa-plus-circle"></i>Add new</a>
-                                <a data-modal="md-add-department" class="btn btn-danger md-trigger"><i class="fa fa-trash-o"></i>Delete</a>
+                                <a data-modal="md-add-department" id="btnAddDepartment" class="btn btn-success md-trigger"><i class="fa fa-plus-circle"></i>Add new</a>
+<!--                                <a data-modal="md-add-department" class="btn btn-danger md-trigger"><i class="fa fa-trash-o"></i>Delete</a>-->
                             </div>
                         </div>
                     </div>
@@ -43,7 +43,7 @@
                         <thead>
                         <tr>
                             <th>No</th>
-                            <th style="width: 30px" data-sortable="false"><input type="checkbox" class="rows-check"></th>
+<!--                            <th style="width: 30px" data-sortable="false"><input type="checkbox" class="rows-check"></th>-->
                             <th>Department Name</th>
                             <th>Tel</th>
                             <th>Address</th>
@@ -56,7 +56,8 @@
                         <tbody>
                         <?php foreach ($departments as $key => $department): ?>
                             <tr>
-                                <td><?php echo $key+1;?></td><td><input type="checkbox" class="rows-check"></td>
+                                <td><?php echo $key+1;?></td>
+<!--                                <td><input type="checkbox" class="rows-check"></td>-->
                                 <td><strong><?php echo $department->name;?></strong></td>
                                 <td><strong><?php echo $department->tel;?></strong></td>
                                 <td><strong><?php echo $department->address;?></strong></td>
@@ -65,7 +66,7 @@
                                 <td>
                                     <div class="btn-group btn-group-xs">
                                         <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'fa fa-edit')), '#' ,array( 'data-value' => $department->id , 'data-modal' => "md-add-department", 'style' => 'margin-right:4px;' ,'class'=>'btn btn-default md-trigger editDepartment','title'=>'Edit','data-toggle'=>"tooltip",'escape' => false ))?>
-                                        <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'fa fa-remove')),array('controller'=>'departments','action'=>'delete','del_dep'),array('class'=>'btn btn-danger','title'=>'Delete','data-toggle'=>"tooltip",'escape' => false ))?>
+                                        <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'fa fa-remove')),'#',array( 'data-value' => $department->id , 'data-name' => $department->name , 'class'=>'btn btn-danger btnDelDepartment','title'=>'Delete','data-toggle'=>"tooltip",'escape' => false ))?>
 <!--                                        <a data-toggle="tooltip" title="Off" class="btn btn-default"><i class="fa fa-power-off"></i></a>-->
 <!--                                        <a data-toggle="tooltip" title="Edit" class="btn btn-default"><i class="fa fa-edit"></i></a>-->
                                     </div>
@@ -98,7 +99,12 @@
 
 
 <script>
+    $(".btnDelDepartment").on("click", function(e){
+        notifyConfirm({title: 'Delete!!!' ,cate: '\"' + $(this).data("name") + '\" department' ,id:$(this).data('value')});
+    });
     $(".editDepartment").on("click", function(e){
+        resetDepartmentForm();
+        $('#titleDepartment').html('Edit<strong> Department</strong>');
         $('#dep_name').val($(this).parents(':eq(2)').find( "td:eq(2)").text());
         $('#dep_tel').val($(this).parents(':eq(2)').find( "td:eq(3)").text());
         $('#dep_address').val($(this).parents(':eq(2)').find( "td:eq(4)").text());
@@ -115,4 +121,52 @@
             value: $(this).data("value")
         }).appendTo('#createDepartment');
     });
+    $("#btnAddDepartment").on("click", function(e){
+        $('#titleDepartment').html('Add<strong> Department</strong>');
+        resetDepartmentForm();
+    });
+    $("#btnResetDepartment").on("click", function(e){
+        resetDepartmentForm();
+        $('#titleDepartment').html('Add<strong> Department</strong>');
+    });
+    function resetDepartmentForm() {
+        $( "#department_id" ).remove( );
+        $('#createDepartment').trigger('reset');
+    }
+
+
+
+
+    $(function(){
+        //listen for click events from this style
+        $(document).on('click', '.notifyjs-metro-base .no', function() {
+            //programmatically trigger propogating hide event
+            $(this).trigger('notify-hide');
+        });
+        $(document).on('click', '.notifyjs-metro-base .yes', function() {
+            //show button text
+//            console($(this).data('value')));
+            //call ajax to delete this items
+
+            $.ajax({
+                type: "GET",
+                url:   '/department/delete.json',
+                dataType: 'text',
+                async:false,
+                data: {id:$(this).data('value')},
+                success: function (data) {
+                    console.log(data);
+//                    $('.btnDelDepartment').parents(':eq(2)').remove();
+                    var res = JSON.parse(data);
+                    notify('success',{title: res.result.status ,message: res.result.response,position:'top center'});
+                    location.reload();
+                    return true;
+                }
+            });
+            //hide notification
+            $(this).trigger('notify-hide');
+        });
+    })
+
+
 </script>

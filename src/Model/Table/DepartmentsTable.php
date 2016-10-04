@@ -67,5 +67,8 @@ class DepartmentsTable extends Table
         if (isset($data['dep_address'])) {
             $data['address'] = $data['dep_address'];
         }
+        if (isset($data['department_id'])) {
+            $data['id'] = $data['department_id'];
+        }
     }
 }

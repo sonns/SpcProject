@@ -13,7 +13,7 @@
                 </div>
                 <div class="form-group">
                     <label for="lblUsername">Tel</label>
-                    <input type="text"  value="<?= $department->tel ;?>" class="form-control" id="dep_name" name="dep_tel" placeholder="Enter department tel">
+                    <input type="text"  value="<?= $department->tel ;?>" class="form-control" id="dep_tel" name="dep_tel" placeholder="Enter department tel">
                 </div>
                 <div class="form-group">
                     <label for="lblUsername">Address</label>

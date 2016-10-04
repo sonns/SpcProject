@@ -27,3 +27,21 @@ function notify(style,data) {
         clickToHide: true
     });
 }
+
+
+function notifyConfirm(data) {
+    // var (data.hasOwnProperty('cate')) ? data.cate : 'this' ;
+    $.notify({
+        title:  (data.hasOwnProperty('title')) ? data.title : 'Delete!!!',
+        text: 'Are you sure you want to delete  ' + data.cate + ' ?<div class="clearfix"></div><br><a class="btn btn-sm btn-default yes" data-value="' + data.id + '">Yes</a> <a class="btn btn-sm btn-danger no" >No</a>',
+        image: "<i class='fa fa-warning'></i>"
+    }, {
+        style: 'metro',
+        className: "cool",
+        showAnimation: "show",
+        showDuration: 0,
+        hideDuration: 0,
+        autoHide: false,
+        clickToHide: false
+    });
+}

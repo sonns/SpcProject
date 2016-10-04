@@ -32,7 +32,7 @@ $(document).ready(function() {
                         message: 'Message is required and can\'t be empty'
                     },
                     stringLength: {
-                        min: 6,
+                        min: 3,
                         message: 'Message must be more than 6 characters long'
                     }
                 }
@@ -40,9 +40,9 @@ $(document).ready(function() {
         },
         submitHandler: function (form) {
             var url =  "/department/add.json";
-            if($('#elemId').length)
+            if($('#department_id').length)
             {
-                var url =  "/department/edit.json";
+                var url =  "/department/edit-ajax.json";
             }
             $.ajax({
                 type: "POST",
@@ -51,10 +51,9 @@ $(document).ready(function() {
                 async:false,
                 data: $("form").serialize(),
                 success: function (data) {
-                    // ev.stopPropagation();
-                    // removeModalHandler();
+                    console.log(data);
                     $("#md-add-department").removeClass("md-show");
-                    $('#createDepartment').trigger('reset');
+                    resetDepartmentForm();
                     window.setTimeout(function () {$("#md-add-department").remove();},500);
                     var res = JSON.parse(data);
                     notify('success',{title: res.result.status ,message: res.result.response,position:'top center'});

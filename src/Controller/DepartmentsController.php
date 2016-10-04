@@ -20,7 +20,8 @@ class DepartmentsController extends AuthMasterController
     public $paginate = [
         'order' => [
             'Departments.title' => 'asc'
-        ]
+        ],
+        'conditions' =>['del_flg' => false]
     ];
     public function  initialize()
     {
@@ -114,6 +115,37 @@ class DepartmentsController extends AuthMasterController
         $this->set('_serialize', ['department']);
     }
 
+    public function editAjax()
+    {
+        $this->request->allowMethod('ajax');
+        if (!isset($this->request->data['department_id']) ) {
+            throw new NotFoundException();
+        }
+        $department = $this->Departments->get($this->request->data['department_id']);
+        if(empty($department))
+        {
+            throw new NotFoundException();
+        }
+        if ($this->request->is(['post'])) {
+            $department = $this->Departments->patchEntity($department, $this->request->data);
+            if ($this->Departments->save($department)) {
+                $result = [
+                    'status' => 'Success',
+                    'response' => __('The department has been saved.')
+                ];
+            } else {
+                $result = [
+                    'status' => 'Error',
+                    'response' => __('The department could not be saved. Please, try again.')
+                ];
+            }
+        }else{
+            throw new NotFoundException();
+        }
+        $this->set(compact('result'));
+        $this->set('_serialize', ['result']);
+    }
+
     /**
      * Delete method
      *
@@ -121,16 +153,31 @@ class DepartmentsController extends AuthMasterController
      * @return \Cake\Network\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
+    public function delete()
     {
-        $this->request->allowMethod(['post', 'delete']);
-        $department = $this->Departments->get($id);
-        if ($this->Departments->delete($department)) {
-            $this->Flash->success(__('The department has been deleted.'));
-        } else {
-            $this->Flash->error(__('The department could not be deleted. Please, try again.'));
-        }
 
-        return $this->redirect(['action' => 'index']);
+        $this->request->allowMethod('ajax');
+        $this->request->allowMethod(['get']);
+        if(!$this->request->query('id')){
+            throw new NotFoundException();
+        }
+        $department = $this->Departments->query()->update()->set([
+            'del_flg' => true
+        ])->where(['id' => $this->request->query('id')])
+        ->execute();
+        if ($department) {
+            $result = [
+                'status' => 'Success',
+                'response' => __('The User has been deleted.')
+            ];
+        } else {
+            $result = [
+                'status' => 'Error',
+                'response' => __('The department could not be deleted. Please, try again.')
+            ];
+        }
+        $this->set(compact('result'));
+        $this->set('_serialize', ['result']);
+//        return $this->redirect(['action' => 'index']);
     }
 }

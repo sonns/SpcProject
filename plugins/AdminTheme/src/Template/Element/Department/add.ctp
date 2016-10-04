@@ -2,7 +2,7 @@
 <div class="md-modal md-slide-stick-top" id="md-add-department">
     <div class="md-content">
         <div class="md-close-btn"><a class="md-close"><i class="fa fa-times"></i></a></div>
-        <h3>Add <strong>Department</strong></h3>
+        <h3 id="titleDepartment">Add <strong>Department</strong></h3>
         <div>
             <div class="row">
                 <div class="col-sm-12">
@@ -38,7 +38,7 @@
 
                     <div class="col-sm-8">
                         <button type="submit" class="btn btn-success">Submit</button>
-                        <button type="reset" class="btn btn-default">Cancel</button>
+                        <button type="reset" id="btnResetDepartment" class="btn btn-default">Cancel</button>
                     </div>
                     <div id="message"></div>
                     </form>
