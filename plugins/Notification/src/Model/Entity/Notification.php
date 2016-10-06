@@ -105,6 +105,16 @@ class Notification extends Entity
         }
         return '';
     }
+    protected function _getLink()
+    {
+        $templates = Configure::read('Notification.templates');
+        if (array_key_exists($this->_properties['template'], $templates)) {
+            $template = $templates[$this->_properties['template']];
+            $message = json_decode($this->_properties['message'], true);
+            return Text::insert($template['link'], $message);
+        }
+        return '';
+    }
     /**
      * _getUnread
      *
@@ -138,5 +148,5 @@ class Notification extends Entity
      *
      * @var array
      */
-    protected $_virtual = ['title', 'body', 'unread', 'read'];
+    protected $_virtual = ['title', 'body', 'unread', 'read', 'link'];
 }

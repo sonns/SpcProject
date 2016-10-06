@@ -62,7 +62,6 @@ class NotificationsController extends AuthMasterController
     public function index()
     {
         $notifiers = $this->paginate($this->_notifier);
-        print_r($notifiers);exit;
         $this->set(compact('notifiers'));
         $this->set('_serialize', ['notifiers']);
     }

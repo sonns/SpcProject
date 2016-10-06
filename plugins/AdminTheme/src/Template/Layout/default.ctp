@@ -199,6 +199,9 @@ echo $this->element('logout');
             else if (Notification.permission === "granted") {
                 notify('info',{title: 'Notification' ,message: response.notification.response.body,position:'bottom right',autoHideDelay:20000});
                 var notification = new Notification(response.notification.response.title, options);
+                notification.onclick = function () {
+                    window.open(response.notification.response.link);
+                };
             }
             else if (Notification.permission !== 'denied') {
                 Notification.requestPermission(function (permission) {
@@ -206,7 +209,7 @@ echo $this->element('logout');
                         notify('info',{title: 'warning' ,message: response.notification.response.body,position:'bottom right',autoHideDelay:20000});
                         var notification = new Notification(response.notification.response.title, options);
                         notification.onclick = function () {
-                            window.open("http://cake.local");
+                            window.open(response.notification.response.link);
                         };
                     }
                 });
@@ -233,13 +236,7 @@ echo $this->element('logout');
                         console.log(response);
                     }
                 })
-
-                }else {
-                    //
-                    console.log('nothing');
                 }
-
-
                 //get tracking_id
 
             });

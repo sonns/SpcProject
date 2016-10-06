@@ -425,7 +425,7 @@ s                            }
                     $("#alert-modal").addClass("md-show");
                     isAddRequest = false;
                     console.log(data);
-                    location.reload();
+                    // location.reload();
                 },
                 error: function()
                 {
