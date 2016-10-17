@@ -1134,6 +1134,9 @@ i.i-xs {
   overflow-y:auto;
   overflow-x: hidden;
 }
+.navbar-nav > li > .dropdown-menu ::-webkit-scrollbar{
+  display: none;
+}
 .navbar-nav > li > .dropdown-menu > li > a {
   -webkit-transition: all 200ms ease-in;
   -moz-transition: all 200ms ease-in;

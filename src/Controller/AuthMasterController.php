@@ -48,7 +48,7 @@ class AuthMasterController extends AppController
             // count all unread notifications
             $countUnreadNoti =  $this->Notification->countNotifications($this->user->id,true);
             // get all unread notifications;
-            $totalUnreadNoti = $this->Notification->getNotifications($this->user->id,null,true,15);
+            $totalUnreadNoti = $this->Notification->getNotifications($this->user->id,null,true,10);
             $arrNotification = [
                 'count' => $countUnreadNoti,
                 'notificationList' => $totalUnreadNoti
@@ -262,13 +262,13 @@ class AuthMasterController extends AppController
                     'active' => false,
                     'hasPermission' => false
                 ],
-                [
-                    'position'=>6,
-                    'title'=>'Notification',
-                    'url' => ['controller'=>"Notifications",'action'=>'index'],
-                    'active' => false,
-                    'hasPermission' => false
-                ],
+//                [
+//                    'position'=>6,
+//                    'title'=>'Notification',
+//                    'url' => ['controller'=>"Notifications",'action'=>'index'],
+//                    'active' => false,
+//                    'hasPermission' => false
+//                ],
                 [
                     'position'=>7,
                     'title'=>"Message",
@@ -287,16 +287,20 @@ class AuthMasterController extends AppController
 //        exit;
         $this->set('sidebar',$result);
     }
-    private function _checkRole(array $menus , $listAcl){
+    private function _checkRole(array $menus , $listAcl , $checkPerm = false){
         foreach ($menus as $key => $menu )
         {
 //            print_r($menu);exit;
             if(isset($menu['children'])){
                 $menu['children'] = $this->_checkRole($menu['children'],$listAcl);
                 $menus[$key]['children'] =  $menu['children'];
+                $menus[$key]['hasPermission'] = $this->_checkRole($menu['children'],$listAcl,true);
             }
             if(isset($listAcl[$menu['url']['controller']]) && ( in_array('*',$listAcl[$menu['url']['controller']]) || in_array($menu['url']['action'],$listAcl[$menu['url']['controller']]))){
                 $menus[$key]['hasPermission'] = true;
+                if($checkPerm){
+                    return true;
+                }
                 if($menu['url']['controller'] === $this->request->params['controller']){
 //                    echo $this->request->params['controller'];exit;
                     $menus[$key]['active'] = true;

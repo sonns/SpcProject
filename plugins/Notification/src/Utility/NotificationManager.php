@@ -66,22 +66,21 @@ class NotificationManager {
         $_data = [
             'users' => [],
             'recipientLists' => [],
-            'template' => 'default',
+            'template' => ['default'],
             'message' => [],
             'tracking_id' => $this->getTrackingId()
         ];
         $data = array_merge($_data, $data);
-
         //notifierByManager and notifierBySubManager
         if((bool)$data['is_approve']){
             foreach ((array)$data['recipientLists'] as $recipientList) {
                 $list = (array)$this->getRecipientList($recipientList);
                 $data['users'] = array_merge($data['users'], $list);
-                if($data['template'] === 'notifierBySubManager'){
+                if($data['template'][0] === 'notifierBySubManager'){
                     //notify for staff and manager
                     $data['template'][$list[0]] = 'notifierForManager';
                     $data['template'][$_data['users'][0]] = 'notifierBySubManager';
-                }elseif($data['template'] === 'notifierByManager'){
+                }elseif($data['template'][0] === 'notifierByManager'){
                     //check request in head company
                     if($recipientList === 'top'){
                         $data['template'][$list[0]] = (count($data['recipientLists']) === 1) ? 'notifierForTopHead' : 'notifierForTop';
@@ -89,23 +88,21 @@ class NotificationManager {
                         $data['template'][$list[0]] = 'notifierByManager';
                         $data['template'][$_data['users'][0]] = 'notifierByManager';
                     }
-                    $data['template'][$list[0]] = 'notifierForManager';
-                    $data['template'][$_data['users'][0]] = 'notifierBySubManager';
                 }
             }
         }else{
-            if($data['template'] === 'notifierBySubManager'){
-                $data['template'] = 'rejectBySubManager';
-            }elseif($data['template'] === 'notifierByManager'){
-                $data['template'] = 'rejectByManager';
-            }elseif($data['template'] === 'notifierByTop'){
-                $data['template'] = 'rejectByTop';
+            if($data['template'][0] === 'notifierBySubManager'){
+                $data['template'][0] = 'rejectBySubManager';
+            }elseif($data['template'][0] === 'notifierByManager'){
+                $data['template'][0] = 'rejectByManager';
+            }elseif($data['template'][0] === 'notifierByTop'){
+                $data['template'][0] = 'rejectByTop';
             }
         }
         $data['users'] = array_unique($data['users']);
         foreach ((array)$data['users'] as $user) {
             $entity = $model->newEntity();
-            $entity->set('template', is_array($data['template']) ? $data['template'][$user] : $data['template']);
+            $entity->set('template', isset($data['template'][$user]) ? $data['template'][$user] : $data['template'][0]);
             $entity->set('tracking_id', $data['tracking_id']);
             $entity->set('message', $data['message']);
             $entity->set('state', 1);

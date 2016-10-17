@@ -46,9 +46,11 @@
                             <?php if (isset($menu['children']) && count($menu['children']) > 0) : ?>
                                 <ul>
                                     <?php foreach ($menu['children'] as $child): ?>
+                                        <?php if($child['hasPermission']){?>
                                         <li>
                                             <a  class="<?= ($child['active']) ? 'active' : ''?>" href='<?= $this->Url->build($child['url']); ?>'><span><?= $child['title']; ?></span></a>
                                         </li>
+                                        <?php }?>
                                     <?php endforeach; ?>
                                 </ul>
                             <?php endif; ?>

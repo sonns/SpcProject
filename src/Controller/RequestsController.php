@@ -193,7 +193,7 @@ class RequestsController extends AuthMasterController
             if(isset($this->user->role[0]->name) && $this->user->role[0]->name === 'staff'){
                 $this->Notification->notify([
                     'recipientLists' => ($this->user->dep->name === 'Headquarter') ? ['manager'] : ['sub-manager'],
-                    'template' => 'notifierRequest',
+                    'template' => ['notifierRequest'],
                     'message' => [
                         'username' => $this->user->profile->first_name . ' ' .$this->user->profile->last_name,
                         'title' => $request->title,
@@ -205,7 +205,7 @@ class RequestsController extends AuthMasterController
             else if(isset($this->user->role[0]->name) && $this->user->role[0]->name === 'sub-manager'){
                 $this->Notification->notify([
                     'recipientLists' => ['manager'],
-                    'template' => 'notifierRequest',
+                    'template' => ['notifierRequest'],
                     'message' => [
                         'username' => $this->user->profile->first_name . ' ' .$this->user->profile->last_name,
                         'title' => $request->title,
@@ -216,7 +216,7 @@ class RequestsController extends AuthMasterController
             }else if(isset($this->user->role[0]->name) && $this->user->role[0]->name === 'manager'){
                 $this->Notification->notify([
                     'recipientLists' => ['top'] ,
-                    'template' => 'notifierRequest',
+                    'template' => ['notifierRequest'],
                     'message' => [
                         'username' => $this->user->profile->first_name . ' ' .$this->user->profile->last_name,
                         'title' => $request->title,
@@ -258,7 +258,7 @@ class RequestsController extends AuthMasterController
                 $this->Notification->notify([
                     'users' => [$request->user_id],
                     'recipientLists' => ['manager'],
-                    'template' => 'notifierBySubManager',
+                    'template' => ['notifierBySubManager'],
                     'is_approve' => $is_approve,
                     'message' => [
                         'subManagerName' => $sub_manager_name,
@@ -273,7 +273,7 @@ class RequestsController extends AuthMasterController
                 $this->Notification->notify([
                     'users' => [$request->user_id],
                     'recipientLists' => (in_array("sub-manager", $recipientLists)) ? ['top','sub-manager'] : ['top'],
-                    'template' => 'notifierByManager',
+                    'template' => ['notifierByManager'],
                     'is_approve' => $is_approve,
                     'message' => [
                         'managerName' => $manager_name,
@@ -289,7 +289,7 @@ class RequestsController extends AuthMasterController
                 $this->Notification->notify([
                     'users' => [$request->user_id],
                     'recipientLists' => (in_array("sub-manager", $recipientLists)) ? ['manager','sub-manager'] : ['manager'],
-                    'template' => 'notifierByTop',
+                    'template' => ['notifierByTop'],
                     'is_approve' => $is_approve,
                     'message' => [
                         'topName' => $top_name,

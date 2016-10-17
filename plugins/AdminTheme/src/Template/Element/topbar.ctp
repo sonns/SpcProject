@@ -38,12 +38,12 @@
                 <ul class="nav navbar-nav navbar-right top-navbar">
                     <li class="dropdown iconify hide-phone">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-globe"></i><?php if($arrNotification['count']){ ?> <span class="label label-danger absolute"><?= $arrNotification['count']?></span><?php }?></a>
-                        <ul class="dropdown-menu dropdown-message">
-                            <li  class="dropdown-header notif-header" style="float: left;background:#ABB7B7;padding: 6px 8px 5px;color: #fff;width: 300px;display: block;"><i class="icon-bell-2"></i> New Notifications<a class="pull-right" href="#"><i class="fa fa-cog"></i></a></li>
-                        </ul>
+<!--                        <ul class="dropdown-menu dropdown-message">-->
+<!--                            <li  class="dropdown-header notif-header" style="float: left;background:#ABB7B7;padding: 6px 8px 5px;color: #fff;width: 300px;display: block;"><i class="icon-bell-2"></i> New Notifications<a class="pull-right" href="#"><i class="fa fa-cog"></i></a></li>-->
+<!--                        </ul>-->
 <!--                        <div style="float: left;background:#ABB7B7;padding: 6px 8px 5px;color: #fff;width: 300px;display: block;" class="dropdown-header notif-header"><i class="icon-bell-2"></i> New Notifications<a class="pull-right" href="#"><i class="fa fa-cog"></i></a></div>-->
-                        <ul style="margin-top: 30px;" class="dropdown-menu dropdown-message">
-<!--                            <li class="dropdown-header notif-header"><i class="icon-bell-2"></i> New Notifications<a class="pull-right" href="#"><i class="fa fa-cog"></i></a></li>-->
+                        <ul class="dropdown-menu dropdown-message">
+                            <li class="dropdown-header notif-header"><i class="icon-bell-2"></i> New Notifications<a class="pull-right" href="#"><i class="fa fa-cog"></i></a></li>
                             <?php if(!count($arrNotification['notificationList'])){?>
                                 <li class="unread">
                                     <a href="#">
@@ -55,8 +55,10 @@
                             ?>
                                 <li class="unread">
                                     <a href="#">
-                                        <p><?= $notification->body; ?></strong>
-                                            <br /><i>2 minutes ago</i>
+                                        <p>
+                                            <?php if(!empty($notification->link)){ ?> <a href="<?php echo $notification->link; ?>"> <?= $notification->body; ?></a><?php }else{ echo $notification->body;} ?>
+
+                                            <br /><i class="livetimestamp" data-value="<?= $notification->created;?>"></i>
                                         </p>
                                     </a>
                                 </li>
@@ -67,10 +69,10 @@
                                         <a href="#" class="btn btn-sm btn-primary"><i class="icon-ccw-1"></i> Refresh</a>
                                     </div>
                                     <div class="btn-group">
-                                        <a href="#" class="btn btn-sm btn-danger"><i class="icon-trash-3"></i> Clear All</a>
+                                        <a class="btn btn-sm btn-danger clear-all"><i class="icon-trash-3"></i> Clear All</a>
                                     </div>
                                     <div class="btn-group">
-                                        <a href="#" class="btn btn-sm btn-success">See All <i class="icon-right-open-2"></i></a>
+                                        <a href="<?= $this->Url->build(['controller'=>'Notifications','action' =>'index'])?>" class="btn btn-sm btn-success">See All <i class="icon-right-open-2"></i></a>
                                     </div>
                                 </div>
                             </li>

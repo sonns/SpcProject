@@ -178,44 +178,18 @@ echo $this->element('logout');
     <?= $this->Html->script('AdminTheme./assets/libs/jquery-notifyjs/styles/metro/notify-metro.js') ?>
 
     <?= $this->Html->script('AdminTheme./assets/js/pages/notifications.js') ?>
+    <?= $this->Html->script('AdminTheme./assets/js/pages/moment.min.js') ?>
 
     <!-- Demo Specific JS Libraries -->
     <?= $this->Html->script('AdminTheme./assets/libs/prettify/prettify.js') ?>
 <!--    <script type="text/javascript" src="http://livechat.local/php/app.php?widget-init.js"></script>-->
-
-    <?= $this->Html->script('AdminTheme./assets/js/init.js') ?>
     <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+    <?= $this->Html->script('AdminTheme./assets/js/init.js') ?>
+
     <script>
-        function notification(response)
-        {
-            var options = {
-                body: response.notification.response.body,
-                tag : 'greeting-notify',
-                icon: 'http://cake.local/admin_theme/images/alert_logo.png'
-            };
-            if (!("Notification" in window)) {
-                alert("This browser does not support desktop notification!!!Please enable it");
-            }
-            else if (Notification.permission === "granted") {
-                notify('info',{title: 'Notification' ,message: response.notification.response.body,position:'bottom right',autoHideDelay:20000});
-                var notification = new Notification(response.notification.response.title, options);
-                notification.onclick = function () {
-                    window.open(response.notification.response.link);
-                };
-            }
-            else if (Notification.permission !== 'denied') {
-                Notification.requestPermission(function (permission) {
-                    if (permission === "granted") {
-                        notify('info',{title: 'warning' ,message: response.notification.response.body,position:'bottom right',autoHideDelay:20000});
-                        var notification = new Notification(response.notification.response.title, options);
-                        notification.onclick = function () {
-                            window.open(response.notification.response.link);
-                        };
-                    }
-                });
-            }
-        }
         $(document).ready(function(){
+            $(".livetimestamp").text(moment($(".livetimestamp").data('value'), "MM/DD/YY HH:mm:ss").fromNow());
+//            moment($(".livetimestamp").data('value'), "YYYYMMDD").fromNow();
 //            var socket = io.connect('http://localhost:5000');
             var socket = io.connect('http://localhost:5000', {
                 reconnection: false
@@ -225,17 +199,17 @@ echo $this->element('logout');
                 var myID = <?= $userInfo->id; ?>;
                 if ( $.inArray( myID, data.id ) > -1 ){
                     $.ajax({
-                    type: "POST",
-                    url:   "/notification/get_notification.json",
-                    dataType: 'text',
-                    data:  {tracking_id:data.arg},
-                    success: function(response)
-                    {
-                        var res = JSON.parse(response);
-                        notification(res);
-                        console.log(response);
-                    }
-                })
+                        type: "POST",
+                        url:   "/notification/get_notification.json",
+                        dataType: 'text',
+                        data:  {tracking_id:data.arg},
+                        success: function(response)
+                        {
+                            var res = JSON.parse(response);
+                            notification(res);
+                            console.log(response);
+                        }
+                    })
                 }
                 //get tracking_id
 

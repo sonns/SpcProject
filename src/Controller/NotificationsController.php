@@ -24,7 +24,8 @@ class NotificationsController extends AuthMasterController
     public $paginate = [
         'order' => [
             'Notifications.id' => 'desc'
-        ]
+        ],
+        'limit' => 10
     ];
     public function initialize()
     {
@@ -34,7 +35,6 @@ class NotificationsController extends AuthMasterController
 
     public function getNotification(){
         $this->request->allowMethod('ajax');
-        $notifier = TableRegistry::get('Notification.Notifications');
         if ($this->request->is('post')) {
 
 
@@ -62,12 +62,33 @@ class NotificationsController extends AuthMasterController
     public function index()
     {
         $notifiers = $this->paginate($this->_notifier);
+//        print_r($notifiers);exit;
         $this->set(compact('notifiers'));
         $this->set('_serialize', ['notifiers']);
     }
+    public function clearAll(){
+        $this->request->allowMethod('ajax');
+        $this->Notification->markAsRead(null, $this->user->id);
+        $result = 'ok';
+        $this->set(compact('result'));
+        $this->set('_serialize', ['result']);
+    }
 
+    public function refresh(){
+        $this->request->allowMethod('ajax');
+        $countUnreadNoti =  $this->Notification->countNotifications($this->user->id,true);
+        // get all unread notifications;
+        $totalUnreadNoti = $this->Notification->getNotifications($this->user->id,null,true,10);
+        $arrNotification = [
+            'count' => $countUnreadNoti,
+            'notificationList' => $totalUnreadNoti
+        ];
+        $this->set(compact('arrNotification'));
+        $this->set('_serialize', ['arrNotification']);
+    }
 
     private function _initPushNotification(){
+        $this->request->allowMethod('ajax');
         $notification = new Elephant(new Version1X('http://localhost:5000'));
         return $notification;
     }

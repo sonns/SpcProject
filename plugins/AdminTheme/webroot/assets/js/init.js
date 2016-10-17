@@ -409,3 +409,47 @@ function exitFullscreen() {
     document.webkitExitFullscreen();
   }
 }
+function notification(response)
+{
+    var options = {
+        body: response.notification.response.body,
+        tag : 'greeting-notify',
+        icon: 'http://cake.local/admin_theme/images/alert_logo.png'
+    };
+    if (!("Notification" in window)) {
+        alert("This browser does not support desktop notification!!!Please enable it");
+    }
+    else if (Notification.permission === "granted") {
+        notify('info',{title: 'Notification' ,message: response.notification.response.body,position:'bottom right',autoHideDelay:20000});
+        var notification = new Notification(response.notification.response.title, options);
+        notification.onclick = function () {
+            window.open(response.notification.response.link);
+        };
+    }
+    else if (Notification.permission !== 'denied') {
+        Notification.requestPermission(function (permission) {
+            if (permission === "granted") {
+                notify('info',{title: 'warning' ,message: response.notification.response.body,position:'bottom right',autoHideDelay:20000});
+                var notification = new Notification(response.notification.response.title, options);
+                notification.onclick = function () {
+                    window.open(response.notification.response.link);
+                };
+            }
+        });
+    }
+}
+
+$(document).on('click', '.clear-all', function() {
+    $.ajax({
+        type: "GET",
+        url:   '/notification/clearAll.json',
+        dataType: 'text',
+        async:false,
+        data: {},
+        success: function (data) {
+            console.log(data);
+        }
+    });
+    //hide notification
+    $(this).trigger('notify-hide');
+});

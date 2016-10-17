@@ -111,7 +111,9 @@ class Notification extends Entity
         if (array_key_exists($this->_properties['template'], $templates)) {
             $template = $templates[$this->_properties['template']];
             $message = json_decode($this->_properties['message'], true);
-            return Text::insert($template['link'], $message);
+            $link =  Text::insert($template['link'], $message);
+            if($link !== ':link')
+                return $link;
         }
         return '';
     }
@@ -143,10 +145,29 @@ class Notification extends Entity
         }
         return false;
     }
+
+    /**
+     * _getFromUser
+     *
+     * Boolean if the notification is read or not.
+     *
+     * @return bool
+     */
+    protected function _getFromUser()
+    {
+        $templates = Configure::read('Notification.templates');
+        if (array_key_exists($this->_properties['template'], $templates)) {
+            $template = $templates[$this->_properties['template']];
+            $message = json_decode($this->_properties['message'], true);
+            return Text::insert($template['fromUser'], $message);
+        }
+        return '';
+    }
+
     /**
      * Virtual fields
      *
      * @var array
      */
-    protected $_virtual = ['title', 'body', 'unread', 'read', 'link'];
+    protected $_virtual = ['title', 'body', 'unread', 'read', 'link','fromUser'];
 }
