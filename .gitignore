@@ -1,0 +1,7 @@
+/vendor/*
+/webroot/file/*
+/.idea/*
+/tmp/*
+/logs/*
+/idea/*
+*.editorconfig
