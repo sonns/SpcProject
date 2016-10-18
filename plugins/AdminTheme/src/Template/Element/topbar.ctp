@@ -13,20 +13,6 @@
             <div class="navbar-collapse2">
                 <ul class="nav navbar-nav hidden-xs">
                     <li class="language_bar dropdown hidden-xs">
-
-<!--                        --><?php //echo  $this->Form->select(
-//                            'sltCategory',
-//                            $ddlLanguage,
-//                            [
-//                                'empty' => 'Select Category',
-//                                'class' => 'dropdown-menu pull-right',
-//                                'name'=> 'sltCategory',
-//                                'id'=> 'sltCategory'
-//
-//                            ]
-//                        );?>
-
-
                         <a href="#" id="languageValue" class="dropdown-toggle" data-toggle="dropdown"><?= $selectLanguage.' ' ;?><i class="fa fa-caret-down"></i></a>
                         <ul class="dropdown-menu pull-right" id="ddlLanguage">
                             <?php foreach ($ddlLanguage as $key => $language):?>
@@ -37,11 +23,7 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right top-navbar">
                     <li class="dropdown iconify hide-phone notificationList">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-globe"></i><?php if($arrNotification['count']){ ?> <span class="label label-danger absolute"><?= $arrNotification['count']?></span><?php }?></a>
-<!--                        <ul class="dropdown-menu dropdown-message">-->
-<!--                            <li  class="dropdown-header notif-header" style="float: left;background:#ABB7B7;padding: 6px 8px 5px;color: #fff;width: 300px;display: block;"><i class="icon-bell-2"></i> New Notifications<a class="pull-right" href="#"><i class="fa fa-cog"></i></a></li>-->
-<!--                        </ul>-->
-<!--                        <div style="float: left;background:#ABB7B7;padding: 6px 8px 5px;color: #fff;width: 300px;display: block;" class="dropdown-header notif-header"><i class="icon-bell-2"></i> New Notifications<a class="pull-right" href="#"><i class="fa fa-cog"></i></a></div>-->
+                        <a href="#" class="dropdown-toggle countNotification" data-toggle="dropdown"><i class="fa fa-globe"></i><?php if($arrNotification['count']){ ?> <span class="label label-danger absolute"><?= $arrNotification['count']?></span><?php }?></a>
                         <ul class="dropdown-menu dropdown-message">
                             <li class="dropdown-header notif-header"><i class="icon-bell-2"></i> New Notifications<a class="pull-right" href="#"><i class="fa fa-cog"></i></a></li>
                             <?php if(!count($arrNotification['notificationList'])){?>
@@ -66,7 +48,7 @@
                             <li class="dropdown-footer">
                                 <div class="btn-group btn-group-justified">
                                     <div class="btn-group">
-                                        <a href="#" class="btn btn-sm btn-primary"><i class="icon-ccw-1"></i> Refresh</a>
+                                        <a class="btn btn-sm btn-primary refresh"><i class="icon-ccw-1"></i> Refresh</a>
                                     </div>
                                     <div class="btn-group">
                                         <a class="btn btn-sm btn-danger clear-all"><i class="icon-trash-3"></i> Clear All</a>
@@ -146,14 +128,28 @@ $("#ddlLanguage a").on("click", function(e){
 })
 
 $(".notificationList").on("click", function(e){
+<!--    $.ajax({-->
+<!--        type: "GET",-->
+<!--        url:   "/notification/clearAll.json",-->
+<!--        dataType: 'text',-->
+<!--        data:  {},-->
+<!--        success: function(data)-->
+<!--        {-->
+<!--            console.log(data);-->
+<!--            $(".notificationList a.countNotification").find('span').remove();-->
+<!--        }-->
+<!--    })-->
+})
+$(".notificationList .refresh").on("click", function(e){
     $.ajax({
         type: "GET",
-        url:   "/notification/clearAll.json",
+        url:   "/notification/refresh.json",
         dataType: 'text',
         data:  {},
         success: function(data)
         {
             console.log(data);
+<!--            $(".notificationList a.countNotification").find('span').remove();-->
         }
     })
 })
