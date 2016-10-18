@@ -36,7 +36,7 @@
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right top-navbar">
-                    <li class="dropdown iconify hide-phone">
+                    <li class="dropdown iconify hide-phone notificationList">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-globe"></i><?php if($arrNotification['count']){ ?> <span class="label label-danger absolute"><?= $arrNotification['count']?></span><?php }?></a>
 <!--                        <ul class="dropdown-menu dropdown-message">-->
 <!--                            <li  class="dropdown-header notif-header" style="float: left;background:#ABB7B7;padding: 6px 8px 5px;color: #fff;width: 300px;display: block;"><i class="icon-bell-2"></i> New Notifications<a class="pull-right" href="#"><i class="fa fa-cog"></i></a></li>-->
@@ -144,6 +144,20 @@ $("#ddlLanguage a").on("click", function(e){
     }
     })
 })
+
+$(".notificationList").on("click", function(e){
+    $.ajax({
+        type: "GET",
+        url:   "/notification/clearAll.json",
+        dataType: 'text',
+        data:  {},
+        success: function(data)
+        {
+            console.log(data);
+        }
+    })
+})
+
 <?php $this->Html->scriptEnd(); ?>
 
 
