@@ -76,6 +76,7 @@ class NotificationsController extends AuthMasterController
 
     public function refresh(){
         $this->request->allowMethod('ajax');
+        $this->viewBuilder()->className('AdminTheme.Ajax');
         $countUnreadNoti =  $this->Notification->countNotifications($this->user->id,true);
         // get all unread notifications;
         $totalUnreadNoti = $this->Notification->getNotifications($this->user->id,null,true,10);
@@ -84,7 +85,7 @@ class NotificationsController extends AuthMasterController
             'notificationList' => $totalUnreadNoti
         ];
         $this->set(compact('arrNotification'));
-        $this->set('_serialize', ['arrNotification']);
+        $this->set('_serialize', 'arrNotification');
     }
 
     private function _initPushNotification(){

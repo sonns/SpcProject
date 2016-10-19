@@ -148,8 +148,17 @@ $(".notificationList .refresh").on("click", function(e){
         data:  {},
         success: function(data)
         {
-            console.log(data);
-<!--            $(".notificationList a.countNotification").find('span').remove();-->
+            var returnedData = JSON.parse(data);
+            console.log(returnedData);
+<!--            console.log(,returnedData.arrNotification.count)-->
+<!--            console.log($(".notificationList a.countNotification").find('span').text())-->
+            if(returnedData.arrNotification.count ===  parseInt($(".notificationList a.countNotification").find('span').text())){
+                console.log(data);
+                $(".notificationList ul.dropdown-message").html(returnedData.content);
+                $(".notificationList a.countNotification").find('span').text(returnedData.arrNotification.count);
+            }
+
+<!--            $(".notificationList a.countNotification").find('span').text();-->
         }
     })
 })
