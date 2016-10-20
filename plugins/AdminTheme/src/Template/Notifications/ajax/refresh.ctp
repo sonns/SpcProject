@@ -9,9 +9,9 @@
     foreach ($arrNotification['notificationList'] as $key => $notification){
         ?>
         <li class="unread">
-            <a href="#">
+            <a href="<?= !empty($notification->link)? $notification->link : ''; ?>">
                 <p>
-                    <?php if(!empty($notification->link)){ ?> <a href="<?php echo $notification->link; ?>"> <?= $notification->body; ?></a><?php }else{ echo $notification->body;} ?>
+                    <?php echo $notification->body; ?>
 
                     <br /><i class="livetimestamp" data-value="<?= $notification->created;?>"></i>
                 </p>

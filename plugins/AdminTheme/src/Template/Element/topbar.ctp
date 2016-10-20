@@ -28,7 +28,7 @@
                             <li class="dropdown-header notif-header"><i class="icon-bell-2"></i> New Notifications<a class="pull-right" href="#"><i class="fa fa-cog"></i></a></li>
                             <?php if(!count($arrNotification['notificationList'])){?>
                                 <li class="unread">
-                                    <a href="#">
+                                    <a>
                                         <p><?= __('No Data')?></p>
                                     </a>
                                 </li>
@@ -36,9 +36,9 @@
                                 foreach ($arrNotification['notificationList'] as $key => $notification){
                             ?>
                                 <li class="unread">
-                                    <a href="#">
+                                    <a href="<?= !empty($notification->link)? $notification->link : ''; ?>">
                                         <p>
-                                            <?php if(!empty($notification->link)){ ?> <a href="<?php echo $notification->link; ?>"> <?= $notification->body; ?></a><?php }else{ echo $notification->body;} ?>
+                                            <?php echo $notification->body; ?>
 
                                             <br /><i class="livetimestamp" data-value="<?= $notification->created;?>"></i>
                                         </p>
@@ -90,7 +90,7 @@
 <!--                    </li>-->
                     <li class="dropdown iconify hide-phone"><a href="#" onclick="javascript:toggle_fullscreen()"><i class="icon-resize-full-2"></i></a></li>
                     <li class="dropdown topbar-profile">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="rounded-image topbar-profile-image">
+                        <a class="dropdown-toggle" data-toggle="dropdown"><span class="rounded-image topbar-profile-image">
                                 <?php echo $this->Html->image( (empty($userInfo['profile'])) ? 'AdminTheme./images/users/user-35.jpg' : '../file/profile/'.$userInfo['profile']['photo'] , array('class' => 'xs-avatar ava-dropdown','style'=> 'height:34px !important','alt'=>'Avatar'));?>
                                 </span> <strong><?php echo $userInfo['first_name'] . ' ' .$userInfo['last_name'] ;?></strong> <i class="fa fa-caret-down"></i>
                         </a>
@@ -128,17 +128,17 @@ $("#ddlLanguage a").on("click", function(e){
 })
 
 $(".notificationList").on("click", function(e){
-<!--    $.ajax({-->
-<!--        type: "GET",-->
-<!--        url:   "/notification/clearAll.json",-->
-<!--        dataType: 'text',-->
-<!--        data:  {},-->
-<!--        success: function(data)-->
-<!--        {-->
-<!--            console.log(data);-->
-<!--            $(".notificationList a.countNotification").find('span').remove();-->
-<!--        }-->
-<!--    })-->
+    $.ajax({
+        type: "GET",
+        url:   "/notification/clearAll.json",
+        dataType: 'text',
+        data:  {},
+        success: function(data)
+        {
+            console.log(data);
+            $(".notificationList a.countNotification").find('span').remove();
+        }
+    })
 })
 $(".notificationList .refresh").on("click", function(e){
     $.ajax({
@@ -150,15 +150,11 @@ $(".notificationList .refresh").on("click", function(e){
         {
             var returnedData = JSON.parse(data);
             console.log(returnedData);
-<!--            console.log(,returnedData.arrNotification.count)-->
-<!--            console.log($(".notificationList a.countNotification").find('span').text())-->
-            if(returnedData.arrNotification.count ===  parseInt($(".notificationList a.countNotification").find('span').text())){
-                console.log(data);
+            if(returnedData.arrNotification.count !==  parseInt($(".notificationList a.countNotification").find('span').text())){
                 $(".notificationList ul.dropdown-message").html(returnedData.content);
+                $(".livetimestamp").text(moment($(".livetimestamp").data('value'), "MM/DD/YY HH:mm:ss").fromNow());
                 $(".notificationList a.countNotification").find('span').text(returnedData.arrNotification.count);
             }
-
-<!--            $(".notificationList a.countNotification").find('span').text();-->
         }
     })
 })
