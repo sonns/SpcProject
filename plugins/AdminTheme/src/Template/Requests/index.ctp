@@ -118,7 +118,7 @@
                                     <div class="btn-group btn-group-xs">
                                         <?php if($userInfo->role[0]->name === 'admin' || $userInfo->role[0]->name === 'staff'){?>
                                             <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'icon-eye-off')),'/requests/preview/'.$request->id,array('class'=>'btn btn-primary','title'=>'Preview','data-toggle'=>"tooltip",'escape' => false,'data-value'=>$request->id,'data-mode' => 'del'  ))?>
-<!--                                         <span class="requestStatus label label-danger">--><?//= __('No Permission!')?><!--</span>-->
+
                                         <?php }else{ ?>
                                             <?php if($status['status']){ ?>
                                                 <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'icon-ok-circled')),'javascript:;',array('class'=>'btn btn-success statusRequest','title'=>'Approve','data-toggle'=>"tooltip",'escape' => false ,'data-value'=>$request->id,'data-mode' => 'app' ))?>
@@ -127,6 +127,9 @@
                                             <?php }else{ if(($userInfo->role[0]->name === 'manager' && (int)$request->manager_status === 1) || ($userInfo->role[0]->name === 'sub-manager' && (int)$request->sub_manager_status === 1)) ?>
                                                 <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'icon-eye-off')),'/requests/preview/'.$request->id,array('class'=>'btn btn-primary','title'=>'Preview','data-toggle'=>"tooltip",'escape' => false,'data-value'=>$request->id,'data-mode' => 'pre'  ))?>
                                             <?php } ?>
+                                        <?php } ?>
+                                        <?php if($status['value'] === 'Pending'){ ?>
+                                            <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'fa fa-mail-forward')),'/requests/report/'.$request->id,array('class'=>'btn btn-primary statusRequest','title'=>'Forward','data-toggle'=>"tooltip",'escape' => false,'data-value'=>$request->id,'data-mode' => 'report'  ))?>
                                         <?php } ?>
                                     </div>
                                 </td>

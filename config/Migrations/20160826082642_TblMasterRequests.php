@@ -35,6 +35,7 @@ class TblMasterRequests extends AbstractMigration
             ->addColumn('note', 'text',['null'=>true])
             ->addColumn('appr_date', 'datetime')
             ->addColumn('del_flg', 'integer', array('limit' => 1,'default'=>0))
+            ->addColumn('is_report', 'integer', array('limit' => 1,'default'=>0))
             ->addColumn('status', 'integer', array('limit' => 1,'default'=>0))
             ->addColumn('created', 'datetime',['default'=> "CURRENT_TIMESTAMP"])
             ->addColumn('modified', 'datetime', array('null' => true,'default'=>null))
