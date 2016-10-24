@@ -69,9 +69,9 @@ class UsersTable extends Table
             'className' => 'Departments',
             'foreignKey' => 'dep_id',
         ]);
-        $this->belongsTo('Profiles', [
+        $this->hasOne('Profiles', [
             'className' => 'Profiles',
-            'foreignKey' => 'id'
+            'foreignKey' => 'user_id'
         ]);
     }
     public function findExistsOr(Query $query, array $conditions)

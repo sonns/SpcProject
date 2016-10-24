@@ -129,6 +129,10 @@ class AuthMasterController extends AppController
             $users = TableRegistry::get('Users');
             $this->user = $users->find()->where(['Users.id' => $this->Auth->user()['id']])
                 ->contain(['role', 'dep', 'Profiles'])->first();
+//                    echo '<pre>';
+//                    print_r($this->user);
+//                    echo '</pre>';
+//                    exit;
             $this->set('userInfo', $this->user);
             $this->set('params', $this->params);
             if (!empty($this->user) && empty($this->user->profile)) {

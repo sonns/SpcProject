@@ -26,7 +26,8 @@ class ProfilesTable extends Table
         $this->displayField('id');
         $this->primaryKey('id');
         $this->addBehavior('Timestamp');
-        $this->belongsTo('Users');
+//        $this->belongsTo('Users');
+
     }
 
     /**

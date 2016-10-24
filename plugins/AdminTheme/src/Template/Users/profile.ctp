@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-sm-3 portlets">
         <div class="avatar-container">
-            <?php echo $this->Html->image((empty($userInfo['profile'])) ? 'AdminTheme./images/users/user-256.jpg' : '../file/profile/'.$userInfo['profile']['photo'] , array('class' => 'img-circle profile-avatar','alt'=>'User avatar'));?>
+            <?php echo $this->Html->image(( !isset($userInfo['profile']['photo']) ||  empty($userInfo['profile']['photo'])) ? 'AdminTheme./images/users/user-256.jpg' : '../file/profile/'.$userInfo['profile']['photo'] , array('class' => 'img-circle profile-avatar','alt'=>'User avatar'));?>
         </div>
         <!-- Begin user profile -->
         <?= $this->cell('User::display', [$userInfo] )?>

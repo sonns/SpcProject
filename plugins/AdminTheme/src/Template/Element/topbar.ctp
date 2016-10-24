@@ -91,7 +91,7 @@
                     <li class="dropdown iconify hide-phone"><a href="#" onclick="javascript:toggle_fullscreen()"><i class="icon-resize-full-2"></i></a></li>
                     <li class="dropdown topbar-profile">
                         <a class="dropdown-toggle" data-toggle="dropdown"><span class="rounded-image topbar-profile-image">
-                                <?php echo $this->Html->image( (empty($userInfo['profile'])) ? 'AdminTheme./images/users/user-35.jpg' : '../file/profile/'.$userInfo['profile']['photo'] , array('class' => 'xs-avatar ava-dropdown','style'=> 'height:34px !important','alt'=>'Avatar'));?>
+                                <?php echo $this->Html->image(( !isset($userInfo['profile']['photo']) ||  empty($userInfo['profile']['photo'])) ? 'AdminTheme./images/users/user-35.jpg' : '../file/profile/'.$userInfo['profile']['photo'] , array('class' => 'xs-avatar ava-dropdown','style'=> 'height:34px !important','alt'=>'Avatar'));?>
                                 </span> <strong><?php echo $userInfo['first_name'] . ' ' .$userInfo['last_name'] ;?></strong> <i class="fa fa-caret-down"></i>
                         </a>
                         <ul class="dropdown-menu">
