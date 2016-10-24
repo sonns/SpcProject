@@ -15,7 +15,7 @@
     </div>
     <div class="col-sm-5 text-right">
         <?php if($requestDetail->role_name !== 'top' && !((int) $requestDetail->department_id === 2 && $requestDetail->role_name === 'manager' ) ){?>
-            <?php if(!(int)$requestDetail->app_status){?>
+            <?php if(!(int)$requestDetail->app_status && $userInfo->role[0]->name !== 'staff' && (int)$requestDetail->user_id !== $userInfo->id ){?>
                 <a id="btnApprove" name="btnApprove"  class="btn btn-success btn-sm btnStatus" data-value="<?=$requestDetail->id?>" data-mode="app"><i class="icon-ok-circled"></i>Approve</a>
                 <a id="btnReject" name="btnReject"  class="btn btn-danger btn-sm btnStatus" data-value="<?=$requestDetail->id?>" data-mode="rej"><i class="icon-ok-circled"></i>Reject</a>
             <?php } ?>

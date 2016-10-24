@@ -29,6 +29,7 @@ class UserCell extends Cell
             $result= $this->Requests->find('all')->where(['Requests.dep_id'=>$user->dep_id])->count();
         }
         $this->set('requestCount',$result);
+//        print_r($user);exit;
         $this->set('userInfo',$user);
     }
 }

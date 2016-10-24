@@ -32,7 +32,6 @@ class UsersController extends AuthMasterController
         $listTimezone = new FunctionCommon();
         $this->set('timezone', $listTimezone->getTimeZone());
         $this->set('_serialize', ['timezone']);
-
     }
 
     public function saveProfile(){
@@ -137,7 +136,7 @@ class UsersController extends AuthMasterController
             $isCheck = false;
             $this->set(compact('result'));
             if ($this->request->is('post')) {
-                $this->request->data['confirmed'] =  true;
+                $this->request->data['confirmed'] =  1;
                 $createUserE = $this->Users->patchEntity($createUserE, $this->request->data);
                 if ($this->Users->save($createUserE)) {
                     $roleUsers = TableRegistry::get('RoleUsers');

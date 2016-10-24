@@ -452,7 +452,7 @@ s                            }
                 {
                     isUpdateProfile = false;
                     console.log(data);
-                    location.reload();
+                    // location.reload();
                 }
             })
         }

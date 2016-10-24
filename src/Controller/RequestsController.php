@@ -492,17 +492,13 @@ class RequestsController extends AuthMasterController
                     $result['manager_status'] = ($app->status === 'approved') ? 1 : 2 ;
                 }elseif ($app->role->name === 'top'){
                     $result['top_name'] = (isset($app->profile->first_name)) ? $app->profile->first_name.' '. $app->profile->last_name :  $app->user->username;
-                    $result['top_status'] = ($app->status === 'approved') ? 1 : 2 ;
+                    $result['app_status'] = $result['top_status'] = ($app->status === 'approved') ? 1 : 2 ;
                 }else{
                     $result['sub_name'] = (isset($app->profile->first_name)) ? $app->profile->first_name.' '. $app->profile->last_name :  $app->user->username;
                     $result['sub_manager_status'] = ($app->status === 'approved') ? 1 : 2 ;
                 }
             }
         }
-//        echo '<pre>';
-//        print_r($this->user);
-//        echo '</pre>';
-//        exit;
         $this->set('requestDetail',$result);
         $this->set('_serialize', ['requestDetail']);
     }

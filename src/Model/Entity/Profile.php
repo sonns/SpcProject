@@ -35,10 +35,11 @@ class Profile extends Entity
     ];
     protected function _getBirthday($birthday)
     {
-        return  Time::parse($birthday);
+       return Time::parse($birthday);
+//        return  $now->i18nFormat('MM-dd-yyyy');
     }
     protected function _setBirthday($birthday)
     {
-        return  Time::parse($birthday);
+        return Time::parse($birthday);
     }
 }

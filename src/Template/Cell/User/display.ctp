@@ -7,11 +7,11 @@
             <?= __('All Request')?>
         </li>
         <li class="list-group-item">
-            <span class="badge"><?= $requestCount;?></span>
+<!--            <span class="badge">--><?//= $requestCount;?><!--</span>-->
             <?= __('Pending Request')?>
         </li>
         <li class="list-group-item">
-            <span class="badge"><?= $requestCount;?></span>
+<!--            <span class="badge">--><?//= $requestCount;?><!--</span>-->
             <?= __('Approve Request')?>
         </li>
     </ul>
