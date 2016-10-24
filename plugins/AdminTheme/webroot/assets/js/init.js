@@ -421,6 +421,7 @@ function notification(response)
     }
     else if (Notification.permission === "granted") {
         notify('info',{title: 'Notification' ,message: response.notification.response.body,position:'bottom right',autoHideDelay:20000});
+        getNotification();
         var notification = new Notification(response.notification.response.title, options);
         notification.onclick = function () {
             window.open(response.notification.response.link);
@@ -430,6 +431,7 @@ function notification(response)
         Notification.requestPermission(function (permission) {
             if (permission === "granted") {
                 notify('info',{title: 'warning' ,message: response.notification.response.body,position:'bottom right',autoHideDelay:20000});
+                getNotification();
                 var notification = new Notification(response.notification.response.title, options);
                 notification.onclick = function () {
                     window.open(response.notification.response.link);
@@ -438,6 +440,27 @@ function notification(response)
         });
     }
 }
+function getNotification()
+{
+    $.ajax({
+        type: "GET",
+        url:   "/notification/refresh.json",
+        dataType: 'text',
+        data:  {},
+        success: function(data)
+        {
+            var returnedData = JSON.parse(data);
+            //console.log(returnedData);
+            if(returnedData.arrNotification.count !==  parseInt($(".notificationList a.countNotification").find('span').text())){
+                $(".notificationList ul.dropdown-message").html(returnedData.content);
+                $(".livetimestamp").text(moment($(".livetimestamp").data('value'), "MM/DD/YY HH:mm:ss").fromNow());
+                $(".notificationList a.countNotification").find('span').text(returnedData.arrNotification.count);
+            }
+        }
+    })
+}
+
+
 
 $(document).on('click', '.clear-all', function() {
     $.ajax({

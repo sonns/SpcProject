@@ -136,27 +136,12 @@ $(".notificationList").on("click", function(e){
         success: function(data)
         {
             console.log(data);
-            $(".notificationList a.countNotification").find('span').remove();
+            $(".notificationList a.countNotification").find('span').text('');
         }
     })
 })
 $(".notificationList .refresh").on("click", function(e){
-    $.ajax({
-        type: "GET",
-        url:   "/notification/refresh.json",
-        dataType: 'text',
-        data:  {},
-        success: function(data)
-        {
-            var returnedData = JSON.parse(data);
-            console.log(returnedData);
-            if(returnedData.arrNotification.count !==  parseInt($(".notificationList a.countNotification").find('span').text())){
-                $(".notificationList ul.dropdown-message").html(returnedData.content);
-                $(".livetimestamp").text(moment($(".livetimestamp").data('value'), "MM/DD/YY HH:mm:ss").fromNow());
-                $(".notificationList a.countNotification").find('span').text(returnedData.arrNotification.count);
-            }
-        }
-    })
+    getNotification();
 })
 
 <?php $this->Html->scriptEnd(); ?>

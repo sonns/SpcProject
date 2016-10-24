@@ -1,8 +1,26 @@
 <div class="row">
-    <div class="col-sm-10 text-right">
+    <div class="col-sm-7 text-left">
+        <div class="previewStatus">
+            <?php if((int) $requestDetail->department_id === 2 && ($requestDetail->role_name === 'top' || $requestDetail->role_name === 'manager') ){?>
+                        <h3 style="font-weight: bold;width:150px; border-color: #82c51a !important;border-style: dashed;text-align: center;color: #82c51a; ">APPROVED</h3>
+            <?php }elseif((int)$requestDetail->app_status === 1){?>
+                    <h3 style="font-weight: bold;width:150px; border-color: #82c51a !important;border-style: dashed;text-align: center;color: #82c51a; ">APPROVED</h3>
+            <?php } elseif((int)$requestDetail->app_status === 2){?>
+                   <h3 style="font-weight: bold;width:150px; border-color: #f12323 !important;border-style: dashed;text-align: center;color: #f12323 ;">REJECTED</h3>
+            <?php }else{ ?>
+                <h3 style="font-weight: bold;width:300px; border-color: #F1DA51 !important;border-style: dashed;text-align: center;color: #F1DA51 ;">WAITING FOR REVIEW</h3>
+            <?php } ?>
+            <!--            -->
+        </div>
     </div>
-    <div class="col-sm-2 text-right">
-        <a id="btnPrint" name="btnPrint"  class="btn btn-primary btn-sm invoice-print"><i class="icon-print-2"></i> Print</a>
+    <div class="col-sm-5 text-right">
+        <?php if($requestDetail->role_name !== 'top' && !((int) $requestDetail->department_id === 2 && $requestDetail->role_name === 'manager' ) ){?>
+            <?php if(!(int)$requestDetail->app_status){?>
+                <a id="btnApprove" name="btnApprove"  class="btn btn-success btn-sm btnStatus" data-value="<?=$requestDetail->id?>" data-mode="app"><i class="icon-ok-circled"></i>Approve</a>
+                <a id="btnReject" name="btnReject"  class="btn btn-danger btn-sm btnStatus" data-value="<?=$requestDetail->id?>" data-mode="rej"><i class="icon-ok-circled"></i>Reject</a>
+            <?php } ?>
+        <?php } ?>
+        <a id="btnPrint" name="btnPrint"  class="btn btn-primary btn-sm"><i class="icon-print-2"></i> Print</a>
     </div>
     <div class="col-sm-12 portlets" id="frmRequests">
 
@@ -21,7 +39,6 @@
                     <tr>
                         <td width="30%"><?= __("request_drafting_date")?></td>
                         <td width="70%">
-<!--                            <a href="#" id="drafting_date" data-type="combodate" data-maxYear="2030" data-value="2016-05-15" data-format="YYYY-MM-DD" data-viewformat="YYYY year MM/DD" data-template="YYYY  / MMM / D" data-pk="10"  data-title="Select Drafting Date"></a>-->
                             <span style="float: right;"><strong><?= __("request_year_month_day", [ $requestDetail->created->format('Y'), $requestDetail->created->format('m'), $requestDetail->created->format('d')])?><strong></span></td>
                     </tr>
                     <tr>
@@ -92,8 +109,8 @@
                 </table>
             </div>
             <div class="col-sm-12">
-<!--                <div class="col-sm-6">-->
-<!--                </div>-->
+                <!--                <div class="col-sm-6">-->
+                <!--                </div>-->
                 <div style="width: 500px; float: right; padding-bottom: 15px;">
 
                     <table id="user" class="table table-bordered table-striped" style="clear: both">
@@ -108,22 +125,21 @@
                         </tr>
                         <tr>
                             <td width="22%" style="height: 100px;text-align: center;vertical-align: middle;">
-                                <?php if(isset($requestDetail->top_status) && (int)$requestDetail->top_status === 1)
+                                <span class="signTop"><?php if(isset($requestDetail->top_status) && (int)$requestDetail->top_status === 1)
                                 {
                                     echo $requestDetail->top_name;
                                 }
-                                ?>
+                                ?></span>
                             </td>
                             <td width="22%" style="text-align: center;vertical-align: middle;">
-                                <?php if(isset($requestDetail->manager_status) && (int)$requestDetail->manager_status === 1)
+                                <span class="signManager"><?php if(isset($requestDetail->manager_status) && (int)$requestDetail->manager_status === 1)
                                 {
                                     echo $requestDetail->manager_name;
                                 }
-                                ?>
-
+                                ?></span>
                             </td>
                             <td width="22%" style="text-align: center;vertical-align: middle;">
-                                <?= $requestDetail->alias_name?>
+                                <span><?= $requestDetail->alias_name?></span>
                             </td>
 
 
@@ -155,6 +171,37 @@ $("#btnPrint").click(function () {
 $("#frmRequests").printThis();
 });
 });
+$(".btnStatus").on("click", function(e){
+e.preventDefault();
+var $this = $(this);
+
+$.ajax({
+type: "GET",
+url:   "/request/change_status.json",
+dataType: 'text',
+data:  'request_id='+$this.data("value")+'&mod='+$this.data("mode"),
+success: function(data)
+{
+    console.log(data);
+    $(".btnStatus").remove();
+    if($this.data("mode") === 'app') {
+        $(".previewStatus h3").text('APPROVED');
+        $(".previewStatus h3").css({'border-color':'#82c51a','color':'#82c51a','width':'150px'});
+    }
+    if($this.data("mode") === 'rej') {
+        $(".previewStatus h3").text('REJECTED');
+        $(".previewStatus h3").css({'border-color':'#f12323','color':'#f12323','width':'150px'});
+    }
+    <?php if($userInfo->role[0]->name === 'top'){?>
+        $("span.signTop").text('<?=(isset($userInfo->profile->first_name)) ? $userInfo->profile->first_name . ' ' .$userInfo->profile->last_name : $userInfo->username ?>');
+    <?php }elseif($userInfo->role[0]->name === 'manager'){ ?>
+        $("span.signManager").text('<?=(isset($userInfo->profile->first_name)) ? $userInfo->profile->first_name . ' ' .$userInfo->profile->last_name : $userInfo->username ?>');
+    <?php } ?>
+}
+})
+
+});
+
 <?php $this->Html->scriptEnd();?>
 <!--<script src="assets/js/pages/advanced-forms.js"></script>-->
 
