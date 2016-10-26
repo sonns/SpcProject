@@ -79,7 +79,7 @@ class AuthMasterController extends AppController
                     'passwordHasher' => [
                         'className' => 'Legacy',
                     ],
-                    'scope' => ['users.confirmed' => 1]
+                    'scope' => ['Users.confirmed' => 1]
                 ],
                 'FOC/Authenticate.MultiColumn' => array(
                     'fields' => ['username' => 'username', 'password' => 'password'],
@@ -88,7 +88,7 @@ class AuthMasterController extends AppController
                     ],
                     'columns' => ['username', 'email'],
                     'userModel' => 'Users',
-                    'scope' => ['users.confirmed' => 1]
+                    'scope' => ['Users.confirmed' => 1]
                 )
             ],
             'loginAction' => [
