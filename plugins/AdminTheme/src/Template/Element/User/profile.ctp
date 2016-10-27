@@ -47,7 +47,7 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label"><?= __('Your Birthday')?></label>
-                        <input type="text" name="birthday" value="<?= isset($userInfo['profile']) ? $this->Time->i18nFormat($userInfo['profile']['birthday'],'MM-dd-yyyy')  : '' ?>" id="birthday" class="form-control datepicker-input"  placeholder="<?= __('mm/dd/yyyy')?>">
+                        <input type="text" name="birthday" value="<?= isset($userInfo['profile']) ? $this->Time->i18nFormat($userInfo['profile']['birthday'],'MM/dd/yyyy')  : '' ?>" id="birthday" class="form-control datepicker-input"  placeholder="<?= __('mm/dd/yyyy')?>">
                     </div>
                     <button type="submit" class="btn btn-success"><?= __('Submit')?></button>
                 </div>
