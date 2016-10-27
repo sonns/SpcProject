@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'fontello';
-  src: url('http://hingisho.spcvn/assets/libs/fontello/font/fontello.eot?66697216');
-  src: url('http://hingisho.spcvn/assets/libs/fontello/font/fontello.eot?66697216#iefix') format('embedded-opentype'),
-       url('http://hingisho.spcvn/assets/libs/fontello/font/fontello.woff?66697216') format('woff'),
-       url('http://hingisho.spcvn/assets/libs/fontello/font/fontello.ttf?66697216') format('truetype'),
-       url('http://hingisho.spcvn/assets/libs/fontello/font/fontello.svg?66697216#fontello') format('svg');
+  src: url('../font/fontello.eot?66697216');
+  src: url('../font/fontello.eot?66697216#iefix'),
+       url('../font/fontello.woff?66697216'),
+       url('../font/fontello.ttf?66697216'),
+       url('../font/fontello.svg?66697216#fontello');
   font-weight: normal;
   font-style: normal;
 }
