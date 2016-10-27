@@ -47,7 +47,7 @@ class UsersController extends AuthMasterController
                     $ext = substr(strtolower(strrchr($file['name'], '.')), 1);
                     $arr_ext = array('jpg', 'jpeg', 'gif','png');
                     if (in_array($ext, $arr_ext)) {
-                        $path =  WWW_ROOT . 'file\\profile\\';
+                        $path =  WWW_ROOT . 'file/profile/';
                         if(!is_dir($path)){
                             mkdir($path, 777,true);
                         }
