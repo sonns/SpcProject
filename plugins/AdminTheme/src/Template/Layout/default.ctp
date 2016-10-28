@@ -190,9 +190,10 @@ echo $this->element('logout');
         $(document).ready(function(){
             $(".livetimestamp").text(moment($(".livetimestamp").data('value'), "MM/DD/YY HH:mm:ss").fromNow());
 //            moment($(".livetimestamp").data('value'), "YYYYMMDD").fromNow();
-//            var socket = io.connect('http://localhost:5000');
-            var socket = io.connect('http://192.168.1.100:5000', {
-            });
+            var socket = io.connect('http://localhost:5000');
+//            var socket = io.connect('http://127.0.0.1:5000', {
+//                reconnection: true
+//            });
             socket.on("cake_response", function(data){
                 console.log(data);
                 var myID = <?= $userInfo->id; ?>;
