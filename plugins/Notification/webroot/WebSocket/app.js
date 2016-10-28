@@ -6,17 +6,17 @@ var http = require('http');
 // var dispatcher = require('httpdispatcher');
 function handleRequest(request, response){
     try {
-        response.writeHead(200, {"Content-Type": "text/html"});
-        response.write("<!DOCTYPE \"html\">");
-        response.write("<html>");
-        response.write("<head>");
-        response.write("<title>Hello World Page</title>");
-        response.write("</head>");
-        response.write("<body>");
-        response.write("Hello World!");
-        response.write("</body>");
-        response.write("</html>");
-        response.end();
+        // response.writeHead(200, {"Content-Type": "text/html"});
+        // response.write("<!DOCTYPE \"html\">");
+        // response.write("<html>");
+        // response.write("<head>");
+        // response.write("<title>Hello World Page</title>");
+        // response.write("</head>");
+        // response.write("<body>");
+        // response.write("Hello World!");
+        // response.write("</body>");
+        // response.write("</html>");
+        // response.end();
     } catch(err) {
         console.log(err);
     }
