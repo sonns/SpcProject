@@ -194,6 +194,11 @@ echo $this->element('logout');
 //            var socket = io.connect('http://127.0.0.1:5000', {
 //                reconnection: true
 //            });
+
+            console.log('check 1', socket.connected);
+            socket.on('connect', function() {
+                console.log('check 2', socket.connected);
+            });
             socket.on("cake_response", function(data){
                 console.log(data);
                 var myID = <?= $userInfo->id; ?>;
