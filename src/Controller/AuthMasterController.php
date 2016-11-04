@@ -23,6 +23,7 @@ class AuthMasterController extends AppController
     public $paginate = [
         'limit' => 10
     ];
+    prote
     public function initialize()
     {
 //        $this->User = TableRegistry::get('Users');

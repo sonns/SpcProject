@@ -37,4 +37,7 @@ class UserCell extends Cell
 //        print_r($user);exit;
         $this->set('userInfo',$user);
     }
+    public function getLink(){
+        return '';
+    }
 }
