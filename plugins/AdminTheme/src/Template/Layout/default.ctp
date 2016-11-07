@@ -191,8 +191,13 @@ echo $this->element('logout');
             $(".livetimestamp").text(moment($(".livetimestamp").data('value'), "MM/DD/YY HH:mm:ss").fromNow());
 //            moment($(".livetimestamp").data('value'), "YYYYMMDD").fromNow();
 //            var socket = io.connect('http://localhost:5000');
-            var socket = io.connect('http://node.cake.local/', {
+            var socket = io.connect('http://hingisho.spcvn:5000', {
                 reconnection: true
+            });
+
+            console.log('check 1', socket.connected);
+            socket.on('connect', function() {
+                console.log('check 2', socket.connected);
             });
             socket.on("cake_response", function(data){
                 console.log(data);

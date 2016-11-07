@@ -1,0 +1,79 @@
+
+# Source function library.
+. /etc/init.d/functions
+
+# Source networking configuration.
+. /etc/sysconfig/network
+USER="root"
+DAEMON="/usr/bin/node"
+ROOT_DIR="/var/www/html/spc_rfa/plugins/Notification/webroot/WebSocket"
+SERVER="$ROOT_DIR/app.js"
+LOG_FILE="$ROOT_DIR/app.js.log"
+
+
+lockfile="/var/lock/subsys/node-server"
+
+start() {
+        # Start daemons.
+        echo -n $"Starting $SERVER: "
+        runuser -l "$USER" -c "$DAEMON $SERVER >> $LOG_FILE &" && echo_success || echo_failure
+        RETVAL=$?
+        echo
+        [ $RETVAL -eq 0 ] && touch $lockfile
+        return $RETVAL
+}
+
+
+stop() {
+        echo -n $"Shutting down $SERVER: "
+        pid=$(get_pid)
+        kill -9 $pid > /dev/null 2>&1 && echo_success || echo_failure
+        RETVAL=$?
+        echo
+        [ $RETVAL -eq 0 ] && rm -f $lockfile
+        return $RETVAL
+}
+is_running() {
+    PID=$(get_pid)
+    ! [ -z "$(ps aux | awk '{print $2}' | grep "^$PID$")" ]
+}
+get_pid() {
+    echo `ps -aefw | grep "$DAEMON $SERVER" | grep -v " grep " | awk '{print $2}'`
+}
+status_app() {
+        if is_running
+        then
+            PID=$(get_pid)
+            echo "$APP_NAME running with pid $PID"
+        else
+            echo "$APP_NAME stopped, but pid file exists"
+        fi
+}
+# See how we were called.
+case "$1" in
+  start)
+        start
+        ;;
+  stop)
+        stop
+        ;;
+  status)
+        status_app
+        ;;
+  restart|force-reload)
+        stop
+        start
+        ;;
+  try-restart|condrestart)
+        if is_running > /dev/null; then
+            stop
+            start
+        fi
+        ;;
+  reload)
+        exit 3
+        ;;
+  *)
+        echo $"Usage: $0 {start|stop|status|restart|try-restart|force-reload}"
+        exit 2
+esac

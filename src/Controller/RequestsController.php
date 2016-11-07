@@ -400,6 +400,7 @@ class RequestsController extends AuthMasterController
      * @return \Cake\Network\Response|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
+
     public function edit($id = null)
     {
         $base = $this->Base->get($id, [
@@ -418,6 +419,7 @@ class RequestsController extends AuthMasterController
         $this->set(compact('base'));
         $this->set('_serialize', ['base']);
     }
+
     public function preview1($id = null){
         $tblApproval = TableRegistry::get('Approvals');
         $approvals =  $tblApproval->find()->where(['req_id'=>$id])->contain(['Requests'=>['Users','Profiles','Departments','Categories'],'Roles','Profiles','Users'])->all()->toArray();

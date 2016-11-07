@@ -24,3 +24,7 @@ the setup traffic lights.
 
 Read and edit `config/app.php` and setup the 'Datasources' and any other
 configuration relevant for your application.
+
+
+
+http://tecadmin.net/install-latest-nodejs-and-npm-on-centos/#

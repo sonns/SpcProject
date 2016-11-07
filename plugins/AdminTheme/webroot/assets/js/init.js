@@ -414,7 +414,7 @@ function notification(response)
     var options = {
         body: response.notification.response.body,
         tag : 'greeting-notify',
-        icon: 'http://cake.local/admin_theme/images/alert_logo.png'
+        // icon: 'http://cake.local/admin_theme/images/alert_logo.png'
     };
     if (!("Notification" in window)) {
         alert("This browser does not support desktop notification!!!Please enable it");
