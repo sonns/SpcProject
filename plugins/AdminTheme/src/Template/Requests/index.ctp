@@ -128,9 +128,9 @@
                                                 <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'icon-eye-off')),'/requests/preview/'.$request->id,array('class'=>'btn btn-primary','title'=>'Preview','data-toggle'=>"tooltip",'escape' => false,'data-value'=>$request->id,'data-mode' => 'pre'  ))?>
                                             <?php } ?>
                                         <?php } ?>
-<!--                                        --><?php //if($status['value'] === 'Pending' && !$request->is_report && ($userInfo->role[0]->name === 'sub-manager' || $userInfo->role[0]->name === 'staff')){ ?>
-<!--                                            --><?php //echo $this->Html->link($this->Html->tag('i', '', array('class'=>'fa fa-mail-forward')),'/requests/report/'.$request->id,array('class'=>'btn btn-primary statusRequest','title'=>'Report for Top','data-toggle'=>"tooltip",'escape' => false,'data-value'=>$request->id,'data-mode' => 'report'  ))?>
-<!--                                        --><?php //} ?>
+                                        <?php if($status['value'] === 'Pending' && !$request->is_report && ($userInfo->role[0]->name === 'sub-manager' || $userInfo->role[0]->name === 'staff')){ ?>
+                                            <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'fa fa-mail-forward')),'/requests/return/'.$request->id,array('class'=>'btn btn-primary statusRequest','title'=>'Return','data-toggle'=>"tooltip",'escape' => false,'data-value'=>$request->id,'data-mode' => 'return'  ))?>
+                                        <?php } ?>
                                     </div>
                                 </td>
                             </tr>
