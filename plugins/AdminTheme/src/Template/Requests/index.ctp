@@ -1,5 +1,6 @@
 <!-- Modal add department-->
 <?php echo $this->element('Request/add') ?>
+<?php echo $this->element('Request/comment') ?>
 <!-- End div .md-modal .md-fade-in-scale-up -->
 
 <!-- Page Heading Start -->
@@ -112,6 +113,9 @@
                                     }
 
                                 ?>
+
+
+
                                 <td> <span class="requestStatus label <?= $status['class'] ?>"><?= $status['value'] ?></span></td>
                                 <td><strong><?php echo $request->created;?></strong></td>
                                 <td>
@@ -128,9 +132,11 @@
                                                 <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'icon-eye-off')),'/requests/preview/'.$request->id,array('class'=>'btn btn-primary','title'=>'Preview','data-toggle'=>"tooltip",'escape' => false,'data-value'=>$request->id,'data-mode' => 'pre'  ))?>
                                             <?php } ?>
                                         <?php } ?>
-                                        <?php if($status['value'] === 'Pending' && !$request->is_report && ($userInfo->role[0]->name === 'sub-manager' || $userInfo->role[0]->name === 'staff')){ ?>
-                                            <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'fa fa-mail-forward')),'/requests/return/'.$request->id,array('class'=>'btn btn-primary statusRequest','title'=>'Return','data-toggle'=>"tooltip",'escape' => false,'data-value'=>$request->id,'data-mode' => 'return'  ))?>
-                                        <?php } ?>
+<!--                                        --><?php //if($status['value'] === 'Pending' && !$request->is_report && ($userInfo->role[0]->name === 'sub-manager' || $userInfo->role[0]->name === 'staff')){ ?>
+
+                                            <a class="btn btn-primary md-trigger btnReturn" title="" data-toggle="tooltip" data-value="<?=$request->id;?>" data-mode="return" data-modal="md-add-request_comment" data-original-title="Return"><i class="fa fa-mail-forward"></i></a>
+<!--                                            --><?php //echo $this->Html->link($this->Html->tag('i', '', array('class'=>'fa fa-mail-forward')),'',array('class'=>'btn btn-primary md-trigger','title'=>'Return','data-toggle'=>"tooltip",'escape' => false,'data-value'=>$request->id,'data-mode' => 'return', "data-modal"=>"md-add-request"  ))?>
+<!--                                        --><?php //} ?>
                                     </div>
                                 </td>
                             </tr>
@@ -183,7 +189,23 @@ $this->Html->scriptEnd();
         .on('ifUnchecked', function() {
             $("input[name='request_id[]']").iCheck('uncheck');
         });
+    $(".btnReturn").on("click", function(e){
+        var $this = $(this);
+        $('#frRequestComment > #request_id').val($this.data("value"));
+        $.ajax({
+            type: "GET",
+            url:   "/comment/get_comment.json",
+            dataType: 'text',
+            data:  'request_id='+$this.data("value"),
+            success: function(data)
+            {
+                var returnedData = JSON.parse(data);
+                $('.listComment').html(returnedData.content);
+                console.log(data);
 
+            }
+        })
+    });
     $(".statusRequest").on("click", function(e){
         e.preventDefault();
         var $this = $(this);

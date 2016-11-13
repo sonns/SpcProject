@@ -132,10 +132,6 @@ class RequestsController extends AuthMasterController
             $this->request->data['user_id'] = $this->user->id;
             $this->request->data['dep_id'] = $this->user->dep_id;
             $this->request->data['txtApproveDate'] = Time::parse($this->request->data['txtApproveDate']);
-//            echo '<pre>';
-//            print_r($this->request->data);
-//            echo '</pre>';
-//            exit;
             $request = $this->Requests->patchEntity($request, $this->request->data);
             if ($this->Requests->save($request)) {
                 $this->Flash->success(__('The base has been saved.'));
@@ -232,7 +228,7 @@ class RequestsController extends AuthMasterController
                 //nothing
             }
         }
-        elseif($mode === 'report'){
+        elseif($mode === 'return'){
             $this->Notification->notify([
                 'recipientLists' =>  ['top'],
                 'template' => ['notifierRequest'],
@@ -340,23 +336,19 @@ class RequestsController extends AuthMasterController
             $approval = TableRegistry::get('Approvals');
             $approvalInfo = $approval->find()->where(['user_id'=>$this->user->id,'req_id'=>$id])->first();
 
-            if($mod !== 'app' && $mod !== 'rej'){
-                $request->status = 0;
-            }
-            else{
-                if(!count($approvalInfo)){
-                    $approvalE = $approval->newEntity();
-                    $approvalE->user_id = $this->user->id;
-                    $approvalE->req_id = $id;
-                    $approvalE->role_id = $this->user->role[0]->id;
-                    $approvalE->status = ($mod === 'app' ) ? 'approved' : 'rejected' ;
-                    $approval->save($approvalE);
-                    //add push noti
-                    $this->pushNotification($request,'changeStatus',$mod === 'app' );
+            $request->status = 0;
+            if(!count($approvalInfo)){
+                $approvalE = $approval->newEntity();
+                $approvalE->user_id = $this->user->id;
+                $approvalE->req_id = $id;
+                $approvalE->role_id = $this->user->role[0]->id;
+                $approvalE->status = ($mod === 'app' ) ? 'approved' : 'rejected' ;
+                $approval->save($approvalE);
+                //add push noti
+                $this->pushNotification($request,'changeStatus',$mod === 'app' );
 
-                }else{
-                    throw new NotFoundException();
-                }
+            }else{
+                throw new NotFoundException();
             }
             if($this->Requests->save($request)){
                 $result = $this->responseData(true,['id'=>$request->id]);
@@ -364,9 +356,10 @@ class RequestsController extends AuthMasterController
                 throw new NotFoundException();
             }
 
-        }elseif($mod === 'report'){
+        }elseif($mod === 'return'){
             $request = $this->Requests->find()->where(['Requests.id' => $id])
                 ->contain(['Profiles', 'Users'])->first();
+            $message = $this->request->query('message');
             if (!count($request)) {
                 throw new NotFoundException();
             }
@@ -419,60 +412,6 @@ class RequestsController extends AuthMasterController
         $this->set(compact('base'));
         $this->set('_serialize', ['base']);
     }
-
-    public function preview1($id = null){
-        $tblApproval = TableRegistry::get('Approvals');
-        $approvals =  $tblApproval->find()->where(['req_id'=>$id])->contain(['Requests'=>['Users','Profiles','Departments','Categories'],'Roles','Profiles','Users'])->all()->toArray();
-        if(count($approvals)){
-            $result = [];
-
-            foreach($approvals as $app){
-
-                if(!count($result)){
-                    $result = $app->request;
-
-                    $result['alias_name']= (isset($app->request->profile->first_name)) ? $app->request->profile->first_name. ' ' . $app->request->profile->last_name : $app->request->user->username;
-                }
-                echo '<pre>';
-                print_r($app);
-                echo '</pre>';
-                exit;
-
-                $result['categories_name'] = $app->request->category->name;
-                $result['department_name'] = $app->request->department->name;
-                if($app->role->name === 'manager'){
-                    $result['manager_name'] = (isset($app->profile->first_name)) ? $app->profile->first_name.' '. $app->profile->last_name :  $app->user->username ;
-                    $result['manager_status'] = ($app->status === 'approved') ? 1 : 2 ;
-                }elseif ($app->role->name === 'top'){
-                    $result['top_name'] = (isset($app->profile->first_name)) ? $app->profile->first_name.' '. $app->profile->last_name :  $app->user->username;
-                    $result['top_status'] = ($app->status === 'approved') ? 1 : 2 ;
-                }else{
-                    $result['sub_name'] = (isset($app->profile->first_name)) ? $app->profile->first_name.' '. $app->profile->last_name :  $app->user->username;
-                    $result['sub_manager_status'] = ($app->status === 'approved') ? 1 : 2 ;
-                }
-            }
-            echo '<pre>';
-            print_r($result);
-            echo '</pre>';
-            exit;
-            $this->set('requestDetail',$result);
-        }else{
-            $requestDetail = $this->Requests->find('requestList')->where(['Requests.id'=>$id])->groupBy('Requests.id')->first();
-            echo '<pre>';
-            print_r($requestDetail);
-            echo '</pre>';
-            exit;
-            if(!count($requestDetail[0]))
-            {
-                throw new NotFoundException;
-            }
-
-            $this->set('requestDetail',$requestDetail[0]);
-
-        }
-        $this->set('_serialize', ['requestDetail']);
-    }
-
     public function preview($id = null){
         $requestDetail = $this->Requests->find('requestList')->where(['Requests.id'=>$id])->groupBy('Requests.id')->first();
         if(!count($requestDetail[0]))

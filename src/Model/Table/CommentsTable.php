@@ -41,12 +41,17 @@ class CommentsTable extends Table
         $this->displayField('id');
         $this->primaryKey('id');
         $this->addBehavior('Timestamp');
+        $this->belongsTo('Users', [
+            'className' => 'Users',
+            'foreignKey' => 'from_user_id'
+        ]);
+        $this->belongsTo('Profiles', [
+            'className' => 'Profiles',
+            'foreignKey' => 'from_user_id'
+        ]);
     }
 
     public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)
     {
-//        if (isset($data['dep_name'])) {
-//            $data['name'] = $data['dep_name'];
-//        }
     }
 }

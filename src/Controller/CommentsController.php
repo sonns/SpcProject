@@ -26,11 +26,21 @@ class CommentsController extends AuthMasterController
 
     public function index()
     {
-//        $depart = $this->Departments->newEntity();
-//        $departments = $this->paginate($this->Departments);
-        $this->set(compact('departments'));
-        $this->set(compact('depart'));
-        $this->set('_serialize', ['departments','depart']);
 
+    }
+    public function getComment(){
+        $this->request->allowMethod('ajax');
+        $this->viewBuilder()->className('AdminTheme.Ajax');
+        $id = $this->request->query('request_id');
+        if (!$id) {
+            throw new NotFoundException();
+        }
+        $arrComment =  $this->Comments->find()->contain(['Profiles','Users'])->where(['req_id' => $id])->all()->toArray();
+        foreach ($arrComment as $key => $item){
+            $arrComment[$key]->username = isset($item->profile->first_name) ? $item->profile->last_name.' '.$item->profile->first_name : $item->user->username;
+            unset($arrComment[$key]->user);
+        }
+        $this->set(compact('arrComment'));
+        $this->set('_serialize', 'arrComment');
     }
 }
