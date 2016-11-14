@@ -69,4 +69,21 @@ class CommentsController extends AuthMasterController
         $this->set(compact('result'));
         $this->set('_serialize', 'result');
     }
+
+    public function pushNotification($request,$mode, $is_approve = true){
+        if(isset($this->user->role[0]->name) && $this->user->role[0]->name === 'staff'){
+            $this->Notification->notify([
+                'recipientLists' => ($this->user->dep->name === 'Headquarter') ? ['manager'] : ['sub-manager'],
+                'template' => ['notifierRequest'],
+                'is_approve' => $is_approve,
+                'message' => [
+                    'username' => $this->user->profile->first_name . ' ' .$this->user->profile->last_name,
+                    'title' => $request->title,
+                    'category' => 'Request',
+                    'link' => Router::url(array('controller'=>'Requests', 'action'=>'preview', $request->id),true)
+                ]
+            ]);
+        }
+    }
+
 }

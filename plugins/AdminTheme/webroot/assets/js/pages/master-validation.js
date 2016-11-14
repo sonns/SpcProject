@@ -1,4 +1,4 @@
-$(document).ready(function() {
+    $(document).ready(function() {
     $('#frRequestComment').bootstrapValidator({
         message: 'This value is not valid',
         fields: {
@@ -19,13 +19,10 @@ $(document).ready(function() {
                 async:false,
                 data:  $("#frRequestComment").serialize(),
                 success: function (data) {
+                    var returnedData = JSON.parse(data);
+                    $('.listComment').prepend(returnedData.content);
+                    $('#frRequestComment').trigger('reset');
                     console.log(data);
-                    // $("#md-add-department").removeClass("md-show");
-                    // resetDepartmentForm();
-                    // window.setTimeout(function () {$("#md-add-department").remove();},500);
-                    // var res = JSON.parse(data);
-                    // notify('success',{title: res.result.status ,message: res.result.response,position:'top center'});
-                    // location.reload();
                     return true;
                 }
             });
