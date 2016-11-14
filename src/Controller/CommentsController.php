@@ -35,12 +35,38 @@ class CommentsController extends AuthMasterController
         if (!$id) {
             throw new NotFoundException();
         }
-        $arrComment =  $this->Comments->find()->contain(['Profiles','Users'])->where(['req_id' => $id])->all()->toArray();
+        $arrComment =  $this->Comments->find()->contain(['Profiles','Users'])->where(['req_id' => $id])->order(['Comments.id' => 'DESC'])->all()->toArray();
         foreach ($arrComment as $key => $item){
             $arrComment[$key]->username = isset($item->profile->first_name) ? $item->profile->last_name.' '.$item->profile->first_name : $item->user->username;
             unset($arrComment[$key]->user);
         }
         $this->set(compact('arrComment'));
         $this->set('_serialize', 'arrComment');
+    }
+    public function addAjax(){
+        $this->request->allowMethod('ajax');
+        $this->viewBuilder()->className('AdminTheme.Ajax');
+        $commentE = $this->Comments->newEntity();
+        if (!$this->request->is('post') || $this->request->data['mod'] !=='return' || empty($this->request->data['request_id'])|| empty($this->request->data['txtComment'])) {
+            throw new NotFoundException();
+        }
+        $this->request->data['role_id'] =$this->user->role[0]->id;
+        $this->request->data['from_user_id'] =$this->user->id;
+        $commentE = $this->Comments->patchEntity($commentE, $this->request->data);
+        $commentDetail = $this->Comments->save($commentE);
+        $result = [];
+        if ($commentDetail) {
+            $result = [
+                'status' => 'Success',
+                'response' => $commentDetail
+            ];
+        } else {
+            $result = [
+                'status' => 'Error',
+                'response' => __('The comment could not be saved. Please, try again.')
+            ];
+        }
+        $this->set(compact('result'));
+        $this->set('_serialize', 'result');
     }
 }

@@ -53,5 +53,14 @@ class CommentsTable extends Table
 
     public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)
     {
+        if (isset($data['txtComment'])) {
+            $data['contents'] = $data['txtComment'];
+        }
+        if (isset($data['request_id'])) {
+            $data['req_id'] = $data['request_id'];
+        }
+        if (isset($data['mod'])) {
+            unset($data['mod']);
+        }
     }
 }

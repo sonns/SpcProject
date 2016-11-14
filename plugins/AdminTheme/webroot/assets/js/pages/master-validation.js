@@ -11,26 +11,26 @@ $(document).ready(function() {
             }
         },
         submitHandler: function (form) {
-            console.log($("form").serialize());
-            // $.ajax({
-            //     type: "POST",
-            //     url:   '/request/change_status.json',
-            //     dataType: 'text',
-            //     async:false,
-            //     data:  $("form").serialize(),
-            //     success: function (data) {
-            //         console.log(data);
-            //         // $("#md-add-department").removeClass("md-show");
-            //         // resetDepartmentForm();
-            //         // window.setTimeout(function () {$("#md-add-department").remove();},500);
-            //         // var res = JSON.parse(data);
-            //         // notify('success',{title: res.result.status ,message: res.result.response,position:'top center'});
-            //         // location.reload();
-            //         // return true;
-            //     }
-            // });
+            // console.log($("form").serialize());
+            $.ajax({
+                type: "POST",
+                url:   '/comment/add_ajax.json',
+                dataType: 'text',
+                async:false,
+                data:  $("#frRequestComment").serialize(),
+                success: function (data) {
+                    console.log(data);
+                    // $("#md-add-department").removeClass("md-show");
+                    // resetDepartmentForm();
+                    // window.setTimeout(function () {$("#md-add-department").remove();},500);
+                    // var res = JSON.parse(data);
+                    // notify('success',{title: res.result.status ,message: res.result.response,position:'top center'});
+                    // location.reload();
+                    return true;
+                }
+            });
             return false; // required to block normal submit since you used ajax
-        },
+        }
     });
     $('#createDepartment').bootstrapValidator({
         message: 'This value is not valid',

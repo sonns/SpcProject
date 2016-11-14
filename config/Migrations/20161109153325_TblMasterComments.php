@@ -25,8 +25,9 @@ class TblMasterComments extends AbstractMigration
             ->addPrimaryKey(['id'])
             ->addColumn('from_user_id', 'integer')
             ->addColumn('req_id', 'integer')
+            ->addColumn('role_id', 'integer')
             ->addColumn('contents', 'text')
-            ->addColumn('del_flg', 'integer', array('limit' => 1))
+            ->addColumn('del_flg', 'integer', array('limit' => 1,'default'=>0))
             ->addColumn('created', 'datetime',['default'=> "CURRENT_TIMESTAMP"])
             ->addForeignKey( 'from_user_id',
                 'tbl_master_users',
@@ -42,12 +43,20 @@ class TblMasterComments extends AbstractMigration
                     'update' => 'CASCADE',
                     'delete' => 'CASCADE'
                 ])
+            ->addForeignKey( 'role_id',
+                'tbl_master_roles',
+                'id',
+                [
+                    'update' => 'CASCADE',
+                    'delete' => 'CASCADE'
+                ])
             ->save();
     }
     public function down()
     {
         $this->table('tbl_master_users')->dropForeignKey(['from_user_id']);
         $this->table('tbl_master_requests')->dropForeignKey(['req_id']);
+        $this->table('tbl_master_roles')->dropForeignKey(['role_id']);
         $this->table('tbl_master_comments')->drop();
     }
 }
