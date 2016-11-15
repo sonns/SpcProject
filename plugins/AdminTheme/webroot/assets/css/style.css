@@ -1,4 +1,13 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700);
+.highlight-success{
+  background-color: #b0f5da !important;
+}
+.highlight-reject{
+  background-color: #ffb8b8 !important;
+}
+.highlight-pending{
+  background-color: #ffff99 !important;
+}
 .datepicker{
   z-index:9999999 !important;
 }
