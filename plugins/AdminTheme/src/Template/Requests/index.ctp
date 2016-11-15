@@ -57,6 +57,7 @@
                             <th>Category</th>
                             <th>Title</th>
                             <th>Approve-date</th>
+                            <th>Approve-by</th>
                             <th>Status</th>
                             <th>Created Date</th>
                             <th width="116px;" data-sortable="false">Action</th>
@@ -73,7 +74,8 @@
                                 <td><strong><?php echo $request->department_name;?></strong></td>
                                 <td><strong><?php echo $request->categories_name;?></strong></td>
                                 <td><strong><?php echo $request->title;?></strong></td>
-                                <td><strong><?php echo $request->appr_date;?></strong></td>
+                                <td><strong><?= $this->Time->i18nFormat($request->appr_date,'MM/dd/yyyy');?></strong></td>
+                                <td><strong></strong></td>
                                 <?php
 //                                    $isApprove = true;
                                     $status = ['class'=>'label-danger','value'=>'Rejected','status' => false];
@@ -117,7 +119,7 @@
 
 
                                 <td> <span class="requestStatus label <?= $status['class'] ?>"><?= $status['value'] ?></span></td>
-                                <td><strong><?php echo $request->created;?></strong></td>
+                                <td><strong><?= $this->Time->i18nFormat($request->created,'MM/dd/yyyy');?></strong></td>
                                 <td>
                                     <div class="btn-group btn-group-xs">
                                         <?php if($userInfo->role[0]->name === 'admin' || $userInfo->role[0]->name === 'staff'){?>
@@ -128,13 +130,12 @@
                                                 <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'icon-ok-circled')),'javascript:;',array('class'=>'btn btn-success statusRequest','title'=>'Approve','data-toggle'=>"tooltip",'escape' => false ,'data-value'=>$request->id,'data-mode' => 'app' ))?>
                                                 <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'icon-cancel-circled')),'javascript:;',array('class'=>'btn btn-danger statusRequest','title'=>'Reject','data-toggle'=>"tooltip",'escape' => false,'data-value'=>$request->id,'data-mode' => 'rej'  ))?>
                                                 <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'icon-eye-off')),'/requests/preview/'.$request->id,array('class'=>'btn btn-primary','title'=>'Preview','data-toggle'=>"tooltip",'escape' => false,'data-value'=>$request->id,'data-mode' => 'pre'  ))?>
+                                                <a class="btn btn-primary md-trigger btnReturn" title="" data-toggle="tooltip" data-value="<?=$request->id;?>" data-mode="return" data-modal="md-add-request_comment" data-original-title="Return"><i class="fa fa-mail-forward"></i></a>
                                             <?php }else{ if(($userInfo->role[0]->name === 'manager' && (int)$request->manager_status === 1) || ($userInfo->role[0]->name === 'sub-manager' && (int)$request->sub_manager_status === 1)) ?>
                                                 <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'icon-eye-off')),'/requests/preview/'.$request->id,array('class'=>'btn btn-primary','title'=>'Preview','data-toggle'=>"tooltip",'escape' => false,'data-value'=>$request->id,'data-mode' => 'pre'  ))?>
                                             <?php } ?>
                                         <?php } ?>
 <!--                                        --><?php //if($status['value'] === 'Pending' && !$request->is_report && ($userInfo->role[0]->name === 'sub-manager' || $userInfo->role[0]->name === 'staff')){ ?>
-
-                                            <a class="btn btn-primary md-trigger btnReturn" title="" data-toggle="tooltip" data-value="<?=$request->id;?>" data-mode="return" data-modal="md-add-request_comment" data-original-title="Return"><i class="fa fa-mail-forward"></i></a>
 <!--                                            --><?php //echo $this->Html->link($this->Html->tag('i', '', array('class'=>'fa fa-mail-forward')),'',array('class'=>'btn btn-primary md-trigger','title'=>'Return','data-toggle'=>"tooltip",'escape' => false,'data-value'=>$request->id,'data-mode' => 'return', "data-modal"=>"md-add-request"  ))?>
 <!--                                        --><?php //} ?>
                                     </div>
