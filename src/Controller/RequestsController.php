@@ -135,6 +135,7 @@ class RequestsController extends AuthMasterController
             $request = $this->Requests->patchEntity($request, $this->request->data);
             if ($this->Requests->save($request)) {
                 $this->Flash->success(__('The base has been saved.'));
+//                $this->addActivities(['req_id'=> $request->id , 'content' => $this->user->profile->first_name .' '. $this->user->profile->last_name . 'created new request with name '.$request->title ]);
                 return $this->redirect(['action' => 'add']);
             } else {
                 $this->Flash->error(__('The base could not be saved. Please, try again.'));
@@ -442,6 +443,20 @@ class RequestsController extends AuthMasterController
         }
         $this->set('requestDetail',$result);
         $this->set('_serialize', ['requestDetail']);
+    }
+
+    private function addActivities($data){
+        if(is_array($data) && count($data)){
+            $tblComment = TableRegistry::get('Comments');
+            $commentE = $tblComment->newEntity();
+            $commentE->from_user_id = $this->user->id;
+            $commentE->req_id = $data['req_id'];
+            $commentE->role_id = $this->user->role[0]->id;
+            $commentE->contents = $data['contents'];
+            $commentE->save($commentE);
+            return true;
+        }
+        return false;
     }
     /**
      * Delete method
