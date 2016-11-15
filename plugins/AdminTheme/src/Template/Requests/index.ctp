@@ -130,21 +130,29 @@
                                 <td><strong><?=  $this->Time->i18nFormat($request->created,'MM/dd/yyyy');?></strong></td>
                                 <td>
                                     <div class="btn-group btn-group-xs">
-                                        <?php if($userInfo->role[0]->name === 'admin' || $userInfo->role[0]->name === 'staff'){?>
-                                            <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'icon-eye-off')),'/requests/preview/'.$request->id,array('class'=>'btn btn-primary','title'=>'Preview','data-toggle'=>"tooltip",'escape' => false,'data-value'=>$request->id,'data-mode' => 'del'  ))?>
+                                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                            <i class="fa fa-cog"></i> Action <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu primary" role="menu">
+                                            <li class="requestAction" data-mode="multiApp"><a href="javascript:;">Approve</a></li>
+                                            <li class="requestAction" data-mode="multiRej"><a href="javascript:;">Reject</a></li>
+                                            <li class="requestAction" data-mode="multiDel"><a href="javascript:;">Preview</a></li>
+                                            <li class="requestAction" data-mode="multiDel"><a href="javascript:;">Return</a></li>
+                                            <li class="divider"></li>
+                                        </ul>
 
-                                        <?php }else{ ?>
-                                            <?php if($status['status']){ ?>
-                                                <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'icon-ok-circled')),'javascript:;',array('class'=>'btn btn-success statusRequest','title'=>'Approve','data-toggle'=>"tooltip",'escape' => false ,'data-value'=>$request->id,'data-mode' => 'app' ))?>
-                                                <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'icon-cancel-circled')),'javascript:;',array('class'=>'btn btn-danger statusRequest','title'=>'Reject','data-toggle'=>"tooltip",'escape' => false,'data-value'=>$request->id,'data-mode' => 'rej'  ))?>
-                                                <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'icon-eye-off')),'/requests/preview/'.$request->id,array('class'=>'btn btn-primary','title'=>'Preview','data-toggle'=>"tooltip",'escape' => false,'data-value'=>$request->id,'data-mode' => 'pre'  ))?>
-                                                <a class="btn btn-primary md-trigger btnReturn" title="" data-toggle="tooltip" data-value="<?=$request->id;?>" data-mode="return" data-modal="md-add-request_comment" data-original-title="Return"><i class="fa fa-mail-forward"></i></a>
-                                            <?php }else{ if(($userInfo->role[0]->name === 'manager' && (int)$request->manager_status === 1) || ($userInfo->role[0]->name === 'sub-manager' && (int)$request->sub_manager_status === 1)) ?>
-                                                <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'icon-eye-off')),'/requests/preview/'.$request->id,array('class'=>'btn btn-primary','title'=>'Preview','data-toggle'=>"tooltip",'escape' => false,'data-value'=>$request->id,'data-mode' => 'pre'  ))?>
-                                            <?php } ?>
-                                        <?php } ?>
-<!--                                        --><?php //if($status['value'] === 'Pending' && !$request->is_report && ($userInfo->role[0]->name === 'sub-manager' || $userInfo->role[0]->name === 'staff')){ ?>
-<!--                                            --><?php //echo $this->Html->link($this->Html->tag('i', '', array('class'=>'fa fa-mail-forward')),'',array('class'=>'btn btn-primary md-trigger','title'=>'Return','data-toggle'=>"tooltip",'escape' => false,'data-value'=>$request->id,'data-mode' => 'return', "data-modal"=>"md-add-request"  ))?>
+<!--                                        --><?php //if($userInfo->role[0]->name === 'admin' || $userInfo->role[0]->name === 'staff'){?>
+<!--                                            --><?php //echo $this->Html->link($this->Html->tag('i', '', array('class'=>'icon-eye-off')),'/requests/preview/'.$request->id,array('class'=>'btn btn-primary','title'=>'Preview','data-toggle'=>"tooltip",'escape' => false,'data-value'=>$request->id,'data-mode' => 'del'  ))?>
+<!---->
+<!--                                        --><?php //}else{ ?>
+<!--                                            --><?php //if($status['status']){ ?>
+<!--                                                --><?php //echo $this->Html->link($this->Html->tag('i', '', array('class'=>'icon-ok-circled')),'javascript:;',array('class'=>'btn btn-success statusRequest','title'=>'Approve','data-toggle'=>"tooltip",'escape' => false ,'data-value'=>$request->id,'data-mode' => 'app' ))?>
+<!--                                                --><?php //echo $this->Html->link($this->Html->tag('i', '', array('class'=>'icon-cancel-circled')),'javascript:;',array('class'=>'btn btn-danger statusRequest','title'=>'Reject','data-toggle'=>"tooltip",'escape' => false,'data-value'=>$request->id,'data-mode' => 'rej'  ))?>
+<!--                                                --><?php //echo $this->Html->link($this->Html->tag('i', '', array('class'=>'icon-eye-off')),'/requests/preview/'.$request->id,array('class'=>'btn btn-primary','title'=>'Preview','data-toggle'=>"tooltip",'escape' => false,'data-value'=>$request->id,'data-mode' => 'pre'  ))?>
+<!--                                                <a class="btn btn-primary md-trigger btnReturn" title="" data-toggle="tooltip" data-value="--><?//=$request->id;?><!--" data-mode="return" data-modal="md-add-request_comment" data-original-title="Return"><i class="fa fa-mail-forward"></i></a>-->
+<!--                                            --><?php //}else{ if(($userInfo->role[0]->name === 'manager' && (int)$request->manager_status === 1) || ($userInfo->role[0]->name === 'sub-manager' && (int)$request->sub_manager_status === 1)) ?>
+<!--                                                --><?php //echo $this->Html->link($this->Html->tag('i', '', array('class'=>'icon-eye-off')),'/requests/preview/'.$request->id,array('class'=>'btn btn-primary','title'=>'Preview','data-toggle'=>"tooltip",'escape' => false,'data-value'=>$request->id,'data-mode' => 'pre'  ))?>
+<!--                                            --><?php //} ?>
 <!--                                        --><?php //} ?>
                                     </div>
                                 </td>
