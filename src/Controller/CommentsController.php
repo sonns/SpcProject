@@ -1,5 +1,7 @@
 <?php
 namespace App\Controller;
+use Cake\Routing\Router;
+
 /**
  * Comments Controller
  *
@@ -56,6 +58,7 @@ class CommentsController extends AuthMasterController
         $commentDetail = $this->Comments->save($commentE);
         $result = [];
         if ($commentDetail) {
+            $commentDetail->username = $this->user->profile->last_name . ' ' .$this->user->profile->first_name;
             $result = [
                 'status' => 'Success',
                 'response' => $commentDetail
@@ -66,24 +69,26 @@ class CommentsController extends AuthMasterController
                 'response' => __('The comment could not be saved. Please, try again.')
             ];
         }
+        $arrUser =  $this->Comments->find('list',['fields'=>['id','from_user_id']])->where(['req_id' => (int)$commentDetail->req_id,'from_user_id <>'=> $this->user->id])->group(['from_user_id'])->toArray();
+        if(!empty($arrUser)){
+            $this->pushNotification(array_values($arrUser),$commentDetail,false);
+        }
         $this->set(compact('result'));
         $this->set('_serialize', 'result');
     }
 
-    public function pushNotification($request,$mode, $is_approve = true){
-        if(isset($this->user->role[0]->name) && $this->user->role[0]->name === 'staff'){
-            $this->Notification->notify([
-                'recipientLists' => ($this->user->dep->name === 'Headquarter') ? ['manager'] : ['sub-manager'],
-                'template' => ['notifierRequest'],
+    private function pushNotification($user , $commentDetail, $is_approve = true){
+        $this->Notification->notify([
+                'users' => $user,
+                'template' => ['returnRequest'],
                 'is_approve' => $is_approve,
                 'message' => [
                     'username' => $this->user->profile->first_name . ' ' .$this->user->profile->last_name,
-                    'title' => $request->title,
+                    'title' => '',
                     'category' => 'Request',
-                    'link' => Router::url(array('controller'=>'Requests', 'action'=>'preview', $request->id),true)
+                    'link' => Router::url(array('controller'=>'Requests', 'action'=>'preview', $commentDetail->req_id),true)
                 ]
             ]);
-        }
     }
 
 }
