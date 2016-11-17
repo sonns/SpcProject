@@ -4,7 +4,7 @@
 
 <!-- Page Heading Start -->
 <div class="page-heading">
-    <h1><i class='fa fa-table'></i> Department List</h1>
+    <h1><i class='fa fa-table'></i> <?=__('department'). ' ' .__('list')?></h1>
 </div>
 <!-- Page Heading End-->
 <!-- Your awesome content goes here -->
@@ -26,12 +26,12 @@
                         <div class="col-md-4">
 
                             <form role="form">
-                                <input type="text" class="form-control" placeholder="Search...">
+                                <input type="text" class="form-control" placeholder="<?=__('search')?>...">
                             </form>
                         </div>
                         <div class="col-md-8">
                             <div class="toolbar-btn-action">
-                                <a data-modal="md-add-department" id="btnAddDepartment" class="btn btn-success md-trigger"><i class="fa fa-plus-circle"></i>Add new</a>
+                                <a data-modal="md-add-department" id="btnAddDepartment" class="btn btn-success md-trigger"><i class="fa fa-plus-circle"></i><?=__('add_new')?></a>
 <!--                                <a data-modal="md-add-department" class="btn btn-danger md-trigger"><i class="fa fa-trash-o"></i>Delete</a>-->
                             </div>
                         </div>
@@ -42,14 +42,14 @@
                     <table data-sortable class="table table-hover table-striped">
                         <thead>
                         <tr>
-                            <th>No</th>
+                            <th><?=__('no')?></th>
 <!--                            <th style="width: 30px" data-sortable="false"><input type="checkbox" class="rows-check"></th>-->
-                            <th>Department Name</th>
-                            <th>Tel</th>
-                            <th>Address</th>
-                            <th>Status</th>
-                            <th>Created Date</th>
-                            <th data-sortable="false">Action</th>
+                            <th><?=__('name')?></th>
+                            <th><?=__('tel')?></th>
+                            <th><?=__('address')?></th>
+                            <th><?=__('status')?></th>
+                            <th><?=__('create_date')?></th>
+                            <th data-sortable="false"><?=__('action')?></th>
                         </tr>
                         </thead>
 

@@ -1,18 +1,18 @@
 <div class="tab-pane animated fadeInRight" id="reset_password">
     <div class="user-profile-content">
-        <h4><strong>Reset </strong> Password</h4>
+        <h4><strong><?=__('reset')?> </strong> <?=__("pass")?></h4>
         <hr />
             <form role="form" method="post" id="resetPassword" name="resetPassword">
                 <input type="hidden" value="resetpass" id="hdnmode" name="hdnmode">
                 <div class="form-group">
-                    <label for="txtPassword">Password</label>
-                    <input type="password" class="form-control" id="password" name="password" placeholder="Enter New Password">
+                    <label for="txtPassword"><?=__("pass")?></label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="<?=__('placeholder_new_pass')?>">
                 </div>
                 <div class="form-group">
-                    <label for="txtConfirmPassword">Confirm Password</label>
-                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Enter New Confirm Password">
+                    <label for="txtConfirmPassword"><?=__('confirm_pass')?></label>
+                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="<?=__('placeholder_new_confirm_pass')?>">
                 </div>
-                <button type="submit" class="btn btn-success">Submit</button>
+                <button type="submit" class="btn btn-success"><?=__('submit')?></button>
             </form>
     </div>
 </div>

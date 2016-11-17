@@ -9,7 +9,7 @@
             <?php echo $this->Form->create(null,['url'=>['controller' => 'AuthMaster','action'=>'login','login']])?>
                 <div class="form-group login-input">
                     <i class="fa fa-user overlay"></i>
-                    <input type="text" class="form-control text-input" placeholder="Enter your email or username" name="username" id="username">
+                    <input type="text" class="form-control text-input" placeholder="<?= __("placeholder_email")?>" name="username" id="username">
                 </div>
                 <div class="form-group login-input">
                     <i class="fa fa-key overlay"></i>
@@ -17,15 +17,15 @@
                 </div>
             <div class="checkbox">
                 <label>
-                    <input type="checkbox" name="remember_me" id="remember_me"> Remember me
+                    <input type="checkbox" name="remember_me" id="remember_me"><?= __("remember")?>
                 </label>
             </div>
                 <div class="row">
                     <div class="col-sm-6">
-                        <button type="submit" class="btn btn-success btn-block">LOGIN</button>
+                        <button type="submit" class="btn btn-success btn-block"><?= __("login")?></button>
                     </div>
                     <div class="col-sm-6">
-                        <a href="#" class="btn btn-default btn-block">Forgot password</a>
+                        <a href="#" class="btn btn-default btn-block"><?= __("forgot_password")?></a>
                     </div>
                 </div>
             </form>

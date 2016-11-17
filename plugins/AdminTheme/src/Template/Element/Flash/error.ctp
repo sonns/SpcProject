@@ -2,7 +2,7 @@
 
 <?php $this->Html->scriptStart(['block' => true]);?>
 $.notify({
-title: 'Error',
+title: '<?=__('error')?>',
 text: '<?= h($message) ?>',
 image: "<i class='fa fa-exclamation'></i>"
 }, {

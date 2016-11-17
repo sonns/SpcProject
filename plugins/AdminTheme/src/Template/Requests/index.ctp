@@ -5,7 +5,7 @@
 
 <!-- Page Heading Start -->
 <div class="page-heading">
-    <h1><i class='fa fa-table'></i> Request List</h1>
+    <h1><i class='fa fa-table'></i> <?=__('request').' '.__('list')?></h1>
 </div>
 <!-- Page Heading End-->
 <!-- Your awesome content goes here -->
@@ -21,26 +21,19 @@
                         <div class="col-md-4">
 
                             <form role="form">
-                                <input type="text" class="form-control" placeholder="Search...">
+                                <input type="text" class="form-control" placeholder="<?=__('search')?>...">
                             </form>
                         </div>
                         <div class="col-md-8">
                             <div class="toolbar-btn-action">
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                        <i class="fa fa-cog"></i> Action <span class="caret"></span>
+                                        <i class="fa fa-cog"></i> <?=__('action')?> <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu primary" role="menu">
-<!--                                        <li class="requestAction" data-mode="multiApp"><a href="javascript:;">Approve</a></li>-->
-<!--                                        <li class="requestAction" data-mode="multiRej"><a href="javascript:;">Reject</a></li>-->
-<!--                                        <li class="requestAction" data-mode="multiDel"><a href="javascript:;">Delete</a></li>-->
-<!--                                        <li class="divider"></li>-->
-                                        <li><a  data-modal="md-add-request" class="md-trigger" >Add new</a></li>
+                                        <li><a  data-modal="md-add-request" class="md-trigger" ><?=__('add_new')?></a></li>
                                     </ul>
                                 </div>
-<!--                                <a data-modal="md-add-request" class="btn btn-success md-trigger"><i class="icon-ok-circled"></i> Add new</a>-->
-<!--                                <a data-modal="md-add-request" class="btn btn-success md-trigger"><i class="fa fa-plus-circle"></i> Add new</a>-->
-<!--                                <a data-modal="md-add-request" class="btn btn-danger md-trigger"><i class="icon-eye-off"></i> Delete</a>-->
                             </div>
                         </div>
                     </div>
@@ -50,17 +43,17 @@
                     <table data-sortable class="table table-hover table-striped">
                         <thead>
                         <tr>
-                            <th>No</th>
+                            <th><?__('no')?></th>
                             <th style="width: 30px"><input id="checkAll" type="checkbox" class="rows-check"></th>
-                            <th>User</th>
-                            <th>Department</th>
-                            <th>Category</th>
-                            <th>Title</th>
-                            <th>Approve-date</th>
-                            <th>Approve-by</th>
-                            <th>Status</th>
-                            <th>Created Date</th>
-                            <th width="116px;" data-sortable="false">Action</th>
+                            <th><?__('user')?></th>
+                            <th><?__('department')?></th>
+                            <th><?__('request_cate')?></th>
+                            <th><?__('title')?></th>
+                            <th><?__('request_approve_date')?></th>
+                            <th><?__('request_approve_by')?></th>
+                            <th><?__('status')?></th>
+                            <th><?__('create_date')?></th>
+                            <th width="116px;" data-sortable="false"><?=__('action')?></th>
                         </tr>
                         </thead>
 
@@ -131,13 +124,13 @@
                                 <td>
                                     <div class="btn-group btn-group-xs">
                                         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                            <i class="fa fa-cog"></i> Action <span class="caret"></span>
+                                            <i class="fa fa-cog"></i> <?=__('action')?> <span class="caret"></span>
                                         </button>
                                         <ul class="dropdown-menu primary" role="menu">
-                                            <li class="requestAction" data-mode="multiApp"><a href="javascript:;">Approve</a></li>
-                                            <li class="requestAction" data-mode="multiRej"><a href="javascript:;">Reject</a></li>
-                                            <li class="requestAction" data-mode="multiDel"><a href="javascript:;">Preview</a></li>
-                                            <li class="requestAction" data-mode="multiDel"><a href="javascript:;">Return</a></li>
+                                            <li class="requestAction" data-mode="multiApp"><a href="javascript:;"><?=__('approve')?></a></li>
+                                            <li class="requestAction" data-mode="multiRej"><a href="javascript:;"><?=__('reject')?></a></li>
+                                            <li class="requestAction" data-mode="multiDel"><a href="javascript:;"><?=__('preview')?></a></li>
+                                            <li class="requestAction" data-mode="multiDel"><a href="javascript:;"><?=__('return')?></a></li>
                                             <li class="divider"></li>
                                         </ul>
 
@@ -173,7 +166,7 @@
                 </div>
                 <?php else:?>
                     <div>
-                        <h1 style="text-align: center;" > No Data </h1>
+                        <h1 style="text-align: center;" > <?=__('no_data')?> </h1>
                     </div>
 
                 <?php endif;?>
@@ -186,7 +179,7 @@
 <footer>
     Son Nguyen &copy; 2016
     <div class="footer-links pull-right">
-<!--        <a href="#">About</a><a href="#">Support</a><a href="#">Terms of Service</a><a href="#">Legal</a><a href="#">Help</a><a href="#">Contact Us</a>-->
+        <a href="#"><?__('about')?></a><a href="#"><?__('support')?></a><a href="#"><?__('term_of_service')?></a><a href="#"><?__('legal')?></a><a href="#"><?__('help')?></a><a href="#"><?__('contact_us')?></a>
     </div>
 </footer>
 
@@ -198,7 +191,6 @@ $this->Html->scriptEnd();
 ?>
 
 <script>
-
     $('#checkAll')
         .on('ifChecked', function(event) {
             $("input[name='request_id[]']").iCheck('check');
@@ -256,7 +248,6 @@ $this->Html->scriptEnd();
             }
         })
     });
-
     $(".requestAction").on("click", function(e){
         e.preventDefault();
         var $this = $(this);
@@ -290,12 +281,8 @@ $this->Html->scriptEnd();
             }
         })
     })
-
-
     $.fn.reloadList = function($param) {
         alert($param);
 
     };
-
-
 </script>

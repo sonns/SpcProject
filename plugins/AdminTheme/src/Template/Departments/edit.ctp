@@ -2,26 +2,26 @@
 <div class="row">
     <div class="col-sm-12 portlets">
         <div class="widget-header transparent">
-            <h2>Update <strong>Department</strong> </h2>
+            <h2><?=__("Update")?> <strong><?=__("department")?></strong> </h2>
         </div>
         <div class="widget-content padding">
             <div id="basic-form">
                 <?php echo $this->Form->create($department)?>
                 <div class="form-group">
-                    <label for="lblUsername">Name</label>
-                    <input type="text" value="<?= $department->name ;?>" class="form-control" id="dep_name" name="dep_name" placeholder="Enter department name">
+                    <label for="lblUsername"><?=__('name')?></label>
+                    <input type="text" value="<?= $department->name ;?>" class="form-control" id="dep_name" name="dep_name" placeholder="<?=__("placeholder_department_name")?>">
                 </div>
                 <div class="form-group">
-                    <label for="lblUsername">Tel</label>
-                    <input type="text"  value="<?= $department->tel ;?>" class="form-control" id="dep_tel" name="dep_tel" placeholder="Enter department tel">
+                    <label for="lblUsername"><?=__('tel')?></label>
+                    <input type="text"  value="<?= $department->tel ;?>" class="form-control" id="dep_tel" name="dep_tel" placeholder="<?=__("placeholder_department_tel")?>">
                 </div>
                 <div class="form-group">
-                    <label for="lblUsername">Address</label>
-                    <input type="text"  value="<?= $department->address ;?>" class="form-control" id="dep_address" name="dep_address" placeholder="Enter department address">
+                    <label for="lblUsername"><?=__('address')?></label>
+                    <input type="text"  value="<?= $department->address ;?>" class="form-control" id="dep_address" name="dep_address" placeholder="<?=__("placeholder_department_address")?>">
                 </div>
                 <div class="col-sm-4">
-                    <button type="submit" class="btn btn-success">Submit</button>
-                    <button type="reset" class="btn btn-default">Cancel</button>
+                    <button type="submit" class="btn btn-success"><?=__('submit')?></button>
+                    <button type="reset" class="btn btn-default"><?=__('cancel')?></button>
                 </div>
                 </form>
             </div>

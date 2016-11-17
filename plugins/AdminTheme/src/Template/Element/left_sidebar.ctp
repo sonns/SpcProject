@@ -10,13 +10,13 @@
     <!--- Profile -->
     <div class="profile-info">
         <div class="col-xs-4">
-            <a href="profile.html" class="rounded-image profile-image">
+            <a href="<?php echo $this->Url->build(['controller'=>'users','action'=>'profile'])?>" class="rounded-image profile-image">
 <!--                --><?php //echo $this->Html->image('AdminTheme./images/users/user-100.jpg');?>
-                <?php echo $this->Html->image(( !isset($userInfo['profile']['photo']) ||  empty($userInfo['profile']['photo'])) ? 'AdminTheme./images/users/user-100.jpg' : '../file/profile/'.$userInfo['profile']['photo'] , array(  'alt'=>'User avatar'));?>
+                <?php echo $this->Html->image(( !isset($userInfo['profile']['photo']) ||  empty($userInfo['profile']['photo'])) ? 'AdminTheme./images/users/user-100.jpg' : '../file/profile/'.$userInfo['profile']['photo'] , array(  'alt'=>''));?>
             </a>
         </div>
         <div class="col-xs-8">
-            <div class="profile-text">Welcome <b><?php echo  (empty($userInfo['profile'])) ? $userInfo['username'] : $userInfo['profile']['first_name'] . ' ' . $userInfo['profile']['last_name'];?></b></div>
+            <div class="profile-text"><b><?php echo __('welcome') . ' ' .  (empty($userInfo['profile'])) ? $userInfo['username'] : $userInfo['profile']['first_name'] . ' ' . $userInfo['profile']['last_name'];?></b></div>
             <div class="profile-buttons">
                 <a href="javascript:;"><i class="fa fa-envelope-o pulse"></i></a>
                 <a href="#connect" class="open-right"><i class="fa fa-comments"></i></a>
@@ -32,7 +32,6 @@
     <div id="sidebar-menu">
         <ul>
             <?php
-//                print_r($sidebar);exit;
             foreach ($sidebar as $menu){
                     if ($menu['hasPermission'] >= 1) {
                         ?>

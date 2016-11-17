@@ -39,7 +39,7 @@
 
         <?= $this->fetch('content') ?>
 
-        <a class="btn btn-primary btn-sm" href="javascript:history.back()"><i class="fa fa-angle-left"></i> Back to Dashboard</a>
+        <a class="btn btn-primary btn-sm" href="javascript:history.back()"><i class="fa fa-angle-left"></i><?=__('back_to_dashboard')?></a>
     </div>
 </div>
 <!-- End of page -->

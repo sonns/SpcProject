@@ -1,6 +1,6 @@
 <div class="tab-pane animated fadeInRight" id="permissions">
     <div class="row"  style="padding-left:25px;">
-        <h4><strong> Manage </strong> Permission</h4>
+        <h4><strong> <?=__('manage')?> </strong> <?=__('permission')?></h4>
         <div class="col-sm-11 center">
             <div class="widget">
                 <div class="widget-content">
@@ -11,7 +11,7 @@
                         <table  class="table">
                             <thead>
                             <tr >
-                                <th>Permission</th>
+                                <th><?=__('permission')?></th>
                                 <?php foreach ($roles as $key => $role): ?>
                                     <th><?php echo $role->display_name;?></th>
                                 <?php endforeach;?>
@@ -54,18 +54,14 @@
                                         <?php endforeach;?>
                                     </tr>
                                     <?php endforeach;?>
-
-
                                 <tr>
-
-
                                 </tr>
                             <?php endforeach;?>
                             </tbody>
                         </table>
                             <div class="col-sm-4">
-                                <button type="submit" class="btn btn-success">Submit</button>
-                                <button type="reset" class="btn btn-default">Cancel</button>
+                                <button type="submit" class="btn btn-success"><?=__('submit')?></button>
+                                <button type="reset" class="btn btn-default"><?=__('cancel')?></button>
                             </div>
                         </form>
                     </div>
