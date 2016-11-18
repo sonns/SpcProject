@@ -66,7 +66,7 @@ class CommentsController extends AuthMasterController
         } else {
             $result = [
                 'status' => 'Error',
-                'response' => __('The comment could not be saved. Please, try again.')
+                'response' => __('comment_error')
             ];
         }
         $arrUser =  $this->Comments->find('list',['fields'=>['id','from_user_id']])->where(['req_id' => (int)$commentDetail->req_id,'from_user_id <>'=> $this->user->id])->group(['from_user_id'])->toArray();

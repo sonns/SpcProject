@@ -2,7 +2,7 @@
 <div class="md-modal md-slide-stick-top" id="md-add-request" >
     <div class="md-content" style="height: 600px !important;overflow-y: scroll;">
         <div class="md-close-btn"><a class="md-close"><i class="fa fa-times"></i></a></div>
-        <h3><?=__('add')?> <strong><?=__('form_request')?></strong></h3>
+        <h3><?=__('add')?> <strong><?=__('request_form')?></strong></h3>
         <div class="widget">
             <div class="widget-content padding">
                 <form class="form-horizontal" role="form" id="frRequest" enctype="multipart/form-data">

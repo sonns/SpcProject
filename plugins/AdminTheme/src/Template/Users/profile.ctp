@@ -12,11 +12,11 @@
             <!-- Nav tab -->
             <ul class="nav nav-tabs nav-justified">
 
-                <li  class="active"><a href="#about" data-toggle="tab"><i class="fa fa-user"></i> About</a></li>
-                <li><a href="#reset_password" data-toggle="tab"><i class="fa fa-pencil"></i> Reset Password</a></li>
+                <li  class="active"><a href="#about" data-toggle="tab"><i class="fa fa-user"></i> <?=__('about')?></a></li>
+                <li><a href="#reset_password" data-toggle="tab"><i class="fa fa-pencil"></i><?__('reset_pass')?></a></li>
                 <?php if($userInfo['role'][0]->name === 'admin'): ?>
-                    <li><a href="#user-activities" data-toggle="tab"><i class="fa fa-laptop"></i> Activities</a></li>
-                    <li><a href="#mymessage" data-toggle="tab"><i class="fa fa-envelope"></i> Message</a></li>
+                    <li><a href="#user-activities" data-toggle="tab"><i class="fa fa-laptop"></i> <?=__('activities')?></a></li>
+                    <li><a href="#mymessage" data-toggle="tab"><i class="fa fa-envelope"></i><?=__('message')?></a></li>
                 <?php endif; ?>
 
             </ul>

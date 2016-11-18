@@ -36,10 +36,6 @@ class AuthMasterController extends AppController
     private function _initNotification(){
         if (!empty($this->user)) {
             $tblUser = TableRegistry::get('Users');
-//            echo '<pre>';
-//            print_r($tblUser->find('groupUsers', ['Roles.name' => 'top']));
-//            echo '<pre>'
-//            exit;
             $this->Notification->addRecipientList('top', $tblUser->find('groupUsers', ['Roles.name' => 'top']));
             $this->Notification->addRecipientList('manager', $tblUser->find('groupUsers', ['Roles.name' => 'manager','Users.dep_id'=> $this->user->dep_id]));
             if($this->user->role[0]->name !== 'top') {
@@ -111,7 +107,7 @@ class AuthMasterController extends AppController
                 'pivotTable' => 'tbl_master_role_user',
                 'autoClearCache' =>Configure::read('debug'),
             ]],
-            'authError' => __('Did you really think you are allowed to see that?'),
+            'authError' => __('auth_alert'),
             'unauthorizedRedirect' =>[
                 'controller' => 'AuthMaster',
                 'action' => 'accessDenied',
@@ -174,11 +170,11 @@ class AuthMasterController extends AppController
             if ($user) {
                 $this->Auth->setUser($user);
                 $this->_setCookie();
-                $this->Flash->success(__('Login success!!!'));
+                $this->Flash->success(__('login_success'));
                 return $this->redirect($this->Auth->redirectUrl());
             }
 //            show error
-            $this->Flash->error(__('Invalid username or password, try again'));
+            $this->Flash->error(__('login_error'));
         }
     }
     /**
@@ -307,13 +303,7 @@ class AuthMasterController extends AppController
                     return true;
                 }
                 if($menu['url']['controller'] === $this->request->params['controller']){
-//                    echo $this->request->params['controller'];exit;
                     $menus[$key]['active'] = true;
-//                    if(isset($menu['children'])){
-//
-//                    }elseif($menu['url']['action'] === $this->request->params['action']){
-//                        $menus[$key]['active'] = true;
-//                    }
                 }
             }
         }
@@ -387,16 +377,5 @@ class AuthMasterController extends AppController
             'response'=>is_null($data) ? $strMessage : $data
         ];
         return $result;
-    }
-    private function _iniNotification(){
-        $templates = Configure::read('Notification.templates');
-        if (array_key_exists('Request', $templates)) {
-            Configure::write('Notification.templates.Request', [
-                'title' => ' :title ',
-                'body' => ':username has posted a request named :name'
-            ]);
-        }
-        return true;
-
     }
 }

@@ -134,11 +134,11 @@ class RequestsController extends AuthMasterController
             $this->request->data['txtApproveDate'] = Time::parse($this->request->data['txtApproveDate']);
             $request = $this->Requests->patchEntity($request, $this->request->data);
             if ($this->Requests->save($request)) {
-                $this->Flash->success(__('The base has been saved.'));
+                $this->Flash->success(__('request_success'));
 //                $this->addActivities(['req_id'=> $request->id , 'content' => $this->user->profile->first_name .' '. $this->user->profile->last_name . 'created new request with name '.$request->title ]);
                 return $this->redirect(['action' => 'add']);
             } else {
-                $this->Flash->error(__('The base could not be saved. Please, try again.'));
+                $this->Flash->error(__('request_error'));
             }
         }
         $this->set(compact('request'));
@@ -177,9 +177,9 @@ class RequestsController extends AuthMasterController
                 $request = $this->Requests->save($request);
                 if ($request) {
                     $this->pushNotification($request,'add');
-                    $result  = ['params'=>$request , 'status' => 'Success' , 'response'=> __('The request has been saved.')];
+                    $result  = ['params'=>$request , 'status' => 'Success' , 'response'=> __('request_success')];
                 } else {
-                    $result  = ['params'=>$request , 'status' => 'Error' , 'response'=> __('The request could not be saved. Please, try again or contact for admin page.')];
+                    $result  = ['params'=>$request , 'status' => 'Error' , 'response'=> __('request_error')];
                 }
             }
             $this->set(compact('result'));
@@ -403,11 +403,11 @@ class RequestsController extends AuthMasterController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $base = $this->Base->patchEntity($base, $this->request->data);
             if ($this->Base->save($base)) {
-                $this->Flash->success(__('The base has been saved.'));
+                $this->Flash->success(__('request_success'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The base could not be saved. Please, try again.'));
+                $this->Flash->error(__('request_error'));
             }
         }
         $this->set(compact('base'));
@@ -470,9 +470,9 @@ class RequestsController extends AuthMasterController
         $this->request->allowMethod(['post', 'delete']);
         $base = $this->Base->get($id);
         if ($this->Base->delete($base)) {
-            $this->Flash->success(__('The base has been deleted.'));
+            $this->Flash->success(__('request_del_success'));
         } else {
-            $this->Flash->error(__('The base could not be deleted. Please, try again.'));
+            $this->Flash->error(__('request_del_error'));
         }
         return $this->redirect(['action' => 'index']);
     }

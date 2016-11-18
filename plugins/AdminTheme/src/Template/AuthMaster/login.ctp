@@ -9,7 +9,7 @@
             <?php echo $this->Form->create(null,['url'=>['controller' => 'AuthMaster','action'=>'login','login']])?>
                 <div class="form-group login-input">
                     <i class="fa fa-user overlay"></i>
-                    <input type="text" class="form-control text-input" placeholder="<?= __("placeholder_email")?>" name="username" id="username">
+                    <input type="text" class="form-control text-input" placeholder="<?= __("placeholder_email_username")?>" name="username" id="username">
                 </div>
                 <div class="form-group login-input">
                     <i class="fa fa-key overlay"></i>

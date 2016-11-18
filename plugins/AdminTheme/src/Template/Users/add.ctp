@@ -1,6 +1,6 @@
 <!-- Your awesome content goes here -->
 <div class="md-content">
-    <h3>Add <strong>Users</strong></h3>
+    <h3><?=__('add')?> <strong><?=__('user')?></strong></h3>
     <div class="widget">
 
 <div class="row">
@@ -11,12 +11,12 @@
             <div id="basic-form">
                 <form method="post" id="createUser">
                 <div class="form-group">
-                    <label for="lblEmail">Email</label>
-                    <input type="text" class="form-control" id="email" name="email" placeholder="Enter email">
+                    <label for="lblEmail"><?=__('email')?></label>
+                    <input type="text" class="form-control" id="email" name="email" placeholder="<?__('placeholder_email')?>">
                 </div>
                 <div class="form-group">
-                    <label for="lblUsername">Username</label>
-                    <input type="text" class="form-control" id="username" name="username" placeholder="Enter username">
+                    <label for="lblUsername"><?=__('username')?></label>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="<?__('placeholder_username')?>">
                 </div>
                 <div class="form-group">
 <!--                    <label for="lblUsername">Role</label>-->
@@ -44,16 +44,16 @@
                     );?>
                 </div>
                 <div class="form-group">
-                    <label for="lblPassword">Password</label>
+                    <label for="lblPassword"><?=__('pass')?></label>
                     <input type="password" class="form-control" id="password" name="password" placeholder="*******">
                 </div>
                 <div class="form-group">
-                    <label for="lblPassword">Confirm Password</label>
+                    <label for="lblPassword"><?=__('confirm_pass')?></label>
                     <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="*******">
                 </div>
                 <div class="col-sm-4">
-                    <button type="submit" class="btn btn-success">Submit</button>
-                    <button type="reset" class="btn btn-default">Cancel</button>
+                    <button type="submit" class="btn btn-success"><?=__('submit')?></button>
+                    <button type="reset" class="btn btn-default"><?=__('cancel')?></button>
                 </div>
                 </form>
             </div>

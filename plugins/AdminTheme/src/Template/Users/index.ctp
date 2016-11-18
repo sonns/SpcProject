@@ -4,7 +4,7 @@
 
 <!-- Page Heading Start -->
 <div class="page-heading">
-    <h1><i class='fa fa-table'></i> Users List</h1>
+    <h1><i class='fa fa-table'></i> <?=__('user').' '.__('list')?></h1>
 </div>
     <!-- Page Heading End-->
     <!-- Your awesome content goes here -->
@@ -28,13 +28,13 @@
                             <div class="col-md-4">
 
                                 <form role="form">
-                                    <input type="text" class="form-control" placeholder="Search...">
+                                    <input type="text" class="form-control" placeholder="<?=__('search')?>...">
                                 </form>
                             </div>
                             <div class="col-md-8">
                                 <div class="toolbar-btn-action">
-                                    <a data-modal="md-add-user" class="btn btn-success md-trigger"><i class="fa fa-plus-circle"></i>Add new</a>
-                                    <a data-modal="md-add-user" class="btn btn-danger md-trigger"><i class="fa fa-trash-o"></i>Delete</a>
+                                    <a data-modal="md-add-user" class="btn btn-success md-trigger"><i class="fa fa-plus-circle"></i><?=__('add_new')?></a>
+                                    <a data-modal="md-add-user" class="btn btn-danger md-trigger"><i class="fa fa-trash-o"></i><?=__('del')?></a>
                                 </div>
                             </div>
                         </div>
@@ -44,14 +44,14 @@
                         <table data-sortable class="table table-hover table-striped">
                             <thead>
                             <tr>
-                                <th>No</th>
+                                <th><?=__('no')?></th>
                                 <th style="width: 30px" data-sortable="false"><input type="checkbox" class="rows-check"></th>
-                                <th>Name</th>
-                                <th>email</th>
-                                <th>username</th>
-                                <th>confirmed</th>
-                                <th>Created Date</th>
-                                <th data-sortable="false">Action</th>
+                                <th><?=__('name')?></th>
+                                <th><?=__('email')?></th>
+                                <th><?=__('username')?></th>
+                                <th><?=__('confirm')?></th>
+                                <th><?=__('create_date')?></th>
+                                <th data-sortable="false"><?=__('action')?></th>
                             </tr>
                             </thead>
 
@@ -62,15 +62,15 @@
                                     <td><strong><?php echo $user->first_name.' '. $user->last_name;?></strong></td>
                                     <td><strong><?php echo $user->email;?></strong></td>
                                     <td><strong><?php echo $user->username;?></strong></td>
-                                    <td> <span class="label <?php echo ($user->confirmed) ? 'label-success' :'label-danger' ?>"><?php echo ($user->confirmed) ? 'Active' :'Suspended' ?></span></td>
+                                    <td> <span class="label <?php echo ($user->confirmed) ? 'label-success' :'label-danger' ?>"><?php echo ($user->confirmed) ? __('active') :__('suspend') ?></span></td>
                                     <td><strong><?php echo $user->created;?></strong></td>
                                     <td>
                                         <div class="btn-group btn-group-xs">
                                             <?php if($userInfo->role[0]->name !== 'admin'){?>
-                                                <span class="requestStatus label label-danger"><?= __('No Permission!')?></span>
+                                                <span class="requestStatus label label-danger"><?= __('no_permission')?></span>
                                             <?php }else{ ?>
-                                                <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'fa fa-edit')),array('controller'=>'users','action'=>'edit','edit_dep'),array('style' => 'margin-right:4px;' ,'class'=>'btn btn-default','title'=>'Edit','data-toggle'=>"tooltip",'escape' => false ))?>
-                                                <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'fa fa-remove')),array('controller'=>'users','action'=>'delete','del_dep'),array('class'=>'btn btn-danger','title'=>'Delete','data-toggle'=>"tooltip",'escape' => false ))?>
+                                                <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'fa fa-edit')),array('controller'=>'users','action'=>'edit','edit_dep'),array('style' => 'margin-right:4px;' ,'class'=>'btn btn-default','title'=>__('edit'),'data-toggle'=>"tooltip",'escape' => false ))?>
+                                                <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'fa fa-remove')),array('controller'=>'users','action'=>'delete','del_dep'),array('class'=>'btn btn-danger','title'=>__('del'),'data-toggle'=>"tooltip",'escape' => false ))?>
                                             <?php } ?>
                                         </div>
                                     </td>
@@ -96,6 +96,6 @@
     <footer>
         Son Nguyen &copy; 2014
         <div class="footer-links pull-right">
-            <a href="#">About</a><a href="#">Support</a><a href="#">Terms of Service</a><a href="#">Legal</a><a href="#">Help</a><a href="#">Contact Us</a>
+            <a href="#"><?__('about')?></a><a href="#"><?__('support')?></a><a href="#"><?__('term_of_service')?></a><a href="#"><?__('legal')?></a><a href="#"><?__('help')?></a><a href="#"><?__('contact_us')?></a>
         </div>
     </footer>

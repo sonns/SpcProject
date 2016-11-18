@@ -36,7 +36,7 @@ class UsersController extends AuthMasterController
 
     public function saveProfile(){
         $this->request->allowMethod('ajax');
-        $result = $this->responseData(false,__('The request could not be saved. Please, try again or contact for admin page.'));
+        $result = $this->responseData(false,__('profile_error'));
         if ($this->request->is('post')) {
             if(isset($this->request->data['hdnmode']) && $this->request->data['hdnmode'] === 'profile'){
                 $profile = TableRegistry::get('Profiles');
@@ -66,14 +66,14 @@ class UsersController extends AuthMasterController
 //                    $this->request->data['birthday'] = Time::parse($this->request->data['birthday']);
                     $profileE = $profile->patchEntity($profileE, $this->request->data);
                     if ($profile->save($profileE)) {
-                        $result  = ['params'=>$this->request->data , 'status' => 'Success' , 'response'=> __('The request has been saved.')];
+                        $result  = ['params'=>$this->request->data , 'status' => 'Success' , 'response'=> __('profile_success')];
                     }
                 }else{
                     //update profile
                     $this->request->data['modified'] = Time::now();
                     $profileInfo = $profile->patchEntity($profileInfo, $this->request->data);
                     if ($profile->save($profileInfo)) {
-                        $result  = ['params'=>$this->request->data , 'status' => 'Success' , 'response'=> __('Your information has been changed !!!.')];
+                        $result  = ['params'=>$this->request->data , 'status' => 'Success' , 'response'=> __('profile_change_success')];
                     }
                 }
             }elseif (isset($this->request->data['hdnmode']) && $this->request->data['hdnmode'] === 'resetpass'){
@@ -83,7 +83,7 @@ class UsersController extends AuthMasterController
                     ->where(['id' => $this->user->id])
                     ->execute();
                 if ($userInfo) {
-                    $result  = ['params'=>$userInfo , 'status' => 'Success' , 'response'=> __('Your password has been changed !!!.')];
+                    $result  = ['params'=>$userInfo , 'status' => 'Success' , 'response'=> __('profile_change_success')];
                 }
             }
 
@@ -148,7 +148,7 @@ class UsersController extends AuthMasterController
                 }
                 $result = [
                     'status'=> $isCheck,
-                    'response'=> $isCheck ?  __('The user has been saved.'): __('The User could not be saved. Please, try again.')
+                    'response'=> $isCheck ?  __('user_success'): __('user_error')
                 ];
             }
             $this->set(compact('result'));
@@ -162,11 +162,11 @@ class UsersController extends AuthMasterController
         $status = false;
         if($this->checkExist('email')){
             $mode = 1;
-            $response = __('This e-mail already exists, please change it');
+            $response = __('email_exist');
         }elseif($this->checkExist('username'))
         {
             $mode = 2;
-            $response = __('This username already exists, please change it');
+            $response = __('username_exist');
         }else{
             $roleUsers = TableRegistry::get('RoleUsers');
             $row =  $roleUsers->find()
@@ -177,11 +177,11 @@ class UsersController extends AuthMasterController
 //            check rule or  return true
             if(count($row)){
                 $mode = 3;
-                $response = __('We already have this role in this company');
+                $response = __('already_role_exist');
             }else
             {
                 $mode = 4;
-                $response =  __("OK!!!");
+                $response =  __("success");
                 $status = true;
             }
 
@@ -213,11 +213,11 @@ class UsersController extends AuthMasterController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->users->patchEntity($user, $this->request->data);
             if ($this->Users->save($user)) {
-                $this->Flash->success(__('The User has been saved.'));
+                $this->Flash->success(__('user_success'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The User could not be saved. Please, try again.'));
+                $this->Flash->error(__('user_error'));
             }
         }
         $this->set(compact('user'));
@@ -241,9 +241,9 @@ class UsersController extends AuthMasterController
         $this->request->allowMethod(['post', 'delete']);
         $user = $this->users->get($id);
         if ($this->users->delete($user)) {
-            $this->Flash->success(__('The User has been deleted.'));
+            $this->Flash->success(__('user_del_success'));
         } else {
-            $this->Flash->error(__('The User could not be deleted. Please, try again.'));
+            $this->Flash->error(__('user_del_error'));
         }
 
         return $this->redirect(['action' => 'index']);
