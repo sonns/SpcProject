@@ -70,12 +70,12 @@ class DepartmentsController extends AuthMasterController
                 if ($this->Departments->save($department)) {
                     $result = [
                         'status' => 'Success',
-                        'response' => __('The department has been saved.')
+                        'response' => __('department_success')
                     ];
                 } else {
                     $result = [
                         'status' => 'Error',
-                        'response' => __('The department could not be saved. Please, try again.')
+                        'response' => __('department_error')
                     ];
                 }
             }
@@ -104,11 +104,11 @@ class DepartmentsController extends AuthMasterController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $department = $this->Departments->patchEntity($department, $this->request->data);
             if ($this->Departments->save($department)) {
-                $this->Flash->success(__('The department has been saved.'));
+                $this->Flash->success(__('department_success'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The department could not be saved. Please, try again.'));
+                $this->Flash->error(__('department_error'));
             }
         }
         $this->set(compact('department'));
@@ -131,12 +131,12 @@ class DepartmentsController extends AuthMasterController
             if ($this->Departments->save($department)) {
                 $result = [
                     'status' => 'Success',
-                    'response' => __('The department has been saved.')
+                    'response' => __('department_success')
                 ];
             } else {
                 $result = [
                     'status' => 'Error',
-                    'response' => __('The department could not be saved. Please, try again.')
+                    'response' => __('department_error')
                 ];
             }
         }else{
@@ -168,12 +168,12 @@ class DepartmentsController extends AuthMasterController
         if ($department) {
             $result = [
                 'status' => 'Success',
-                'response' => __('The User has been deleted.')
+                'response' => __('department_del_success')
             ];
         } else {
             $result = [
                 'status' => 'Error',
-                'response' => __('The department could not be deleted. Please, try again.')
+                'response' => __('department_del_error')
             ];
         }
         $this->set(compact('result'));

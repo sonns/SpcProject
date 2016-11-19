@@ -114,4 +114,9 @@ Router::scope('/notification', function (RouteBuilder $routes) {
     $routes->fallbacks('DashedRoute');
 });
 
+Router::scope('/comment', function (RouteBuilder $routes) {
+    $routes->connect('/', ['controller' => 'Comments', 'action' => 'index'], ['routeClass' => 'DashedRoute']);
+    $routes->connect('/:action/*', ['controller' => 'Comments'], ['routeClass' => 'DashedRoute']);
+    $routes->fallbacks('DashedRoute');
+});
 Plugin::routes();

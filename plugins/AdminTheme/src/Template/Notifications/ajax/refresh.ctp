@@ -1,8 +1,8 @@
-<li class="dropdown-header notif-header"><i class="icon-bell-2"></i> New Notifications<a class="pull-right" href="#"><i class="fa fa-cog"></i></a></li>
+<li class="dropdown-header notif-header"><i class="icon-bell-2"></i><?=__('new_noti')?><a class="pull-right" href="#"><i class="fa fa-cog"></i></a></li>
 <?php if(!count($arrNotification['notificationList'])){?>
     <li class="unread">
         <a href="#">
-            <p><?= __('No Data')?></p>
+            <p><?= __('no_data')?></p>
         </a>
     </li>
 <?php }else{
@@ -21,13 +21,13 @@
 <li class="dropdown-footer">
     <div class="btn-group btn-group-justified">
         <div class="btn-group">
-            <a class="btn btn-sm btn-primary refresh"><i class="icon-ccw-1"></i> Refresh</a>
+            <a class="btn btn-sm btn-primary refresh"><i class="icon-ccw-1"></i><?=__('refresh')?></a>
         </div>
         <div class="btn-group">
-            <a class="btn btn-sm btn-danger clear-all"><i class="icon-trash-3"></i> Clear All</a>
+            <a class="btn btn-sm btn-danger clear-all"><i class="icon-trash-3"></i> <?=__('clear_all')?></a>
         </div>
         <div class="btn-group">
-            <a href="<?= $this->Url->build(['controller'=>'Notifications','action' =>'index'])?>" class="btn btn-sm btn-success">See All <i class="icon-right-open-2"></i></a>
+            <a href="<?= $this->Url->build(['controller'=>'Notifications','action' =>'index'])?>" class="btn btn-sm btn-success"><?=__('see_all')?><i class="icon-right-open-2"></i></a>
         </div>
     </div>
 </li>

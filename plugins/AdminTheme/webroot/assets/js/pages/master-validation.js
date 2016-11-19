@@ -1,4 +1,34 @@
-$(document).ready(function() {
+    $(document).ready(function() {
+    $('#frRequestComment').bootstrapValidator({
+        message: 'This value is not valid',
+        fields: {
+            txtComment: {
+                validators: {
+                    notEmpty: {
+                        message: 'The Comment is required and can\'t be empty'
+                    }
+                }
+            }
+        },
+        submitHandler: function (form) {
+            // console.log($("form").serialize());
+            $.ajax({
+                type: "POST",
+                url:   '/comment/add_ajax.json',
+                dataType: 'text',
+                async:false,
+                data:  $("#frRequestComment").serialize(),
+                success: function (data) {
+                    var returnedData = JSON.parse(data);
+                    $('.listComment').prepend(returnedData.content);
+                    $('#frRequestComment').trigger('reset');
+                    console.log(data);
+                    return true;
+                }
+            });
+            return false; // required to block normal submit since you used ajax
+        }
+    });
     $('#createDepartment').bootstrapValidator({
         message: 'This value is not valid',
         fields: {
@@ -290,6 +320,9 @@ s                            }
         }
     });
 
+
+
+
     var isAddRequest = false;
     $('#frRequest').bootstrapValidator({
         fields: {
@@ -459,4 +492,8 @@ s                            }
 
         return false;
     }));
+
+
+
+
 });

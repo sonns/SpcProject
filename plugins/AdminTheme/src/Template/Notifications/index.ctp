@@ -4,7 +4,7 @@
 
 <!-- Page Heading Start -->
 <div class="page-heading">
-    <h1><i class='fa fa-table'></i> Department List</h1>
+    <h1><i class='fa fa-table'></i><?=__('request_dep') . ' ' . __('list') ?></h1>
 </div>
 <!-- Page Heading End-->
 <!-- Your awesome content goes here -->
@@ -28,13 +28,13 @@
                     <table data-sortable class="table table-hover table-striped">
                         <thead>
                         <tr>
-                            <th>No</th>
+                            <th><?=__('no')?></th>
                             <!--                            <th style="width: 30px" data-sortable="false"><input type="checkbox" class="rows-check"></th>-->
-                            <th>From User</th>
-                            <th>Title</th>
-                            <th>Message</th>
-                            <th>Link</th>
-                            <th>Created Date</th>
+                            <th><?__('from_user')?></th>
+                            <th><?__('title')?></th>
+                            <th><?__('message')?></th>
+                            <th><?__('link')?></th>
+                            <th><?__('create_date')?></th>
                         </tr>
                         </thead>
 
@@ -70,7 +70,7 @@
 <footer>
     Son Nguyen &copy; 2014
     <div class="footer-links pull-right">
-        <a href="#">About</a><a href="#">Support</a><a href="#">Terms of Service</a><a href="#">Legal</a><a href="#">Help</a><a href="#">Contact Us</a>
+        <a href="#"><?__('about')?></a><a href="#"><?__('support')?></a><a href="#"><?__('term_of_service')?></a><a href="#"><?__('legal')?></a><a href="#"><?__('help')?></a><a href="#"><?__('contact_us')?></a>
     </div>
 </footer>
 
@@ -81,7 +81,7 @@
     });
     $(".editDepartment").on("click", function(e){
         resetDepartmentForm();
-        $('#titleDepartment').html('Edit<strong> Department</strong>');
+        $('#titleDepartment').html('<?=__('edit')?> <strong><?=__('department')?></strong>');
         $('#dep_name').val($(this).parents(':eq(2)').find( "td:eq(2)").text());
         $('#dep_tel').val($(this).parents(':eq(2)').find( "td:eq(3)").text());
         $('#dep_address').val($(this).parents(':eq(2)').find( "td:eq(4)").text());
@@ -97,12 +97,12 @@
         }).appendTo('#createDepartment');
     });
     $("#btnAddDepartment").on("click", function(e){
-        $('#titleDepartment').html('Add<strong> Department</strong>');
+        $('#titleDepartment').html('<?=__('add')?><strong> <?=__('department')?></strong>');
         resetDepartmentForm();
     });
     $("#btnResetDepartment").on("click", function(e){
         resetDepartmentForm();
-        $('#titleDepartment').html('Add<strong> Department</strong>');
+        $('#titleDepartment').html('<?=__('add')?><strong> <?=__('department')?></strong>');
     });
     function resetDepartmentForm() {
         $( "#department_id" ).remove( );

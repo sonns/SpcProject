@@ -2,13 +2,13 @@
     <div class="col-sm-10 text-right">
     </div>
     <div class="col-sm-2 text-right">
-        <a href="#" class="btn btn-primary btn-sm invoice-print"><i class="icon-print-2"></i> Print</a>
+        <a href="#" class="btn btn-primary btn-sm invoice-print"><i class="icon-print-2"></i> <?=__('print')?></a>
     </div>
     <div class="col-sm-12 portlets" id="frmRequests">
 
         <div class="widget">
             <div style="margin-bottom: 50px; margin-top: 20px;" class="widget-header text-center">
-                <h2 style="font-size: 30px;"><strong><?= __("form_request")?></strong></h2>
+                <h2 style="font-size: 30px;"><strong><?= __("request_form")?></strong></h2>
                 <br>
                 <br>
             </div>
@@ -21,7 +21,6 @@
                     <tr>
                         <td width="30%"><?= __("request_drafting_date")?></td>
                         <td width="70%">
-                            <!--                            <a href="#" id="drafting_date" data-type="combodate" data-maxYear="2030" data-value="2016-05-15" data-format="YYYY-MM-DD" data-viewformat="YYYY year MM/DD" data-template="YYYY  / MMM / D" data-pk="10"  data-title="Select Drafting Date"></a>-->
                             <span style="float: right;"><strong><?= __("request_year_month_day",[$requestDetail->created->format('Y'),$requestDetail->created->format('m'),$requestDetail->created->format('d')])?><strong></span></td>
                     </tr>
                     <tr>

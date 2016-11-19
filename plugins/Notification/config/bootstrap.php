@@ -12,6 +12,12 @@ Configure::write('Notification.templates.notifierRequest', [
     'body' => ':username '.__('new_post').' :category',
     'link' => ':link'
 ]);
+Configure::write('Notification.templates.returnRequest', [
+    'title' => ':title',
+    'fromUser' => ':username',
+    'body' => ':username '.__('return_post').' :category',
+    'link' => ':link'
+]);
 Configure::write('Notification.templates.notifierForManager', [
     'title' => ':title',
     'fromUser' => ':username',

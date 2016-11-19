@@ -2,22 +2,22 @@
 <div class="md-modal md-slide-stick-top" id="md-add-department">
     <div class="md-content">
         <div class="md-close-btn"><a class="md-close"><i class="fa fa-times"></i></a></div>
-        <h3 id="titleDepartment">Add <strong>Department</strong></h3>
+        <h3 id="titleDepartment"><?=__('add')?> <strong><?=__('department')?></strong></h3>
         <div>
             <div class="row">
                 <div class="col-sm-12">
                     <?php echo $this->Form->create($depart,['url'=>['controller'=>'department','action'=>'add'],'id'=>'createDepartment'])?>
                     <div class="form-group">
-                        <label for="lblUsername">Name</label>
-                        <input type="text" class="form-control" id="dep_name" name="dep_name" placeholder="Enter department name">
+                        <label for="lblUsername"><?=__('name')?></label>
+                        <input type="text" class="form-control" id="dep_name" name="dep_name" placeholder="<?=__('placeholder_department_name')?>">
                     </div>
                     <div class="form-group">
-                        <label for="lblTel">Tel</label>
-                        <input type="text" class="form-control" id="dep_tel" name="dep_tel" placeholder="Enter department tel">
+                        <label for="lblTel"><?=__('tel')?></label>
+                        <input type="text" class="form-control" id="dep_tel" name="dep_tel" placeholder="<?=__('placeholder_department_tel')?>">
                     </div>
                     <div class="form-group">
-                        <label for="lblAddress">Address</label>
-                        <input type="text" class="form-control" id="dep_address" name="dep_address" placeholder="Enter department address">
+                        <label for="lblAddress"><?=__('address')?></label>
+                        <input type="text" class="form-control" id="dep_address" name="dep_address" placeholder="<?=__('placeholder_department_address')?>">
                     </div>
                     <div class="form-group">
                         <div class="col-sm-10">
@@ -37,8 +37,8 @@
                     </div>
 
                     <div class="col-sm-8">
-                        <button type="submit" class="btn btn-success">Submit</button>
-                        <button type="reset" id="btnResetDepartment" class="btn btn-default">Cancel</button>
+                        <button type="submit" class="btn btn-success"><?=__('submit')?></button>
+                        <button type="reset" id="btnResetDepartment" class="btn btn-default"><?=__('cancel')?></button>
                     </div>
                     <div id="message"></div>
                     </form>

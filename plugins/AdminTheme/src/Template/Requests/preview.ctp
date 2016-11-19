@@ -2,13 +2,13 @@
     <div class="col-sm-7 text-left">
         <div class="previewStatus">
             <?php if((int) $requestDetail->department_id === 2 && ($requestDetail->role_name === 'top' || $requestDetail->role_name === 'manager') ){?>
-                        <h3 style="font-weight: bold;width:150px; border-color: #82c51a !important;border-style: dashed;text-align: center;color: #82c51a; ">APPROVED</h3>
+                        <h3 style="font-weight: bold;width:150px; border-color: #82c51a !important;border-style: dashed;text-align: center;color: #82c51a; "><?=__('approved')?></h3>
             <?php }elseif((int)$requestDetail->app_status === 1){?>
-                    <h3 style="font-weight: bold;width:150px; border-color: #82c51a !important;border-style: dashed;text-align: center;color: #82c51a; ">APPROVED</h3>
+                    <h3 style="font-weight: bold;width:150px; border-color: #82c51a !important;border-style: dashed;text-align: center;color: #82c51a; "><?=__('approved')?></h3>
             <?php } elseif((int)$requestDetail->app_status === 2){?>
-                   <h3 style="font-weight: bold;width:150px; border-color: #f12323 !important;border-style: dashed;text-align: center;color: #f12323 ;">REJECTED</h3>
+                   <h3 style="font-weight: bold;width:150px; border-color: #f12323 !important;border-style: dashed;text-align: center;color: #f12323 ;"><?=__('rejected')?></h3>
             <?php }else{ ?>
-                <h3 style="font-weight: bold;width:300px; border-color: #F1DA51 !important;border-style: dashed;text-align: center;color: #F1DA51 ;">WAITING FOR REVIEW</h3>
+                <h3 style="font-weight: bold;width:300px; border-color: #F1DA51 !important;border-style: dashed;text-align: center;color: #F1DA51 ;"><?=__('waiting')?></h3>
             <?php } ?>
             <!--            -->
         </div>
@@ -16,17 +16,17 @@
     <div class="col-sm-5 text-right">
         <?php if($requestDetail->role_name !== 'top' && !((int) $requestDetail->department_id === 2 && $requestDetail->role_name === 'manager' ) ){?>
             <?php if(!(int)$requestDetail->app_status && $userInfo->role[0]->name !== 'staff' && (int)$requestDetail->user_id !== $userInfo->id ){?>
-                <a id="btnApprove" name="btnApprove"  class="btn btn-success btn-sm btnStatus" data-value="<?=$requestDetail->id?>" data-mode="app"><i class="icon-ok-circled"></i>Approve</a>
-                <a id="btnReject" name="btnReject"  class="btn btn-danger btn-sm btnStatus" data-value="<?=$requestDetail->id?>" data-mode="rej"><i class="icon-ok-circled"></i>Reject</a>
+                <a id="btnApprove" name="btnApprove"  class="btn btn-success btn-sm btnStatus" data-value="<?=$requestDetail->id?>" data-mode="app"><i class="icon-ok-circled"></i><?=__('approve')?></a>
+                <a id="btnReject" name="btnReject"  class="btn btn-danger btn-sm btnStatus" data-value="<?=$requestDetail->id?>" data-mode="rej"><i class="icon-ok-circled"></i><?=__('reject')?></a>
             <?php } ?>
         <?php } ?>
-        <a id="btnPrint" name="btnPrint"  class="btn btn-primary btn-sm"><i class="icon-print-2"></i> Print</a>
+        <a id="btnPrint" name="btnPrint"  class="btn btn-primary btn-sm"><i class="icon-print-2"></i> <?=__('print')?></a>
     </div>
     <div class="col-sm-12 portlets" id="frmRequests">
 
         <div class="widget">
             <div style="margin-bottom: 50px; margin-top: 20px;" class="widget-header text-center">
-                <h2 style="font-size: 30px;"><strong><?= __("form_request")?></strong></h2>
+                <h2 style="font-size: 30px;"><strong><?= __("request_form")?></strong></h2>
                 <br>
                 <br>
             </div>
@@ -185,11 +185,11 @@ success: function(data)
     console.log(data);
     $(".btnStatus").remove();
     if($this.data("mode") === 'app') {
-        $(".previewStatus h3").text('APPROVED');
+        $(".previewStatus h3").text('<?=__('approved')?>');
         $(".previewStatus h3").css({'border-color':'#82c51a','color':'#82c51a','width':'150px'});
     }
     if($this.data("mode") === 'rej') {
-        $(".previewStatus h3").text('REJECTED');
+        $(".previewStatus h3").text('<?=__('rejected')?>');
         $(".previewStatus h3").css({'border-color':'#f12323','color':'#f12323','width':'150px'});
     }
     <?php if($userInfo->role[0]->name === 'top'){?>

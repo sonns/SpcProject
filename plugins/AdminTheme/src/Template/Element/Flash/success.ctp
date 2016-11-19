@@ -1,7 +1,7 @@
 <!--<div class="message error" onclick="this.classList.add('hidden');">--><?//= h($message) ?><!--</div>-->
 <?php $this->Html->scriptStart(['block' => true]);?>
 $.notify({
-title: 'Success',
+title: '<?=__('success')?>',
 text: '<?= h($message) ?>',
 image: "<i class='fa fa-check'></i>"
 }, {

@@ -12,7 +12,7 @@
                     <input type="text" class="form-control" placeholder="Search">
                 </div>
                 <div class="right-toolbar">
-                    <a href="javascript:;" class="pull-right">Settings <i class="icon-cog"></i></a>
+                    <a href="javascript:;" class="pull-right"><?=__('setting')?><i class="icon-cog"></i></a>
                     <div class="clearfix"></div>
                 </div>
                 <div class="clearfix"></div>
