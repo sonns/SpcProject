@@ -374,7 +374,18 @@ s                            }
             txtApproveDate: {
                 validators: {
                     notEmpty: {
-                        message: 'The Approve_Date is required and can\'t be empty'
+                        message: 'The Approve Date is required and can\'t be empty'
+                    },
+                    date: {
+                        message: 'Please enter a valid date',
+                        format: 'MM/DD/YYYY'
+                    }
+                }
+            },
+            txtPaymentDate: {
+                validators: {
+                    notEmpty: {
+                        message: 'The Payment Date is required and can\'t be empty'
                     },
                     date: {
                         message: 'Please enter a valid date',
@@ -411,13 +422,17 @@ s                            }
     $('#txtApproveDate')
         .on('changeDate show', function(e) {
             // Validate the date when user change it
-            //$('#frRequest').validateField('datepicker');
-            //$('#frRequest').formValidation('revalidateField', 'txtApproveDate');
             $('#frRequest')
                 .bootstrapValidator('updateStatus', 'txtApproveDate', 'NOT_VALIDATED')
                 .bootstrapValidator('validateField', 'txtApproveDate');
         });
-
+    $('#txtPaymentDate')
+            .on('changeDate show', function(e) {
+                // Validate the date when user change it
+                $('#frRequest')
+                    .bootstrapValidator('updateStatus', 'txtPaymentDate', 'NOT_VALIDATED')
+                    .bootstrapValidator('validateField', 'txtPaymentDate');
+            });
     $('#birthday')
         .on('changeDate show', function(e) {
             $('#editProfile')
@@ -438,7 +453,7 @@ s                            }
                 success: function(data)
                 {
                     var returnedData = JSON.parse(data);
-
+                    $('#listRequests tr:first').after(returnedData.content);
                     if(returnedData.result.status === 'Success'){
                         $("#alertDiv").removeClass("alert-danger");
                         $("#alertDiv").addClass("alert-info");

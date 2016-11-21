@@ -27,6 +27,7 @@ class TblMasterComments extends AbstractMigration
             ->addColumn('req_id', 'integer')
             ->addColumn('role_id', 'integer')
             ->addColumn('contents', 'text')
+            ->addColumn('type', 'enum', array('values' => ['comment','add','edit','status'],'default'=> "comment"))
             ->addColumn('del_flg', 'integer', array('limit' => 1,'default'=>0))
             ->addColumn('created', 'datetime',['default'=> "CURRENT_TIMESTAMP"])
             ->addForeignKey( 'from_user_id',

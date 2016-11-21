@@ -167,6 +167,9 @@ class RequestsTable extends Table
         if (isset($data['txtApproveDate'])) {
             $data['appr_date'] = $data['txtApproveDate'];
         }
+        if (isset($data['txtPaymentDate'])) {
+            $data['payment_date'] = $data['txtPaymentDate'];
+        }
         if (isset($data['txtTitle'])) {
             $data['title'] = $data['txtTitle'];
         }

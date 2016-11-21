@@ -57,8 +57,7 @@ msgstr "稟議を承認しました"
 msgid "rejected_post"
 msgstr "稟議を拒否しました"
 msgid "not_found"
-msgstr "The page you are looking for could not be found"
-        このページが見つけられません
+msgstr "このページが見つけられません!"
 msgid "back_to_dashboard"
 msgstr "ダッシュボードへ戻ります"
 msgid "access_denied"
@@ -77,8 +76,6 @@ msgid "placeholder_email_username"
 msgstr "メールアドレとユーザー名を入力してください"
 msgid "placeholder_email"
 msgstr "メールアドレスを入力してください"
-
-
 msgid "about"
 msgstr "メニュー"
 msgid "support"
@@ -91,7 +88,6 @@ msgid "help"
 msgstr "ヘルプ"
 msgid "contact_us"
 msgstr "問い合わせ"
-
 msgid "add"
 msgstr "追加"
 msgid "no"
@@ -104,8 +100,6 @@ msgid "del"
 msgstr "削除"
 msgid "confirm"
 msgstr "確認済み"
-
-
 msgid "search"
 msgstr "検索"
 msgid "user"
@@ -259,23 +253,15 @@ msgstr "ロッグアウト"
 msgid "logout_confirm"
 msgstr "ロッグアウト確認"
 msgid "logout_content"
-msgstr "Are you sure want to logout from this awesome system?"
-　　　　　　Are you sure to logout this awesome system?
-        素晴らしいシステムを本当にロッグアウトしたいですか。
-msgid "-------------------------------------------------"
-msgstr "---------------------------------------------------------------------------------------------------------------------------------------------------"
+msgstr "素晴らしいシステムを本当にロッグアウトしたいですか。?"
 msgid "auth_alert"
-msgstr "Did you really think you are allowed to see that?"
-        Do you think that you are allowed to see it?
-		これが許されると思いますか？
+msgstr "これが許されると思いますか？?"
 msgid "login_error"
 msgstr "無効なユーザー名またはパスワードです。もう一度してみてください"
-　　　　　　
 msgid "login_success"
 msgstr "ログインができました!!!"
 msgid "comment_error"
-msgstr "The comment could not be saved. Please try again."
-　　　　　　このコメントが保存されませんでした。もう一度保存してみてください
+msgstr "このコメントが保存されませんでした。もう一度保存してみてください."
 msgid "department_success"
 msgstr "属所事業部が保存されました"
 msgid "department_error"
@@ -298,7 +284,6 @@ msgid "profile_error"
 msgstr "プロファイルが保存されませんでした。再保存またはページアドミへ問い合わせをしてみてください"
 msgid "profile_change_success"
 msgstr "情報が変更されました!!"
-
 msgid "user_success"
 msgstr "ユーザーが保存されました"
 msgid "user_error"
@@ -307,20 +292,9 @@ msgid "user_del_success"
 msgstr "ユーザーが削除されました"
 msgid "user_del_error"
 msgstr "ユーザーが削除されませんでした。もう一度削除してみてください"
-
-
 msgid "email_exist"
 msgstr "このメールアドレスが既に作成されたため、別のメールを入力してください"
 msgid "username_exist"
 msgstr "このユーザー名が既に作成されたため、別のユーザー名を入力してください"
 msgid "already_role_exist"
 msgstr "社内でこの権限が既にありました"
-
-
-
-
-
-
-
-
-

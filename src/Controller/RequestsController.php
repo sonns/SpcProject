@@ -17,18 +17,6 @@ class RequestsController extends AuthMasterController
      *
      * @return \Cake\Network\Response|null
      */
-//    public $paginate = [
-//        'limit' => 4,
-//        'finder' => 'orWhere',
-//        'order' => [
-//            'Requests.id' => 'desc'
-//        ],
-//        'contain' =>[
-//            'Users'=>array('fields'=>['username']),
-//            'Departments' =>['fields'=>['name']],
-//            'Categories' => ['fields'=>['name']]
-//        ]
-//    ];
     public $paginate = [
         'limit' => 20,
         'finder' => 'requestList',
@@ -45,16 +33,18 @@ class RequestsController extends AuthMasterController
 
     public function index()
     {
-
-
+        $this->showRequest();
+    }
+    public function reload(){
+        $this->reload();
+    }
+    private function showRequest(){
         $roles = TableRegistry::get('Categories');
         $listCate = $roles->find('list', [
             'keyField' => 'id',
             'valueField' => 'name',
             'conditions' => ''
         ]);
-
-        $conditions = [];
         if($this->user->role[0]->name ==='staff') {
             $conditions = ['group'=>['Requests.id Having Requests.user_id = '.$this->user->id.''],'conditions' => ['OR'=> ['Requests.status ' => 1]]];
         }elseif ($this->user->role[0]->name ==='top'){
@@ -70,8 +60,6 @@ class RequestsController extends AuthMasterController
             $conditions = [];
         }
         $requests = $this->paginate($this->Requests,$conditions);
-//        print_r($requests);exit;
-//        echo '<pre>';print_r($requests) ; echo '</pre>';exit;
         $this->set(compact('requests'));
         $this->set(compact('listCate'));
         $this->set('_serialize', ['requests']);
@@ -132,10 +120,11 @@ class RequestsController extends AuthMasterController
             $this->request->data['user_id'] = $this->user->id;
             $this->request->data['dep_id'] = $this->user->dep_id;
             $this->request->data['txtApproveDate'] = Time::parse($this->request->data['txtApproveDate']);
+            $this->request->data['txtPaymentDate'] = Time::parse($this->request->data['txtPaymentDate']);
             $request = $this->Requests->patchEntity($request, $this->request->data);
             if ($this->Requests->save($request)) {
                 $this->Flash->success(__('request_success'));
-//                $this->addActivities(['req_id'=> $request->id , 'content' => $this->user->profile->first_name .' '. $this->user->profile->last_name . 'created new request with name '.$request->title ]);
+//                $this->addActivities(['req_id'=> $request->id, 'type' => 'add' , 'contents' =>  __('new_post') . ' ' . __('request') ]);
                 return $this->redirect(['action' => 'add']);
             } else {
                 $this->Flash->error(__('request_error'));
@@ -149,6 +138,7 @@ class RequestsController extends AuthMasterController
     public function addRequest()
     {
         if($this->request->is('ajax')){
+            $this->viewBuilder()->className('AdminTheme.Ajax');
             $request = $this->Requests->newEntity();
             $result = [];
             if ($this->request->is('post')) {
@@ -173,11 +163,13 @@ class RequestsController extends AuthMasterController
                 $this->request->data['dep_id'] = $this->user->dep_id;
                 $request->status = 1;
                 $this->request->data['txtApproveDate'] = Time::parse($this->request->data['txtApproveDate']);
+                $this->request->data['txtPaymentDate'] = Time::parse($this->request->data['txtPaymentDate']);
                 $request = $this->Requests->patchEntity($request, $this->request->data);
                 $request = $this->Requests->save($request);
                 if ($request) {
                     $this->pushNotification($request,'add');
-                    $result  = ['params'=>$request , 'status' => 'Success' , 'response'=> __('request_success')];
+                    $requestDetail = $this->Requests->find('requestList')->where(['Requests.id'=>$request->id])->groupBy('Requests.id')->first();
+                    $result  = ['params'=>(count($requestDetail[0])) ? $requestDetail[0] : '' , 'status' => 'Success' , 'response'=> __('request_success')];
                 } else {
                     $result  = ['params'=>$request , 'status' => 'Error' , 'response'=> __('request_error')];
                 }
@@ -228,6 +220,7 @@ class RequestsController extends AuthMasterController
             }else{
                 //nothing
             }
+            $this->addActivities(['req_id'=> $request->id, 'type' => 'add' , 'contents' =>  __('new_post') . ' ' . __('request') ]);
         }
         elseif($mode === 'return'){
             $this->Notification->notify([
@@ -319,6 +312,7 @@ class RequestsController extends AuthMasterController
             else{
                 //nothing
             }
+            $this->addActivities(['req_id'=> $request->id, 'type' => 'status' , 'contents' => (($is_approve) ? __('approve_post') : __('rejected_post') ). ' ' . __('request') ]);
         }
     }
     public function changeStatus(){
@@ -452,8 +446,9 @@ class RequestsController extends AuthMasterController
             $commentE->from_user_id = $this->user->id;
             $commentE->req_id = $data['req_id'];
             $commentE->role_id = $this->user->role[0]->id;
-            $commentE->contents = $data['contents'];
-            $commentE->save($commentE);
+            $commentE->contents = $this->user->profile->first_name .' '. $this->user->profile->last_name .' ' . $data['contents'];
+            $commentE->type = $data['type'];
+            $tblComment->save($commentE);
             return true;
         }
         return false;

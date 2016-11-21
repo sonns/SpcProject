@@ -107,7 +107,6 @@ class AuthMasterController extends AppController
                 'pivotTable' => 'tbl_master_role_user',
                 'autoClearCache' =>Configure::read('debug'),
             ]],
-            'authError' => __('auth_alert'),
             'unauthorizedRedirect' =>[
                 'controller' => 'AuthMaster',
                 'action' => 'accessDenied',
@@ -121,21 +120,15 @@ class AuthMasterController extends AppController
             $this->Auth->setUser($user);
         }
         if ($this->Auth->user()) {
-//            echo 1234;exit;
             $users = TableRegistry::get('Users');
             $this->user = $users->find()->where(['Users.id' => $this->Auth->user()['id']])
                 ->contain(['role', 'dep', 'Profiles'])->first();
-//                    echo '<pre>';
-//                    print_r($this->user);
-//                    echo '</pre>';
-//                    exit;
             $this->set('userInfo', $this->user);
             $this->set('params', $this->params);
             if (!empty($this->user) && empty($this->user->profile)) {
                 if (!$this->_isUpdateProfile())
                     return $this->redirect('user/profile');
             } elseif(empty($this->user)){
-//                print_r($this->user);exit;
                 return $this->redirect($this->Auth->redirectUrl());
             }
             $this->_initMenu();
@@ -203,14 +196,6 @@ class AuthMasterController extends AppController
         ]);
         $menus = [
             'left-menu'=>[
-//                [
-//                    'position'=>1,
-//                    'title'=>"Dashboard",
-//                    'url' => ['controller'=>"AuthMaster",'action'=>'index'],
-//                    'hasPermission' => false,
-//                    'active' => false
-//
-//                ],
                 [
                     'position'=>2,
                     'title'=>"Department",

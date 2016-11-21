@@ -43,7 +43,7 @@
                             <label class="col-sm-3 control-label"><?=__('payment_date')?></label>
                             <div class="col-sm-9">
                                 <input type="text" id="txtPaymentDate" name="txtPaymentDate"
-                                       class="form-control datepicker-input" data-mask="99-99-9999" placeholder="<?=__('placeholder_format_date')?>">
+                                       class="form-control datepicker-input" data-mask="99-99-9999" placeholder="<?=__('placeholder_payment_date')?>">
                             </div>
                         </div>
                         <div class="form-group">
