@@ -121,28 +121,24 @@
                                             <i class="fa fa-cog"></i> <?=__('action')?> <span class="caret"></span>
                                         </button>
                                         <ul class="dropdown-menu primary" role="menu">
-                                            <li class="requestAction" data-mode="multiApp"><a href="javascript:;"><?=__('approve')?></a></li>
-                                            <li class="requestAction" data-mode="multiRej"><a href="javascript:;"><?=__('reject')?></a></li>
-                                            <li class="requestAction" data-mode="multiDel">
+                                            <li>
                                                 <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'icon-eye-off')) . ' '.__('preview'),'/requests/preview/'.$request->id,array('data-toggle'=>"tooltip",'escape' => false,'data-value'=>$request->id  ))?>
-                                                <a href="javascript:;"><?=__('preview')?></a></li>
-                                            <li class="requestAction" data-mode="multiDel"><a href="javascript:;"><?=__('return')?></a></li>
+                                            </li>
+
+                                            <?php if($status['status']){ ?>
+                                                <li>
+                                                    <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'icon-ok-circled')). ' '.__('approve') ,'javascript:;',array('class'=>'statusRequest','data-toggle'=>"tooltip",'escape' => false ,'data-value'=>$request->id,'data-mode' => 'app' ))?>
+                                                </li>
+                                                <li>
+                                                    <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'icon-cancel-circled')). ' '.__('reject'),'javascript:;',array('class'=>'statusRequest','data-toggle'=>"tooltip",'escape' => false,'data-value'=>$request->id,'data-mode' => 'rej'  ))?>
+                                                </li>
+                                                <li>
+                                                    <a class="md-trigger btnReturn"  data-toggle="tooltip" data-value="<?=$request->id;?>" data-mode="return" data-modal="md-add-request_comment"><i class="fa fa-mail-forward"></i> <?=__('return')?></a>
+                                                </li>
+                                            <?php } ?>
                                             <li class="divider"></li>
                                         </ul>
 
-                                        <?php if($userInfo->role[0]->name === 'admin' || $userInfo->role[0]->name === 'staff'){?>
-
-
-                                        <?php }else{ ?>
-                                            <?php if($status['status']){ ?>
-                                                <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'icon-ok-circled')),'javascript:;',array('class'=>'btn btn-success statusRequest','title'=>'Approve','data-toggle'=>"tooltip",'escape' => false ,'data-value'=>$request->id,'data-mode' => 'app' ))?>
-                                                <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'icon-cancel-circled')),'javascript:;',array('class'=>'btn btn-danger statusRequest','title'=>'Reject','data-toggle'=>"tooltip",'escape' => false,'data-value'=>$request->id,'data-mode' => 'rej'  ))?>
-                                                <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'icon-eye-off')),'/requests/preview/'.$request->id,array('class'=>'btn btn-primary','title'=>'Preview','data-toggle'=>"tooltip",'escape' => false,'data-value'=>$request->id,'data-mode' => 'pre'  ))?>
-                                                <a class="btn btn-primary md-trigger btnReturn" title="" data-toggle="tooltip" data-value="<?=$request->id;?>" data-mode="return" data-modal="md-add-request_comment" data-original-title="Return"><i class="fa fa-mail-forward"></i></a>
-                                            <?php }else{ if(($userInfo->role[0]->name === 'manager' && (int)$request->manager_status === 1) || ($userInfo->role[0]->name === 'sub-manager' && (int)$request->sub_manager_status === 1)) ?>
-                                                <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'icon-eye-off')),'/requests/preview/'.$request->id,array('class'=>'btn btn-primary','title'=>'Preview','data-toggle'=>"tooltip",'escape' => false,'data-value'=>$request->id,'data-mode' => 'pre'  ))?>
-                                            <?php } ?>
-                                        <?php } ?>
                                     </div>
                                 </td>
                             </tr>
