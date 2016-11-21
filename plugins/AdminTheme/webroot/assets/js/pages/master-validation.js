@@ -453,7 +453,8 @@ s                            }
                 success: function(data)
                 {
                     var returnedData = JSON.parse(data);
-                    $('#listRequests tr:first').after(returnedData.content);
+                    $('#listRequests tr:eq(1)').before(returnedData.content);
+
                     if(returnedData.result.status === 'Success'){
                         $("#alertDiv").removeClass("alert-danger");
                         $("#alertDiv").addClass("alert-info");
@@ -473,6 +474,9 @@ s                            }
                     $("#alert-modal").addClass("md-show");
                     isAddRequest = false;
                     console.log(data);
+                    updateIndex($('#listRequests tr'));
+                    $('#listRequests tr:last').remove();
+
                     // location.reload();
                 },
                 error: function()
@@ -512,3 +516,10 @@ s                            }
 
 
 });
+function updateIndex(el)
+{
+    $(el).each(function(index){
+        console.log($( this ).find( "td:eq(3)" ).html());
+        $( this ).find( "td:first" ).html( index);
+    });
+}

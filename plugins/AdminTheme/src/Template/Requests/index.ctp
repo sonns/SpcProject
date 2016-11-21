@@ -61,7 +61,7 @@
                         <?php foreach ($requests as $key => $request): ?>
                             <?php
                                 $status = ['class'=>'label-danger','value'=>'Rejected','status' => false, 'rowclass'=> (round( ( strtotime( $this->Time->i18nFormat($request->appr_date,'MM/dd/yyyy') ) - time() ) / 86400 ) <= 1) ? 'highlight-out-pending' : 'highlight-pending'];
-                                if($request->role_name === 'top' || (int)$request->top_status === 1 ||  ((int)$request->department_id === 2 && $request->role_name === 'manager')){
+                                if($request->role_name === 'top' || ((int)$request->department_id === 2 && $request->role_name === 'manager')){
                                     $status = ['class'=>'label-success','value'=>'Approved','status' => false, 'rowclass'=>'highlight-success'];
                                 }else{
                                     if((int)$request->department_id === 2) {
@@ -111,6 +111,8 @@
                                         <strong  title="<?= ((int)$request->manager_status === 2 ? 'Reject by Manager' : 'Approve by Manager')?>"><i class="icon-child"></i></strong>
                                     <?php } if((int)$request->sub_manager_status === 1 || (int)$request->sub_manager_status === 2){ ?>
                                         <strong  title="<?= ((int)$request->sub_manager_status === 2 ? 'Reject by Sub-Manager' : 'Approve by Sub-Manager')?>"><i class="icon-child"></i></strong>
+                                    <?php } if($request->role_name === 'top' || ((int)$request->department_id === 2 && $request->role_name === 'manager')){?>
+                                        <strong  title="<?= ((int)$request->role_name === 'top' ? 'Create by Top' : 'Create by Manager')?>"><i class="icon-child"></i></strong>
                                     <?php } ?>
                                 </td>
                                 <td> <span class="requestStatus label <?= $status['class'] ?>"><?= $status['value'] ?></span></td>
