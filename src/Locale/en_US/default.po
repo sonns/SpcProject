@@ -308,9 +308,16 @@ msgid "username_exist"
 msgstr "This username already exists, please change it"
 msgid "already_role_exist"
 msgstr "We already have this role in this company"
-
-
-
+msgid "approval_confirm"
+msgstr "Approval Confirmation"
+msgid "approval_confirm_content"
+msgstr "Are you sure to approve this application?"
+msgid "rejection_confirm"
+msgstr "Rejection Confirmation"
+msgid "rejection_confirm_content"
+msgstr "Are you sure to reject this application?"
+msgid "confirm_comment"
+msgstr "Leave your comment here."
 
 
 

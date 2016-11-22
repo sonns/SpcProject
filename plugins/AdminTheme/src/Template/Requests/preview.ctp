@@ -26,7 +26,7 @@
 
         <div class="widget">
             <div style="margin-bottom: 50px; margin-top: 20px;" class="widget-header text-center">
-                <h2 style="font-size: 30px;"><strong><?= __("request_form")?></strong></h2>
+                <h2 style="font-size: 30px;"><strong><?= __("form_request")?></strong></h2>
                 <br>
                 <br>
             </div>

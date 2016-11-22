@@ -1,7 +1,7 @@
 <!-- Modal End -->
 <div id="md-add-department" >
     <div class="md-content">
-        <h3><?=__('add')?> <strong><?=__('request_form')?></strong></h3>
+        <h3><?=__('add')?> <strong><?=__('form_request')?></strong></h3>
         <div class="widget">
             <div class="widget-content padding">
                 <form href="request/add" method="post" class="form-horizontal" role="form" id="frRequest" enctype="multipart/form-data">
