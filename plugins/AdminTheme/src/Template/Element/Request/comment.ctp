@@ -1,5 +1,5 @@
 <!-- Modal End -->
-<div class="md-modal md-slide-stick-top" id="md-add-request_comment" >
+<div class="md-modal md-slide-stick-top" id="md-add-request-comment" >
     <div class="md-content" style="height: 600px !important;overflow-y: scroll;">
         <div class="md-close-btn"><a class="md-close"><i class="fa fa-times"></i></a></div>
         <h3><strong><?=__('activities').' '. __('list') ?></strong></h3>

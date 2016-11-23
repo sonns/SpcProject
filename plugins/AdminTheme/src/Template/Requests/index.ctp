@@ -1,6 +1,7 @@
 <!-- Modal add department-->
 <?php echo $this->element('Request/add') ?>
 <?php echo $this->element('Request/comment') ?>
+<?php echo $this->element('Request/change_status') ?>
 <!-- End div .md-modal .md-fade-in-scale-up -->
 
 <!-- Page Heading Start -->
@@ -129,13 +130,13 @@
 
                                             <?php if($status['status']){ ?>
                                                 <li>
-                                                    <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'icon-ok-circled')). ' '.__('approve') ,'javascript:;',array('class'=>'statusRequest','data-toggle'=>"tooltip",'escape' => false ,'data-value'=>$request->id,'data-mode' => 'app' ))?>
+                                                    <a class="md-trigger statusRequest" data-toggle="tooltip" data-value="<?=$request->id;?>" data-mode="app" data-modal="md-add-request-status"><i class="icon-ok-circled"></i>  <?=__('approve')?></a>
                                                 </li>
                                                 <li>
-                                                    <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'icon-cancel-circled')). ' '.__('reject'),'javascript:;',array('class'=>'statusRequest','data-toggle'=>"tooltip",'escape' => false,'data-value'=>$request->id,'data-mode' => 'rej'  ))?>
+                                                    <a class="md-trigger statusRequest" data-toggle="tooltip" data-value="<?=$request->id;?>" data-mode="rej" data-modal="md-add-request-status"><i class="icon-cancel-circled"></i>  <?=__('reject')?></a>
                                                 </li>
                                                 <li>
-                                                    <a class="md-trigger btnReturn"  data-toggle="tooltip" data-value="<?=$request->id;?>" data-mode="return" data-modal="md-add-request_comment"><i class="fa fa-mail-forward"></i> <?=__('return')?></a>
+                                                    <a class="md-trigger btnReturn"  data-toggle="tooltip" data-value="<?=$request->id;?>" data-mode="return" data-modal="md-add-request-comment"><i class="fa fa-mail-forward"></i> <?=__('return')?></a>
                                                 </li>
                                             <?php } ?>
                                             <li class="divider"></li>
@@ -212,35 +213,47 @@ $this->Html->scriptEnd();
     $(".statusRequest").on("click", function(e){
         e.preventDefault();
         var $this = $(this);
-        $.ajax({
-            type: "GET",
-            url:   "/request/change_status.json",
-            dataType: 'text',
-            data:  'request_id='+$this.data("value")+'&mod='+$this.data("mode"),
-            success: function(data)
-            {
-                console.log(data);
-                var returnedData = JSON.parse(data);
-                <?php if($userInfo->role[0]->name === 'top'){?>
-                    if($this.data("mode") === 'app') {
-                        $this.parents(':eq(2)').find('.requestStatus').removeClass('label-danger').removeClass('label-warning').addClass('label-success').text('Approved');
-                    }else {
-                        $this.parents(':eq(2)').find('.requestStatus').removeClass('label-danger').removeClass('label-warning').addClass('label-danger').text('Rejected');
-                    }
-                <?php }elseif($userInfo->role[0]->name === 'staff'){}else{ ?>
-                    if($this.data("mode") === 'app') {
-                        $this.parents(':eq(2)').find('.requestStatus').removeClass('label-danger').removeClass('label-warning').addClass('label-success').text('Approved');
-                    }else {
-                        $this.parents(':eq(2)').find('.requestStatus').removeClass('label-danger').removeClass('label-warning').addClass('label-danger').text('Rejected');
-                    }
-                <?php } ?>
-                var btnAction = $this.parent();
-                btnAction.empty();
-                $("[class='tooltip fade top in']").remove();
-                btnAction.html('<a href="/request/preview/'+returnedData.result.response.id+'" class="btn btn-primary" title="" data-toggle="tooltip" data-value="'+returnedData.result.response.id+'" data-mode="pre" data-original-title="Preview"><i class="icon-eye-off"></i></a>');
-
-            }
-        })
+        $('#frChangeStatusRequest > #request_id').val($this.data("value"));
+        $('#frChangeStatusRequest > #mod').val($this.data("mode"));
+        $('#statusRequestAction').text('<?=__('approve')?>')
+        if($this.data("mode") === 'app') {
+            $('#statusRequestTitle').text('<?=__('approval_confirm')?>')
+            $('.statusRequestContent').text('<?=__('approval_confirm_content')?>')
+            $('#statusRequestAction').text('<?=__('approve')?>')
+        }else if($this.data("mode") === 'rej') {
+            $('#statusRequestTitle').text('<?=__('rejection_confirm')?>')
+            $('.statusRequestContent').text('<?=__('rejection_confirm_content')?>')
+            $('#statusRequestAction').text('<?=__('reject')?>')
+        }
+//        $.ajax({
+//            type: "GET",
+//            url:   "/request/change_status.json",
+//            dataType: 'text',
+//            data:  'request_id='+$this.data("value")+'&mod='+$this.data("mode"),
+//            success: function(data)
+//            {
+//                console.log(data);
+//                var returnedData = JSON.parse(data);
+//                <?php //if($userInfo->role[0]->name === 'top'){?>
+//                    if($this.data("mode") === 'app') {
+//                        $this.parents(':eq(2)').find('.requestStatus').removeClass('label-danger').removeClass('label-warning').addClass('label-success').text('Approved');
+//                    }else {
+//                        $this.parents(':eq(2)').find('.requestStatus').removeClass('label-danger').removeClass('label-warning').addClass('label-danger').text('Rejected');
+//                    }
+//                <?php //}elseif($userInfo->role[0]->name === 'staff'){}else{ ?>
+//                    if($this.data("mode") === 'app') {
+//                        $this.parents(':eq(2)').find('.requestStatus').removeClass('label-danger').removeClass('label-warning').addClass('label-success').text('Approved');
+//                    }else {
+//                        $this.parents(':eq(2)').find('.requestStatus').removeClass('label-danger').removeClass('label-warning').addClass('label-danger').text('Rejected');
+//                    }
+//                <?php //} ?>
+//                var btnAction = $this.parent();
+//                btnAction.empty();
+//                $("[class='tooltip fade top in']").remove();
+//                btnAction.html('<a href="/request/preview/'+returnedData.result.response.id+'" class="btn btn-primary" title="" data-toggle="tooltip" data-value="'+returnedData.result.response.id+'" data-mode="pre" data-original-title="Preview"><i class="icon-eye-off"></i></a>');
+//
+//            }
+//        })
     });
     $(".requestAction").on("click", function(e){
         e.preventDefault();

@@ -178,7 +178,7 @@ class RequestsController extends AuthMasterController
             $this->set('_serialize', ['result']);
         }
     }
-    private function pushNotification($request,$mode, $is_approve = true){
+    private function pushNotification($request,$mode, $is_approve = true ,$cmt = null){
         if($mode === 'add'){
             if(isset($this->user->role[0]->name) && $this->user->role[0]->name === 'staff'){
                 $this->Notification->notify([
@@ -312,14 +312,15 @@ class RequestsController extends AuthMasterController
             else{
                 //nothing
             }
-            $this->addActivities(['req_id'=> $request->id, 'type' => 'status' , 'contents' => (($is_approve) ? __('approve_post') : __('rejected_post') ). ' ' . __('request') ]);
+            $this->addActivities(['req_id'=> $request->id, 'type' => 'status' , 'contents' => ( (($is_approve) ? __('approve_post') : __('rejected_post') ). ' ' . __('request')) . ' with comment : "'. $cmt . '"' ]);
         }
     }
     public function changeStatus(){
         $this->request->allowMethod('ajax');
-        $id = $this->request->query('request_id');
-        $mod = $this->request->query('mod') ;
-        if (!$id || !$this->request->query('mod')) {
+        $id = $this->request->data['request_id'];
+        $mod = $this->request->data['mod'];
+        $cmt = $this->request->data['txtComment'];
+        if (!$id || !$mod) {
             throw new NotFoundException();
         }
         if($mod === 'app' || $mod === 'rej'){
@@ -340,7 +341,7 @@ class RequestsController extends AuthMasterController
                 $approvalE->status = ($mod === 'app' ) ? 'approved' : 'rejected' ;
                 $approval->save($approvalE);
                 //add push noti
-                $this->pushNotification($request,'changeStatus',$mod === 'app' );
+                $this->pushNotification($request,'changeStatus',$mod === 'app' ,$cmt );
 
             }else{
                 throw new NotFoundException();

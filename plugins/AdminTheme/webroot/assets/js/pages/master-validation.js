@@ -29,6 +29,59 @@
             return false; // required to block normal submit since you used ajax
         }
     });
+        $('#frChangeStatusRequest').bootstrapValidator({
+            message: 'This value is not valid',
+            fields: {
+                txtComment: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The Comment is required and can\'t be empty'
+                        }
+                    }
+                }
+            },
+            submitHandler: function (form) {
+                console.log($("form").serialize());
+                $.ajax({
+                    type: "POST",
+                    url:   "/request/change_status.json",
+                    dataType: 'text',
+                    data:  $("#frChangeStatusRequest").serialize(),
+                    success: function(data)
+                    {
+
+                        console.log(data);
+                        var returnedData = JSON.parse(data);
+                        $("#md-add-request-status").removeClass("md-show");
+                        location.reload();
+                    //     <?php if($userInfo->role[0]->name === 'top'){?>
+                    //     if($this.data("mode") === 'app') {
+                    //         $this.parents(':eq(2)').find('.requestStatus').removeClass('label-danger').removeClass('label-warning').addClass('label-success').text('Approved');
+                    //     }else {
+                    //         $this.parents(':eq(2)').find('.requestStatus').removeClass('label-danger').removeClass('label-warning').addClass('label-danger').text('Rejected');
+                    //     }
+                    // <?php }elseif($userInfo->role[0]->name === 'staff'){}else{ ?>
+                    //     if($this.data("mode") === 'app') {
+                    //         $this.parents(':eq(2)').find('.requestStatus').removeClass('label-danger').removeClass('label-warning').addClass('label-success').text('Approved');
+                    //     }else {
+                    //         $this.parents(':eq(2)').find('.requestStatus').removeClass('label-danger').removeClass('label-warning').addClass('label-danger').text('Rejected');
+                    //     }
+                    // <?php } ?>
+                    //     var btnAction = $this.parent();
+                    //     btnAction.empty();
+                    //     $("[class='tooltip fade top in']").remove();
+                    //     btnAction.html('<a href="/request/preview/'+returnedData.result.response.id+'" class="btn btn-primary" title="" data-toggle="tooltip" data-value="'+returnedData.result.response.id+'" data-mode="pre" data-original-title="Preview"><i class="icon-eye-off"></i></a>');
+                    //
+                    }
+                });
+
+
+
+
+                return false; // required to block normal submit since you used ajax
+            }
+        });
+
     $('#createDepartment').bootstrapValidator({
         message: 'This value is not valid',
         fields: {

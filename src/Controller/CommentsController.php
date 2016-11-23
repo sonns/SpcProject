@@ -77,6 +77,10 @@ class CommentsController extends AuthMasterController
         $this->set('_serialize', 'result');
     }
 
+
+
+
+
     private function pushNotification($user , $commentDetail, $is_approve = true){
         $this->Notification->notify([
                 'users' => $user,
