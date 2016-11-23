@@ -4,7 +4,7 @@ $cakeDescription = 'SPC';
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo isset($theme['title']) ? $theme['title'] : 'SPCProject'; ?></title>
     <?= $this->Html->meta(
@@ -177,7 +177,7 @@ echo $this->element('logout');
             $(".livetimestamp").text(moment($(".livetimestamp").data('value'), "MM/DD/YY HH:mm:ss").fromNow());
 //            moment($(".livetimestamp").data('value'), "YYYYMMDD").fromNow();
 //            var socket = io.connect('http://localhost:5000');
-            var socket = io.connect('http://localhost:5000', {
+            var socket = io.connect('http://ringisho.spcvn:5000', {
                 reconnection: true
             });
 
