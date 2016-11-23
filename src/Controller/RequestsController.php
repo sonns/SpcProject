@@ -332,7 +332,7 @@ class RequestsController extends AuthMasterController
             $approval = TableRegistry::get('Approvals');
             $approvalInfo = $approval->find()->where(['user_id'=>$this->user->id,'req_id'=>$id])->first();
 
-            $request->status = 0;
+            $request->status = 1;
             if(!count($approvalInfo)){
                 $approvalE = $approval->newEntity();
                 $approvalE->user_id = $this->user->id;

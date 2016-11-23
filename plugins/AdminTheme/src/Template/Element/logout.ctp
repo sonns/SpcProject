@@ -5,12 +5,12 @@
         <div>
             <p class="text-center"><?=__('logout_content')?></p>
             <p class="text-center">
-                <button class="btn btn-danger md-close"><?=__('cancel')?></button>
                 <a href="<?php echo $this->Url->build([
                     "controller" => "AuthMaster",
                     "action" => "logout",
                     "logout"
                 ])?>" class="btn btn-success md-close"><?=__('submit')?></a>
+                <button class="btn btn-danger md-close"><?=__('cancel')?></button>
             </p>
         </div>
     </div>
