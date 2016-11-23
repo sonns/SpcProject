@@ -68,10 +68,10 @@ if($result['params']->role_name === 'top' || (int)$result['params']->top_status 
 
                 <?php if($status['status']){ ?>
                     <li>
-                        <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'icon-ok-circled')). ' '.__('approve') ,'javascript:;',array('class'=>'statusRequest','data-toggle'=>"tooltip",'escape' => false ,'data-value'=>$result['params']->id,'data-mode' => 'app' ))?>
+                        <a class="md-trigger statusRequest" data-toggle="tooltip" data-value="<?=$request->id;?>" data-mode="app" data-modal="md-add-request-status"><i class="icon-ok-circled"></i>  <?=__('approve')?></a>
                     </li>
                     <li>
-                        <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'icon-cancel-circled')). ' '.__('reject'),'javascript:;',array('class'=>'statusRequest','data-toggle'=>"tooltip",'escape' => false,'data-value'=>$result['params']->id,'data-mode' => 'rej'  ))?>
+                        <a class="md-trigger statusRequest" data-toggle="tooltip" data-value="<?=$request->id;?>" data-mode="rej" data-modal="md-add-request-status"><i class="icon-cancel-circled"></i>  <?=__('reject')?></a>
                     </li>
                     <li>
                         <a class="md-trigger btnReturn"  data-toggle="tooltip" data-value="<?=$result['params']->id;?>" data-mode="return" data-modal="md-add-request_comment"><i class="fa fa-mail-forward"></i> <?=__('return')?></a>
