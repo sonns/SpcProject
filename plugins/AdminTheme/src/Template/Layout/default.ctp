@@ -4,7 +4,7 @@ $cakeDescription = 'SPC';
 <!DOCTYPE html>
 <html>
 <head>
-    <?= $this->Html->charset() ?>
+    <meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo isset($theme['title']) ? $theme['title'] : 'SPCProject'; ?></title>
     <?= $this->Html->meta(
