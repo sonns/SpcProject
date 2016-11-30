@@ -6,6 +6,8 @@
         <div class="widget">
             <!-- Begin timeline -->
             <div class="the-timeline" >
+                <?php // check status !== reject or approve
+                if(true) ?>
                 <form class="form-horizontal" role="form" id="frRequestComment" enctype="multipart/form-data">
                     <div class="form-group">
                         <textarea class="form-control" style="height: 70px;" id="txtComment" name="txtComment" placeholder="<?=__('placeholder_yr_cmt')?>..."></textarea>

@@ -130,14 +130,14 @@
 
                                             <?php if($status['status'] && $userInfo->id !== $request->user_id ){ ?>
                                                 <li>
-                                                    <a class="md-trigger statusRequest" data-toggle="tooltip" data-value="<?=$request->id;?>" data-mode="app" data-modal="md-add-request-status"><i class="icon-ok-circled"></i>  <?=__('approve')?></a>
+                                                    <a class="md-trigger statusRequest" data-toggle="tooltip" data-value="<?=$request->id;?>" data-mode="app" data-status="<?=$status['status']; ?>" data-modal="md-add-request-status"><i class="icon-ok-circled"></i>  <?=__('approve')?></a>
                                                 </li>
                                                 <li>
-                                                    <a class="md-trigger statusRequest" data-toggle="tooltip" data-value="<?=$request->id;?>" data-mode="rej" data-modal="md-add-request-status"><i class="icon-cancel-circled"></i>  <?=__('reject')?></a>
+                                                    <a class="md-trigger statusRequest" data-toggle="tooltip" data-value="<?=$request->id;?>" data-mode="rej"  data-status="<?=$status['status']; ?>" data-modal="md-add-request-status"><i class="icon-cancel-circled"></i>  <?=__('reject')?></a>
                                                 </li>
                                             <?php } ?>
                                             <li>
-                                                <a class="md-trigger btnReturn"  data-toggle="tooltip" data-value="<?=$request->id;?>" data-mode="return" data-modal="md-add-request-comment"><i class="fa fa-mail-forward"></i> <?=__('return')?></a>
+                                                <a class="md-trigger btnReturn"  data-toggle="tooltip" data-value="<?=$request->id;?>" data-mode="return"  data-status="<?=$status['status']; ?>" data-modal="md-add-request-comment"><i class="fa fa-mail-forward"></i> <?=__('return')?></a>
                                             </li>
                                             <li class="divider"></li>
                                         </ul>
@@ -195,7 +195,13 @@ $this->Html->scriptEnd();
         });
     $(".btnReturn").on("click", function(e){
         var $this = $(this);
+        $('.listComment').empty();
         $('#frRequestComment > #request_id').val($this.data("value"));
+        if(parseInt($this.data("status"))){
+            $('#frRequestComment').show();
+        }else{
+            $('#frRequestComment').hide();
+        }
         $.ajax({
             type: "GET",
             url:   "/comment/get_comment.json",
@@ -215,6 +221,7 @@ $this->Html->scriptEnd();
         var $this = $(this);
         $('#frChangeStatusRequest > #request_id').val($this.data("value"));
         $('#frChangeStatusRequest > #mod').val($this.data("mode"));
+
         $('#statusRequestAction').text('<?=__('approve')?>')
         if($this.data("mode") === 'app') {
             $('#statusRequestTitle').text('<?=__('approval_confirm')?>')
