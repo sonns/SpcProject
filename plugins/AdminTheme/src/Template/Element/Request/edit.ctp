@@ -2,7 +2,7 @@
 <div class="md-modal md-slide-stick-top" id="md-edit-request" >
     <div class="md-content" style="height: 600px !important;overflow-y: scroll;">
         <div class="md-close-btn"><a class="md-close"><i class="fa fa-times"></i></a></div>
-        <h3><?=__('edit')?> <strong><?=__('form_request')?></strong></h3>
+        <h3><strong id="titleRequestForm"></strong></h3>
         <div class="widget">
             <div class="widget-content padding">
                 <form class="form-horizontal" role="form" id="frRequest1" enctype="multipart/form-data">
@@ -27,7 +27,7 @@
                         <div class="col-sm-9">
                             <div class="input-group">
                                 <span class="input-group-addon">$</span>
-                                <input type="text" name="txtPrice" class="form-control">
+                                <input type="text" name="txtPrice" id="txtPrice" class="form-control">
                                 <span class="input-group-addon">.00</span>
                             </div>
                         </div>

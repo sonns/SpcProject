@@ -16,21 +16,26 @@ namespace App\Auth;
 
 use App\Utility\FunctionCommon;
 use Cake\Auth\AbstractPasswordHasher;
+use Cake\Core\Configure;
+use Cake\Utility\Security;
 
 class LegacyPasswordHasher extends AbstractPasswordHasher
 {
 
     public function hash($password)
     {
-        return (new FunctionCommon())->cipher_encrypt($password,MCRYPT_KEY);
+//        return (new FunctionCommon())->cipher_encrypt($password,MCRYPT_KEY);
+        return Security::encrypt($password, Configure::read("Security.password"));
     }
 
     public function check($password, $hashedPassword)
     {
-        return $this->hash($password) === fread($hashedPassword, 256);
+//        return $this->hash($password) === fread($hashedPassword, 256);
+        return $this->hash($password) === $hashedPassword;
     }
     public function needsRehash($password)
     {
-        return password_needs_rehash(fread($password, 256), PASSWORD_DEFAULT);
+//        return password_needs_rehash(fread($password, 256), PASSWORD_DEFAULT);
+        return password_needs_rehash($password, PASSWORD_DEFAULT);
     }
 }

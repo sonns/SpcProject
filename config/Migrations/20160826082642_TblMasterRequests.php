@@ -35,11 +35,10 @@ class TblMasterRequests extends AbstractMigration
             ->addColumn('note', 'text',['null'=>true])
             ->addColumn('appr_date', 'datetime')
             ->addColumn('del_flg', 'integer', array('limit' => 1,'default'=>0))
-            ->addColumn('is_report', 'integer', array('limit' => 1,'default'=>0))
-            ->addColumn('status', 'integer', array('limit' => 1,'default'=>1))
+            ->addColumn('status', 'enum', array('values' => ['waiting','approved','rejected','returned']))
+            ->addColumn('payment_date', 'datetime',['default'=> "CURRENT_TIMESTAMP"])
             ->addColumn('created', 'datetime',['default'=> "CURRENT_TIMESTAMP"])
             ->addColumn('modified', 'datetime', array('null' => true,'default'=>null))
-
             ->addForeignKey(
                 'user_id',
                 'tbl_master_users',

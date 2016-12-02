@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller;
 use Cake\I18n\Time;
+use Cake\Network\Exception\ForbiddenException;
 use Cake\Network\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
@@ -48,7 +49,7 @@ class RequestsController extends AuthMasterController
         if($this->user->role[0]->name ==='staff') {
             $conditions = ['group'=>['Requests.id Having Requests.user_id = '.$this->user->id.''],'conditions' => ['OR'=> ['Requests.status ' => 1]]];
         }elseif ($this->user->role[0]->name ==='top'){
-            $conditions = ['group'=>['Requests.id Having manager_status = 1 or Requests.user_id = '.$this->user->id.' OR Requests.is_report = 1'],'conditions' => ['OR'=> ['Requests.status ' => 1]]];
+            $conditions = ['group'=>['Requests.id Having manager_status = 1 or Requests.user_id = '.$this->user->id],'conditions' => ['OR'=> ['Requests.status ' => 1]]];
         }elseif ($this->user->role[0]->name ==='manager'){
             $conditions = ['group'=>
                 ['Requests.id Having (department_id = 2 and role_name ="staff" or Requests.user_id = '.$this->user->id.')
@@ -173,9 +174,9 @@ class RequestsController extends AuthMasterController
             {
                 $request = $this->Requests->newEntity();
             }else{
-                $request = $this->Requests->get($this->request->data['request_id']);
+                $request = $this->Requests->find()->where(['user_id'=>$this->user->id,'id'=>$this->request->data['request_id']])->first();
                 if(!count($request)){
-                    throw new NotFoundException();
+                    throw new ForbiddenException();
                 }
             }
             $request = $this->Requests->patchEntity($request, $this->request->data);
@@ -183,16 +184,14 @@ class RequestsController extends AuthMasterController
             if($request){
                 $this->pushNotification($request, empty($this->request->data['request_id']) ? 'add' : 'edit');
                 $requestDetail = $this->Requests->find('requestList')->where(['Requests.id'=>$request->id])->groupBy('Requests.id')->first();
-                $result  = ['params'=>(count($requestDetail[0])) ? $requestDetail[0] : '' , 'status' => 'Success' , 'response'=> __('request_success')];
+                $result  = [ 'action' =>  empty($this->request->data['request_id']) ? 'add' : 'edit' , 'params'=>(count($requestDetail[0])) ? $requestDetail[0] : '' , 'status' => 'Success' , 'response'=> __('request_success')];
             }else{
-                $result  = ['params'=>$request , 'status' => 'Error' , 'response'=> __('request_error')];
+                $result  = [ 'action' =>  empty($this->request->data['request_id']) ? 'add' : 'edit' , 'params'=>$request , 'status' => 'Error' , 'response'=> __('request_error')];
             }
             $this->set(compact('result'));
             $this->set('_serialize', ['result']);
         }
     }
-
-
     public function addRequest()
     {
         if($this->request->is('ajax')){

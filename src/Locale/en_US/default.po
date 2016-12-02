@@ -97,7 +97,7 @@ msgstr "Add"
 msgid "no"
 msgstr "NO"
 msgid "add_new"
-msgstr "Add new"
+msgstr "Add New"
 msgid "update"
 msgstr "Update"
 msgid "del"
@@ -318,6 +318,9 @@ msgid "rejection_confirm_content"
 msgstr "Are you sure to reject this application?"
 msgid "confirm_comment"
 msgstr "Leave your comment here."
+msgid "edit_request"
+msgstr "Edit Request."
+
 
 
 

@@ -61,6 +61,8 @@
 
                         <?php foreach ($requests as $key => $request): ?>
                             <?php
+                                $request->appr_date = $this->Time->i18nFormat($request->appr_date,'MM/dd/yyyy');
+                                $request->payment_date = $this->Time->i18nFormat($request->payment_date,'MM/dd/yyyy');
                                 $status = ['class'=>'label-danger','value'=>'Rejected','status' => false, 'rowclass'=> (round( ( strtotime( $this->Time->i18nFormat($request->appr_date,'MM/dd/yyyy') ) - time() ) / 86400 ) <= 1) ? 'highlight-out-pending' : 'highlight-pending'];
                                 if($request->role_name === 'top' || ((int)$request->department_id === 2 && $request->role_name === 'manager')){
                                     $status = ['class'=>'label-success','value'=>'Approved','status' => false, 'rowclass'=>'highlight-success'];
@@ -104,7 +106,7 @@
                                 <td><strong><?php echo $request->department_name;?></strong></td>
                                 <td><strong><?php echo $request->categories_name;?></strong></td>
                                 <td><strong><?php echo $request->title;?></strong></td>
-                                <td><strong><?= $this->Time->i18nFormat($request->appr_date,'MM/dd/yyyy');?></strong></td>
+                                <td><strong><?= $request->appr_date;?></strong></td>
                                 <td>
                                     <?php if((int)$request->top_status === 1 || (int)$request->top_status === 2){?>
                                         <strong  title="<?= ((int)$request->top_status === 2 ? 'Reject by Top' : 'Approve by Top')?>"><i class="icon-adult"></i></strong>
@@ -140,9 +142,11 @@
                                                 <a class="md-trigger btnReturn"  data-toggle="tooltip" data-value="<?=$request->id;?>" data-mode="return"  data-status="<?=$status['status']; ?>" data-modal="md-add-request-comment"><i class="fa fa-mail-forward"></i> <?=__('return')?></a>
 
                                             </li>
-                                            <li>
-                                                <a class="md-trigger actionRequest"  data-toggle="tooltip" data-value="<?=$request;?>" data-mode="edit"  data-modal="md-edit-request"><i class="fa fa-mail-forward"></i> <?=__('Edit Request')?></a>
-                                            </li>
+                                            <?php if($userInfo->id === $request->user_id ){ ?>
+                                                <li>
+                                                    <a class="md-trigger actionRequest"  data-toggle="tooltip" data-value='<?=$request;?>' data-mode="edit"  data-modal="md-edit-request"><i class="fa fa-mail-forward"></i> <?=__('edit_request')?></a>
+                                                </li>
+                                            <?php } ?>
                                             <li class="divider"></li>
                                         </ul>
 
@@ -191,11 +195,13 @@ $this->Html->scriptEnd();
 
 <script>
     $(".actionRequest").on("click", function(e){
-        console.log(<?=$request?>);
+        $('#frRequest1').trigger('reset');
         if($(this).data("mode") === 'add')
         {
             $('#frRequest1 > #request_id').val('');
+            $('#titleRequestForm').text('<?=__('add_new'). ' ' .__('request')?>');
         }else {
+            $('#titleRequestForm').text('<?=__('update'). ' ' .__('request')?>');
             bindingForm($(this).data("value"),'edit');
         }
     });
@@ -307,12 +313,19 @@ $this->Html->scriptEnd();
                 console.log(data);
             }
         })
-    })
+    });
     $.fn.reloadList = function($param) {
         alert($param);
-
     };
     function bindingForm(param,mod){
-        console.log(param);
+        $('#frRequest1').find('input[name="request_id"]').val(param.id);
+        $('#frRequest1').find('select[name="sltCategory"]').val(param.cate_id);
+        $('#frRequest1').find('input[name="txtApproveDate"]').val(param.appr_date);
+        $('#frRequest1').find('input[name="txtPaymentDate"]').val(param.payment_date);
+        $('#frRequest1').find('input[name="txtTitle"]').val(param.title);
+        $('#frRequest1').find('input[name="txtDescription"]').val(param.description);
+        $('#frRequest1').find('input[name="txtReason"]').val(param.reason);
+        $('#frRequest1').find('input[name="txtNote"]').val(param.note);
+        $('#frRequest1').find('input[name="txtPrice"]').val(param.price);
     }
 </script>

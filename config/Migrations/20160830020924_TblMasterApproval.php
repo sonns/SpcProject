@@ -21,7 +21,7 @@ class TblMasterApproval extends AbstractMigration
         $requests->addColumn('user_id', 'integer')
             ->addColumn('req_id', 'integer')
             ->addColumn('role_id', 'integer')
-            ->addColumn('status', 'enum', array('values' => ['approved','rejected' ]))
+            ->addColumn('status', 'enum', array('values' => ['approved','rejected','returned']))
             ->addColumn('created', 'datetime',['default'=> "CURRENT_TIMESTAMP"])
             ->addForeignKey(
                 'user_id',

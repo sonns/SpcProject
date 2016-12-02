@@ -655,33 +655,32 @@ s                            }
                     processData:false,
                     success: function(data)
                     {
-                        console.log(data);
-                        // var returnedData = JSON.parse(data);
-                        // $('#listRequests tr:eq(1)').before(returnedData.content);
-                        //
-                        // if(returnedData.result.status === 'Success'){
-                        //     $("#alertDiv").removeClass("alert-danger");
-                        //     $("#alertDiv").addClass("alert-info");
-                        // }else{
-                        //     $("#alertDiv").removeClass("alert-info");
-                        //     $("#alertDiv").addClass("alert-danger");
-                        // }
-                        //
-                        // $("#alertHeader").text(returnedData.result.status);
-                        // $("#alertMessage").text(returnedData.result.response);
-                        // $("#alertMessage").text(returnedData.result.response);
-                        // setTimeout(function () {
-                        //     $("#alert-modal").removeClass("md-show");
-                        // }, 8000);
-                        // $("#md-add-request").removeClass("md-show");
-                        // $('#frRequest').trigger('reset');
-                        // $("#alert-modal").addClass("md-show");
-                        // isAddRequest = false;
-                        // console.log(data);
-                        // updateIndex($('#listRequests tr'));
-                        // $('#listRequests tr:last').remove();
-
-                        location.reload();
+                        var returnedData = JSON.parse(data);
+                        $('#frRequest1 > #request_id').val('');
+                        if(returnedData.result.action === 'add'){
+                            $('#listRequests tr:eq(1)').before(returnedData.content);
+                            updateIndex($('#listRequests tr'));
+                            $('#listRequests tr:last').remove();
+                        }else{
+                            location.reload();
+                        }
+                        if(returnedData.result.status === 'Success'){
+                            $("#alertDiv").removeClass("alert-danger");
+                            $("#alertDiv").addClass("alert-info");
+                        }else{
+                            $("#alertDiv").removeClass("alert-info");
+                            $("#alertDiv").addClass("alert-danger");
+                        }
+                        $("#alertHeader").text(returnedData.result.status);
+                        $("#alertMessage").text(returnedData.result.response);
+                        $("#alertMessage").text(returnedData.result.response);
+                        setTimeout(function () {
+                            $("#alert-modal").removeClass("md-show");
+                        }, 8000);
+                        $("#md-add-request").removeClass("md-show");
+                        $('#frRequest').trigger('reset');
+                        $("#alert-modal").addClass("md-show");
+                        isValidate = false;
                     },
                     error: function()
                     {
