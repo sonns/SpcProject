@@ -29,7 +29,8 @@
             return false; // required to block normal submit since you used ajax
         }
     });
-        $('#frChangeStatusRequest').bootstrapValidator({
+
+    $('#frChangeStatusRequest').bootstrapValidator({
             message: 'This value is not valid',
             fields: {
                 txtComment: {
@@ -191,7 +192,6 @@
             return false; // required to block normal submit since you used ajax
         }
     });
-
 
     $('#createUser').bootstrapValidator({
         message: 'This value is not valid',
@@ -372,10 +372,6 @@ s                            }
             isUpdateProfile = true;
         }
     });
-
-
-
-
     var isAddRequest = false;
     $('#frRequest').bootstrapValidator({
         fields: {
@@ -486,6 +482,219 @@ s                            }
                     .bootstrapValidator('updateStatus', 'txtPaymentDate', 'NOT_VALIDATED')
                     .bootstrapValidator('validateField', 'txtPaymentDate');
             });
+    $("#frRequest").on('submit',(function(e) {
+            if(isAddRequest){
+                $.ajax({
+                    type: "POST",
+                    url:   "/request/addRequest.json",
+                    dataType: 'text',
+                    data:  new FormData(this),
+                    contentType: false,
+                    cache: false,
+                    processData:false,
+                    success: function(data)
+                    {
+                        var returnedData = JSON.parse(data);
+                        $('#listRequests tr:eq(1)').before(returnedData.content);
+
+                        if(returnedData.result.status === 'Success'){
+                            $("#alertDiv").removeClass("alert-danger");
+                            $("#alertDiv").addClass("alert-info");
+                        }else{
+                            $("#alertDiv").removeClass("alert-info");
+                            $("#alertDiv").addClass("alert-danger");
+                        }
+
+                        $("#alertHeader").text(returnedData.result.status);
+                        $("#alertMessage").text(returnedData.result.response);
+                        $("#alertMessage").text(returnedData.result.response);
+                        setTimeout(function () {
+                            $("#alert-modal").removeClass("md-show");
+                        }, 8000);
+                        $("#md-add-request").removeClass("md-show");
+                        $('#frRequest').trigger('reset');
+                        $("#alert-modal").addClass("md-show");
+                        isAddRequest = false;
+                        console.log(data);
+                        updateIndex($('#listRequests tr'));
+                        $('#listRequests tr:last').remove();
+
+                        // location.reload();
+                    },
+                    error: function()
+                    {
+
+                    }
+                })
+                $("html, body").animate({ scrollTop: 0 }, "slow");
+            }
+
+            return false;
+}));
+
+
+        var isValidate = false;
+        $('#frRequest1').bootstrapValidator({
+            fields: {
+                sltCategory: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The Category is required and can\'t be empty'
+                        },
+                    }
+                },
+                txtPrice: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The Price is required and can\'t be empty'
+                        },
+                        digits: {
+                            message: 'The value can contain only digits'
+                        },
+                        callback: {
+                            // message: 'This '+ $('#sltCategory').val() +' category have a minimum price must be up',
+                            callback: function(value, validator) {
+                                var cate = $('#sltCategory').val();
+                                // if(!$('#sltCategory').val() || 0 === $('#sltCategory').val().length){
+                                //     validator.updateStatus('sltCategory', 'INVALID ', 'notEmpty');
+                                // }
+                                if(value < 10000 && cate === '4' )
+                                {
+                                    // var fields = validator.getMessageContainer('txtPrice');
+                                    // alert(fields);exit;
+                                    // validator.option.message = 'This \''+ $('#sltCategory').val() +'\' category have a minimum sale price must be up';
+
+                                    $("small[data-bv-validator-for='txtPrice']:last").html(
+                                        'This \' '+ $('#sltCategory').find(":selected").text() +' \' category have a minimum price must be up 10.000'
+                                    );
+                                    return false;
+                                }else if(value < 5000 && cate === '6'){
+                                    // validator.option.message = 'This \''+ $('#sltCategory').val() +'\' category have a minimum sale price must be up';
+                                    $("small[data-bv-validator-for='txtPrice']:last").html(
+                                        'This \''+ $('#sltCategory').find(":selected").text() +'\' category have a minimum price must be up 5.000'
+                                    );
+                                    return false;
+                                }
+                                // var items = $('#captchaOperation').html().split(' '), sum = parseInt(items[0]) + parseInt(items[2]);
+                                return true;
+                            }
+                        }
+                    }
+                },
+                txtApproveDate: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The Approve Date is required and can\'t be empty'
+                        },
+                        date: {
+                            message: 'Please enter a valid date',
+                            format: 'MM/DD/YYYY'
+                        }
+                    }
+                },
+                txtPaymentDate: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The Payment Date is required and can\'t be empty'
+                        },
+                        date: {
+                            message: 'Please enter a valid date',
+                            format: 'MM/DD/YYYY'
+                        }
+                    }
+                },
+                txtTitle: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The Title is required and can\'t be empty'
+                        }
+                    }
+                },
+                txtDescription: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The Description is required and can\'t be empty'
+                        }
+                    }
+                },
+                txtReason: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The Reason is required and can\'t be empty'
+                        }
+                    }
+                }
+            },
+            submitHandler: function (form) {
+                isValidate = true;
+            }
+        });
+        $('#txtApproveDate')
+            .on('changeDate show', function(e) {
+                // Validate the date when user change it
+                $('#frRequest1')
+                    .bootstrapValidator('updateStatus', 'txtApproveDate', 'NOT_VALIDATED')
+                    .bootstrapValidator('validateField', 'txtApproveDate');
+            });
+        $('#txtPaymentDate')
+            .on('changeDate show', function(e) {
+                // Validate the date when user change it
+                $('#frRequest1')
+                    .bootstrapValidator('updateStatus', 'txtPaymentDate', 'NOT_VALIDATED')
+                    .bootstrapValidator('validateField', 'txtPaymentDate');
+            });
+        $("#frRequest1").on('submit',(function(e) {
+            if(isValidate){
+                $.ajax({
+                    type: "POST",
+                    url:   "/request/addOrEdit.json",
+                    dataType: 'text',
+                    data:  new FormData(this),
+                    contentType: false,
+                    cache: false,
+                    processData:false,
+                    success: function(data)
+                    {
+                        console.log(data);
+                        // var returnedData = JSON.parse(data);
+                        // $('#listRequests tr:eq(1)').before(returnedData.content);
+                        //
+                        // if(returnedData.result.status === 'Success'){
+                        //     $("#alertDiv").removeClass("alert-danger");
+                        //     $("#alertDiv").addClass("alert-info");
+                        // }else{
+                        //     $("#alertDiv").removeClass("alert-info");
+                        //     $("#alertDiv").addClass("alert-danger");
+                        // }
+                        //
+                        // $("#alertHeader").text(returnedData.result.status);
+                        // $("#alertMessage").text(returnedData.result.response);
+                        // $("#alertMessage").text(returnedData.result.response);
+                        // setTimeout(function () {
+                        //     $("#alert-modal").removeClass("md-show");
+                        // }, 8000);
+                        // $("#md-add-request").removeClass("md-show");
+                        // $('#frRequest').trigger('reset');
+                        // $("#alert-modal").addClass("md-show");
+                        // isAddRequest = false;
+                        // console.log(data);
+                        // updateIndex($('#listRequests tr'));
+                        // $('#listRequests tr:last').remove();
+
+                        location.reload();
+                    },
+                    error: function()
+                    {
+
+                    }
+                })
+                $("html, body").animate({ scrollTop: 0 }, "slow");
+            }
+            return false;
+        }));
+
+
+
     $('#birthday')
         .on('changeDate show', function(e) {
             $('#editProfile')
@@ -493,55 +702,7 @@ s                            }
                 .bootstrapValidator('validateField', 'birthday');
     });
 
-    $("#frRequest").on('submit',(function(e) {
-        if(isAddRequest){
-            $.ajax({
-                type: "POST",
-                url:   "/request/addRequest.json",
-                dataType: 'text',
-                data:  new FormData(this),
-                contentType: false,
-                cache: false,
-                processData:false,
-                success: function(data)
-                {
-                    var returnedData = JSON.parse(data);
-                    $('#listRequests tr:eq(1)').before(returnedData.content);
 
-                    if(returnedData.result.status === 'Success'){
-                        $("#alertDiv").removeClass("alert-danger");
-                        $("#alertDiv").addClass("alert-info");
-                    }else{
-                        $("#alertDiv").removeClass("alert-info");
-                        $("#alertDiv").addClass("alert-danger");
-                    }
-
-                    $("#alertHeader").text(returnedData.result.status);
-                    $("#alertMessage").text(returnedData.result.response);
-                    $("#alertMessage").text(returnedData.result.response);
-                    setTimeout(function () {
-                        $("#alert-modal").removeClass("md-show");
-                    }, 8000);
-                    $("#md-add-request").removeClass("md-show");
-                    $('#frRequest').trigger('reset');
-                    $("#alert-modal").addClass("md-show");
-                    isAddRequest = false;
-                    console.log(data);
-                    updateIndex($('#listRequests tr'));
-                    $('#listRequests tr:last').remove();
-
-                    // location.reload();
-                },
-                error: function()
-                {
-
-                }
-            })
-            $("html, body").animate({ scrollTop: 0 }, "slow");
-        }
-
-        return false;
-    }));
 
     $("#editProfile").on('submit',(function(e) {
         if(isUpdateProfile){

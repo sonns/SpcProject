@@ -1,5 +1,5 @@
 <!-- Modal add department-->
-<?php echo $this->element('Request/add') ?>
+<?php echo $this->element('Request/edit') ?>
 <?php echo $this->element('Request/comment') ?>
 <?php echo $this->element('Request/change_status') ?>
 <!-- End div .md-modal .md-fade-in-scale-up -->
@@ -32,7 +32,7 @@
                                         <i class="fa fa-cog"></i> <?=__('action')?> <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu primary" role="menu">
-                                        <li><a  data-modal="md-add-request" class="md-trigger" ><?=__('add_new')?></a></li>
+                                        <li><a  data-modal="md-edit-request" class="md-trigger actionRequest" data-mode="add"   ><?=__('add_new')?></a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -138,6 +138,10 @@
                                             <?php } ?>
                                             <li>
                                                 <a class="md-trigger btnReturn"  data-toggle="tooltip" data-value="<?=$request->id;?>" data-mode="return"  data-status="<?=$status['status']; ?>" data-modal="md-add-request-comment"><i class="fa fa-mail-forward"></i> <?=__('return')?></a>
+
+                                            </li>
+                                            <li>
+                                                <a class="md-trigger actionRequest"  data-toggle="tooltip" data-value="<?=$request;?>" data-mode="edit"  data-modal="md-edit-request"><i class="fa fa-mail-forward"></i> <?=__('Edit Request')?></a>
                                             </li>
                                             <li class="divider"></li>
                                         </ul>
@@ -186,6 +190,15 @@ $this->Html->scriptEnd();
 ?>
 
 <script>
+    $(".actionRequest").on("click", function(e){
+        console.log(<?=$request?>);
+        if($(this).data("mode") === 'add')
+        {
+            $('#frRequest1 > #request_id').val('');
+        }else {
+            bindingForm($(this).data("value"),'edit');
+        }
+    });
     $('#checkAll')
         .on('ifChecked', function(event) {
             $("input[name='request_id[]']").iCheck('check');
@@ -299,4 +312,7 @@ $this->Html->scriptEnd();
         alert($param);
 
     };
+    function bindingForm(param,mod){
+        console.log(param);
+    }
 </script>

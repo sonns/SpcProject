@@ -135,6 +135,64 @@ class RequestsController extends AuthMasterController
         $this->set('_serialize', ['request']);
         $this->set('_serialize', ['listCate']);
     }
+
+    /**
+     * Add method
+     *
+     * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
+     */
+    public function addOrEdit()
+    {
+        if($this->request->is('ajax') && $this->request->is('post')){
+
+            $this->viewBuilder()->className('AdminTheme.Ajax');
+
+            //Check if image has been uploaded
+            if (!empty($this->request->data['fileAttach']['name'])) {
+                $file = $this->request->data['fileAttach'];
+
+                $ext = substr(strtolower(strrchr($file['name'], '.')), 1);
+                $arr_ext = array('jpg', 'jpeg', 'gif','png');
+//                    if (in_array($ext, $arr_ext)) {
+                if (true) {
+                    $path =  WWW_ROOT . 'file\request\\';
+                    if(!is_dir($path)){
+                        mkdir($path, 777,true);
+                    }
+                    move_uploaded_file($file['tmp_name'], $path . $file['name']);
+                    //prepare the filename for database entry
+                    $this->request->data['attach'] = $file['name'];
+                }
+            }
+            $this->request->data['user_id'] = $this->user->id;
+            $this->request->data['dep_id'] = $this->user->dep_id;
+            $this->request->data['txtApproveDate'] = Time::parse($this->request->data['txtApproveDate']);
+            $this->request->data['txtPaymentDate'] = Time::parse($this->request->data['txtPaymentDate']);
+            // If the request_id is empty, add new request
+            if(empty($this->request->data['request_id']))
+            {
+                $request = $this->Requests->newEntity();
+            }else{
+                $request = $this->Requests->get($this->request->data['request_id']);
+                if(!count($request)){
+                    throw new NotFoundException();
+                }
+            }
+            $request = $this->Requests->patchEntity($request, $this->request->data);
+            $request = $this->Requests->save($request);
+            if($request){
+                $this->pushNotification($request, empty($this->request->data['request_id']) ? 'add' : 'edit');
+                $requestDetail = $this->Requests->find('requestList')->where(['Requests.id'=>$request->id])->groupBy('Requests.id')->first();
+                $result  = ['params'=>(count($requestDetail[0])) ? $requestDetail[0] : '' , 'status' => 'Success' , 'response'=> __('request_success')];
+            }else{
+                $result  = ['params'=>$request , 'status' => 'Error' , 'response'=> __('request_error')];
+            }
+            $this->set(compact('result'));
+            $this->set('_serialize', ['result']);
+        }
+    }
+
+
     public function addRequest()
     {
         if($this->request->is('ajax')){

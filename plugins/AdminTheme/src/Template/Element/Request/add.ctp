@@ -32,6 +32,7 @@
                                 </div>
                             </div>
                         </div>
+                        <input type="hidden" name="request_id" id="request_id" value="">
                         <div class="form-group">
                             <label class="col-sm-3 control-label"><?=__('appr_date')?></label>
                             <div class="col-sm-9">
