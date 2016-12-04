@@ -25,6 +25,7 @@ class TblMasterDepartmentsSeed extends AbstractSeed
                 'tel'  => '0932093940',
                 'address'  => 'Tokyo',
                 'del_flg'  => 0,
+                'status' => 1,
                 'created'  => '2016-08-27 13:23:29',
                 'modified'  => '2016-08-27 13:23:29',
             ]

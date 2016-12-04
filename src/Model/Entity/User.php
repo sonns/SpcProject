@@ -2,7 +2,9 @@
 namespace App\Model\Entity;
 
 use App\Utility\FunctionCommon;
+use Cake\Core\Configure;
 use Cake\ORM\Entity;
+use Cake\Utility\Security;
 
 /**
  * TblMasterUser Entity
@@ -38,14 +40,9 @@ class User extends Entity
     protected function _setPassword($password)
     {
 //        print_r(fopen((new FunctionCommon)->cipher_encrypt($password,MCRYPT_KEY),256)) ;exit;
-        return (new FunctionCommon)->cipher_encrypt($password,MCRYPT_KEY);
+        return base64_encode(Security::encrypt($password, Configure::read("Security.password")));
     }
 
-//    protected function _getPassword($password)
-//    {
-//        // convert binary to string
-//        return fread($password, 256);
-//    }
 
 //    protected function _getAliasName()
 //    {

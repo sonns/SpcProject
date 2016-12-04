@@ -47,20 +47,21 @@ class RequestsController extends AuthMasterController
             'conditions' => ''
         ]);
         if($this->user->role[0]->name ==='staff') {
-            $conditions = ['group'=>['Requests.id Having Requests.user_id = '.$this->user->id.''],'conditions' => ['OR'=> ['Requests.status ' => 1]]];
+            $conditions = ['group'=>['Requests.id Having Requests.user_id = '.$this->user->id.''],'conditions' => ['OR'=> ['Requests.del_flg ' => 0]]];
         }elseif ($this->user->role[0]->name ==='top'){
-            $conditions = ['group'=>['Requests.id Having manager_status = 1 or Requests.user_id = '.$this->user->id],'conditions' => ['OR'=> ['Requests.status ' => 1]]];
+            $conditions = ['group'=>['Requests.id Having role_name ="manager" or manager_status = 1 or Requests.user_id = '.$this->user->id],'conditions' => ['OR'=> ['Requests.del_flg ' => 0]]];
         }elseif ($this->user->role[0]->name ==='manager'){
             $conditions = ['group'=>
-                ['Requests.id Having (department_id = 2 and role_name ="staff" or Requests.user_id = '.$this->user->id.')
-            or ( department_id <> 2  and sub_manager_status = 1 or Requests.user_id = '.$this->user->id.' )'],'conditions' => ['OR'=> ['Requests.status ' => 1]]];
+                ['Requests.id Having (department_id = 1 and role_name ="staff" or Requests.user_id = '.$this->user->id.')
+            or ( department_id <> 1  and sub_manager_status = 1 or Requests.user_id = '.$this->user->id.' )'],'conditions' => ['OR'=> ['Requests.del_flg ' => 0]]];
         }
         elseif ($this->user->role[0]->name ==='sub-manager'){
-            $conditions = ['group'=>['Requests.id Having  department_id <> 2 and role_name =\'staff\' and department_id = '.$this->user->dep_id.' or Requests.user_id = '.$this->user->id.' '],'conditions' => ['OR'=> ['Requests.status ' => 1]]];
+            $conditions = ['group'=>['Requests.id Having  department_id <> 1 and role_name =\'staff\' and department_id = '.$this->user->dep_id.' or Requests.user_id = '.$this->user->id.' '],'conditions' => ['OR'=> ['Requests.del_flg ' => 0]]];
         }else{
             $conditions = [];
         }
-        $requests = $this->paginate($this->Requests,$conditions);
+        $requests = $this->paginate($this->Requests,$conditions)->toArray();
+//        print_r($requests);exit;
         $this->set(compact('requests'));
         $this->set(compact('listCate'));
         $this->set('_serialize', ['requests']);
@@ -202,9 +203,8 @@ class RequestsController extends AuthMasterController
                 //Check if image has been uploaded
                 if (!empty($this->request->data['fileAttach']['name'])) {
                     $file = $this->request->data['fileAttach'];
-
-                    $ext = substr(strtolower(strrchr($file['name'], '.')), 1);
-                    $arr_ext = array('jpg', 'jpeg', 'gif','png');
+//                    $ext = substr(strtolower(strrchr($file['name'], '.')), 1);
+//                    $arr_ext = array('jpg', 'jpeg', 'gif','png');
 //                    if (in_array($ext, $arr_ext)) {
                     if (true) {
                         $path =  WWW_ROOT . 'file\request\\';
@@ -218,7 +218,11 @@ class RequestsController extends AuthMasterController
                 }
                 $this->request->data['user_id'] = $this->user->id;
                 $this->request->data['dep_id'] = $this->user->dep_id;
-                $request->status = 1;
+                if ($this->user->role[0]->name ==='top' or ($this->user->role[0]->name ==='manager' && $this->user->dep_id === 2)){
+                    $request->status = 'approved';
+                }else{
+                    $request->status = 'waiting';
+                }
                 $this->request->data['txtApproveDate'] = Time::parse($this->request->data['txtApproveDate']);
                 $this->request->data['txtPaymentDate'] = Time::parse($this->request->data['txtPaymentDate']);
                 $request = $this->Requests->patchEntity($request, $this->request->data);

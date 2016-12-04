@@ -80,26 +80,29 @@ class RequestsTable extends Table
             ->addCase([
                 $query->newExpr()->add(['Roles.name' => 'top','Approvals.status'=>'approved']),
                 $query->newExpr()->add(['Roles.name' => 'top','Approvals.status'=>'rejected']),
+                $query->newExpr()->add(['Roles.name' => 'top','Approvals.status'=>'returned']),
             ],
-                [1,2,0],
-                ['integer', 'integer', 'integer']
+                [1,2,3,0],
+                ['integer', 'integer', 'integer', 'integer']
             );
         $manager_status = $query->newExpr()
             ->addCase([
                 $query->newExpr()->add(['Roles.name' => 'manager','Approvals.status'=>'approved']),
                 $query->newExpr()->add(['Roles.name' => 'manager','Approvals.status'=>'rejected']),
+                $query->newExpr()->add(['Roles.name' => 'manager','Approvals.status'=>'returned']),
             ],
-                [1,2,0],
-                ['integer', 'integer', 'integer']
+                [1,2,3,0],
+                ['integer', 'integer', 'integer', 'integer']
             );
         $sub_manager_status = $query->newExpr()
             ->addCase(
                 [
                     $query->newExpr()->add(['Roles.name' => 'sub-manager','Approvals.status'=>'approved']),
                     $query->newExpr()->add(['Roles.name' => 'sub-manager','Approvals.status'=>'rejected']),
+                    $query->newExpr()->add(['Roles.name' => 'sub-manager','Approvals.status'=>'returned']),
                 ],
-                [1,2,0],
-                ['integer', 'integer', 'integer']
+                [1,2,3,0],
+                ['integer', 'integer', 'integer', 'integer']
             );
 
         $query = $query->autoFields(true)->select([
@@ -136,8 +139,6 @@ class RequestsTable extends Table
                 'type' => 'LEFT',
                 'conditions' => 'Roles1.id = RoleUser.role_id',
             ]);
-//            ->where($conditions)
-//            ->group('Requests.id');
         return $query->hydrate(true);
 
     }

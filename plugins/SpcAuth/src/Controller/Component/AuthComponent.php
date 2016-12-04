@@ -58,7 +58,7 @@ class AuthComponent extends CakeAuthComponent {
 	 * @return \Cake\Network\Response|null
 	 */
 	public function startup(Event $event) {
-	    if($this->_config['mode']){
+        if($this->_config['mode']){
             $this->_prepareAuthentication();
         }
 
@@ -71,7 +71,6 @@ class AuthComponent extends CakeAuthComponent {
 	 */
 	protected function _prepareAuthentication() {
 		$authentication = $this->_getAuth($this->_config['filePath']);
-
 		$params = $this->request->params;
 		foreach ($authentication as $rule) {
 			if ($params['plugin'] && $params['plugin'] !== $rule['plugin']) {

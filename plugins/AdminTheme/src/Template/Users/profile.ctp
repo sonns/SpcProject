@@ -15,8 +15,8 @@
                 <li  class="active"><a href="#about" data-toggle="tab"><i class="fa fa-user"></i> <?=__('about')?></a></li>
                 <li><a href="#reset_password" data-toggle="tab"><i class="fa fa-pencil"></i><?__('reset_pass')?></a></li>
                 <?php if($userInfo['role'][0]->name === 'admin'): ?>
-                    <li><a href="#user-activities" data-toggle="tab"><i class="fa fa-laptop"></i> <?=__('activities')?></a></li>
-                    <li><a href="#mymessage" data-toggle="tab"><i class="fa fa-envelope"></i><?=__('message')?></a></li>
+<!--                    <li><a href="#user-activities" data-toggle="tab"><i class="fa fa-laptop"></i> --><?//=__('activities')?><!--</a></li>-->
+<!--                    <li><a href="#mymessage" data-toggle="tab"><i class="fa fa-envelope"></i>--><?//=__('message')?><!--</a></li>-->
                 <?php endif; ?>
 
             </ul>
@@ -29,8 +29,8 @@
                 <!-- End Tab about -->
                 <?php echo $this->element('User/change_password') ?>
                 <?php if($userInfo['role'][0]->name === 'admin'): ?>
-                    <?php echo $this->element('User/activities') ?>
-                    <?php echo $this->element('User/mymessage') ?>
+<!--                    --><?php //echo $this->element('User/activities') ?>
+<!--                    --><?php //echo $this->element('User/mymessage') ?>
                 <?php endif;?>
 
 

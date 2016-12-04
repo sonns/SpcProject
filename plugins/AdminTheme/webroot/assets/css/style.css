@@ -3,13 +3,16 @@
   background-color: #b0f5da !important;
 }
 .highlight-reject{
-  background-color: #f9f9f9 !important;
+  background-color: #ffb0b0 !important;
+}
+.highlight-return{
+  background-color: #b4bfdc !important;
 }
 .highlight-out-pending{
-  background-color: #ffb8b8 !important;
+  background-color: #fffc8f !important;
 }
 .highlight-pending{
-  background-color: #ffff99 !important;
+  background-color: #f8f8f8 !important;
 }
 .datepicker{
   z-index:9999999 !important;

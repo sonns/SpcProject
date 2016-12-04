@@ -28,7 +28,7 @@ class TblMasterUsers extends AbstractMigration
             ->addColumn('dep_id', 'integer')
             ->addColumn('email', 'string')
             ->addColumn('username', 'string')
-            ->addColumn('password', 'blob', array('limit' => MysqlAdapter::BLOB_REGULAR))
+            ->addColumn('password', 'string', array('limit' => 255))
             ->addColumn('remember_token', 'string', array('limit' => 255,'null' => true,'default'=>null))
             ->addColumn('confirmation_code', 'string', array('limit' => 200,'null' => true,'default'=>null))
             ->addColumn('confirmed', 'integer', array('limit' => 50,'null' => true,'default'=>0))

@@ -23,17 +23,14 @@ class RolesController extends AuthMasterController
      */
     public function index()
     {
-
         $roles = $this->Roles->find('all');
         $listAcl = $this->MyAuth->getACL();
-//        print("<pre>".print_r($listAcl,true)."</pre>"); exit;
         if ($this->request->is('post')) {
             $data =  $this->request->data;
             $dataini = [];
             if($data['mode'])
             {
                 // backup file acl.ini
-
                 foreach($listAcl as $key => $acls){
                     //$key = controller
                     if(isset($data[$key])){

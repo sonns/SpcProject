@@ -2,9 +2,11 @@
 namespace App\Controller;
 
 use App\Utility\FunctionCommon;
+use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\I18n\Time;
 use Cake\ORM\TableRegistry;
+use Cake\Utility\Security;
 
 /**
  * Users Controller
@@ -14,7 +16,7 @@ use Cake\ORM\TableRegistry;
 class UsersController extends AuthMasterController
 {
     public $paginate = [
-        'limit' => 4
+        'limit' => 20
     ];
     public function  initialize()
     {
@@ -79,7 +81,7 @@ class UsersController extends AuthMasterController
             }elseif (isset($this->request->data['hdnmode']) && $this->request->data['hdnmode'] === 'resetpass'){
                 $query = $this->Users->query();
                 $userInfo =  $query->update()
-                    ->set(['password' => (new FunctionCommon)->cipher_encrypt($this->request->data['password'],MCRYPT_KEY)])
+                    ->set(['password' => base64_encode(Security::encrypt($this->request->data['password'], Configure::read("Security.password")))])
                     ->where(['id' => $this->user->id])
                     ->execute();
                 if ($userInfo) {
@@ -248,4 +250,6 @@ class UsersController extends AuthMasterController
 
         return $this->redirect(['action' => 'index']);
     }
+
+
 }

@@ -21,10 +21,21 @@ class TblMasterUsersSeed extends AbstractSeed
     public function run()
     {
 
-        $pass = Security::encrypt('123456', Configure::read("Security.password"));
+        $pass = base64_encode(Security::encrypt('123456', Configure::read("Security.password")));
         $data = [
             [
                 'id'    => 1,
+                'dep_id'    => 1,
+                'password'  => $pass,
+                'email'  => 'admin@gmail.com',
+                'username'  => 'admin',
+                'confirmed'=>1,
+                'del_flg'  => 0,
+                'created'  => '2016-08-27 13:23:29',
+                'modified'  => '2016-08-27 13:23:29',
+            ],
+            [
+                'id'    => 2,
                 'dep_id'    => 1,
                 'password'  => $pass,
                 'email'  => 'truongsonns@gmail.com',
@@ -85,6 +96,11 @@ class TblMasterUsersSeed extends AbstractSeed
                 'id'    => 1,
                 'user_id'    => 1,
                 'role_id'  => 1,
+            ],
+            [
+                'id'    => 2,
+                'user_id'    => 2,
+                'role_id'  => 2,
             ]
         ];
 

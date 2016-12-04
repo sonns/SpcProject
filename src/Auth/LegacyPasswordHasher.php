@@ -25,13 +25,13 @@ class LegacyPasswordHasher extends AbstractPasswordHasher
     public function hash($password)
     {
 //        return (new FunctionCommon())->cipher_encrypt($password,MCRYPT_KEY);
-        return Security::encrypt($password, Configure::read("Security.password"));
+        return base64_encode(Security::encrypt($password, Configure::read("Security.password")));
     }
 
     public function check($password, $hashedPassword)
     {
 //        return $this->hash($password) === fread($hashedPassword, 256);
-        return $this->hash($password) === $hashedPassword;
+        return $password === Security::decrypt(base64_decode($hashedPassword), Configure::read("Security.password"));
     }
     public function needsRehash($password)
     {

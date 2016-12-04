@@ -12,14 +12,13 @@
                 <form method="post" id="createUser">
                 <div class="form-group">
                     <label for="lblEmail"><?=__('email')?></label>
-                    <input type="text" class="form-control" id="email" name="email" placeholder="<?__('placeholder_email')?>">
+                    <input type="text" class="form-control" id="email" name="email" placeholder="<?=__('placeholder_email')?>" >
                 </div>
                 <div class="form-group">
                     <label for="lblUsername"><?=__('username')?></label>
-                    <input type="text" class="form-control" id="username" name="username" placeholder="<?__('placeholder_username')?>">
+                    <input type="text" class="form-control" id="username" name="username" placeholder="<?=__('placeholder_username')?>">
                 </div>
                 <div class="form-group">
-<!--                    <label for="lblUsername">Role</label>-->
                     <?php  echo $this->Form->input(
                         'role_id',
                         array(

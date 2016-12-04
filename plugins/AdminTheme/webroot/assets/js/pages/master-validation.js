@@ -293,7 +293,7 @@
                                 $( ".alertMessage" ).replaceWith( res.content );
                                 $('#createUser').trigger('reset');
                                 notify('success',{title:'Success!!!',message: returnedData.result.response,position:'top center'});
-s                            }
+                            }
                         });
                     }else {
                         if(returnedData.result.mode === 1)
@@ -655,6 +655,7 @@ s                            }
                     processData:false,
                     success: function(data)
                     {
+                        console.log(data);
                         var returnedData = JSON.parse(data);
                         $('#frRequest1 > #request_id').val('');
                         if(returnedData.result.action === 'add'){
@@ -677,8 +678,8 @@ s                            }
                         setTimeout(function () {
                             $("#alert-modal").removeClass("md-show");
                         }, 8000);
-                        $("#md-add-request").removeClass("md-show");
-                        $('#frRequest').trigger('reset');
+                        $("#md-edit-request").removeClass("md-show");
+                        $('#frRequest1').trigger('reset');
                         $("#alert-modal").addClass("md-show");
                         isValidate = false;
                     },

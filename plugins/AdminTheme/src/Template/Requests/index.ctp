@@ -39,7 +39,7 @@
                         </div>
                     </div>
                 </div>
-                <?php  if(count($requests)):?>
+                <?php  if(count($requests) && !empty($requests[0]->id)):?>
                 <div class="table-responsive">
                     <table data-sortable class="table table-hover table-striped" id="listRequests">
                         <thead>
@@ -56,49 +56,44 @@
                             <th width="116px;" data-sortable="false"><?=__('action')?></th>
                         </tr>
                         </thead>
-
                         <tbody>
-
                         <?php foreach ($requests as $key => $request): ?>
                             <?php
                                 $request->appr_date = $this->Time->i18nFormat($request->appr_date,'MM/dd/yyyy');
                                 $request->payment_date = $this->Time->i18nFormat($request->payment_date,'MM/dd/yyyy');
                                 $status = ['class'=>'label-danger','value'=>'Rejected','status' => false, 'rowclass'=> (round( ( strtotime( $this->Time->i18nFormat($request->appr_date,'MM/dd/yyyy') ) - time() ) / 86400 ) <= 1) ? 'highlight-out-pending' : 'highlight-pending'];
-                                if($request->role_name === 'top' || ((int)$request->department_id === 2 && $request->role_name === 'manager')){
+                                if($request->role_name === 'top' || ((int)$request->department_id === 1 && $request->role_name === 'manager') || $request->status === 'approved'){
                                     $status = ['class'=>'label-success','value'=>'Approved','status' => false, 'rowclass'=>'highlight-success'];
-                                }else{
-                                    if((int)$request->department_id === 2) {
-                                        if ((int)$request->manager_status === 1 && $userInfo->role[0]->name === 'manager') {
-                                            $status = ['class' => 'label-success', 'value' => 'Approved', 'status' => false , 'rowclass'=>'highlight-success'];
-                                        } elseif ((int)$request->top_status === 1 && $userInfo->role[0]->name === 'top') {
-                                            $status = ['class' => 'label-success', 'value' => 'Approved', 'status' => false, 'rowclass'=>'highlight-success'];
-                                        }elseif ((int)$request->top_status === 1 && $userInfo->role[0]->name === 'staff') {
-                                            $status = ['class' => 'label-success', 'value' => 'Approved', 'status' => false, 'rowclass'=>'highlight-success'];
-                                        }
-                                        elseif ((int)$request->manager_status === 2 || (int)$request->top_status === 2) {
-                                            $status = ['class'=>'label-danger','value'=>'Rejected','status' => false, 'rowclass'=>'highlight-reject'];
-                                        }
-                                        else
-                                            $status = ['class' => 'label-warning', 'value' => 'Pending', 'status' => true, 'rowclass'=>$status['rowclass']];
-                                    }else{
-                                        if ((int)$request->top_status === 1 && $userInfo->role[0]->name === 'manager') {
-                                            $status = ['class' => 'label-success', 'value' => 'Approved', 'status' => false, 'rowclass'=>'highlight-success'];
-                                        } elseif ((int)$request->top_status === 1 && $userInfo->role[0]->name === 'sub-manager') {
-                                            $status = ['class' => 'label-success', 'value' => 'Approved', 'status' => false, 'rowclass'=>'highlight-success'];
-                                        } elseif ((int)$request->top_status === 1 && $userInfo->role[0]->name === 'top') {
-                                            $status = ['class' => 'label-success', 'value' => 'Approved', 'status' => false, 'rowclass'=>'highlight-success'];
-                                        }
-                                        elseif ((int)$request->top_status === 1 && $userInfo->role[0]->name === 'staff') {
-                                            $status = ['class' => 'label-success', 'value' => 'Approved', 'status' => false, 'rowclass'=>'highlight-success'];
-                                        }
-                                        elseif ((int)$request->manager_status === 2 || (int)$request->top_status === 2 || (int)$request->sub_manager_status === 2) {
-                                            $status = ['class'=>'label-danger','value'=>'Rejected','status' => false, 'rowclass'=>'highlight-reject'];
-                                        }
-                                        else
-
-                                            $status = ['class' => 'label-warning', 'value' => 'Pending', 'status' => true, 'rowclass'=>$status['rowclass']];
-                                    }
+                                }elseif ($request->status === 'rejected'){
+                                    $status = ['class'=>'label-danger','value'=>'Rejected','status' => false, 'rowclass'=>'highlight-reject'];
+                                }elseif ($request->status === 'returned'){
+                                    $status = ['class'=>'label-success','value'=>'Returned','status' => false, 'rowclass'=>'highlight-return'];
                                 }
+                                else{
+                                    $status = ['class' => 'label-warning', 'value' => 'Pending', 'status' => true, 'rowclass'=>$status['rowclass']];
+                                }
+//                                    if((int)$request->department_id === 2) {
+//
+//                                    }else{
+//                                        if ( ((int)$request->top_status === 1 && $userInfo->role[0]->name === 'top') || ((int)$request->manager_status === 1 && $userInfo->role[0]->name === 'manager')) {
+//                                        if ((int)$request->top_status === 1 && $userInfo->role[0]->name === 'manager') {
+//                                            $status = ['class' => 'label-success', 'value' => 'Approved', 'status' => false, 'rowclass'=>'highlight-success'];
+//                                        } elseif ((int)$request->top_status === 1 && $userInfo->role[0]->name === 'sub-manager') {
+//                                            $status = ['class' => 'label-success', 'value' => 'Approved', 'status' => false, 'rowclass'=>'highlight-success'];
+//                                        } elseif ((int)$request->top_status === 1 && $userInfo->role[0]->name === 'top') {
+//                                            $status = ['class' => 'label-success', 'value' => 'Approved', 'status' => false, 'rowclass'=>'highlight-success'];
+//                                        }
+//                                        elseif ((int)$request->top_status === 1 && $userInfo->role[0]->name === 'staff') {
+//                                            $status = ['class' => 'label-success', 'value' => 'Approved', 'status' => false, 'rowclass'=>'highlight-success'];
+//                                        }
+//                                        elseif ((int)$request->manager_status === 2 || (int)$request->top_status === 2 || (int)$request->sub_manager_status === 2) {
+//                                            $status = ['class'=>'label-danger','value'=>'Rejected','status' => false, 'rowclass'=>'highlight-reject'];
+//                                        }
+//                                        else
+//
+//                                            $status = ['class' => 'label-warning', 'value' => 'Pending', 'status' => true, 'rowclass'=>$status['rowclass']];
+//                                    }
+//                                }
                             ?>
                             <tr class="<?=$status['rowclass'];?>">
                                 <td><?php echo $key+1;?></td>
@@ -108,14 +103,14 @@
                                 <td><strong><?php echo $request->title;?></strong></td>
                                 <td><strong><?= $request->appr_date;?></strong></td>
                                 <td>
-                                    <?php if((int)$request->top_status === 1 || (int)$request->top_status === 2){?>
-                                        <strong  title="<?= ((int)$request->top_status === 2 ? 'Reject by Top' : 'Approve by Top')?>"><i class="icon-adult"></i></strong>
-                                    <?php } if((int)$request->manager_status === 1 || (int)$request->manager_status === 2){ ?>
-                                        <strong  title="<?= ((int)$request->manager_status === 2 ? 'Reject by Manager' : 'Approve by Manager')?>"><i class="icon-child"></i></strong>
-                                    <?php } if((int)$request->sub_manager_status === 1 || (int)$request->sub_manager_status === 2){ ?>
-                                        <strong  title="<?= ((int)$request->sub_manager_status === 2 ? 'Reject by Sub-Manager' : 'Approve by Sub-Manager')?>"><i class="icon-child"></i></strong>
-                                    <?php } if($request->role_name === 'top' || ((int)$request->department_id === 2 && $request->role_name === 'manager')){?>
-                                        <strong  title="<?= ((int)$request->role_name === 'top' ? 'Create by Top' : 'Create by Manager')?>"><i class="icon-child"></i></strong>
+                                    <?php if((int)$request->top_status === 1 || (int)$request->top_status === 2 || $request->role_name === 'top' ){?>
+                                        <strong  title="<?= ($request->role_name === 'top' ? __('created_by_top') : ( (int)$request->top_status === 2 ? __('rejected_by_top') : __('approved_by_top')))?>"><i class="icon-person"></i></strong>
+                                    <?php } if((int)$request->manager_status === 1 || (int)$request->manager_status === 2 ||  $request->role_name === 'manager'){ ?>
+                                        <strong  title="<?= ($request->role_name === 'manager' ? __('created_by_manager') : ( (int)$request->manager_status === 2 ? __('rejected_by_manager') : __('rejected_by_manager'))) ?>"><i class="icon-adult"></i></strong>
+                                    <?php } if((int)$request->sub_manager_status === 1 || (int)$request->sub_manager_status === 2 ||  $request->role_name === 'sub-manager'){ ?>
+                                        <strong  title="<?= ($request->role_name === 'sub-manager' ? __('created_by_sub') : ( (int)$request->sub_manager_status === 2 ? __('rejected_by_sub') : __('rejected_by_sub'))) ?>"><i class="icon-child"></i></strong>
+                                    <?php } if($request->role_name === 'staff'){?>
+                                        <strong  title="<?= __('created_by_staff')?>"><i class="icon-user-1"></i></strong>
                                     <?php } ?>
                                 </td>
                                 <td> <span class="requestStatus label <?= $status['class'] ?>"><?= $status['value'] ?></span></td>

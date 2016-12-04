@@ -9,8 +9,8 @@
                     "controller" => "AuthMaster",
                     "action" => "logout",
                     "logout"
-                ])?>" class="btn btn-success md-close"><?=__('submit')?></a>
-                <button class="btn btn-danger md-close"><?=__('cancel')?></button>
+                ])?>" class="btn btn-success"><?=__('submit')?></a>
+                <a class="btn btn-danger md-close"><?=__('cancel')?></a>
             </p>
         </div>
     </div>
