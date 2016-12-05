@@ -30,7 +30,7 @@
                             <div class="radio-inline iradio">
                                 <label>
                                     <input type="radio" name="status" id="status2" value="0" checked>
-                                    <?= __('Deactivate'); ?>
+                                    <?= __('deactivate'); ?>
                                 </label>
                             </div>
                         </div>

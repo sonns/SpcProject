@@ -417,13 +417,14 @@ class RequestsController extends AuthMasterController
                     throw new NotFoundException();
                 }
             }
-            if($this->user->role[0]->name ==='top' ||  $tempStatus  = 'rejected' ||  $tempStatus  = 'returned'){
+            if($this->user->role[0]->name ==='top' ||  $tempStatus  === 'rejected' ||  $tempStatus  === 'returned'){
+
                 $request->status = $tempStatus;
             }
             //add push noti
             $this->pushNotification($request,'changeStatus',$mod === 'app' ,$cmt );
             if($this->Requests->save($request)){
-                $result = $this->responseData(true,['id'=>$request->id]);
+                $result = $this->responseData(true,['id'=>$request->id , 'request' => $request]);
             }else{
                 throw new NotFoundException();
             }

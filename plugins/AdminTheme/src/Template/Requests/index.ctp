@@ -67,7 +67,7 @@
                                 }elseif ($request->status === 'rejected'){
                                     $status = ['class'=>'label-danger','value'=>'Rejected','status' => false, 'rowclass'=>'highlight-reject'];
                                 }elseif ($request->status === 'returned'){
-                                    $status = ['class'=>'label-success','value'=>'Returned','status' => false, 'rowclass'=>'highlight-return'];
+                                    $status = ['class'=>'label-return','value'=>'Returned','status' => false, 'rowclass'=>'highlight-return'];
                                 }
                                 else{
                                     $status = ['class' => 'label-warning', 'value' => 'Pending', 'status' => true, 'rowclass'=>$status['rowclass']];

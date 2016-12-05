@@ -661,6 +661,9 @@
                         if(returnedData.result.action === 'add'){
                             $('#listRequests tr:eq(1)').before(returnedData.content);
                             updateIndex($('#listRequests tr'));
+                            if($('#listRequests tr').length < 1){
+                                location.reload();
+                            }
                             if($('#listRequests tr').length > 21)
                             {
                                 $('#listRequests tr:last').remove();

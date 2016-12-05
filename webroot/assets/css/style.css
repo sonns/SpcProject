@@ -3098,6 +3098,9 @@ i.info {
 i.danger {
   color: #E15554;
 }
+.label.label-return {
+  background: #4A525F;
+}
 .label.label-success {
   background: #68C39F;
 }

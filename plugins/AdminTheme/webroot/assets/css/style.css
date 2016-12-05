@@ -6,7 +6,7 @@
   background-color: #ffb0b0 !important;
 }
 .highlight-return{
-  background-color: #b4bfdc !important;
+  background-color: #bbbcc1 !important;
 }
 .highlight-out-pending{
   background-color: #fffc8f !important;
@@ -3126,6 +3126,9 @@ i.info {
 }
 i.danger {
   color: #E15554;
+}
+.label.label-return {
+  background: #4A525F;
 }
 .label.label-success {
   background: #68C39F;
