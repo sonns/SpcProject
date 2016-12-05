@@ -198,6 +198,7 @@ echo $this->element('logout');
                         {
                             var res = JSON.parse(response);
                             notification(res);
+                            location.reload();
                             console.log(response);
                         }
                     })
