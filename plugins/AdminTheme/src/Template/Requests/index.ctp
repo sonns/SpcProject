@@ -221,7 +221,6 @@ $this->Html->scriptEnd();
             $('.listComment').empty();
             $('#frRequestComment > #request_id').val($this.data("value"));
             if($this.data("status") === 'waiting' || $this.data("status") === 'returned'){
-                alert($this.data("status"));
                 $('#frRequestComment').show();
             }else {
                 $('#frRequestComment').hide();

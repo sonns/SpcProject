@@ -179,6 +179,9 @@ class RequestsController extends AuthMasterController
                 if(!count($request)){
                     throw new ForbiddenException();
                 }
+                if($request->status === 'returned'){
+                    $this->request->data['status'] = 'waiting';
+                }
             }
             $request = $this->Requests->patchEntity($request, $this->request->data);
             $request = $this->Requests->save($request);

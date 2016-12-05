@@ -366,6 +366,8 @@ msgid "edit_department"
 msgstr "Edit Department"
 msgid "deactivate"
 msgstr "Deactivate"
+msgid "slt_cate"
+msgstr "Select Category"
 
 
 

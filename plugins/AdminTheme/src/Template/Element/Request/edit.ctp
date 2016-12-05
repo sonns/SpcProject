@@ -13,7 +13,7 @@
                                 'sltCategory',
                                 $listCate,
                                 [
-                                    'empty' => 'Select Category',
+                                    'empty' => __('slt_cate'),
                                     'class' => 'form-control',
                                     'name'=> 'sltCategory',
                                     'id'=> 'sltCategory'
