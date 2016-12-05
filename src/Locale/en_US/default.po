@@ -370,5 +370,7 @@ msgid "slt_cate"
 msgstr "Select Category"
 msgid "updated_request"
 msgstr "has updated the request"
+msgid "edit"
+msgstr "Edit"
 
 

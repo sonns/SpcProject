@@ -44,7 +44,7 @@
                         <tr>
                             <th><?=__('no')?></th>
 <!--                            <th style="width: 30px" data-sortable="false"><input type="checkbox" class="rows-check"></th>-->
-                            <th><?=__('name')?></th>
+                            <th><?=__('dep_name')?></th>
                             <th><?=__('tel')?></th>
                             <th><?=__('address')?></th>
                             <th><?=__('status')?></th>
@@ -65,8 +65,8 @@
                                 <td><strong><?php echo $department->created;?></strong></td>
                                 <td>
                                     <div class="btn-group btn-group-xs">
-                                        <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'fa fa-edit')), '#' ,array( 'data-value' => $department->id , 'data-modal' => "md-add-department", 'style' => 'margin-right:4px;' ,'class'=>'btn btn-default md-trigger editDepartment','title'=>'Edit','data-toggle'=>"tooltip",'escape' => false ))?>
-                                        <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'fa fa-remove')),'#',array( 'data-value' => $department->id , 'data-name' => $department->name , 'class'=>'btn btn-danger btnDelDepartment','title'=>'Delete','data-toggle'=>"tooltip",'escape' => false ))?>
+                                        <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'fa fa-edit')), '#' ,array( 'data-value' => $department->id , 'data-modal' => "md-add-department", 'style' => 'margin-right:4px;' ,'class'=>'btn btn-default md-trigger editDepartment','title'=>'__("edit")','data-toggle'=>"tooltip",'escape' => false ))?>
+                                        <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'fa fa-remove')),'#',array( 'data-value' => $department->id , 'data-name' => $department->name , 'class'=>'btn btn-danger btnDelDepartment','title'=>'__("del ")','data-toggle'=>"tooltip",'escape' => false ))?>
 <!--                                        <a data-toggle="tooltip" title="Off" class="btn btn-default"><i class="fa fa-power-off"></i></a>-->
 <!--                                        <a data-toggle="tooltip" title="Edit" class="btn btn-default"><i class="fa fa-edit"></i></a>-->
                                     </div>
