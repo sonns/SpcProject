@@ -84,9 +84,9 @@
                                     <?php if((int)$request->top_status === 1 || (int)$request->top_status === 2 || $request->role_name === 'top' ){?>
                                         <strong  title="<?= ($request->role_name === 'top' ? __('created_by_top') : ( (int)$request->top_status === 2 ? __('rejected_by_top') : __('approved_by_top')))?>"><i class="icon-person"></i></strong>
                                     <?php } if((int)$request->manager_status === 1 || (int)$request->manager_status === 2 ||  $request->role_name === 'manager'){ ?>
-                                        <strong  title="<?= ($request->role_name === 'manager' ? __('created_by_manager') : ( (int)$request->manager_status === 2 ? __('rejected_by_manager') : __('rejected_by_manager'))) ?>"><i class="icon-adult"></i></strong>
+                                        <strong  title="<?= ($request->role_name === 'manager' ? __('created_by_manager') : ( (int)$request->manager_status === 2 ? __('rejected_by_manager') : __('approved_by_manager'))) ?>"><i class="icon-adult"></i></strong>
                                     <?php } if((int)$request->sub_manager_status === 1 || (int)$request->sub_manager_status === 2 ||  $request->role_name === 'sub-manager'){ ?>
-                                        <strong  title="<?= ($request->role_name === 'sub-manager' ? __('created_by_sub') : ( (int)$request->sub_manager_status === 2 ? __('rejected_by_sub') : __('rejected_by_sub'))) ?>"><i class="icon-child"></i></strong>
+                                        <strong  title="<?= ($request->role_name === 'sub-manager' ? __('created_by_sub') : ( (int)$request->sub_manager_status === 2 ? __('rejected_by_sub') : __('approved_by_sub'))) ?>"><i class="icon-child"></i></strong>
                                     <?php } if($request->role_name === 'staff'){?>
                                         <strong  title="<?= __('created_by_staff')?>"><i class="icon-user-1"></i></strong>
                                     <?php } ?>
