@@ -94,7 +94,7 @@
                                 <td> <span class="requestStatus label <?= $status['class'] ?>"><?= $status['value'] ?></span></td>
                                 <td><strong><?=  $this->Time->i18nFormat($request->created,'MM/dd/yyyy');?></strong></td>
                                 <td>
-                                    <div class="btn-group btn-group-xs">
+                                    <div class="btn-group btn-group-xs" style="position: absolute;">
                                         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                                             <i class="fa fa-cog"></i> <?=__('action')?> <span class="caret"></span>
                                         </button>
