@@ -24,7 +24,7 @@
                             <div class="radio-inline iradio">
                                 <label>
                                     <input type="radio" name="status" id="status1" value="1">
-                                    <?= __('Active'); ?>
+                                    <?= __('active'); ?>
                                 </label>
                             </div>
                             <div class="radio-inline iradio">

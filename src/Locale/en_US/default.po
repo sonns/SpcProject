@@ -364,6 +364,8 @@ msgid "dep_name"
 msgstr "Department Name"
 msgid "edit_department"
 msgstr "Edit Department"
+msgid "deactivate"
+msgstr "Deactivate"
 
 
 
