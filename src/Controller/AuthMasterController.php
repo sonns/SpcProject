@@ -301,7 +301,6 @@ class AuthMasterController extends AppController
                 }
             }
         }
-
         return $menus;
     }
     protected function _setCookie()
@@ -324,7 +323,7 @@ class AuthMasterController extends AppController
         switch($language)
         {
             case "jp_JP":
-                I18n::locale('jp_JP');
+                I18n::locale('en_US');
                 $result[] = array(
                     'ok'=>I18n::locale()
                 );
