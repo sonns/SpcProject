@@ -218,7 +218,7 @@ class RequestsController extends AuthMasterController
                 }
                 $this->request->data['user_id'] = $this->user->id;
                 $this->request->data['dep_id'] = $this->user->dep_id;
-                if ($this->user->role[0]->name ==='top' or ($this->user->role[0]->name ==='manager' && $this->user->dep_id === 2)){
+                if ($this->user->role[0]->name ==='top' or ($this->user->role[0]->name ==='manager' && $this->user->dep_id === 1)){
                     $request->status = 'approved';
                 }else{
                     $request->status = 'waiting';
@@ -384,8 +384,8 @@ class RequestsController extends AuthMasterController
         if (!$id || !$mod) {
             throw new NotFoundException();
         }
-        if($mod === 'app' || $mod === 'rej'){
-            $request = $this->Requests->find()->where(['Requests.id' => $id])
+        if($mod === 'app' || $mod === 'rej' || $mod === 'ret'){
+            $request = $this->Requests->find()->where(['Requests.id' => $id , 'Requests.status <>' => 'approved', 'Requests.status <>' => 'rejected'])
                 ->contain(['Profiles', 'Users'])->first();
             if (!count($request)) {
                 throw new NotFoundException();
@@ -393,52 +393,43 @@ class RequestsController extends AuthMasterController
             $approval = TableRegistry::get('Approvals');
             $approvalInfo = $approval->find()->where(['user_id'=>$this->user->id,'req_id'=>$id])->first();
 
-            $request->status = 1;
+            if($mod === 'app'){
+                $tempStatus  = 'approved';
+            }elseif ($mod === 'rej'){
+                $tempStatus  = 'rejected';
+            }else{
+                $tempStatus  = 'returned';
+            }
             if(!count($approvalInfo)){
                 $approvalE = $approval->newEntity();
                 $approvalE->user_id = $this->user->id;
                 $approvalE->req_id = $id;
                 $approvalE->role_id = $this->user->role[0]->id;
-                $approvalE->status = ($mod === 'app' ) ? 'approved' : 'rejected' ;
+                $approvalE->status = $tempStatus;
                 $approval->save($approvalE);
-                //add push noti
-                $this->pushNotification($request,'changeStatus',$mod === 'app' ,$cmt );
+
 
             }else{
-                throw new NotFoundException();
+                if($approvalInfo->status === 'returned'){
+                    $approvalInfo->status = $tempStatus;
+                    $approval->save($approvalInfo);
+                }else{
+                    throw new NotFoundException();
+                }
             }
+            if($this->user->role[0]->name ==='top' ||  $tempStatus  = 'rejected' ||  $tempStatus  = 'returned'){
+                $request->status = $tempStatus;
+            }
+            //add push noti
+            $this->pushNotification($request,'changeStatus',$mod === 'app' ,$cmt );
             if($this->Requests->save($request)){
                 $result = $this->responseData(true,['id'=>$request->id]);
             }else{
                 throw new NotFoundException();
             }
 
-        }elseif($mod === 'return'){
-            $request = $this->Requests->find()->where(['Requests.id' => $id])
-                ->contain(['Profiles', 'Users'])->first();
-            $message = $this->request->query('message');
-            if (!count($request)) {
-                throw new NotFoundException();
-            }
-            $request->is_report = 1;
-            if($this->Requests->save($request)){
-                $this->pushNotification($request,'report' );
-                $result = $this->responseData(true,['id'=>$request->id]);
-            }else{
-                throw new NotFoundException();
-            }
-        }
-        elseif($mod === 'multiDel' || $mod === 'multiApp'|| $mod === 'multiRej'){
-            if($mod === 'multiApp'){
-                throw new NotFoundException();
-            }elseif ($mod === 'multiRej'){
-                throw new NotFoundException();
-            }else{
-                throw new NotFoundException();
-            }
-            $arrId = explode(',',$id);
-            $temp = $this->Requests->updateAll(['status'=> $status],['id IN'=>$arrId]);
-            $result = $this->responseData(true,$temp);
+        }else{
+            throw new NotFoundException();
         }
         $this->set(compact('result'));
         $this->set('_serialize', ['result']);

@@ -346,8 +346,12 @@ msgid "returned_by_sub"
 msgstr "Returned by Sub-Manager"
 msgid "created_by_staff"
 msgstr "Created by Staff"
-
-
+msgid "history"
+msgstr "History"
+msgid "return_confirm_content"
+msgstr "Are you sure to return this application?"
+msgid "return_confirm"
+msgstr "Return Confirmation"
 
 
 
