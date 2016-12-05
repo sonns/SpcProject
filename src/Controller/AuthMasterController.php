@@ -211,19 +211,19 @@ class AuthMasterController extends AppController
             'left-menu'=>[
                 [
                     'position'=>2,
-                    'title'=>"Department",
+                    'title'=>__('department'),
                     'url' => ['controller'=>"Departments",'action'=>'index'],
                     'hasPermission' => false,
                     'active' => false
                 ],
                 [
                     'position'=>3,
-                    'title'=>'User',
+                    'title'=>__('user'),
                     'url' => ['controller'=>"Users",'action'=>'index'],
                     'children' => [
                         [
                             'position'=>1,
-                            'title'=>'Profile',
+                            'title'=>__('my_profile'),
                             'url' => ['controller'=>"Users",'action'=>'profile'],
                             'active' => false,
                             'hasPermission' => false
@@ -231,14 +231,14 @@ class AuthMasterController extends AppController
                         ],
                         [
                             'position'=>2,
-                            'title'=>'Manage User',
+                            'title'=>__('manage_user'),
                             'url' => ['controller'=>"Users",'action'=>'index'],
                             'active' => false,
                             'hasPermission' => false
                         ],
                         [
                             'position'=>3,
-                            'title'=>'Create User',
+                            'title'=> __('create_user'),
                             'url' => ['controller'=>"Users",'action'=>'add'],
                             'active' => false,
                             'hasPermission' => false
@@ -249,14 +249,14 @@ class AuthMasterController extends AppController
                 ],
                 [
                     'position'=>4,
-                    'title'=>"Configuration",
+                    'title'=>__('configuration'),
                     'url' => ['controller'=>"Roles",'action'=>'index'],
                     'active' => false,
                     'hasPermission' => false
                 ],
                 [
                     'position'=>5,
-                    'title'=>'Request',
+                    'title'=>__('request'),
                     'url' => ['controller'=>"Requests",'action'=>'index'],
                     'active' => false,
                     'hasPermission' => false

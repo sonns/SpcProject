@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-sm-12 portlets">
         <div class="widget-header transparent">
-            <h2><?=__("add")?><strong> <?=__("department")?></strong></h2>
+            <h2><strong> <?=__("add_department")?></strong></h2>
         </div>
         <div class="widget-content padding">
             <div id="basic-form">

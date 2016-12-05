@@ -352,7 +352,15 @@ msgid "return_confirm_content"
 msgstr "Are you sure to return this application?"
 msgid "return_confirm"
 msgstr "Return Confirmation"
+msgid "create_user"
+msgstr "Create User"
+msgid "manage_user"
+msgstr "Manage Users"
+msgid "configuration"
+msgstr "Configuration"
 
+msgid "add_department"
+msgstr "Add Department"
 
 
 
