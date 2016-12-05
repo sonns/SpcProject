@@ -5,7 +5,7 @@
             txtComment: {
                 validators: {
                     notEmpty: {
-                        message: 'The Comment is required and can\'t be empty'
+                        message: 'コメントが必要なので、必ず入力してください'
                     }
                 }
             }
@@ -36,7 +36,7 @@
                 txtComment: {
                     validators: {
                         notEmpty: {
-                            message: 'The Comment is required and can\'t be empty'
+                            message: 'コメントが必要なので、必ず入力してください'
                         }
                     }
                 }
@@ -84,40 +84,40 @@
         });
 
     $('#createDepartment').bootstrapValidator({
-        message: 'This value is not valid',
+        message: '入力した文字が無効です',
         fields: {
             dep_name: {
-                message: 'The username is not valid',
+                message: '無効な事業部名です',
                 validators: {
                     notEmpty: {
-                        message: 'The name is required and can\'t be empty'
+                        message: 'コメントが必要なので、必ず入力してください'
                     },
                     stringLength: {
                         min: 3,
                         max: 30,
-                        message: 'The name must be more than 3 and less than 30 characters long'
+                        message: '事業部名を３～３０文字で入力してください'
                     },
                     regexp: {
                         regexp: /^[a-zA-Z0-9_\.]+$/,
-                        message: 'The username can only consist of alphabetical, number, dot and underscore'
+                        message: '事業部名はアルファベット、数字、「.」以外入力できません'
                     }
                 }
             },
             dep_tel: {
                 validators: {
                     digits: {
-                        message: 'The value can contain only digits'
+                        message: '電話番号は数字以外入力できません'
                     }
                 }
             },
             dep_address: {
                 validators: {
                     notEmpty: {
-                        message: 'Message is required and can\'t be empty'
+                        message: '住所入力が必要です'
                     },
                     stringLength: {
                         min: 3,
-                        message: 'Message must be more than 6 characters long'
+                        message: '住所を６文字以上入力してください'
                     }
                 }
             }
@@ -150,27 +150,27 @@
     });
 
     $('#resetPassword').bootstrapValidator({
-        message: 'This value is not valid',
+        message: 'パスワードが無効です',
         fields: {
             password: {
                 validators: {
                     notEmpty: {
-                        message: 'The password is required and can\'t be empty'
+                        message: 'パスワードが必要なので、かならず入力してください'
                     },
                     identical: {
                         field: 'confirmPassword',
-                        message: 'The password and its confirm are not the same'
+                        message: 'パスワードと確認されるパスワードは一致されていません'
                     }
                 }
             },
             confirmPassword: {
                 validators: {
                     notEmpty: {
-                        message: 'The confirm password is required and can\'t be empty'
+                        message: 'パスワード確認が必要なので、かならず入力してください'
                     },
                     identical: {
                         field: 'password',
-                        message: 'The password and its confirm are not the same'
+                        message: 'パスワードと確認されるパスワードは一致されていません'
                     }
                 }
             }
@@ -194,32 +194,32 @@
     });
 
     $('#createUser').bootstrapValidator({
-        message: 'This value is not valid',
+        message: 'このユーザーは無効です',
         fields: {
             email: {
                 validators: {
                     notEmpty: {
-                        message: 'The email address is required and can\'t be empty'
+                        message: 'メールアドレスが必要なので、かならず入力してください'
                     },
                     emailAddress: {
-                        message: 'The input is not a valid email address'
+                        message: '入力されたメールアドレスが無効です'
                     }
                 }
             },
             username: {
-                message: 'The username is not valid',
+                message: 'ユーザー名が無効です',
                 validators: {
                     notEmpty: {
-                        message: 'The name is required and can\'t be empty'
+                        message: 'ユーザー名が必要なので、かならず入力してください'
                     },
                     stringLength: {
                         min: 3,
                         max: 30,
-                        message: 'The name must be more than 3 and less than 30 characters long'
+                        message: 'ユーザー名は３～３０文字で入力してください'
                     },
                     regexp: {
                         regexp: /^[a-zA-Z0-9_\.]+$/,
-                        message: 'The username can only consist of alphabetical, number, dot and underscore'
+                        message: 'ユーザー名はアルファベット、数字、「.」以外入力できません'
                     }
                 }
             },
@@ -227,14 +227,14 @@
             role_id: {
                 validators: {
                     notEmpty: {
-                        message: 'The role is required and can\'t be empty'
+                        message: '権限が必要なので、かならず入力してください'
                     }
                 }
             },
             dep_id: {
                 validators: {
                     notEmpty: {
-                        message: 'The department is required and can\'t be empty'
+                        message: '事業部が必要なので、かならず入力してください'
                     }
                 }
             },
@@ -242,30 +242,30 @@
             password: {
                 validators: {
                     notEmpty: {
-                        message: 'The password is required and can\'t be empty'
+                        message: 'パスワードが必要なので、かならず入力してください'
                     },
                     identical: {
                         field: 'password_confirmation',
-                        message: 'The password and its confirm are not the same'
+                        message: 'パスワードと確認されるパスワードは一致されていません'
                     },
                     different: {
                         field: 'username',
-                        message: 'The password can\'t be the same as username'
+                        message: 'パスワードをユーザー名と同じのようにしないでください'
                     }
                 }
             },
             password_confirmation: {
                 validators: {
                     notEmpty: {
-                        message: 'The confirm password is required and can\'t be empty'
+                        message: '確認するパスワードが必要なので、かならず入力してください'
                     },
                     identical: {
                         field: 'password',
-                        message: 'The password and its confirm are not the same'
+                        message: 'パスワードと確認されるパスワードは一致されていません'
                     },
                     different: {
                         field: 'username',
-                        message: 'The password can\'t be the same as username'
+                        message: 'パスワードをユーザー名と同じのようにしないでください'
                     }
                 }
             }
@@ -326,43 +326,43 @@
     });
     var isUpdateProfile = false;
     $('#editProfile').bootstrapValidator({
-        message: 'This value is not valid',
+        message: '編集された情報が無効です',
         fields: {
             first_name: {
                 validators: {
                     notEmpty: {
-                        message: 'The first name is required and can\'t be empty'
+                        message: '名字が必要なので、かならず入力してください'
                     }
                 }
             },
             last_name: {
                 validators: {
                     notEmpty: {
-                        message: 'The last name is required and can\'t be empty'
+                        message: '名前が必要なので、かならず入力してください'
                     }
                 }
             },
             phone_num: {
                 validators: {
                     digits: {
-                        message: 'Please enter a valid phone'
+                        message: '有効な電話番号を入力してください'
                     }
                 }
             },
             timezone: {
                 validators: {
                     notEmpty: {
-                        message: 'The Timezone is required and can\'t be empty'
+                        message: '時間帯が必要なので、かならず選択してください'
                     }
                 }
             },
             birthday: {
                 validators: {
                     notEmpty: {
-                        message: 'The Birthday is required and can\'t be empty'
+                        message: '誕生日が必要なので、かならず選択してください'
                     },
                     date: {
-                        message: 'Please enter a valid date',
+                        message: '有効な日付を選択してください',
                         format: 'MM/DD/YYYY'
                     }
                 }
@@ -378,17 +378,17 @@
             sltCategory: {
                 validators: {
                     notEmpty: {
-                        message: 'The Category is required and can\'t be empty'
+                        message: 'カテゴリが必要なので、かならず選択してください'
                     },
                 }
             },
             txtPrice: {
                 validators: {
                     notEmpty: {
-                        message: 'The Price is required and can\'t be empty'
+                        message: '単価が必要なので、かならず入力してください'
                     },
                     digits: {
-                        message: 'The value can contain only digits'
+                        message: '単価が数字しか入力されていません'
                     },
                     callback: {
                         // message: 'This '+ $('#sltCategory').val() +' category have a minimum price must be up',
@@ -423,10 +423,10 @@
             txtApproveDate: {
                 validators: {
                     notEmpty: {
-                        message: 'The Approve Date is required and can\'t be empty'
+                        message: '承認日が必要なので、かならず選択してください'
                     },
                     date: {
-                        message: 'Please enter a valid date',
+                        message: '有効な日付を選択してください',
                         format: 'MM/DD/YYYY'
                     }
                 }
@@ -434,10 +434,10 @@
             txtPaymentDate: {
                 validators: {
                     notEmpty: {
-                        message: 'The Payment Date is required and can\'t be empty'
+                        message: '支払日が必要なので、かならず選択してください'
                     },
                     date: {
-                        message: 'Please enter a valid date',
+                        message: '有効な日付を選択してください',
                         format: 'MM/DD/YYYY'
                     }
                 }
@@ -445,21 +445,21 @@
             txtTitle: {
                 validators: {
                     notEmpty: {
-                        message: 'The Title is required and can\'t be empty'
+                        message: 'タイトルが必要なので、かならず入力してください'
                     }
                 }
             },
             txtDescription: {
                 validators: {
                     notEmpty: {
-                        message: 'The Description is required and can\'t be empty'
+                        message: '内容が必要なので、かならず入力してください'
                     }
                 }
             },
             txtReason: {
                 validators: {
                     notEmpty: {
-                        message: 'The Reason is required and can\'t be empty'
+                        message: '理由が必要なので、かならず入力してください'
                     }
                 }
             }
@@ -539,17 +539,17 @@
                 sltCategory: {
                     validators: {
                         notEmpty: {
-                            message: 'The Category is required and can\'t be empty'
+                            message: 'カテゴリが必要なので、かならず選択してください'
                         },
                     }
                 },
                 txtPrice: {
                     validators: {
                         notEmpty: {
-                            message: 'The Price is required and can\'t be empty'
+                            message: '単価が必要なので、かならず入力してください'
                         },
                         digits: {
-                            message: 'The value can contain only digits'
+                            message: '単価が数字しか入力されていません'
                         },
                         callback: {
                             // message: 'This '+ $('#sltCategory').val() +' category have a minimum price must be up',
@@ -584,10 +584,10 @@
                 txtApproveDate: {
                     validators: {
                         notEmpty: {
-                            message: 'The Approve Date is required and can\'t be empty'
+                            message: '承認日が必要なので、かならず選択してください'
                         },
                         date: {
-                            message: 'Please enter a valid date',
+                            message: '有効な日付を選択してください',
                             format: 'MM/DD/YYYY'
                         }
                     }
@@ -595,10 +595,10 @@
                 txtPaymentDate: {
                     validators: {
                         notEmpty: {
-                            message: 'The Payment Date is required and can\'t be empty'
+                            message: '支払日が必要なので、かならず選択してください'
                         },
                         date: {
-                            message: 'Please enter a valid date',
+                            message: '有効な日付を選択してください',
                             format: 'MM/DD/YYYY'
                         }
                     }
@@ -606,21 +606,21 @@
                 txtTitle: {
                     validators: {
                         notEmpty: {
-                            message: 'The Title is required and can\'t be empty'
+                            message: 'タイトルが必要なので、かならず入力してください'
                         }
                     }
                 },
                 txtDescription: {
                     validators: {
                         notEmpty: {
-                            message: 'The Description is required and can\'t be empty'
+                            message: '内容が必要なので、かならず入力してください'
                         }
                     }
                 },
                 txtReason: {
                     validators: {
                         notEmpty: {
-                            message: 'The Reason is required and can\'t be empty'
+                            message: '理由が必要なので、かならず入力してください'
                         }
                     }
                 }

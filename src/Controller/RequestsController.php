@@ -243,11 +243,11 @@ class RequestsController extends AuthMasterController
         }
     }
     private function pushNotification($request,$mode, $is_approve = true ,$cmt = null){
-        if($mode === 'add'){
+        if($mode === 'add' || $mode === 'edit' ){
             if(isset($this->user->role[0]->name) && $this->user->role[0]->name === 'staff'){
                 $this->Notification->notify([
                     'recipientLists' => ($this->user->dep->name === 'Headquarter') ? ['manager'] : ['sub-manager'],
-                    'template' => ['notifierRequest'],
+                    'template' => ($mode === 'add') ? ['notifierRequest'] : ['notifierEditRequest'],
                     'is_approve' => $is_approve,
                     'message' => [
                         'username' => $this->user->profile->first_name . ' ' .$this->user->profile->last_name,
@@ -260,7 +260,7 @@ class RequestsController extends AuthMasterController
             else if(isset($this->user->role[0]->name) && $this->user->role[0]->name === 'sub-manager'){
                 $this->Notification->notify([
                     'recipientLists' => ['manager'],
-                    'template' => ['notifierRequest'],
+                    'template' => ($mode === 'add') ? ['notifierRequest'] : ['notifierEditRequest'],
                     'is_approve' => $is_approve,
                     'message' => [
                         'username' => $this->user->profile->first_name . ' ' .$this->user->profile->last_name,
@@ -272,7 +272,7 @@ class RequestsController extends AuthMasterController
             }else if(isset($this->user->role[0]->name) && $this->user->role[0]->name === 'manager'){
                 $this->Notification->notify([
                     'recipientLists' => ['top'] ,
-                    'template' => ['notifierRequest'],
+                    'template' => ($mode === 'add') ? ['notifierRequest'] : ['notifierEditRequest'],
                     'is_approve' => $is_approve,
                     'message' => [
                         'username' => $this->user->profile->first_name . ' ' .$this->user->profile->last_name,
@@ -284,12 +284,38 @@ class RequestsController extends AuthMasterController
             }else{
                 //nothing
             }
-            $this->addActivities(['req_id'=> $request->id, 'type' => 'add' , 'contents' =>  __('new_post') . ' ' . __('request') ]);
+
+            $this->addActivities(['req_id'=> $request->id, 'type' => ($mode === 'add') ? 'add' : 'edit' , 'contents' => ($mode === 'add') ?  __('new_post') . ' ' . __('request') : __('updated_request') ]);
         }
-        elseif($mode === 'return'){
+        elseif($mode === 'ret'){
+            $topInfo = $this->Notification->getRecipientList('top');
+            $managerInfo = $this->Notification->getRecipientList('manager');
+            if(count($topInfo)){
+                $top_name = (empty($topInfo[0]->first_name)) ? $topInfo[0]->username : $topInfo[0]->first_name . $topInfo[0]->last_name;
+            }else{
+                $top_name = '';
+            }
+            if(count($managerInfo)){
+                $manager_name = (empty($managerInfo[0]->first_name)) ? $managerInfo[0]->username : $managerInfo[0]->first_name . $managerInfo[0]->last_name;
+            }else{
+                $manager_name = '';
+            }
+            if($this->user->dep->name === 'Headquarter'){
+                $recipientLists = ['top','manager'];
+                $sub_manager_name = '';
+            }else{
+                $recipientLists = ['top','manager','sub-manager'];
+                $subManagerInfo = $this->Notification->getRecipientList('sub-manager');
+                if(count($subManagerInfo)){
+                    $sub_manager_name = (empty($subManagerInfo[0]->first_name)) ? $subManagerInfo[0]->username : $subManagerInfo[0]->first_name . $subManagerInfo[0]->last_name;
+                }else{
+                    $sub_manager_name = '';
+                }
+            }
             $this->Notification->notify([
+                'users' => [$request->user_id],
                 'recipientLists' =>  ['top'],
-                'template' => ['notifierRequest'],
+                'template' => ['returnRequest'],
                 'is_approve' => $is_approve,
                 'message' => [
                     'username' => $this->user->profile->first_name . ' ' .$this->user->profile->last_name,
@@ -425,7 +451,12 @@ class RequestsController extends AuthMasterController
                 $request->status = $tempStatus;
             }
             //add push noti
-            $this->pushNotification($request,'changeStatus',$mod === 'app' ,$cmt );
+            if($tempStatus !== 'returned' ){
+                $this->pushNotification($request,'changeStatus',$mod === 'app' ,$cmt );
+            }else{
+                $this->pushNotification($request,'changeStatus',$mod === 'ret' ,$cmt );
+            }
+
             if($this->Requests->save($request)){
                 $result = $this->responseData(true,['id'=>$request->id , 'request' => $request]);
             }else{

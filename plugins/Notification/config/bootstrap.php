@@ -12,6 +12,13 @@ Configure::write('Notification.templates.notifierRequest', [
     'body' => ':username '.__('new_post').' :category',
     'link' => ':link'
 ]);
+Configure::write('Notification.templates.notifierEditRequest', [
+    'title' => ':title',
+    'fromUser' => ':username',
+    'body' => ':username '.__('updated_request'),
+    'link' => ':link'
+]);
+
 Configure::write('Notification.templates.returnRequest', [
     'title' => ':title',
     'fromUser' => ':username',
