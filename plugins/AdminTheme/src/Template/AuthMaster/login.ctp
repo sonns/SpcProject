@@ -25,7 +25,7 @@
                         <button type="submit" class="btn btn-success btn-block"><?= __("login")?></button>
                     </div>
                     <div class="col-sm-6">
-                        <a href="#" class="btn btn-default btn-block"><?= __("forgot_password")?></a>
+                        <a href="#" class="btn btn-default btn-block"><?= __("forgot_password")?> </a>
                     </div>
                 </div>
             </form>

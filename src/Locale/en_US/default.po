@@ -362,6 +362,8 @@ msgid "add_department"
 msgstr "Add Department"
 msgid "dep_name"
 msgstr "Department Name"
+msgid "edit_department"
+msgstr "Edit Department"
 
 
 

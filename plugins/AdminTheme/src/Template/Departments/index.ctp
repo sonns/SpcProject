@@ -104,7 +104,7 @@
     });
     $(".editDepartment").on("click", function(e){
         resetDepartmentForm();
-        $('#titleDepartment').html('Edit<strong> Department</strong>');
+        $('#titleDepartment').html('<strong><?=__("edit_department")?></strong>');
         $('#dep_name').val($(this).parents(':eq(2)').find( "td:eq(2)").text());
         $('#dep_tel').val($(this).parents(':eq(2)').find( "td:eq(3)").text());
         $('#dep_address').val($(this).parents(':eq(2)').find( "td:eq(4)").text());
@@ -122,12 +122,12 @@
         }).appendTo('#createDepartment');
     });
     $("#btnAddDepartment").on("click", function(e){
-        $('#titleDepartment').html('Add<strong> Department</strong>');
+        $('#titleDepartment').html('<strong><?=__("add_department")?></strong>');
         resetDepartmentForm();
     });
     $("#btnResetDepartment").on("click", function(e){
         resetDepartmentForm();
-        $('#titleDepartment').html('Add<strong> Department</strong>');
+        $('#titleDepartment').html('<strong><?=__("add_department")?></strong>');
     });
     function resetDepartmentForm() {
         $( "#department_id" ).remove( );
