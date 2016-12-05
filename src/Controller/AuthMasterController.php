@@ -366,4 +366,54 @@ class AuthMasterController extends AppController
         ];
         return $result;
     }
+    protected function getPusherInfo($from = 'staff' , $to , $isHead = false){
+        if($from === 'top'){
+            if($isHead){
+                $result = [$from =>[
+                    'manager'=>$this->Notification->getRecipientList('manager')
+                ]];
+                if($to === 'staff'){
+                    $result = [$from =>[
+                        'staff'=> ''
+                    ]];
+                }
+            }else{
+                if($to === 'staff'){
+                    $this->getPusherInfo('sub-manager',$to,$isHead);
+                }if($to === 'sub-manager'){
+                    $this->getPusherInfo('manager',$to,$isHead);
+                }
+                else{
+                    return [
+                        $from => []
+                    ];
+                }
+            }
+        }elseif ($from === 'manager')
+        {
+            if($isHead){
+                // add staff to pushNotification
+                return [
+                    $from => []
+                ];
+            }else{
+                if($to === 'sub-manager'){
+                    $this->getPusherInfo('manager',$to,$isHead);
+                }
+                else{
+                    return [
+                        $from => []
+                    ];
+                }
+            }
+        }elseif ($from === 'sub-manager')
+        {
+
+        }elseif ($from === 'staff')
+        {
+
+        }else{
+            return false;
+        }
+    }
 }
