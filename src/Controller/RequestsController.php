@@ -288,30 +288,6 @@ class RequestsController extends AuthMasterController
             $this->addActivities(['req_id'=> $request->id, 'type' => ($mode === 'add') ? 'add' : 'edit' , 'contents' => ($mode === 'add') ?  __('new_post') . ' ' . __('request') : __('updated_request') ]);
         }
         elseif($mode === 'ret'){
-            $topInfo = $this->Notification->getRecipientList('top');
-            $managerInfo = $this->Notification->getRecipientList('manager');
-            if(count($topInfo)){
-                $top_name = (empty($topInfo[0]->first_name)) ? $topInfo[0]->username : $topInfo[0]->first_name . $topInfo[0]->last_name;
-            }else{
-                $top_name = '';
-            }
-            if(count($managerInfo)){
-                $manager_name = (empty($managerInfo[0]->first_name)) ? $managerInfo[0]->username : $managerInfo[0]->first_name . $managerInfo[0]->last_name;
-            }else{
-                $manager_name = '';
-            }
-            if($this->user->dep->name === 'Headquarter'){
-                $recipientLists = ['top','manager'];
-                $sub_manager_name = '';
-            }else{
-                $recipientLists = ['top','manager','sub-manager'];
-                $subManagerInfo = $this->Notification->getRecipientList('sub-manager');
-                if(count($subManagerInfo)){
-                    $sub_manager_name = (empty($subManagerInfo[0]->first_name)) ? $subManagerInfo[0]->username : $subManagerInfo[0]->first_name . $subManagerInfo[0]->last_name;
-                }else{
-                    $sub_manager_name = '';
-                }
-            }
             $this->Notification->notify([
                 'users' => [$request->user_id],
                 'recipientLists' =>  ['top'],
@@ -454,7 +430,7 @@ class RequestsController extends AuthMasterController
             if($tempStatus !== 'returned' ){
                 $this->pushNotification($request,'changeStatus',$mod === 'app' ,$cmt );
             }else{
-                $this->pushNotification($request,'changeStatus',$mod === 'ret' ,$cmt );
+                $this->pushNotification($request,'ret',$mod === 'rej' ,$cmt );
             }
 
             if($this->Requests->save($request)){

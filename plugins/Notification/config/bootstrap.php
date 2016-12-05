@@ -35,25 +35,25 @@ Configure::write('Notification.templates.notifierForManager', [
 Configure::write('Notification.templates.notifierByManager', [
     'title' => ':title',
     'fromUser' => ':username',
-    'body' => ':managerName '.__('approve_post').' ":title" :category ',
+    'body' => ':managerName '.__('approve_post').' :category ',
     'link' => ':link'
 ]);
 Configure::write('Notification.templates.rejectByManager', [
     'title' => ':title',
     'fromUser' => ':username',
-    'body' => ':managerName '.__('rejected_post').' ":title" :category ',
+    'body' => ':managerName '.__('rejected_post').' :category ',
     'link' => ':link'
 ]);
 Configure::write('Notification.templates.notifierBySubManager', [
     'title' => ':title',
     'fromUser' => ':username',
-    'body' => ':subManagerName '.__('approve_post').' ":title" :category',
+    'body' => ':subManagerName '.__('approve_post').' :category',
     'link' => ':link'
 ]);
 Configure::write('Notification.templates.rejectBySubManager', [
     'title' => ':title',
     'fromUser' => ':username',
-    'body' => ':subManagerName '.__('rejected_post').' ":title" :category',
+    'body' => ':subManagerName '.__('rejected_post').' :category',
     'link' => ':link'
 ]);
 Configure::write('Notification.templates.notifierForTopHead', [
@@ -73,12 +73,12 @@ Configure::write('Notification.templates.notifierForTop', [
 Configure::write('Notification.templates.notifierByTop', [
     'title' => ':title',
     'fromUser' => ':username',
-    'body' => ':topName '.__('approve_post').' ":title" :category',
+    'body' => ':topName '.__('approve_post').' " :category',
     'link' => ':link'
 ]);
 Configure::write('Notification.templates.rejectByTop', [
     'title' => ':title',
     'fromUser' => ':username',
-    'body' => ':topName '.__('rejected_post').' ":title" :category',
+    'body' => ':topName '.__('rejected_post').' " :category',
     'link' => ':link'
 ]);

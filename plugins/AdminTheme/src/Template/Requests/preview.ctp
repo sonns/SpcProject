@@ -117,7 +117,7 @@
                         <tbody>
                         <tr>
                             <td  style="vertical-align: middle;" rowspan="2" width="10%"><?= __("request_representative_confirmed")?></td>
-                            <td width="10%" style="text-align: center;vertical-align: middle;"><?= __("request_date")?>:</td>
+                            <td width="10%" style="text-align: center;vertical-align: middle;"><?= __("request_date")?></td>
                             <td style="vertical-align: middle;"  rowspan="2" width="10%"><?= __("request_approve_by")?></td>
                             <td width="10%" style="text-align: center;vertical-align: middle;"><?= __("request_date")?></td>
                             <td style="vertical-align: middle;" rowspan="2" width="10%"><?= __("request_requester")?></td>
