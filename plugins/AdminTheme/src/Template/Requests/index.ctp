@@ -44,7 +44,7 @@
                     <table data-sortable class="table table-hover table-striped" id="listRequests">
                         <thead>
                         <tr>
-                            <th><?=__('no')?></th>
+                            <th><?=__('stt')?></th>
                             <th><?=__('user')?></th>
                             <th><?=__('department')?></th>
                             <th><?=__('request_cate')?></th>
@@ -178,9 +178,9 @@ $this->Html->scriptEnd();
         if($(this).data("mode") === 'add')
         {
             $('#frRequest1 > #request_id').val('');
-            $('#titleRequestForm').text('<?=__('add_new'). ' ' .__('request')?>');
+            $('#titleRequestForm').text('<?=__('add_new_request')?>');
         }else {
-            $('#titleRequestForm').text('<?=__('update'). ' ' .__('request')?>');
+            $('#titleRequestForm').text('<?=__('edit_new_request')?>');
             bindingForm($(this).data("value"),'edit');
         }
     });

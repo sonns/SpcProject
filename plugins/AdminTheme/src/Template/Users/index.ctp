@@ -44,7 +44,7 @@
                         <table data-sortable class="table table-hover table-striped">
                             <thead>
                             <tr>
-                                <th><?=__('no')?></th>
+                                <th><?=__('stt')?></th>
                                 <th style="width: 30px" data-sortable="false"><input type="checkbox" class="rows-check"></th>
                                 <th><?=__('name')?></th>
                                 <th><?=__('email')?></th>

@@ -7,12 +7,12 @@
                 <form role="form" method="post" id="addRole" name="addRole">
                     <input type="hidden" value="resetpass" id="hdnmode" name="hdnmode">
                     <div class="form-group">
-                        <label for="tblName"><?php echo __('Name');?></label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter name">
+                        <label for="tblName"><?php echo __('role_name');?></label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="<?=__('placeholder_role_name')?>">
                     </div>
                     <div class="form-group">
-                        <label for="tblDisplayName"><?php echo __('Display Name');?></label>
-                            <input type="text" class="form-control" id="display_name" name="display_name" placeholder="Enter Display Name">
+                        <label for="tblDisplayName"><?php echo __('role_display_name');?></label>
+                            <input type="text" class="form-control" id="display_name" name="display_name" placeholder="<?=__('placeholder_role_display_name')?>">
                     </div>
                     <button type="submit" class="btn btn-success"><?=__("submit")?></button>
                 </form>
@@ -20,7 +20,7 @@
         <div class="col-sm-7">
             <div class="widget">
                 <div class="widget-header  btn-success " >
-                    <h2 style="color: white"><strong><?=__("role")?></strong> <?=__("tbl")?></h2>
+                    <h2 style="color: white"><strong><?=__("role_list")?></strong></h2>
                     <div class="additional-btn">
                         <a href="#" class="hidden reload"><i class="icon-ccw-1"></i></a>
                         <a href="#" class="widget-toggle"><i class="icon-down-open-2"></i></a>
@@ -31,7 +31,7 @@
                         <table data-sortable class="table">
                             <thead>
                             <tr>
-                                <th><?=__("no")?></th>
+                                <th><?=__("stt")?></th>
                                 <th><?=__("name")?></th>
                                 <th><?=__("alias")?></th>
                                 <th data-sortable="false"><?=__("action")?></th>

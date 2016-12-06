@@ -7,7 +7,7 @@
             <div class="widget-content padding">
                 <form class="form-horizontal" role="form" id="frRequest1" enctype="multipart/form-data">
                     <div class="form-group">
-                        <label class="col-sm-3 control-label"></label>
+                        <label class="col-sm-3 control-label"><?=__('request_cate')?><a style="color:red;">(*)</a></label>
                         <div class="col-sm-9">
                             <?php echo  $this->Form->select(
                                 'sltCategory',
@@ -23,10 +23,10 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label"><?=__('price')?></label>
+                        <label class="col-sm-3 control-label"><?=__('price')?><a style="color:red;">(*)</a></label>
                         <div class="col-sm-9">
                             <div class="input-group">
-                                <span class="input-group-addon">$</span>
+                                <span class="input-group-addon"><?=__('currency')?></span>
                                 <input type="text" name="txtPrice" id="txtPrice" class="form-control">
                                 <span class="input-group-addon">.00</span>
                             </div>
@@ -34,34 +34,34 @@
                     </div>
                     <input type="hidden" name="request_id" id="request_id" value="">
                     <div class="form-group">
-                        <label class="col-sm-3 control-label"><?=__('appr_date')?></label>
+                        <label class="col-sm-3 control-label"><?=__('appr_date')?><a style="color:red;">(*)</a></label>
                         <div class="col-sm-9">
                             <input type="text" id="txtApproveDate" name="txtApproveDate"
                                    class="form-control datepicker-input" data-mask="99-99-9999" placeholder="<?=__('placeholder_format_date')?>">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label"><?=__('payment_date')?></label>
+                        <label class="col-sm-3 control-label"><?=__('payment_date')?><a style="color:red;">(*)</a></label>
                         <div class="col-sm-9">
                             <input type="text" id="txtPaymentDate" name="txtPaymentDate"
                                    class="form-control datepicker-input" data-mask="99-99-9999" placeholder="<?=__('placeholder_format_date')?>">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" for="lblTitle"><?=__('title')?></label>
+                        <label class="col-sm-3 control-label" for="lblTitle"><?=__('title')?><a style="color:red;">(*)</a></label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="txtTitle" name="txtTitle" placeholder="<?=__('placeholder_title')?>">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-3 control-label"  for="lblDescription"><?=__('description')?></label>
+                        <label class="col-sm-3 control-label"  for="lblDescription"><?=__('description')?><a style="color:red;">(*)</a></label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="txtDescription" name="txtDescription" placeholder="<?=__('placeholder_des')?>">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label"  for="lblReason"><?=__('reason')?></label>
+                        <label class="col-sm-3 control-label"  for="lblReason"><?=__('reason')?><a style="color:red;">(*)</a></label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="txtReason" name="txtReason" placeholder="<?=__('placeholder_reason')?>">
                         </div>

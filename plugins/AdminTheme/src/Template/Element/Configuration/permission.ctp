@@ -1,6 +1,6 @@
 <div class="tab-pane animated fadeInRight" id="permissions">
     <div class="row"  style="padding-left:25px;">
-        <h4><strong> <?=__('manage')?> </strong> <?=__('permission')?></h4>
+        <h4><strong> <?=__('manage_permission')?></strong></h4>
         <div class="col-sm-11 center">
             <div class="widget">
                 <div class="widget-content">
@@ -21,7 +21,7 @@
                             <tbody>
                             <?php foreach ($listAcl as $key => $acls): ?>
                                 <tr class="btn-success" <?php echo ($key === 'AuthMaster') ? "style='display:none;'" : ''; ?>>
-                                    <td><?php echo $acls['alias'];?></td>
+                                    <td><?=__(''.$acls['alias']);?></td>
                                     <?php foreach ($roles as $key1 => $role): ?>
                                         <td><td>
                                     <?php endforeach;?>
@@ -29,7 +29,7 @@
 
                                     <?php foreach ($acls['roles'] as $key1 => $acl): ?>
                                     <tr <?php echo ($key === 'AuthMaster') ? "style='display:none;'" : ''; ?>>
-                                        <td style="padding: 20px;"><?php echo $acl;?></td>
+                                        <td style="padding: 20px;"><?= $acl;?></td>
                                         <?php foreach ($roles as $key2 => $role): ?>
                                             <td>
                                                 <label class="icheckbox">
