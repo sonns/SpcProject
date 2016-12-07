@@ -94,11 +94,11 @@
                                 <td> <span class="requestStatus label <?= $status['class'] ?>"><?= $status['value'] ?></span></td>
                                 <td><strong><?=  $this->Time->i18nFormat($request->created,'yyyy/MM/dd');?></strong></td>
                                 <td>
-                                    <div class="btn-group btn-group-xs" >
+                                    <div class="btn-group btn-group-xs" style="position: absolute;" >
                                         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                                             <i class="fa fa-cog"></i> <?=__('action')?> <span class="caret"></span>
                                         </button>
-                                        <ul class="dropdown-menu primary" role="menu">
+                                        <ul class="dropdown-menu primary" role="menu" style="left: -100px">
                                             <?php if($request->status === 'waiting' && $userInfo->id !== $request->user_id ){ ?>
                                                 <li>
                                                     <a class="md-trigger statusRequest" data-toggle="tooltip" data-value="<?=$request->id;?>" data-mode="app" data-status="<?=$request->status; ?>" data-modal="md-add-request-status"><i class="icon-ok-circled"></i>  <?=__('approve')?></a>
@@ -129,6 +129,7 @@
                                         </ul>
 
                                     </div>
+
                                 </td>
                             </tr>
                         <?php endforeach;?>

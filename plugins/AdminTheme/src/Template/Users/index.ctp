@@ -63,7 +63,7 @@
                                     <td><strong><?php echo $user->email;?></strong></td>
                                     <td><strong><?php echo $user->username;?></strong></td>
                                     <td> <span class="label <?php echo ($user->confirmed) ? 'label-success' :'label-danger' ?>"><?php echo ($user->confirmed) ? __('active') :__('suspend') ?></span></td>
-                                    <td><strong><?php echo $user->created;?></strong></td>
+                                    <td><strong><?= $this->Time->i18nFormat($user->created,'yyyy-MM-dd')?></strong></td>
                                     <td>
                                         <div class="btn-group btn-group-xs">
                                             <?php if($userInfo->role[0]->name !== 'admin'){?>
