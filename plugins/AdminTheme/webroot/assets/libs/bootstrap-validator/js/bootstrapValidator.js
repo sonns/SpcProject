@@ -1387,7 +1387,7 @@
          * @param {jQuery} $field Field element
          * @param {Object} options Can consist of the following keys:
          * - message: The invalid message
-         * - format: The date format. Default is MM/DD/YYYY
+         * - format: The date format. Default is YYYY/MM/DD
          * The format can be:
          *
          * i) date: Consist of DD, MM, YYYY parts which are separated by /
@@ -1402,7 +1402,7 @@
                 return true;
             }
 
-            options.format = options.format || 'MM/DD/YYYY';
+            options.format = options.format || 'YYYY/MM/DD';
 
             var formats    = options.format.split(' '),
                 dateFormat = formats[0],

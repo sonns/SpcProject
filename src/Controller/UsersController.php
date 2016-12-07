@@ -16,7 +16,11 @@ use Cake\Utility\Security;
 class UsersController extends AuthMasterController
 {
     public $paginate = [
-        'limit' => 20
+        'limit' => 20,
+        'contain' => ['Profiles'],
+        'order' => [
+            'id' => 'desc'
+        ]
     ];
     public function  initialize()
     {
@@ -101,13 +105,10 @@ class UsersController extends AuthMasterController
      */
     public function index()
     {
-        $this->set('users', $this->Users->find('all'));
-        $userE = $this->Users->newEntity();
         $users = $this->paginate($this->Users);
+//        print_r($users);exit;
         $this->set(compact('users'));
         $this->set('_serialize', ['users']);
-        $this->set(compact('userE'));
-        $this->set('_serialize', ['userE']);
     }
     /**
      * Add method

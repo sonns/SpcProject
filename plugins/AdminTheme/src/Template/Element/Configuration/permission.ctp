@@ -21,7 +21,7 @@
                             <tbody>
                             <?php foreach ($listAcl as $key => $acls): ?>
                                 <tr class="btn-success" <?php echo ($key === 'AuthMaster') ? "style='display:none;'" : ''; ?>>
-                                    <td><?=__(''.$acls['alias']);?></td>
+                                    <td><?=__($acls['alias']);?></td>
                                     <?php foreach ($roles as $key1 => $role): ?>
                                         <td><td>
                                     <?php endforeach;?>
@@ -29,7 +29,7 @@
 
                                     <?php foreach ($acls['roles'] as $key1 => $acl): ?>
                                     <tr <?php echo ($key === 'AuthMaster') ? "style='display:none;'" : ''; ?>>
-                                        <td style="padding: 20px;"><?= $acl;?></td>
+                                        <td style="padding: 20px;"><?=__($acl);?></td>
                                         <?php foreach ($roles as $key2 => $role): ?>
                                             <td>
                                                 <label class="icheckbox">

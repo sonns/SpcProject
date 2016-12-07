@@ -363,7 +363,7 @@
                     },
                     date: {
                         message: 'Please enter a valid date',
-                        format: 'MM/DD/YYYY'
+                        format: 'YYYY/MM/DD'
                     }
                 }
             }
@@ -427,7 +427,7 @@
                     },
                     date: {
                         message: 'Please enter a valid date',
-                        format: 'MM/DD/YYYY'
+                        format: 'YYYY/MM/DD'
                     }
                 }
             },
@@ -438,7 +438,7 @@
                     },
                     date: {
                         message: 'Please enter a valid date',
-                        format: 'MM/DD/YYYY'
+                        format: 'YYYY/MM/DD'
                     }
                 }
             },
@@ -588,7 +588,7 @@
                         },
                         date: {
                             message: 'Please enter a valid date',
-                            format: 'MM/DD/YYYY'
+                            format: 'YYYY/MM/DD'
                         }
                     }
                 },
@@ -599,7 +599,7 @@
                         },
                         date: {
                             message: 'Please enter a valid date',
-                            format: 'MM/DD/YYYY'
+                            format: 'YYYY/MM/DD'
                         }
                     }
                 },

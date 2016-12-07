@@ -2,7 +2,7 @@
 <div class="md-modal md-slide-stick-top" id="md-add-user">
     <div class="md-content">
         <div class="md-close-btn"><a class="md-close"><i class="fa fa-times"></i></a></div>
-        <h3><?=__('add')?> <strong><?=__('user')?></strong></h3>
+        <h3><strong><?=__('add_user')?></strong></h3>
         <div>
             <div class="row">
                 <div class="col-sm-12">

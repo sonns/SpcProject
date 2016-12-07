@@ -2,8 +2,8 @@
 if($result['action'] === 'edit'){
 
 }else{
-    $result['params']->appr_date = $this->Time->i18nFormat($result['params']->appr_date,'MM/dd/yyyy');
-    $result['params']->payment_date = $this->Time->i18nFormat($result['params']->payment_date,'MM/dd/yyyy');
+    $result['params']->appr_date = $this->Time->i18nFormat($result['params']->appr_date,'yyyy/MM/dd');
+    $result['params']->payment_date = $this->Time->i18nFormat($result['params']->payment_date,'yyyy/MM/dd');
     $status = ['class'=>'label-danger','value'=>'Rejected','status' => false, 'rowclass'=> (round( ( strtotime( $result['params']->appr_date) - time() ) / 86400 ) <= 1) ? 'highlight-out-pending' : 'highlight-pending'];
     if($result['params']->role_name === 'top' || ((int)$result['params']->department_id === 1 && $result['params']->role_name === 'manager') || $result['params']->status === 'approved'){
         $status = ['class'=>'label-success','value'=>'Approved','status' => false, 'rowclass'=>'highlight-success'];
@@ -35,7 +35,7 @@ if($result['action'] === 'edit'){
             <?php } ?>
         </td>
         <td> <span class="requestStatus label <?= $status['class'] ?>"><?= $status['value'] ?></span></td>
-        <td><strong><?=  $this->Time->i18nFormat($result['params']->created,'MM/dd/yyyy');?></strong></td>
+        <td><strong><?=  $this->Time->i18nFormat($result['params']->created,'yyyy/MM/dd');?></strong></td>
         <td>
             <div class="btn-group btn-group-xs">
                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">

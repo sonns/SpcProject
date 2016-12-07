@@ -4,15 +4,15 @@
     <ul class="list-group">
         <li class="list-group-item">
             <span class="badge"><?= $requestCount;?></span>
-            <?= __('All Request')?>
+            <?= __('all_request')?>
         </li>
         <li class="list-group-item">
 <!--            <span class="badge">--><?//= $requestCount;?><!--</span>-->
-            <?= __('Pending Request')?>
+            <?= __('waiting_request')?>
         </li>
         <li class="list-group-item">
 <!--            <span class="badge">--><?//= $requestCount;?><!--</span>-->
-            <?= __('Approve Request')?>
+            <?= __('approve_request')?>
         </li>
     </ul>
 </div>

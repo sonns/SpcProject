@@ -1,6 +1,6 @@
 <!-- Your awesome content goes here -->
 <div class="md-content">
-    <h3><?=__('add')?> <strong><?=__('user')?></strong></h3>
+    <h3><strong><?=__('add_user')?></strong></h3>
     <div class="widget">
 
 <div class="row">
@@ -23,10 +23,11 @@
                         'role_id',
                         array(
                             'options' => $listRoles ,
+                            'label'=> __('role'),
                             'class' => 'form-control',
                             'name' => 'role_id',
                             'id' => 'role_id',
-                            'empty' => 'Select Role'
+                            'empty' => __('select_role')
                         )
                     );?>
                 </div>
@@ -34,10 +35,11 @@
                     <?php  echo $this->Form->input(
                         'Department_id',
                         array('options' => $listDepartments ,
+                            'label' => __('department'),
                             'class' => 'form-control',
                             'name' => 'dep_id',
                             'id' => 'dep_id',
-                            'empty' => 'Select Department'
+                            'empty' => __('select_dep')
                         )
 
                     );?>

@@ -1,6 +1,6 @@
 <div class="tab-pane animated fadeInRight" id="reset_password">
     <div class="user-profile-content">
-        <h4><strong><?=__('reset')?> </strong> <?=__("pass")?></h4>
+        <h4><strong><?=__('reset_pass')?> </strong></h4>
         <hr />
             <form role="form" method="post" id="resetPassword" name="resetPassword">
                 <input type="hidden" value="resetpass" id="hdnmode" name="hdnmode">

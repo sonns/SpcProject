@@ -59,8 +59,8 @@
                         <tbody>
                         <?php foreach ($requests as $key => $request): ?>
                             <?php
-                                $request->appr_date = $this->Time->i18nFormat($request->appr_date,'MM/dd/yyyy');
-                                $request->payment_date = $this->Time->i18nFormat($request->payment_date,'MM/dd/yyyy');
+                                $request->appr_date = $this->Time->i18nFormat($request->appr_date,'yyyy/MM/dd');
+                                $request->payment_date = $this->Time->i18nFormat($request->payment_date,'yyyy/MM/dd');
                                 $status = ['class'=>'label-danger','value'=>'Rejected','status' => false, 'rowclass'=> (round( ( strtotime( $request->appr_date ) - time() ) / 86400 ) <= 1) ? 'highlight-out-pending' : 'highlight-pending'];
                                 if($request->role_name === 'top' || ((int)$request->department_id === 1 && $request->role_name === 'manager') || $request->status === 'approved'){
                                     $status = ['class'=>'label-success','value'=>'Approved','status' => false, 'rowclass'=>'highlight-success'];
@@ -92,7 +92,7 @@
                                     <?php } ?>
                                 </td>
                                 <td> <span class="requestStatus label <?= $status['class'] ?>"><?= $status['value'] ?></span></td>
-                                <td><strong><?=  $this->Time->i18nFormat($request->created,'MM/dd/yyyy');?></strong></td>
+                                <td><strong><?=  $this->Time->i18nFormat($request->created,'yyyy/MM/dd');?></strong></td>
                                 <td>
                                     <div class="btn-group btn-group-xs" >
                                         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">

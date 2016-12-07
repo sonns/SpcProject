@@ -59,7 +59,7 @@
                             <?php foreach ($users as $key => $user): ?>
                                 <tr>
                                     <td><?php echo $key+1;?></td><td><input type="checkbox" class="rows-check"></td>
-                                    <td><strong><?php echo $user->first_name.' '. $user->last_name;?></strong></td>
+                                    <td><strong><?= (!isset($user->profile->first_name)) ? 'N/A' : $user->profile->first_name.' '. $user->profile->last_name ;?></strong></td>
                                     <td><strong><?php echo $user->email;?></strong></td>
                                     <td><strong><?php echo $user->username;?></strong></td>
                                     <td> <span class="label <?php echo ($user->confirmed) ? 'label-success' :'label-danger' ?>"><?php echo ($user->confirmed) ? __('active') :__('suspend') ?></span></td>

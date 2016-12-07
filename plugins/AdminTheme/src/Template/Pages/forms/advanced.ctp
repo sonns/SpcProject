@@ -118,13 +118,13 @@
               </div>
               <!-- /.form group -->
 
-              <!-- Date mm/dd/yyyy -->
+              <!-- Date yyyy/mm/dd -->
               <div class="form-group">
                 <div class="input-group">
                   <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
-                  <input type="text" class="form-control" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask>
+                  <input type="text" class="form-control" data-inputmask="'alias': 'yyyy/mm/dd'" data-mask>
                 </div>
                 <!-- /.input group -->
               </div>
@@ -419,15 +419,15 @@ $this->Html->script([
 
     //Datemask dd/mm/yyyy
     $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
-    //Datemask2 mm/dd/yyyy
-    $("#datemask2").inputmask("mm/dd/yyyy", {"placeholder": "mm/dd/yyyy"});
+    //Datemask2 yyyy/mm/dd
+    $("#datemask2").inputmask("yyyy/mm/dd", {"placeholder": "yyyy/mm/dd"});
     //Money Euro
     $("[data-mask]").inputmask();
 
     //Date range picker
     $('#reservation').daterangepicker();
     //Date range picker with time picker
-    $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A'});
+    $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'YYYY/MM/DD h:mm A'});
     //Date range as a button
     $('#daterange-btn').daterangepicker(
         {

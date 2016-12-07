@@ -26,15 +26,6 @@ use Cake\Validation\Validator;
 class UsersTable extends Table
 {
     public  $hasMany = array( 'Requests' => array( 'className' => 'Requests' ) );
-    public $hasOne = array(
-        'Profiles' => array(
-            'className' => 'Profiles',
-//            'conditions' => array('Profiles.published' => '1'),
-            'dependent' => true
-        )
-
-    );
-
     /**
      * Initialize method
      *
@@ -69,9 +60,13 @@ class UsersTable extends Table
             'className' => 'Departments',
             'foreignKey' => 'dep_id',
         ]);
+//        $this->hasOne('Profiles', [
+//            'className' => 'Profiles',
+//            'foreignKey' => 'user_id'
+//        ]);
         $this->hasOne('Profiles', [
             'className' => 'Profiles',
-            'foreignKey' => 'user_id'
+            'dependent' => true
         ]);
     }
     public function findExistsOr(Query $query, array $conditions)

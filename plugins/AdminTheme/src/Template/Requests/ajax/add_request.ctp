@@ -2,7 +2,7 @@
 if($result['action'] === 'edit'){
 
 }else{
-    $status = ['class'=>'label-danger','value'=>'Rejected','status' => false, 'rowclass'=> (round( ( strtotime( $this->Time->i18nFormat($result['params']->appr_date,'MM/dd/yyyy') ) - time() ) / 86400 ) <= 1) ? 'highlight-out-pending' : 'highlight-pending'];
+    $status = ['class'=>'label-danger','value'=>'Rejected','status' => false, 'rowclass'=> (round( ( strtotime( $this->Time->i18nFormat($result['params']->appr_date,'yyyy/MM/dd') ) - time() ) / 86400 ) <= 1) ? 'highlight-out-pending' : 'highlight-pending'];
     if($result['params']->role_name === 'top' || (int)$result['params']->top_status === 1 ||  ((int)$result['params']->department_id === 2 && $result['params']->role_name === 'manager')){
         $status = ['class'=>'label-success','value'=>'Approved','status' => false, 'rowclass'=>'highlight-success'];
     }else{
@@ -45,7 +45,7 @@ if($result['action'] === 'edit'){
         <td><strong><?php echo $result['params']->department_name;?></strong></td>
         <td><strong><?php echo $result['params']->categories_name;?></strong></td>
         <td><strong><?php echo $result['params']->title;?></strong></td>
-        <td><strong><?= $this->Time->i18nFormat($result['params']->appr_date,'MM/dd/yyyy');?></strong></td>
+        <td><strong><?= $this->Time->i18nFormat($result['params']->appr_date,'yyyy/MM/dd');?></strong></td>
         <td>
             <?php if((int)$result['params']->top_status === 1 || (int)$result['params']->top_status === 2){?>
                 <strong  title="<?= ((int)$result['params']->top_status === 2 ? 'Reject by Top' : 'Approve by Top')?>"><i class="icon-adult"></i></strong>
@@ -58,7 +58,7 @@ if($result['action'] === 'edit'){
             <?php } ?>
         </td>
         <td> <span class="requestStatus label <?= $status['class'] ?>"><?= $status['value'] ?></span></td>
-        <td><strong><?=  $this->Time->i18nFormat($result['params']->created,'MM/dd/yyyy');?></strong></td>
+        <td><strong><?=  $this->Time->i18nFormat($result['params']->created,'yyyy/MM/dd');?></strong></td>
         <td>
             <div class="btn-group btn-group-xs">
                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">

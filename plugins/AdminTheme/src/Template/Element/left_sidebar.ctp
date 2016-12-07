@@ -37,7 +37,7 @@
                         ?>
                         <li class='<?= (isset($menu['children']) && count($menu['children']) > 0) ? 'has_sub' : ''; ?>'>
                             <a class="<?= ($menu['active']) ? 'active' : ''?>" href='<?= (isset($menu['children']) && count($menu['children']) > 0) ? 'javascript:void(0);' : $this->Url->build($menu['url']); ?>'>
-                                <i class='icon-home-3'></i><span><?= $menu['title'] ?></span>
+                                <i class='<?=$menu['icon'];?>'></i><span><?= $menu['title'] ?></span>
                                 <?php if (isset($menu['children']) && count($menu['children']) > 0): ?>
                                     <span class="pull-right"><i class="fa fa-angle-down"></i></span>
                                 <?php endif; ?>

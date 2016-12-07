@@ -212,6 +212,7 @@ class AuthMasterController extends AppController
                 [
                     'position'=>2,
                     'title'=>__('department'),
+                    'icon' => 'icon-home-3',
                     'url' => ['controller'=>"Departments",'action'=>'index'],
                     'hasPermission' => false,
                     'active' => false
@@ -219,6 +220,7 @@ class AuthMasterController extends AppController
                 [
                     'position'=>3,
                     'title'=>__('user'),
+                    'icon' => 'fa fa-users',
                     'url' => ['controller'=>"Users",'action'=>'index'],
                     'children' => [
                         [
@@ -250,6 +252,7 @@ class AuthMasterController extends AppController
                 [
                     'position'=>4,
                     'title'=>__('configuration'),
+                    'icon' => 'icon-cog-3',
                     'url' => ['controller'=>"Roles",'action'=>'index'],
                     'active' => false,
                     'hasPermission' => false
@@ -257,6 +260,7 @@ class AuthMasterController extends AppController
                 [
                     'position'=>5,
                     'title'=>__('request'),
+                    'icon' => 'icon-doc-inv-alt',
                     'url' => ['controller'=>"Requests",'action'=>'index'],
                     'active' => false,
                     'hasPermission' => false
