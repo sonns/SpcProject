@@ -53,7 +53,7 @@
                             <th><?=__('request_approve_by')?></th>
                             <th><?=__('status')?></th>
                             <th><?=__('create_date')?></th>
-                            <th width="116px;" data-sortable="false"><?=__('action')?></th>
+                            <th style="width: 70px;" data-sortable="false"><?=__('action')?></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -94,41 +94,41 @@
                                 <td> <span class="requestStatus label <?= $status['class'] ?>"><?= $status['value'] ?></span></td>
                                 <td><strong><?=  $this->Time->i18nFormat($request->created,'yyyy/MM/dd');?></strong></td>
                                 <td>
-                                    <div class="btn-group btn-group-xs" style="position: absolute;" >
-                                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                            <i class="fa fa-cog"></i> <?=__('action')?> <span class="caret"></span>
-                                        </button>
-                                        <ul class="dropdown-menu primary" role="menu" style="left: -100px">
-                                            <?php if($request->status === 'waiting' && $userInfo->id !== $request->user_id ){ ?>
-                                                <li>
-                                                    <a class="md-trigger statusRequest" data-toggle="tooltip" data-value="<?=$request->id;?>" data-mode="app" data-status="<?=$request->status; ?>" data-modal="md-add-request-status"><i class="icon-ok-circled"></i>  <?=__('approve')?></a>
-                                                </li>
-                                                <li>
-                                                    <a class="md-trigger statusRequest" data-toggle="tooltip" data-value="<?=$request->id;?>" data-mode="rej"  data-status="<?=$request->status; ?>" data-modal="md-add-request-status"><i class="icon-cancel-circled"></i>  <?=__('reject')?></a>
-                                                </li>
-                                                <li>
-                                                    <a class="md-trigger statusRequest"  data-toggle="tooltip" data-value="<?=$request->id;?>" data-mode="ret"  data-status="<?=$request->status; ?>" data-modal="md-add-request-status"><i class="fa fa-mail-forward"></i> <?=__('return')?></a>
+                                        <div class="btn-group btn-group-xs" style="position: absolute; right: 8px;" >
+                                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                <i class="fa fa-cog"></i> <?=__('action')?> <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu primary" role="menu" style="left: -100px;">
+                                                <?php if($request->status === 'waiting' && $userInfo->id !== $request->user_id ){ ?>
+                                                    <li>
+                                                        <a class="md-trigger statusRequest" data-toggle="tooltip" data-value="<?=$request->id;?>" data-mode="app" data-status="<?=$request->status; ?>" data-modal="md-add-request-status"><i class="icon-ok-circled"></i>  <?=__('approve')?></a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="md-trigger statusRequest" data-toggle="tooltip" data-value="<?=$request->id;?>" data-mode="rej"  data-status="<?=$request->status; ?>" data-modal="md-add-request-status"><i class="icon-cancel-circled"></i>  <?=__('reject')?></a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="md-trigger statusRequest"  data-toggle="tooltip" data-value="<?=$request->id;?>" data-mode="ret"  data-status="<?=$request->status; ?>" data-modal="md-add-request-status"><i class="fa fa-mail-forward"></i> <?=__('return')?></a>
 
-                                                </li>
-                                            <?php }else{ ?>
+                                                    </li>
+                                                <?php }else{ ?>
+                                                    <li>
+                                                        <a class="md-trigger statusRequest"  data-toggle="tooltip" data-value="<?=$request->id;?>" data-mode="history"  data-status="<?=$request->status; ?>" data-modal="md-add-request-comment"><i class="fa fa-mail-forward"></i> <?=__('history')?></a>
+
+                                                    </li>
+                                                <?php } ?>
+
                                                 <li>
-                                                    <a class="md-trigger statusRequest"  data-toggle="tooltip" data-value="<?=$request->id;?>" data-mode="history"  data-status="<?=$request->status; ?>" data-modal="md-add-request-comment"><i class="fa fa-mail-forward"></i> <?=__('history')?></a>
-
+                                                    <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'icon-eye-off')) . ' '.__('preview'),'/requests/preview/'.$request->id,array('data-toggle'=>"tooltip",'escape' => false,'data-value'=>$request->id  ))?>
                                                 </li>
-                                            <?php } ?>
-
-                                            <li>
-                                                <?php echo $this->Html->link($this->Html->tag('i', '', array('class'=>'icon-eye-off')) . ' '.__('preview'),'/requests/preview/'.$request->id,array('data-toggle'=>"tooltip",'escape' => false,'data-value'=>$request->id  ))?>
-                                            </li>
-                                            <?php if($userInfo->id === $request->user_id && $request->status === 'returned' ){ ?>
-                                                <li>
-                                                    <a class="md-trigger actionRequest"  data-toggle="tooltip" data-value='<?=$request;?>' data-mode="edit"  data-modal="md-edit-request"><i class="fa fa-edit"></i> <?=__('edit_request')?></a>
-                                                </li>
-                                            <?php } ?>
-                                            <li class="divider"></li>
-                                        </ul>
-
+                                                <?php if($userInfo->id === $request->user_id && $request->status === 'returned' ){ ?>
+                                                    <li>
+                                                        <a class="md-trigger actionRequest"  data-toggle="tooltip" data-value='<?=$request;?>' data-mode="edit"  data-modal="md-edit-request"><i class="fa fa-edit"></i> <?=__('edit_request')?></a>
+                                                    </li>
+                                                <?php } ?>
+                                                <li class="divider"></li>
+                                            </ul>
                                     </div>
+
 
                                 </td>
                             </tr>
