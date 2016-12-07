@@ -231,8 +231,8 @@ return [
              */
             //'port' => 'non_standard_port_number',
             'username' => 'root',
-            'password' => ((preg_match("#son#",strtolower(gethostname()))))  ? 'sql2016' : '',
-            'database' => ((preg_match("#son#",strtolower(gethostname()))))  ? 'spc_project' : 'spcproject',
+            'password' => ((preg_match("#son#",strtolower(gethostname()))))  ? 'sql2016' : 'ZF9AvGpq',
+            'database' => ((preg_match("#son#",strtolower(gethostname()))))  ? 'spc_project' : 'spc_rfa',
             'encoding' => 'utf8',
             'timezone' => 'UTC',
             'flags' => [],
