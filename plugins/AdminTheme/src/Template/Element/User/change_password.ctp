@@ -5,7 +5,7 @@
             <form role="form" method="post" id="resetPassword" name="resetPassword">
                 <input type="hidden" value="resetpass" id="hdnmode" name="hdnmode">
                 <div class="form-group">
-                    <label for="txtPassword"><?=__("pass")?></label>
+                    <label for="txtPassword"><?=__("new_pass")?></label>
                     <input type="password" class="form-control" id="password" name="password" placeholder="<?=__('placeholder_new_pass')?>">
                 </div>
                 <div class="form-group">
