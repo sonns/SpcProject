@@ -44,13 +44,26 @@ class AuthMasterController extends AppController
             // count all unread notifications
             $countUnreadNoti =  $this->Notification->countNotifications($this->user->id,true);
             // get all unread notifications;
-            $totalUnreadNoti = $this->Notification->getNotifications($this->user->id,null,true,10);
+            $totalUnreadNoti = $this->Notification->getNotifications($this->user->id,null,null,10);
             $arrNotification = [
                 'count' => $countUnreadNoti,
                 'notificationList' => $totalUnreadNoti
             ];
             $this->set(compact('arrNotification'));
         }
+    }
+    public function download($id){
+        // Run any pre-download logic here.
+        // Send file as response
+        $path =  WWW_ROOT . 'file\request\\'.$id;
+        $this->response->file(
+            $path,
+            array(
+                'download' => true,
+                'name' => $id
+            )
+        );
+        return $this->response;
     }
     public function beforeFilter(Event $event)
     {

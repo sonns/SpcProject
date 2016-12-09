@@ -34,7 +34,7 @@
                             <?php
                             foreach($timezone as $key=>$value){
                                 $selected = '';
-                                if(isset($userInfo['profile']) || $key == $userInfo['profile']['timezone']){
+                                if(isset($userInfo['profile']) && $key == $userInfo['profile']['timezone']){
                                     $selected = 'selected';
                                 }
                                 echo '<option value="'.$key.'" '.$selected.'>'.$value.'</option>';

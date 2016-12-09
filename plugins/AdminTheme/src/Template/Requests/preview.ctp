@@ -75,10 +75,16 @@
                             <?= $requestDetail->description?>
                         </td>
                     </tr>
-                    <tr style="height: 140px;">
-                        <td><?= __("request_effect")?></td>
+                    <tr>
+                        <td><?= __("request_approve_date")?></td>
                         <td colspan="3">
-                            <?= $requestDetail->effectiveness?>
+                            <?= $requestDetail->appr_date->format('Y/m/d')?>
+                        </td>
+                    </tr>
+                    <tr style="height: 140px;">
+                        <td><?= __("payment_date")?></td>
+                        <td colspan="3">
+                            <?= $requestDetail->payment_date->format('Y/m/d');?>
                         </td>
                     </tr>
                     <tr style="height: 120px;">
@@ -87,16 +93,15 @@
                             <?= $requestDetail->reason?>
                         </td>
                     </tr>
-                    <tr>
-                        <td><?= __("request_approve_date")?></td>
-                        <td colspan="3">
-                            <?= $requestDetail->appr_date->format('Y/m/d')?>
-                        </td>
-                    </tr>
+
                     <tr>
                         <td><?= __("request_attach")?></td>
                         <td colspan="3">
-                            <?= $requestDetail->attach?>
+                            <?= $this->Html->link($requestDetail->attach, array(
+                                'controller' => 'AuthMaster',
+                                'action'     => 'download',
+                                $requestDetail->attach
+                            ));?>
                         </td>
                     </tr>
 

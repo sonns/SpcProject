@@ -99,7 +99,11 @@
                                                 <i class="fa fa-cog"></i> <?=__('action')?> <span class="caret"></span>
                                             </button>
                                             <ul class="dropdown-menu primary" role="menu" style="left: -100px;">
-                                                <?php if($request->status === 'waiting' && $userInfo->id !== $request->user_id ){ ?>
+
+                                                <?php if($request->status === 'waiting' && ($userInfo->id !== $request->user_id && ( $userInfo->role[0]->name === 'top' && (int) $request->top_status === 0 )
+                                                        or ( $userInfo->role[0]->name === 'manager' && (int) $request->manager_status === 0 )
+                                                        or ( $userInfo->role[0]->name === 'sub-manager' && (int) $request->sub_manager_status === 0 ))
+                                                ){ ?>
                                                     <li>
                                                         <a class="md-trigger statusRequest" data-toggle="tooltip" data-value="<?=$request->id;?>" data-mode="app" data-status="<?=$request->status; ?>" data-modal="md-add-request-status"><i class="icon-ok-circled"></i>  <?=__('approve')?></a>
                                                     </li>
