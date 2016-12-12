@@ -44,6 +44,61 @@ class TblMasterUsersSeed extends AbstractSeed
                 'del_flg'  => 0,
                 'created'  => '2016-08-27 13:23:29',
                 'modified'  => '2016-08-27 13:23:29',
+            ],
+            [
+                'id'    => 3,
+                'dep_id'    => 1,
+                'password'  => $pass,
+                'email'  => 'truongsonns1@gmail.com',
+                'username'  => 'msonns',
+                'confirmed'=>1,
+                'del_flg'  => 0,
+                'created'  => '2016-08-27 13:23:29',
+                'modified'  => '2016-08-27 13:23:29',
+            ],
+            [
+                'id'    => 4,
+                'dep_id'    => 1,
+                'password'  => $pass,
+                'email'  => 'truongsonns2@gmail.com',
+                'username'  => 'ssonns',
+                'confirmed'=>1,
+                'del_flg'  => 0,
+                'created'  => '2016-08-27 13:23:29',
+                'modified'  => '2016-08-27 13:23:29',
+            ],
+            [
+                'id'    => 5,
+                'dep_id'    => 2,
+                'password'  => $pass,
+                'email'  => 'truongsonns3@gmail.com',
+                'username'  => 'mmsonns',
+                'confirmed'=>1,
+                'del_flg'  => 0,
+                'created'  => '2016-08-27 13:23:29',
+                'modified'  => '2016-08-27 13:23:29',
+            ],
+            [
+                'id'    => 6,
+                'dep_id'    => 2,
+                'password'  => $pass,
+                'email'  => 'truongsonns4@gmail.com',
+                'username'  => 'smsonns',
+                'confirmed'=>1,
+                'del_flg'  => 0,
+                'created'  => '2016-08-27 13:23:29',
+                'modified'  => '2016-08-27 13:23:29',
+            ],
+            [
+                'id'    => 7,
+                'dep_id'    => 2,
+                'password'  => $pass,
+                'email'  => 'truongsonns5@gmail.com',
+                'username'  => 'sssonns',
+                'confirmed'=>1,
+                'del_flg'  => 0,
+                'created'  => '2016-08-27 13:23:29',
+                'modified'  => '2016-08-27 13:23:29',
             ]
         ];
 
@@ -101,6 +156,31 @@ class TblMasterUsersSeed extends AbstractSeed
                 'id'    => 2,
                 'user_id'    => 2,
                 'role_id'  => 2,
+            ],
+            [
+                'id'    => 3,
+                'user_id'    => 3,
+                'role_id'  => 3,
+            ],
+            [
+                'id'    => 4,
+                'user_id'    => 4,
+                'role_id'  => 5,
+            ],
+            [
+                'id'    => 5,
+                'user_id'    => 5,
+                'role_id'  => 3,
+            ],
+            [
+                'id'    => 6,
+                'user_id'    => 6,
+                'role_id'  => 4,
+            ],
+            [
+                'id'    => 7,
+                'user_id'    => 7,
+                'role_id'  => 5,
             ]
         ];
 

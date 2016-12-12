@@ -102,9 +102,8 @@ class UsersTable extends Table
                 'conditions' => 'Roles.id = RoleUser.role_id',
             ])
             ;
-        $query = $query->where($conditions)->toArray();
-//        $query = array_map(create_function('$query', 'return $query->id;'), $query);
-        return $query;
+        $query = $query->where($conditions)->first();
+        return (isset($query->id)) ? $query->id : null;
     }
 
     /**

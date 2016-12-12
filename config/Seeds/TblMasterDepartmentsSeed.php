@@ -28,6 +28,16 @@ class TblMasterDepartmentsSeed extends AbstractSeed
                 'status' => 1,
                 'created'  => '2016-08-27 13:23:29',
                 'modified'  => '2016-08-27 13:23:29',
+            ],
+            [
+                'id'    => 2,
+                'name'  => 'Vietnamese',
+                'tel'  => '0932093940',
+                'address'  => 'HCM',
+                'del_flg'  => 0,
+                'status' => 1,
+                'created'  => '2016-08-27 13:23:29',
+                'modified'  => '2016-08-27 13:23:29',
             ]
         ];
 

@@ -27,7 +27,7 @@ class TblMasterCategoriesSeed extends AbstractSeed
             ],
             [
                 'id'    => 2,
-                'name'  => 'セミナー参加',//Phi THam DU Hoi Thao
+                'name'  => 'セミナー参加',//Phi Tham Du Hoi Thao
                 'created'  => '2016-08-27 13:23:29',
                 'modified'  => '2016-08-27 13:23:29',
             ],
