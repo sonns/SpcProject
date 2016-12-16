@@ -71,38 +71,10 @@ class NotificationManager {
             'tracking_id' => $this->getTrackingId()
         ];
         $data = array_merge($_data, $data);
-        //notifierByManager and notifierBySubManager
-        if((bool)$data['is_approve']){
-            foreach ((array)$data['recipientLists'] as $recipientList) {
-                $list = (array)$this->getRecipientList($recipientList);
-                $data['users'] = array_merge($data['users'], $list);
-                if($data['template'][0] === 'notifierBySubManager'){
-                    //notify for staff and manager
-                    $data['template'][$list[0]] = 'notifierForManager';
-                    $data['template'][$_data['users'][0]] = 'notifierBySubManager';
-                }elseif($data['template'][0] === 'notifierByManager'){
-                    //check request in head company
-                    if($recipientList === 'top'){
-                        $data['template'][$list[0]] = (count($data['recipientLists']) === 1) ? 'notifierForTopHead' : 'notifierForTop';
-                    }else{
-                        $data['template'][$list[0]] = 'notifierByManager';
-                        $data['template'][$_data['users'][0]] = 'notifierByManager';
-                    }
-                }
-            }
-        }else{
-            if($data['template'][0] === 'notifierBySubManager'){
-                $data['template'][0] = 'rejectBySubManager';
-            }elseif($data['template'][0] === 'notifierByManager'){
-                $data['template'][0] = 'rejectByManager';
-            }elseif($data['template'][0] === 'notifierByTop'){
-                $data['template'][0] = 'rejectByTop';
-            }
-        }
         $data['users'] = array_unique($data['users']);
         foreach ((array)$data['users'] as $user) {
             $entity = $model->newEntity();
-            $entity->set('template', isset($data['template'][$user]) ? $data['template'][$user] : $data['template'][0]);
+            $entity->set('template', $this->getKeyTemplate($data['type_id']) );
             $entity->set('tracking_id', $data['tracking_id']);
             $entity->set('message', $data['message']);
             $entity->set('state', 1);
@@ -111,6 +83,9 @@ class NotificationManager {
         }
         self::pushSocket($data['tracking_id'],$data['users']);
         return $data['tracking_id'];
+    }
+    private function getKeyTemplate($type){
+
     }
     /**
      * addRecipientList

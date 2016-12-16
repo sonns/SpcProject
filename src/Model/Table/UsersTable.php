@@ -87,7 +87,8 @@ class UsersTable extends Table
                 'Users.id',
                 'Users.username',
                 'first_name' => 'Profiles.first_name',
-                'last_name' =>'Profiles.last_name'
+                'last_name' =>'Profiles.last_name',
+                'role' =>'Roles.name',
 
             ])->leftJoinWith('Profiles')->join([
                 'table' => 'tbl_master_role_user',
@@ -102,8 +103,8 @@ class UsersTable extends Table
                 'conditions' => 'Roles.id = RoleUser.role_id',
             ])
             ;
-        $query = $query->where($conditions)->first();
-        return (isset($query->id)) ? $query->id : null;
+        $query = $query->where($conditions)->toArray();
+        return $query;
     }
 
     /**

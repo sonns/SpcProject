@@ -186,7 +186,8 @@ class RequestsController extends AuthMasterController
             $request = $this->Requests->patchEntity($request, $this->request->data);
             $request = $this->Requests->save($request);
             if($request){
-                $this->pushNotification($request, empty($this->request->data['request_id']) ? 'add' : 'edit');
+                $type =  empty($this->request->data['request_id']) ? 'add' : 'edit';
+                $this->getPusherInfo($this->getTypeId($type),$this->request->data['request_id']);
                 $requestDetail = $this->Requests->find('requestList')->where(['Requests.id'=>$request->id])->groupBy('Requests.id')->first();
                 $result  = [ 'action' =>  empty($this->request->data['request_id']) ? 'add' : 'edit' , 'params'=>(count($requestDetail[0])) ? $requestDetail[0] : '' , 'status' => 'Success' , 'response'=> __('request_success')];
             }else{
@@ -231,7 +232,7 @@ class RequestsController extends AuthMasterController
                 $request = $this->Requests->patchEntity($request, $this->request->data);
                 $request = $this->Requests->save($request);
                 if ($request) {
-                    $this->pushNotification($request,'add');
+                    $this->getPusherInfo($this->getTypeId('add'),$request->id);
                     $requestDetail = $this->Requests->find('requestList')->where(['Requests.id'=>$request->id])->groupBy('Requests.id')->first();
                     $result  = ['params'=>(count($requestDetail[0])) ? $requestDetail[0] : '' , 'status' => 'Success' , 'response'=> __('request_success')];
                 } else {
@@ -427,12 +428,12 @@ class RequestsController extends AuthMasterController
                 $request->status = $tempStatus;
             }
             //add push noti
-            if($tempStatus !== 'returned' ){
-                $this->pushNotification($request,'changeStatus',$mod === 'app' ,$cmt );
-            }else{
-                $this->pushNotification($request,'ret',$mod === 'rej' ,$cmt );
-            }
-
+//            if($tempStatus !== 'returned' ){
+//                $this->pushNotification($request,'changeStatus',$mod === 'app' ,$cmt );
+//            }else{
+//                $this->pushNotification($request,'ret',$mod === 'rej' ,$cmt );
+//            }
+            $this->getPusherInfo($this->getTypeId($mod),$request->id);
             if($this->Requests->save($request)){
                 $result = $this->responseData(true,['id'=>$request->id , 'request' => $request]);
             }else{

@@ -72,6 +72,7 @@ class CommentsController extends AuthMasterController
         $arrUser =  $this->Comments->find('list',['fields'=>['id','from_user_id']])->where(['req_id' => (int)$commentDetail->req_id,'from_user_id <>'=> $this->user->id])->group(['from_user_id'])->toArray();
         if(!empty($arrUser)){
             $this->pushNotification(array_values($arrUser),$commentDetail,false);
+
         }
         $this->set(compact('result'));
         $this->set('_serialize', 'result');
