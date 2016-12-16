@@ -66,15 +66,19 @@ class NotificationManager {
         $_data = [
             'users' => [],
             'recipientLists' => [],
-            'template' => ['default'],
+            'template' => 'Default',
             'message' => [],
             'tracking_id' => $this->getTrackingId()
         ];
         $data = array_merge($_data, $data);
+        foreach ((array)$data['recipientLists'] as $recipientList) {
+            $list = (array)$this->getRecipientList($recipientList);
+            $data['users'] = array_merge($data['users'], $list);
+        }
         $data['users'] = array_unique($data['users']);
         foreach ((array)$data['users'] as $user) {
             $entity = $model->newEntity();
-            $entity->set('template', $this->getKeyTemplate($data['type_id']) );
+            $entity->set('template', $data['template']);
             $entity->set('tracking_id', $data['tracking_id']);
             $entity->set('message', $data['message']);
             $entity->set('state', 1);
@@ -83,9 +87,6 @@ class NotificationManager {
         }
         self::pushSocket($data['tracking_id'],$data['users']);
         return $data['tracking_id'];
-    }
-    private function getKeyTemplate($type){
-
     }
     /**
      * addRecipientList
@@ -156,7 +157,7 @@ class NotificationManager {
             'body' => '',
         ];
         $options = array_merge($_options, $options);
-        Configure::write('Notification.templates.' . $name, $options);
+        Configure::write('Notification.Templates.' . $name, $options);
     }
     /**
      * getTemplate
@@ -170,7 +171,7 @@ class NotificationManager {
      */
     public function getTemplate($name, $type = null)
     {
-        $templates = Configure::read('Notification.templates');
+        $templates = Configure::read('Notification.Templates');
         if (array_key_exists($name, $templates)) {
             if ($type == 'title') {
                 return $templates[$name]['title'];

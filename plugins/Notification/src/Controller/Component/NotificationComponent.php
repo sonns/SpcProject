@@ -30,6 +30,9 @@ class NotificationComponent extends Component
     protected $_defaultConfig = [
         'UsersModel' => 'Users'
     ];
+    protected  $_templateList = [
+        'default' => 'Default'
+    ];
     /**
      * The controller.
      *
@@ -213,6 +216,20 @@ class NotificationComponent extends Component
     {
         return Configure::read('Notification.recipientLists.' . $name);
     }
+
+    public function setTemplateList($arrTemp)
+    {
+        if(!empty($arrTemp)|| is_array($arrTemp))
+        {
+            $this->_templateList = array_merge($this->_templateList,$arrTemp);
+        }
+    }
+    public function getTemplateDetail($key){
+        if(isset($this->_templateList[$key]))
+            return $this->_templateList[$key];
+        return $this->_templateList['default'];
+    }
+
 
 
 }

@@ -47,6 +47,7 @@ class AuthMasterController extends AppController
                 'notificationList' => $totalUnreadNoti
             ];
             $this->set(compact('arrNotification'));
+            $this->setTemplatePush();
         }
     }
     public function download($id){
@@ -300,7 +301,6 @@ class AuthMasterController extends AppController
     private function _checkRole(array $menus , $listAcl , $checkPerm = false){
         foreach ($menus as $key => $menu )
         {
-//            print_r($menu);exit;
             if(isset($menu['children'])){
                 $menu['children'] = $this->_checkRole($menu['children'],$listAcl);
                 $menus[$key]['children'] =  $menu['children'];
@@ -391,7 +391,9 @@ class AuthMasterController extends AppController
         {
             // pusher for manage and write activity
             $param['users'] =  $this->getApprovalList($type, $id);
-            return $this->addTemplateForPusher($param);
+            if(!empty($param['users']) && is_array($param['users'])){
+                return $this->addTemplateForPusher($param);
+            }
         }
         return null;
     }
@@ -430,10 +432,11 @@ class AuthMasterController extends AppController
     private function addTemplateForPusher($param){
         $result = [
             'users' => $param['users'],
-            'type_id' => $param['type'],
+            'template' => $this->Notification->getTemplateDetail('request'),
             'message' => [
                 'user_id' => $this->user->id,
                 'id' => $param['id'],
+                'type_id' => $param['type'],
                 'category' => $param['cate']
             ]
         ];
@@ -442,6 +445,7 @@ class AuthMasterController extends AppController
     }
     private function getApprovalList($type , $request_id ){
         $listUser = null;
+        $template = null;
         $groupUser = $this->Notification->getRecipientList('groupUser');
         if($type === EDIT_REQUEST_BY_STAFF || $type === EDIT_REQUEST_BY_SUB_MANAGE){
             $approval = TableRegistry::get('Approvals');
@@ -453,15 +457,15 @@ class AuthMasterController extends AppController
             }
         }elseif ($type === ADD_REQUEST_BY_STAFF || $type === ADD_REQUEST_BY_SUB_MANAGE){
             if(!$this->isHead && $type === ADD_REQUEST_BY_STAFF  && isset($groupUser['sub-manager']) ){
-                $listUser = $groupUser['sub-manager'];
+                $listUser[] = $groupUser['sub-manager'];
             }else{
                 if(isset($groupUser['manager'])){
-                    $listUser = $groupUser['manager'];
+                    $listUser[] = $groupUser['manager'];
                 }
             }
 
         }elseif (($type === ADD_REQUEST_BY_MANAGE || $type === EDIT_REQUEST_BY_MANAGE) && isset($groupUser['top']) ){
-            $listUser = $groupUser['top'];
+            $listUser[] = $groupUser['top'];
         }
         elseif ($type >= APPROVE_REQUEST_BY_SUB_MANAGE && $type <= RETURN_REQUEST_BY_TOP ){
             //notify for top and staff
@@ -510,5 +514,10 @@ class AuthMasterController extends AppController
             }, array());
             $this->Notification->addRecipientList('groupUser', $userList);
         }
+    }
+    private function setTemplatePush(){
+        $this->Notification->setTemplateList([
+            'request' => 'Request'
+        ]);
     }
 }
