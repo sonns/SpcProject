@@ -185,13 +185,13 @@ class RequestsController extends AuthMasterController
             }
             $request = $this->Requests->patchEntity($request, $this->request->data);
             $request = $this->Requests->save($request);
+            $type =  empty($this->request->data['request_id']) ? 'add' : 'edit';
             if($request){
-                $type =  empty($this->request->data['request_id']) ? 'add' : 'edit';
-                $this->getPusherInfo($this->getTypeId($type),$this->request->data['request_id']);
+                $this->getPusherInfo($this->getTypeId($type),$request->id);
                 $requestDetail = $this->Requests->find('requestList')->where(['Requests.id'=>$request->id])->groupBy('Requests.id')->first();
-                $result  = [ 'action' =>  empty($this->request->data['request_id']) ? 'add' : 'edit' , 'params'=>(count($requestDetail[0])) ? $requestDetail[0] : '' , 'status' => 'Success' , 'response'=> __('request_success')];
+                $result  = [ 'action' =>  $type , 'params'=>(count($requestDetail[0])) ? $requestDetail[0] : '' , 'status' => 'Success' , 'response'=> __('request_success')];
             }else{
-                $result  = [ 'action' =>  empty($this->request->data['request_id']) ? 'add' : 'edit' , 'params'=>$request , 'status' => 'Error' , 'response'=> __('request_error')];
+                $result  = [ 'action' =>  $type , 'params'=>$request , 'status' => 'Error' , 'response'=> __('request_error')];
             }
             $this->set(compact('result'));
             $this->set('_serialize', ['result']);

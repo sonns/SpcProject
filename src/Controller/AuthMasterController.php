@@ -35,7 +35,7 @@ class AuthMasterController extends AppController
     }
     private function _initNotification(){
         if (!empty($this->user)) {
-            $tblUser = TableRegistry::get('Users');
+//            $tblUser = TableRegistry::get('Users');
             // set Group list user_id
             $this->getUserListByRole();
             // count all unread notifications
@@ -276,21 +276,7 @@ class AuthMasterController extends AppController
                     'url' => ['controller'=>"Requests",'action'=>'index'],
                     'active' => false,
                     'hasPermission' => false
-                ],
-//                [
-//                    'position'=>6,
-//                    'title'=>'Notification',
-//                    'url' => ['controller'=>"Notifications",'action'=>'index'],
-//                    'active' => false,
-//                    'hasPermission' => false
-//                ],
-//                [
-//                    'position'=>7,
-//                    'title'=>"Message",
-//                    'url' => ['controller'=>"Messages",'action'=>'index'],
-//                    'active' => false,
-//                    'hasPermission' => false
-//                ]
+                ]
             ]
         ];
         // check roles
@@ -436,14 +422,14 @@ class AuthMasterController extends AppController
             'message' => [
                 'user_id' => $this->user->id,
                 'id' => $param['id'],
-                'type_id' => $param['type'],
+                'type_id' => $param['type_id'],
                 'category' => $param['cate']
             ]
         ];
         $this->Notification->notify($result);
         return true;
     }
-    private function getApprovalList($type , $request_id ){
+    private function getApprovalList($type , $request_id = null ){
         $listUser = null;
         $template = null;
         $groupUser = $this->Notification->getRecipientList('groupUser');

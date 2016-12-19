@@ -15,6 +15,8 @@
 namespace Notification\Model\Entity;
 use Cake\Core\Configure;
 use Cake\ORM\Entity;
+use Cake\ORM\TableRegistry;
+use Cake\Routing\Router;
 use Cake\Utility\Text;
 /**
  * Notification Entity.
@@ -35,7 +37,7 @@ class Notification extends Entity
         'user' => false,
         'title' => true
     ];
-
+    protected $_usersInfo = [];
     /**
      * _getmessage
      *
@@ -80,9 +82,10 @@ class Notification extends Entity
     {
         $templates = Configure::read('Notification.Templates');
         if (array_key_exists($this->_properties['template'], $templates)) {
-            $template = $templates[$this->_properties['template']];
             $message = json_decode($this->_properties['message'], true);
-            return Text::insert($template['title'], $message);
+            $template = $templates[$this->_properties['template']][$message['type_id']];
+            $detail = $this->getUserInfo($message['user_id']);
+            return __($template,$detail->profile->first_name . ' ' .$detail->profile->last_name);
         }
         return '';
     }
@@ -99,21 +102,19 @@ class Notification extends Entity
     {
         $templates = Configure::read('Notification.Templates');
         if (array_key_exists($this->_properties['template'], $templates)) {
-            $template = $templates[$this->_properties['template']];
             $message = json_decode($this->_properties['message'], true);
-            return Text::insert($template['body'], $message);
+            $template = $templates[$this->_properties['template']][$message['type_id']];
+            $detail = $this->getUserInfo($message['user_id']);
+            return __($template,$detail->profile->first_name . ' ' .$detail->profile->last_name);
         }
         return '';
     }
     protected function _getLink()
     {
-        $templates = Configure::read('Notification.Templates');
-        if (array_key_exists($this->_properties['template'], $templates)) {
-            $template = $templates[$this->_properties['template']];
-            $message = json_decode($this->_properties['message'], true);
-            $link =  Text::insert($template['link'], $message);
-            if($link !== ':link')
-                return $link;
+        $message = json_decode($this->_properties['message'], true);
+        if(isset($message['id']) && !empty($message['id'])){
+            $link =  Router::url(array('controller'=>'Requests', 'action'=>'preview', $message['id']),true);
+            return $link;
         }
         return '';
     }
@@ -155,13 +156,28 @@ class Notification extends Entity
      */
     protected function _getFromUser()
     {
-        $templates = Configure::read('Notification.Templates');
-        if (array_key_exists($this->_properties['template'], $templates)) {
-            $template = $templates[$this->_properties['template']];
-            $message = json_decode($this->_properties['message'], true);
-            return Text::insert($template['fromUser'], $message);
+        $message = json_decode($this->_properties['message'], true);
+        if(isset($message['user_id']) && !empty($message['user_id'])){
+            $detail = $this->getUserInfo($message['user_id']);
+            if($detail){
+                return $detail->profile->first_name . ' ' .$detail->profile->last_name;
+            }
         }
         return '';
+    }
+
+    private function getUserInfo($user_id){
+        if(!isset($this->_usersInfo[$user_id])){
+            $users = TableRegistry::get('Users');
+            $detail = $users->find()->where(['Users.id' => $user_id])
+                ->contain(['Profiles'])->first();
+            if( count($detail) && isset($detail->profile)){
+                $this->_usersInfo[$user_id] =  $detail;
+            }else{
+                return false;
+            }
+        }
+        return $this->_usersInfo[$user_id];
     }
 
     /**

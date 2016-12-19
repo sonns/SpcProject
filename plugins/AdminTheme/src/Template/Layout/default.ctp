@@ -180,14 +180,13 @@ echo $this->element('logout');
             var socket = io.connect('http://localhost:5000', {
                 reconnection: true
             });
-
-            console.log('check 1', socket.connected);
             socket.on('connect', function() {
-                console.log('check 2', socket.connected);
+                console.log('Connected', socket.connected);
             });
             socket.on("cake_response", function(data){
-                console.log(data);
+                console.log(data.id);
                 var myID = <?= $userInfo->id; ?>;
+                console.log(myID);
                 if ( $.inArray( myID, data.id ) > -1 ){
                     $.ajax({
                         type: "POST",
@@ -198,7 +197,7 @@ echo $this->element('logout');
                         {
                             var res = JSON.parse(response);
                             notification(res);
-                            location.reload();
+//                          location.reload();
                             console.log(response);
                         }
                     })

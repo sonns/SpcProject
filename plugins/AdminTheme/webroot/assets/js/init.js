@@ -417,6 +417,7 @@ function notification(response)
     };
     if (!("Notification" in window)) {
         alert("This browser does not support desktop notification!!!Please enable it");
+        console.log("This browser does not support desktop notification!!!Please enable it");
     }
     else if (Notification.permission === "granted") {
         notify('info',{title: 'Notification' ,message: response.notification.response.body,position:'bottom right',autoHideDelay:20000});

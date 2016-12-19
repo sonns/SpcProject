@@ -732,15 +732,10 @@
 
         return false;
     }));
-
-
-
-
 });
 function updateIndex(el)
 {
     $(el).each(function(index){
-        console.log($( this ).find( "td:eq(3)" ).html());
         $( this ).find( "td:first" ).html( index);
     });
 }
