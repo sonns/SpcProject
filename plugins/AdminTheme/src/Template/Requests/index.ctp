@@ -82,7 +82,7 @@
                                 <td><strong><?= $request->appr_date;?></strong></td>
                                 <td>
                                     <?php if((int)$request->top_status === 1 || (int)$request->top_status === 2 || $request->role_name === 'top' ){?>
-                                        <strong  title="<?= ($request->role_name === 'top' ? __('created_by_top') : ( (int)$request->top_status === 2 ? __('rejected_by_top') : __('approved_by_top')))?>"><i class="icon-person"></i></strong>
+                                        <strong  title="<?= ($request->role_name === 'top' ?  __('created_by_top') : ( (int)$request->top_status === 2 ? __('rejected_by_top') :  __('approved_by_top')))?>"><i class="icon-person"></i></strong>
                                     <?php } if((int)$request->manager_status === 1 || (int)$request->manager_status === 2 ||  $request->role_name === 'manager'){ ?>
                                         <strong  title="<?= ($request->role_name === 'manager' ? __('created_by_manager') : ( (int)$request->manager_status === 2 ? __('rejected_by_manager') : __('approved_by_manager'))) ?>"><i class="icon-adult"></i></strong>
                                     <?php } if((int)$request->sub_manager_status === 1 || (int)$request->sub_manager_status === 2 ||  $request->role_name === 'sub-manager'){ ?>
@@ -100,7 +100,7 @@
                                             </button>
                                             <ul class="dropdown-menu primary" role="menu" style="left: -100px;">
 
-                                                <?php if($request->status === 'waiting' && ($userInfo->id !== $request->user_id && ( $userInfo->role[0]->name === 'top' && (int) $request->top_status === 0 )
+                                                <?php if($request->status === 'waiting' && $userInfo->id !== $request->user_id &&  (( $userInfo->role[0]->name === 'top' && (int) $request->top_status === 0 )
                                                         or ( $userInfo->role[0]->name === 'manager' && (int) $request->manager_status === 0 )
                                                         or ( $userInfo->role[0]->name === 'sub-manager' && (int) $request->sub_manager_status === 0 ))
                                                 ){ ?>

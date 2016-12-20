@@ -114,12 +114,18 @@ class RequestsTable extends Table
             'top_status' => $query->func()->max($top_status),
             'manager_status' => $query->func()->max($manager_status),
             'sub_manager_status' => $query->func()->max($sub_manager_status)
-        ])->leftJoinWith('Departments')->leftJoinWith('Profiles')->leftJoinWith('Categories')->hydrate(false)
+        ])->leftJoinWith('Departments')->leftJoinWith('Categories')->hydrate(false)
             ->join([
                 'table' => 'tbl_master_approval',
                 'alias' => 'Approvals',
                 'type' => 'LEFT',
                 'conditions' => 'Requests.id = Approvals.req_id',
+            ])
+            ->join([
+                'table' => 'tbl_master_profile',
+                'alias' => 'Profiles',
+                'type' => 'LEFT',
+                'conditions' => 'Profiles.user_id = Requests.user_id',
             ])
             ->join([
                 'table' => 'tbl_master_roles',

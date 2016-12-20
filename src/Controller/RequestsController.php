@@ -61,7 +61,6 @@ class RequestsController extends AuthMasterController
             $conditions = [];
         }
         $requests = $this->paginate($this->Requests,$conditions)->toArray();
-//        print_r($requests);exit;
         $this->set(compact('requests'));
         $this->set(compact('listCate'));
         $this->set('_serialize', ['requests']);
