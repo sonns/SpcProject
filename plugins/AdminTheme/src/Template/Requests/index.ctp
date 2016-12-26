@@ -116,7 +116,7 @@
                                                     </li>
                                                 <?php }else{ ?>
                                                     <li>
-                                                        <a class="md-trigger statusRequest"  data-toggle="tooltip" data-value="<?=$request->id;?>" data-mode="history"  data-status="<?=$request->status; ?>" data-modal="md-add-request-comment"><i class="fa fa-mail-forward"></i> <?=__('history')?></a>
+                                                        <a class="md-trigger statusRequest"  data-toggle="tooltip" data-value="<?=$request->id;?>" data-mode="history"  data-status="<?=$request->status; ?>" data-modal="md-add-request-comment"><i class="fa fa-history"></i> <?=__('history')?></a>
 
                                                     </li>
                                                 <?php } ?>

@@ -52,8 +52,8 @@ class RequestsController extends AuthMasterController
             $conditions = ['group'=>['Requests.id Having role_name ="manager" or manager_status = 1 or Requests.user_id = '.$this->user->id],'conditions' => ['OR'=> ['Requests.del_flg ' => 0]]];
         }elseif ($this->user->role[0]->name ==='manager'){
             $conditions = ['group'=>
-                ['Requests.id Having (department_id = 1 and role_name ="staff" or Requests.user_id = '.$this->user->id.')
-            or ( department_id <> 1  and sub_manager_status = 1 or Requests.user_id = '.$this->user->id.' )'],'conditions' => ['OR'=> ['Requests.del_flg ' => 0]]];
+                ['Requests.id Having ( department_id = '.$this->user->dep_id . (($this->user->dep_id === HEADQUARTER_ID) ? ' and role_name ="staff"' : ' and (sub_manager_status = 1 or role_name ="sub-manager" )')  .' ) or Requests.user_id = '.$this->user->id],
+                    'conditions' => ['OR'=> ['Requests.del_flg ' => 0]]];
         }
         elseif ($this->user->role[0]->name ==='sub-manager'){
             $conditions = ['group'=>['Requests.id Having  department_id <> 1 and role_name =\'staff\' and department_id = '.$this->user->dep_id.' or Requests.user_id = '.$this->user->id.' '],'conditions' => ['OR'=> ['Requests.del_flg ' => 0]]];

@@ -433,8 +433,9 @@ class AuthMasterController extends AppController
         $listUser = null;
         $template = null;
         $groupUser = $this->Notification->getRecipientList('groupUser');
+        $approval = TableRegistry::get('Approvals');
         if($type === EDIT_REQUEST_BY_STAFF || $type === EDIT_REQUEST_BY_SUB_MANAGE){
-            $approval = TableRegistry::get('Approvals');
+
             $approvalInfo = $approval->find()->where(['req_id'=>$request_id])->all();
             if(count($approvalInfo)){
                 return array_map(function ($v){ return $v->user_id; }, $approvalInfo->toArray());
@@ -463,7 +464,15 @@ class AuthMasterController extends AppController
                     $listUser[] =  $groupUser['top'];
                 }
                 if(($type === APPROVE_REQUEST_BY_TOP || $type === REJECT_REQUEST_BY_TOP || $type === RETURN_REQUEST_BY_TOP ) && isset($groupUser['manager'])){
-                    $listUser[] = $groupUser['manager'];
+                    if($requestDetail->dep_id === HEADQUARTER_ID){
+                        $listUser[] = $groupUser['manager'];
+                    }else{
+                        $approvalInfo = $approval->find()->where(['req_id'=>$request_id])->all();
+                        if(count($approvalInfo)){
+                            $approvalInfo =  array_map(function ($v){ return $v->user_id; }, $approvalInfo->toArray());
+                            $listUser = array_merge($listUser,$approvalInfo);
+                        }
+                    }
                 }
             }else{
                 if ($type === APPROVE_REQUEST_BY_SUB_MANAGE && isset($groupUser['manager']) ){
@@ -485,6 +494,7 @@ class AuthMasterController extends AppController
         }else{
             return null;
         }
+        $listUser = array_diff ( $listUser , [$this->user->id] );
         return $listUser;
     }
     private function getUserListByRole(){
