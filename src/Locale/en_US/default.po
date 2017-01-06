@@ -104,8 +104,6 @@ msgid "del"
 msgstr "Delete"
 msgid "confirm"
 msgstr "Confirmed"
-
-
 msgid "search"
 msgstr "Search"
 msgid "user"
