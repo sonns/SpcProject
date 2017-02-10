@@ -7,7 +7,7 @@ use Cake\Routing\Router;
 
 Configure::write('Admin', [
     'debug'=>true,
-    'title' => 'SPCProject',
+    'title' => 'RINGISHO',
     'logo' => [
         'mini' => '<b>A</b>LT',
         'large' => '<b>Admin</b>'

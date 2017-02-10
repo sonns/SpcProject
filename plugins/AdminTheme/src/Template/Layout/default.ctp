@@ -6,7 +6,7 @@ $cakeDescription = 'SPC';
 <head>
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo isset($theme['title']) ? $theme['title'] : 'SPCProject'; ?></title>
+    <title><?php echo isset($theme['title']) ? $theme['title'] : 'RINGISHO'; ?></title>
     <?= $this->Html->meta(
         [
             'link' => 'http://cake.local/favicon.ico',

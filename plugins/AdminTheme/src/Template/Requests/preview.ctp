@@ -17,7 +17,7 @@
         <?php if($requestDetail->role_name !== 'top' && !((int) $requestDetail->department_id === 2 && $requestDetail->role_name === 'manager' ) ){?>
             <?php if(!(int)$requestDetail->app_status && $userInfo->role[0]->name !== 'staff' && (int)$requestDetail->user_id !== $userInfo->id ){?>
                 <a id="btnApprove" name="btnApprove"  class="btn btn-success btn-sm btnStatus" data-value="<?=$requestDetail->id?>" data-mode="app"><i class="icon-ok-circled"></i><?=__('approve')?></a>
-                <a id="btnReject" name="btnReject"  class="btn btn-danger btn-sm btnStatus" data-value="<?=$requestDetail->id?>" data-mode="rej"><i class="icon-ok-circled"></i><?=__('reject')?></a>
+                <a id="btnReject" name="btnReject"  class="btn btn-danger btn-sm btnStatus" data-value="<?=$requestDetail->id?>" data-mode="rej"><i class="icon-cancel-circled-2"></i><?=__('reject')?></a>
             <?php } ?>
         <?php } ?>
         <a id="btnPrint" name="btnPrint"  class="btn btn-primary btn-sm"><i class="icon-print-2"></i> <?=__('print')?></a>
@@ -81,7 +81,7 @@
                             <?= $requestDetail->appr_date->format('Y/m/d')?>
                         </td>
                     </tr>
-                    <tr style="height: 140px;">
+                    <tr>
                         <td><?= __("payment_date")?></td>
                         <td colspan="3">
                             <?= $requestDetail->payment_date->format('Y/m/d');?>

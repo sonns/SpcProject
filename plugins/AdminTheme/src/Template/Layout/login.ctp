@@ -20,7 +20,7 @@ $cakeDescription = 'SPC';
 <head>
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo isset($theme['title']) ? $theme['title'] : 'SPCProject'; ?></title>
+    <title><?php echo isset($theme['title']) ? $theme['title'] : 'RINGISHO'; ?></title>
     <?= $this->Html->meta('icon') ?>
     <?= $this->Html->css('AdminTheme./assets/libs/jqueryui/ui-lightness/jquery-ui-1.10.4.custom.min.css') ?>
     <?= $this->Html->css('AdminTheme./assets/libs/bootstrap/css/bootstrap.min.css') ?>
